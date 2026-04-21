@@ -1,11 +1,14 @@
 {
   "name": "@tpw/skills",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
-  "license": "MIT",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "restricted"
+  },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/templeandwebster/horizon/crew/crew",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/crew/crew.git",
     "directory": "packages/skills"
   },
   "keywords": [
@@ -23,6 +26,12 @@
   },
   "files": [
     "*/SKILL.md",
-    "README.md"
+    "*/template.md",
+    "*/template-*.md",
+    "*/template.*.md",
+    "*/examples/**",
+    "*/scripts/**",
+    "README.md",
+    "CHANGELOG.md"
   ]
 }
