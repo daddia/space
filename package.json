@@ -1,0 +1,28 @@
+{
+  "name": "@tpw/skills",
+  "version": "0.1.2",
+  "description": "Delivery activity skills for AI coding agents -- works with any IDE",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/templeandwebster/horizon/crew/crew",
+    "directory": "packages/skills"
+  },
+  "keywords": [
+    "horizon",
+    "crew",
+    "skills",
+    "delivery",
+    "ai-agents",
+    "cursor",
+    "claude-code",
+    "copilot"
+  ],
+  "engines": {
+    "node": ">=24.14.1"
+  },
+  "files": [
+    "*/SKILL.md",
+    "README.md"
+  ]
+}
