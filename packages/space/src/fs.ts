@@ -25,12 +25,9 @@ export async function atomicWrite(
   await rm(tmpDir, { recursive: true, force: true });
   await mkdir(tmpDir, { recursive: true });
 
-  try {
-    await writer(tmpDir);
-  } catch (err) {
-    // Leave tmpDir intact for post-mortem inspection. Do not touch destDir.
-    throw err;
-  }
+  // If writer throws, execution stops here. tmpDir is left for post-mortem
+  // inspection; rm(destDir) and rename below do not run so destDir is untouched.
+  await writer(tmpDir);
 
   // Writing succeeded -- swap tmp into place.
   // Remove the existing destDir first (rename cannot replace a non-empty dir

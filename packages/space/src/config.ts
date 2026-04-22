@@ -151,6 +151,9 @@ function validateConfig(data: unknown): WorkspaceConfig {
     }
   }
 
+  // All required fields validated above; extra keys pass through silently
+  // (forward-compatible). The double cast is intentional: YAML parse returns
+  // unknown and TS cannot infer structural compatibility at compile time.
   return data as unknown as WorkspaceConfig;
 }
 

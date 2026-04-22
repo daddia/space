@@ -94,7 +94,14 @@ export function createJiraClient(
         throw new Error(`Jira API error: HTTP ${response.status} ${response.statusText}`);
       }
 
-      return response.json() as Promise<JiraSearchResponse>;
+      try {
+        return (await response.json()) as JiraSearchResponse;
+      } catch {
+        throw new Error(
+          `Jira API returned non-JSON response (HTTP ${response.status}). ` +
+            `Check that ATLASSIAN_BASE_URL points to an Atlassian Cloud instance.`,
+        );
+      }
     }
 
     // Unreachable: the loop either returns or throws inside, but satisfies TS.

@@ -1,6 +1,6 @@
 import type { Command } from 'commander';
 import pc from 'picocolors';
-import { findWorkspaceRoot, loadConfig } from '../config.js';
+import { findWorkspaceRoot, loadConfig, ConfigError } from '../config.js';
 import { loadCredentials } from '../credentials.js';
 import { syncJira } from '../providers/jira/sync.js';
 
@@ -19,10 +19,10 @@ export function registerSyncCommand(program: Command): void {
         const credentials = loadCredentials(root);
 
         if (!config.sources?.issues) {
-          console.error(
-            pc.red('space: sources.issues is not configured in .space/config'),
+          throw new ConfigError(
+            'sources.issues is not configured in .space/config -- ' +
+              'add a sources.issues block with provider, base_url, and project',
           );
-          process.exit(1);
         }
 
         console.log(pc.cyan('syncing jira...'));
