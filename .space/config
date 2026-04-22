@@ -1,0 +1,29 @@
+project:
+  name: Space
+  key: SPACE
+  description: Temple & Webster's Space workspace
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+
+sources:
+  repo:
+    provider: gitlab
+    path: horizon/horizon
+    url: https://gitlab.com/templeandwebster/horizon/space
+
+  issues:
+    provider: jira
+    base_url: https://templeandwebster.atlassian.net
+    project: STORE
+    url: https://templeandwebster.atlassian.net/browse/HORIZON
+
+  docs:
+    provider: confluence
+    space: STOREFRONT
+    url: https://templeandwebster.atlassian.net/wiki/spaces/HORIZON/overview
+
+  chat:
+    provider: slack
+    channel: '#ask-horizon'
