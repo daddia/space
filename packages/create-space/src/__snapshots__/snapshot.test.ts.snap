@@ -5,6 +5,20 @@ exports[`template output snapshots > matches the expected .space/config content 
   name: acme
   key: ACME
 
+# External source configuration for \`space sync\`.
+# Uncomment and fill in to enable Jira and Confluence sync.
+#
+# sources:
+#   issues:
+#     provider: jira
+#     base_url: https://your-org.atlassian.net
+#     project: ACME
+#
+#   docs:
+#     provider: confluence
+#     space: YOUR_SPACE_KEY
+#     url: https://your-org.atlassian.net/wiki/spaces/YOUR_SPACE_KEY
+
 workspace:
   path: .
   work: work/{TASK_ID}/
@@ -70,6 +84,8 @@ exports[`template output snapshots > matches the expected file tree 1`] = `
   ".env.example",
   ".gitignore",
   ".space/config",
+  ".space/raci",
+  ".space/team",
   "AGENTS.md",
   "README.md",
   "acme.code-workspace",

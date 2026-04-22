@@ -1,6 +1,11 @@
 {
   "private": true,
+  "scripts": {
+    "postinstall": "sync-skills",
+    "sync": "space sync"
+  },
   "devDependencies": {
-    "@tpw/skills": "^0.2.0"
+    "@tpw/skills": "^0.2.0",
+    "@tpw/space": "*"
   }
 }

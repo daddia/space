@@ -206,7 +206,7 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
       console.log(`     ${pc.cyan('git remote add origin <url>')}`);
       if (config.sourceProvider !== 'none') {
         console.log(
-          `     Edit ${pc.cyan('.crew/config')} -- update source.repo with your ${config.sourceProvider} org`,
+          `     Edit ${pc.cyan('.space/config')} -- update source.repo with your ${config.sourceProvider} org`,
         );
       }
     }
