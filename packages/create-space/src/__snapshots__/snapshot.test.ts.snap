@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`template output snapshots > matches the expected .crew/config content 1`] = `
+exports[`template output snapshots > matches the expected .space/config content 1`] = `
 "project:
   name: acme
   key: ACME
@@ -65,11 +65,11 @@ Delivery activity skills are provided by \`@tpw/skills\` and discovered automati
 exports[`template output snapshots > matches the expected file tree 1`] = `
 [
   ".claude/skills -> symlink",
-  ".crew/config",
   ".cursor/rules/workspace.mdc",
   ".cursor/skills -> symlink",
   ".env.example",
   ".gitignore",
+  ".space/config",
   "AGENTS.md",
   "README.md",
   "acme.code-workspace",

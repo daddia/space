@@ -68,9 +68,9 @@ describe('template output snapshots', () => {
     expect(content).toMatchSnapshot();
   });
 
-  it('matches the expected .crew/config content', async () => {
+  it('matches the expected .space/config content', async () => {
     await createSpace(makeConfig(targetDir), { yes: true });
-    const content = await readFile(join(targetDir, '.crew/config'), 'utf-8');
+    const content = await readFile(join(targetDir, '.space/config'), 'utf-8');
     expect(content).toMatchSnapshot();
   });
 });
