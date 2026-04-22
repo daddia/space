@@ -1,5 +1,15 @@
 # @tpw/skills
 
+## 0.2.0
+
+- Add `bin/sync-skills.mjs` CLI binary: copies skills from the package into a git-tracked `skills/` directory; preserves project-local skills; idempotent on re-runs
+- New install model: `"postinstall": "sync-skills"` + `skills/` dir + `ln -s ../skills .claude/skills`
+- New skills: `plan-adr`, `write-adr`, `write-backlog`, `write-metrics`, `write-product`, `write-roadmap`
+- `write-adr`, `plan-adr`: full template + examples (cart domain)
+- `write-backlog`, `write-metrics`, `write-product`, `write-roadmap`: full template + examples (cart domain)
+- Add `bin/**` to published `files`
+- Update `README.md` with new installation model and configuration options
+
 ## 0.1.4
 
 - Add `write-product` skill with template and cart example

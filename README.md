@@ -61,37 +61,73 @@ Each skill lives in its own directory named `{verb}-{topic}` (for example `write
 
 ## Installation
 
-```bash
-npm install @tpw/skills
-```
-
-## Usage with Cursor
-
-Symlink into your project's `.cursor/skills/` directory:
+Install the package and add a `postinstall` script so skills are synced automatically:
 
 ```bash
-ln -s ../../node_modules/@tpw/skills/requirements .cursor/skills/requirements
+pnpm add -D @tpw/skills
 ```
 
-Or symlink the entire package:
+```json
+{
+  "scripts": {
+    "postinstall": "sync-skills"
+  }
+}
+```
+
+Then set up a `skills/` directory with IDE symlinks (one-time, committed to git):
 
 ```bash
-mkdir -p .cursor/skills
-for skill in node_modules/@tpw/skills/*/; do
-  ln -s "../../$skill" ".cursor/skills/$(basename $skill)"
-done
+mkdir -p skills
+ln -s ../skills .claude/skills
+ln -s ../skills .cursor/skills
+git add skills .claude/skills .cursor/skills
 ```
 
-## Usage with Claude Code
+On the next `pnpm install`, the `sync-skills` binary copies all skills from the package into your `skills/` directory. From then on, any skill you add to `skills/` is immediately available to the IDE.
 
-Symlink into `.claude/skills/`:
+### Adding project-specific skills
+
+Create skill directories directly in `skills/`. The sync script detects that these were not installed from any package source and leaves them untouched on every update.
+
+```
+skills/
+  .sources.json            # auto-managed — tracks which skills came from which source
+  write-adr/               # synced from @tpw/skills
+  write-product/           # synced from @tpw/skills
+  plan-checkout-epic/      # project-specific — never touched by sync
+  our-deploy/              # project-specific — never touched by sync
+```
+
+### Excluding specific shared skills
+
+```json
+{
+  "skills": {
+    "exclude": ["review-code"]
+  }
+}
+```
+
+### Adding a second shared source
+
+```json
+{
+  "skills": {
+    "sources": ["@tpw/skills", "@acme/cart-skills"]
+  }
+}
+```
+
+### Running the sync manually
 
 ```bash
-mkdir -p .claude/skills
-for skill in node_modules/@tpw/skills/*/; do
-  ln -s "../../$skill" ".claude/skills/$(basename $skill)"
-done
+pnpm exec sync-skills
 ```
+
+### Working without registry access
+
+The `skills/` directory is tracked in git. After `git clone`, skills are available immediately — no install needed. The sync only runs when you explicitly install.
 
 ## Adding a new skill
 

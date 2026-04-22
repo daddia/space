@@ -1,10 +1,11 @@
 {
   "name": "@tpw/skills",
-  "version": "0.1.4",
+  "version": "0.2.0",
+  "type": "module",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
   "license": "UNLICENSED",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "repository": {
     "type": "git",
@@ -24,7 +25,11 @@
   "engines": {
     "node": ">=24.14.1"
   },
+  "bin": {
+    "sync-skills": "./bin/sync-skills.js"
+  },
   "files": [
+    "bin/**",
     "*/SKILL.md",
     "*/template.md",
     "*/template-*.md",
