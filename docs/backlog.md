@@ -75,7 +75,7 @@ in `storefront-space` by committing the first real source mirrors.
 
 ### Stream 1 -- `@tpw/space` foundation
 
-- [ ] **[SPACE-01] Config and credentials layer**
+- [x] **[SPACE-01] Config and credentials layer**
   - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
   - **Deliverable:** `src/config.ts` loads and validates `.space/config`; `src/credentials.ts` loads and validates `.env` credentials for each provider.
   - **Acceptance:**
@@ -84,7 +84,7 @@ in `storefront-space` by committing the first real source mirrors.
     - [ ] `credentials.ts` loads `.env` via `dotenv`; returns typed credential objects for `jira` and `confluence`; throws a descriptive error listing missing variable names when required vars are absent
     - [ ] `pnpm typecheck` passes with no `any`; `pnpm test` passes
 
-- [ ] **[SPACE-02] Atomic write helper**
+- [x] **[SPACE-02] Atomic write helper**
   - **Status:** Not started | **Priority:** P0 | **Estimate:** 2
   - **Deliverable:** `src/fs.ts` with `atomicWrite(destDir, writer)` that buffers output to a `.tmp` sibling and renames on success.
   - **Acceptance:**
