@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`template output snapshots > matches the expected .crew/config content 1`] = `
+"project:
+  name: acme
+  key: ACME
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+  runs: runs/
+
+source:
+  repo: github:acme
+  path: ../acme
+
+llm:
+  default_model: claude-sonnet
+  providers:
+    anthropic:
+      api_key_env: ANTHROPIC_API_KEY
+      models:
+        claude-sonnet: claude-sonnet-4-20250514
+"
+`;
+
+exports[`template output snapshots > matches the expected AGENTS.md content 1`] = `
+"# AGENTS.md
+
+acme is ... <!-- one-line product description -->
+
+## Repository layout
+
+This is the **delivery workspace** (\`acme-space\`). It contains product strategy, architecture, backlog, design documents, and delivery reports. Application code lives in the separate \`acme\` repo.
+
+| Repo                   | Path                | Purpose                                                            |
+| ---------------------- | ------------------- | ------------------------------------------------------------------ |
+| \`acme-space\` | \`.\` (this repo)     | Delivery artifacts: product, architecture, backlog, epics, reports |
+| \`acme\`       | \`../acme\` | Application code                                                   |
+
+## Key documents
+
+Before working in this repo, read:
+
+- \`product/product.md\` -- product strategy and requirements
+- \`product/roadmap.md\` -- phased roadmap
+- \`architecture/solution.md\` -- solution architecture
+- \`architecture/decisions/register.md\` -- architecture decision register
+- \`docs/conventions/definition-of-ready.md\` -- when a story is ready to implement
+- \`docs/conventions/definition-of-done.md\` -- when a story is actually done
+
+## Skills
+
+Delivery activity skills are provided by \`@tpw/skills\` and discovered automatically via \`.cursor/skills/\` and \`.claude/skills/\`. Skills include prompts for requirements writing, technical design, ADRs, code review, and more.
+
+## Conventions
+
+- All delivery artifacts are Markdown with YAML frontmatter
+- Architecture decisions follow the ADR template at \`architecture/decisions/adr-template.md\`
+- Epic artifacts go in \`work/{EPIC_ID}/\`
+- This is a documentation and coordination workspace -- no application code belongs here
+"
+`;
+
+exports[`template output snapshots > matches the expected file tree 1`] = `
+[
+  ".claude/skills -> symlink",
+  ".crew/config",
+  ".cursor/rules/workspace.mdc",
+  ".cursor/skills -> symlink",
+  ".editorconfig",
+  ".gitignore",
+  ".markdownlint.yaml",
+  "AGENTS.md",
+  "README.md",
+  "acme.code-workspace",
+  "architecture/decisions/adr-template.md",
+  "architecture/decisions/register.md",
+  "architecture/solution.md",
+  "docs/.gitkeep",
+  "docs/conventions/definition-of-done.md",
+  "docs/conventions/definition-of-ready.md",
+  "package.json",
+  "product/backlog.md",
+  "product/product.md",
+  "product/roadmap.md",
+  "reports/.gitkeep",
+  "runs/.gitkeep",
+  "work/.gitkeep",
+]
+`;

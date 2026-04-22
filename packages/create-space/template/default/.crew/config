@@ -1,0 +1,17 @@
+project:
+  name: {projectName}
+  key: {projectKey}
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+  runs: runs/
+
+source:
+  repo: {sourceRepo}
+  path: {sourcePath}
+
+llm:
+  default_model: {llmDefaultModel}
+  providers:
+{llmProviders}

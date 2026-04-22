@@ -1,0 +1,47 @@
+{
+  "name": "@tpw/create-space",
+  "version": "0.1.1",
+  "description": "Scaffold a new Horizon delivery workspace",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
+    "directory": "packages/create-space"
+  },
+  "keywords": [
+    "horizon",
+    "crew",
+    "workspace",
+    "scaffold",
+    "delivery"
+  ],
+  "engines": {
+    "node": ">=24.14.1"
+  },
+  "bin": {
+    "create-space": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "template"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit --project tsconfig.json"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.1",
+    "ci-info": "^4.4.0",
+    "commander": "^14.0.3",
+    "cross-spawn": "^7.0.6",
+    "picocolors": "^1.1.1",
+    "update-check": "^1.5.4"
+  },
+  "devDependencies": {
+    "@tpw/typescript-config": "workspace:*",
+    "@types/cross-spawn": "^6.0.6",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2"
+  }
+}

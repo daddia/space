@@ -1,0 +1,42 @@
+{
+  "name": "@tpw/skills",
+  "version": "0.2.0",
+  "type": "module",
+  "description": "Delivery activity skills for AI coding agents -- works with any IDE",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
+    "directory": "packages/skills"
+  },
+  "keywords": [
+    "horizon",
+    "space",
+    "skills",
+    "delivery",
+    "ai-agents",
+    "cursor",
+    "claude-code",
+    "copilot"
+  ],
+  "engines": {
+    "node": ">=24.14.1"
+  },
+  "bin": {
+    "sync-skills": "bin/sync-skills.js"
+  },
+  "files": [
+    "bin/**",
+    "*/SKILL.md",
+    "*/template.md",
+    "*/template-*.md",
+    "*/template.*.md",
+    "*/examples/**",
+    "*/scripts/**",
+    "README.md",
+    "CHANGELOG.md"
+  ]
+}

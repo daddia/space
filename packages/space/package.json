@@ -1,0 +1,46 @@
+{
+  "name": "@tpw/space",
+  "version": "0.1.0",
+  "description": "Operate a Horizon delivery space -- sync sources, publish docs",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
+    "directory": "packages/space"
+  },
+  "keywords": [
+    "horizon",
+    "space",
+    "delivery",
+    "sync",
+    "jira",
+    "confluence"
+  ],
+  "engines": {
+    "node": ">=24.14.1"
+  },
+  "bin": {
+    "space": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "dev": "tsc --watch --project tsconfig.json"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.8.3",
+    "dotenv": "^16.5.0"
+  },
+  "devDependencies": {
+    "@tpw/typescript-config": "workspace:*",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.3"
+  }
+}
