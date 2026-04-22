@@ -2,13 +2,22 @@
 /**
  * sync-skills
  *
- * Copies skills from @tpw/skills (and any additional configured sources) into
- * a local `skills/` directory that is tracked in git. Project-specific skills
- * that live in `skills/` but are not managed by any source are never touched.
+ * Run automatically on `pnpm add -D @tpw/skills` (via the package's own
+ * postinstall) and on every subsequent `pnpm install` (via the consumer's
+ * postinstall script, which this script adds on first run).
+ *
+ * What it does:
+ *   1. Copies skills from @tpw/skills (and any extra configured sources) into
+ *      a local `skills/` directory tracked in git. Project-local skills are
+ *      never touched.
+ *   2. Adds `"postinstall": "sync-skills"` to the consumer's package.json if
+ *      it is not already present (chains with && if a script already exists).
+ *   3. Creates `.cursor/skills` and `.claude/skills` symlinks when the IDE
+ *      directory exists and the link is not already present.
  *
  * Usage:
- *   postinstall (automatic): "postinstall": "sync-skills" in package.json
- *   manual:                  pnpm exec sync-skills
+ *   automatic: fires as postinstall of @tpw/skills and of the consumer repo
+ *   manual:    pnpm exec sync-skills
  */
 
 import fs from 'fs';
@@ -129,6 +138,45 @@ for (const { name: sourceName, dir: sourceDir } of sources) {
 
 fs.writeFileSync(manifestPath, JSON.stringify(newManifest, null, 2) + '\n');
 console.log('sync-skills: wrote .sources.json');
+
+// ---------------------------------------------------------------------------
+// Patch consumer postinstall
+// ---------------------------------------------------------------------------
+
+if (fs.existsSync(consumerPkgPath)) {
+  const consumerPkg = JSON.parse(fs.readFileSync(consumerPkgPath, 'utf8'));
+  const existing = consumerPkg.scripts?.postinstall ?? '';
+
+  if (!existing.includes('sync-skills')) {
+    consumerPkg.scripts ??= {};
+    consumerPkg.scripts.postinstall = existing ? `${existing} && sync-skills` : 'sync-skills';
+    fs.writeFileSync(consumerPkgPath, JSON.stringify(consumerPkg, null, 2) + '\n');
+    console.log('sync-skills: added postinstall script to package.json');
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Create IDE symlinks (.cursor/skills, .claude/skills)
+// ---------------------------------------------------------------------------
+
+const ideLinks = [
+  ['.cursor', 'skills'],
+  ['.claude', 'skills'],
+];
+
+for (const [ideDir, linkName] of ideLinks) {
+  const ideDirPath = path.join(projectRoot, ideDir);
+  const linkPath = path.join(ideDirPath, linkName);
+
+  if (!fs.existsSync(ideDirPath)) continue;
+
+  // existsSync follows symlinks — treats a valid existing symlink as present
+  if (fs.existsSync(linkPath)) continue;
+
+  const relTarget = path.relative(ideDirPath, destDir);
+  fs.symlinkSync(relTarget, linkPath);
+  console.log(`sync-skills: created ${path.join(ideDir, linkName)} -> ${relTarget}`);
+}
 
 // ---------------------------------------------------------------------------
 // Helpers

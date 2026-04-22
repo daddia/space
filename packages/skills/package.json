@@ -25,6 +25,9 @@
   "engines": {
     "node": ">=24.14.1"
   },
+  "scripts": {
+    "postinstall": "sync-skills"
+  },
   "bin": {
     "sync-skills": "bin/sync-skills.js"
   },
