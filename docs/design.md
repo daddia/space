@@ -348,15 +348,14 @@ interface ConfluenceSourceConfig {
 }
 ```
 
-Credentials are loaded from `.env` at workspace root:
+Credentials are loaded from `.env` at workspace root. Jira and Confluence
+share a single Atlassian credential set because they always run on the same
+tenant:
 
 ```
-JIRA_BASE_URL          optional override for config.sources.issues.base_url
-JIRA_USER              required for Jira sync
-JIRA_API_TOKEN         required for Jira sync
-CONFLUENCE_BASE_URL    optional override; defaults to JIRA_BASE_URL (same tenant)
-CONFLUENCE_USER        required for Confluence sync
-CONFLUENCE_API_TOKEN   required for Confluence sync
+ATLASSIAN_BASE_URL    required; e.g. https://your-org.atlassian.net
+ATLASSIAN_USER        required; Atlassian account email
+ATLASSIAN_API_TOKEN   required; Atlassian API token (from account settings)
 ```
 
 ### Jira sync
