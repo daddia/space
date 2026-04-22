@@ -33,10 +33,10 @@ acme is ... <!-- one-line product description -->
 
 This is the **delivery workspace** (\`acme-space\`). It contains product strategy, architecture, backlog, design documents, and delivery reports. Application code lives in the separate \`acme\` repo.
 
-| Repo                   | Path                | Purpose                                                            |
-| ---------------------- | ------------------- | ------------------------------------------------------------------ |
-| \`acme-space\` | \`.\` (this repo)     | Delivery artifacts: product, architecture, backlog, epics, reports |
-| \`acme\`       | \`../acme\` | Application code                                                   |
+| Repo              | Path            | Purpose                                                            |
+| ----------------- | --------------- | ------------------------------------------------------------------ |
+| \`acme-space\` | \`.\` (this repo) | Delivery artifacts: product, architecture, backlog, epics, reports |
+| \`acme\`       | \`../acme\`  | Application code                                                   |
 
 ## Key documents
 
@@ -68,9 +68,8 @@ exports[`template output snapshots > matches the expected file tree 1`] = `
   ".crew/config",
   ".cursor/rules/workspace.mdc",
   ".cursor/skills -> symlink",
-  ".editorconfig",
+  ".env.example",
   ".gitignore",
-  ".markdownlint.yaml",
   "AGENTS.md",
   "README.md",
   "acme.code-workspace",
@@ -82,10 +81,9 @@ exports[`template output snapshots > matches the expected file tree 1`] = `
   "docs/conventions/definition-of-ready.md",
   "package.json",
   "product/backlog.md",
-  "product/product.md",
+  "product/prd.md",
   "product/roadmap.md",
   "reports/.gitkeep",
-  "runs/.gitkeep",
   "work/.gitkeep",
 ]
 `;
