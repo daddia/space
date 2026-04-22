@@ -2,7 +2,7 @@
 
 ## Package Overview
 
-`@tpw/create-space` is a scaffolding CLI that initialises a new Crew delivery workspace. It runs interactively or non-interactively and outputs a ready-to-use `crew-space` directory with the standard file structure.
+`@tpw/create-space` is a scaffolding CLI that initialises a new Horizon delivery workspace. It runs interactively or non-interactively and outputs a ready-to-use workspace directory with the standard file structure.
 
 ## Commands
 

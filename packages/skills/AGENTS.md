@@ -1,61 +1,67 @@
 # AGENTS.md
 
-This file gives implementation context to AI coding assistants working in the Space monorepo.
+## Package Overview
 
-## Project Overview
+`@tpw/skills` is a Markdown-only package. It contains delivery activity skills consumed by AI coding agents in Horizon delivery workspaces. There is no build step and no TypeScript.
 
-This is the `@tpw/space` monorepo -- the workspace ecosystem for Horizon delivery spaces. It contains:
+## Skill Structure
 
-- Skills for AI coding agents
-- Tooling to scaffold new delivery workspaces
-- Scripts to operate existing spaces (sync, publish)
-
-## Repository Structure
-
-pnpm workspace monorepo. All packages use the `@tpw` scope.
-
-| Directory | Package | Purpose |
-|---|---|---|
-| `packages/skills` | `@tpw/skills` | Delivery activity skills (Markdown content, no build step) |
-| `packages/create-space` | `@tpw/create-space` | Scaffolding CLI for new delivery workspaces |
-| `packages/space` | `@tpw/space` | Space operations CLI (sync, publish) |
-| `tooling/` | `@tpw/*-config` | Shared internal configs (eslint, prettier, typescript) |
-
-## Dependency rules
-
-Dependencies flow downward only:
+Each skill lives in its own directory named `{verb}-{topic}/` (e.g. `write-product/`, `review-code/`):
 
 ```
-create-space  ->  (third-party only)
-space         ->  (third-party only)
-skills        ->  (nothing -- Markdown files only)
-tooling/*     ->  (build configs only -- devDependencies)
+packages/skills/
+  write-product/
+    SKILL.md          # Required — skill definition and instructions
+    template.md       # Optional — output template
+    examples/         # Optional — worked examples
 ```
 
-No package in this repo depends on `@tpw/crew`.
+`SKILL.md` uses YAML frontmatter followed by a Markdown body:
 
-## Development Commands
+```yaml
+---
+name: write-product
+description: One-line description shown in skill pickers
+when_to_use: >
+  Prose description of when to invoke this skill.
+allowed-tools:
+  - Read
+  - Write
+argument-hint: '<scope: platform|domain>'
+version: '0.1'
+---
+```
 
-Run from repo root:
+## Naming Convention
 
-| Command | Description |
+Skills use the `{verb}-{topic}` pattern. Canonical verbs:
+
+| Verb | Usage |
 |---|---|
-| `pnpm build` | Build `create-space` and `space` |
-| `pnpm typecheck` | Type-check all packages |
-| `pnpm test` | Run Vitest suite |
-| `pnpm lint` | Run ESLint |
-| `pnpm format:write` | Format with Prettier |
+| `write-` | Author a document from scratch (product, design, requirements, ADR, backlog, metrics, roadmap) |
+| `review-` | Review an existing document or artefact (code, docs, ADR) |
+| `plan-` | Orchestrate or plan a multi-step activity (e.g. `plan-adr`) |
+| `implement` | Execute a story against approved requirements and design |
+| `validate` | Final acceptance check that an epic is complete |
+| `create-` | Automate a process that creates an external artefact (e.g. `create-mr`) |
 
-## Skills
+## Adding a Skill
 
-`packages/skills/` is Markdown only -- no build step, no TypeScript. Changes to skills do not require a build. Publish directly via changeset.
+1. Create `packages/skills/{verb}-{topic}/SKILL.md` with the frontmatter above.
+2. Add a `template.md` if the skill produces a structured output document.
+3. Add an `examples/` directory with at least one worked example if the output shape is complex.
+4. Record a changeset (`pnpm changeset` from the repo root) before publishing.
 
-## Adding a new skill
+## Editing a Skill
 
-See `packages/skills/AGENTS.md`.
+Skills are plain Markdown. No build or typecheck is required after editing. Changes take effect immediately for consumers who install the updated package version.
 
-## Adding a new package
+## Publishing
 
-1. Create `packages/{name}/` with `package.json`, `tsconfig.json`, `src/index.ts`
-2. Add to root `tsconfig.json` references if it has TypeScript
-3. Ensure it appears in the `build` script filter if it needs building
+Publish via changeset from the repo root:
+
+```
+pnpm changeset        # record the change
+pnpm version-packages # bump version
+pnpm release          # publish to npm
+```

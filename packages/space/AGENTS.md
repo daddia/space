@@ -30,7 +30,7 @@
 - Partial writes go to a temp dir and only rename into place on success.
 - Exit non-zero on API errors.
 
-See `horizon/space-design/source-sync.md` for the full design.
+See `docs/design/source-sync.md` (repo root) for the full design.
 
 ## Development
 
