@@ -467,7 +467,8 @@ Sections 3-10 are present as headings with `[NEEDS CLARIFICATION]`
 markers. This gives the team an architectural anchor without inventing
 solution content.
 
-**Full mode (Phase 2+, 8-12 pages)**, ten sections (arc42-lite):
+**Full mode (Phase 2+, 8-12 pages)**, ten sections (arc42-lite) plus
+a mandatory graduation-candidates section:
 
 1. Context and scope
 2. Quality goals and constraints
@@ -480,6 +481,16 @@ solution content.
 8. Deployment and environments
 9. Architectural decisions (ADR log, linked MADR entries)
 10. Risks, technical debt, open questions
+11. **Graduation candidates.** A table of patterns this domain
+    establishes that should lift to `architecture/patterns/` (or
+    extend an existing ADR) once a second domain adopts the same
+    shape. Each row names: the pattern, its current home in this
+    document, the target home in platform architecture, and the
+    trigger. **Do not lift speculatively** -- the first domain
+    establishes the pattern; the second adopter confirms it is
+    generic. Keeping this section in every domain solution is what
+    prevents domain-local patterns from silently calcifying as
+    platform architecture.
 
 ### 4.8 roadmap.md vs backlog.md -- the temporal seam
 
@@ -511,6 +522,56 @@ Three concrete rules flow from this:
    changes; the roadmap usually does not. If a change touches both,
    either the outcome has genuinely shifted (rare) or the change has
    been expressed in the wrong artefact.
+
+### 4.9 Scope canonicalisation -- one source, explicit references
+
+Scope of this cycle tends to appear in four places: `product.md` §5
+(no-gos), `solution.md` §1.2 (what the domain does not own),
+`roadmap.md` §Later (deferred capabilities), and `backlog.md` §1
+(out-of-scope summary). Four overlapping statements of the same
+boundary is the most likely place for drift across the doc set.
+
+The rule:
+
+1. **`product.md` §5 owns the canonical list of things never in
+   scope for the domain.** Permanent no-gos -- items owned by
+   another domain, or items that will never be a problem the cart
+   (or any other domain) should solve.
+2. **`roadmap.md` §Later owns the list of things deferred this
+   cycle and activating in a future phase.** Each entry names the
+   gating phase.
+3. **`solution.md` §1.2 owns the technical boundary only** (what
+   APIs / systems / schemas the domain does not own). For the full
+   list of deferred customer-facing capabilities it says:
+   "see `product.md` §5".
+4. **`backlog.md` §1 does not restate scope.** It references
+   `product.md` §5 and `roadmap.md` §Later and adds nothing new.
+
+This split is enforced by the `pnpm lint:docs` rule **no-repeated
+scope-statements**: if the same capability name appears in two
+different scope sections across the four docs, the lint fails and
+points at the canonical section.
+
+### 4.10 Doc-lint checks (`pnpm lint:docs`)
+
+Structural checks enforced in CI. Concrete scripts land with EPIC-03
+tooling; the design pins what each check does.
+
+| Check                     | What it asserts                                                                                                                                                                                             | Failure message                                        |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `frontmatter-schema`      | Every doc's frontmatter matches the canonical schema for its `type` (product, solution, roadmap, backlog, contracts).                                                                                       | "Missing required key X on doc Y"                      |
+| `link-check`              | Every internal link resolves to a file that exists in the repo.                                                                                                                                             | "Broken link in doc X -> missing path Y"               |
+| `budget`                  | Per-doc length budget holds (product <=5pp, solution <=12pp full / <=2pp stub, roadmap <=2pp, backlog <=2pp domain).                                                                                        | "Doc X exceeds budget N lines"                         |
+| `id-resolution`           | Every cited `CM-G*`, `CM-I*`, `CM-0N`, `CART NN`, `BFF-CART-NN`, `EPIC-NN`, or `ADR-NNNN` identifier resolves in its owning doc (`metrics.md`, `backlog.md`, `dependencies/*.md`, `decisions/register.md`). | "ID X cited in doc Y does not resolve in its owner Z"  |
+| `no-repeated-scope`       | No two of (`product.md` §5, `solution.md` §1.2, `roadmap.md` §Later, `backlog.md` §1) list the same capability by name.                                                                                     | "Capability X appears in both Y and Z; canonical is W" |
+| `negative-constraints`    | No artefact output (`docs/**`, `domain/**`, `work/**`) contains `<!-- DO NOT INCLUDE -->` comments (those are skill/template-only).                                                                         | "Doc X contains a skill-only constraint block"         |
+| `no-speculative-epic-ids` | `roadmap.md` contains no epic IDs (`CART NN`, `EPIC-NN`). Roadmap owns outcomes, not epics.                                                                                                                 | "Roadmap doc X cites epic Y -- demote to backlog"      |
+| `story-AC-schema`         | Every story in `work/**/backlog.md` has the schema-required fields (Status, Priority, Estimate, Epic, Labels, Depends on, Deliverable, Design, EARS, Gherkin).                                              | "Story X missing required field Y"                     |
+
+The `id-resolution` check is what catches the failure mode where a
+roadmap gate cites `CM-G08 > 99%` but `metrics.md` has renamed or
+dropped `CM-G08`: the roadmap becomes silently undecidable. A
+deterministic CI check is cheap and catches drift immediately.
 
 ## 5. Work-package model
 
@@ -705,16 +766,16 @@ The complete set of changes to `packages/skills/`. Ordered by priority.
 
 ### 7.2 P1 -- tooling, orchestration, views
 
-| Action                                                               | Skill / location            |
-| -------------------------------------------------------------------- | --------------------------- |
-| **Add** `space-index` router skill; body auto-generated in CI        | `space-index/`              |
-| **Add** generated role views: `pm.md`, `architect.md`, `engineer.md` | `packages/skills/views/`    |
-| **Add** profile YAMLs and `space sync skills --profile X`            | `packages/skills/profiles/` |
-| **Add** description eval loop (`skill-creator run_loop.py`) in CI    | tooling                     |
-| **Add** `pnpm lint:docs`: frontmatter schema, link check, budgets    | tooling                     |
-| **Add** `plan-delivery` orchestrator for Phase-0 artefact sequencing | `plan-delivery/`            |
-| **Add** `refine-docs` sprint-end skill (promote ADRs -> solution.md) | `refine-docs/`              |
-| **Add** `space publish jira` with source-aware behaviour + dry-run   | `packages/space/`           |
+| Action                                                                                              | Skill / location            |
+| --------------------------------------------------------------------------------------------------- | --------------------------- |
+| **Add** `space-index` router skill; body auto-generated in CI                                       | `space-index/`              |
+| **Add** generated role views: `pm.md`, `architect.md`, `engineer.md`                                | `packages/skills/views/`    |
+| **Add** profile YAMLs and `space sync skills --profile X`                                           | `packages/skills/profiles/` |
+| **Add** description eval loop (`skill-creator run_loop.py`) in CI                                   | tooling                     |
+| **Add** `pnpm lint:docs`: frontmatter schema, link check, budgets, ID resolution, no-repeated-scope | tooling                     |
+| **Add** `plan-delivery` orchestrator for Phase-0 artefact sequencing                                | `plan-delivery/`            |
+| **Add** `refine-docs` sprint-end skill (promote ADRs -> solution.md)                                | `refine-docs/`              |
+| **Add** `space publish jira` with source-aware behaviour + dry-run                                  | `packages/space/`           |
 
 ### 7.3 P2 -- optional and regulated-only
 
