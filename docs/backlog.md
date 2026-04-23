@@ -48,9 +48,9 @@ live in `docs/roadmap.md`.
 **Prerequisites (required before Next phase ships).**
 
 - `@tpw/space` source-sync commands green against real Atlassian
-  credentials from `storefront-space` (EPIC-01).
+  credentials from `storefront-space` (SPACE-01).
 - `docs/design/space-artefact-model.md` reviewed and accepted (this is
-  the design that EPIC-02, -03, -04 implement against).
+  the design that SPACE-02, -03, -04 implement against).
 
 **Out of scope (platform).** Scope for specific epics lives in each
 epic's work-package `design.md` and `backlog.md`. Platform-level
@@ -60,7 +60,7 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 
 | Convention      | Value                                                             |
 | --------------- | ----------------------------------------------------------------- |
-| Epic ID format  | `EPIC-{nn}` (e.g. `EPIC-01`)                                      |
+| Epic ID format  | `SPACE-{nn}` (e.g. `SPACE-01`)                                      |
 | Story ID format | `SPACE-{nn}` (stored in the work-package backlog)                 |
 | Status values   | Not started, In progress, In review, Done, Blocked                |
 | Priority levels | P0 (must have), P1 (should have), P2 (stretch), P3 (defer)        |
@@ -71,20 +71,20 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 
 | Epic    | Title                                         | Phase | Priority | Dependencies         | Points | Work package                      | Status      |
 | ------- | --------------------------------------------- | ----- | -------- | -------------------- | ------ | --------------------------------- | ----------- |
-| EPIC-01 | Source sync foundation                        | Now   | P0       | -                    | 43     | `work/01-source-sync/`            | In progress |
-| EPIC-02 | Space v2 artefact model: skill changeset (P0) | Next  | P0       | EPIC-01 (validation) | ~25    | `work/02-v2-skills/` (planned)    | Not started |
-| EPIC-03 | Space v2 artefact model: tooling and router   | Next  | P1       | EPIC-02              | ~15    | `work/03-v2-tooling/` (planned)   | Not started |
-| EPIC-04 | Publish pipeline: Jira                        | Next  | P1       | EPIC-02, EPIC-01     | ~20    | `work/04-publish-jira/` (planned) | Not started |
-| EPIC-05 | Publish pipeline: Confluence                  | Next  | P1       | EPIC-02, EPIC-01     | ~15    | `work/05-publish-conf/` (planned) | Not started |
-| EPIC-06 | Embedded workspace mode                       | Later | P2       | EPIC-02              | TBD    | `work/06-embedded/` (planned)     | Not started |
-| EPIC-07 | Additional source providers (Slack, Vercel)   | Later | P2       | EPIC-01              | TBD    | `work/07-providers/` (planned)    | Not started |
-| EPIC-08 | Multi-project Jira and incremental sync       | Later | P2       | EPIC-01              | TBD    | `work/08-jira-scale/` (planned)   | Not started |
-| EPIC-09 | Skill library expansion (regulated + ops)     | Later | P2       | EPIC-02              | TBD    | `work/09-skills-expand/` (plan)   | Not started |
-| EPIC-10 | Workspace profiles at scaffold                | Later | P2       | EPIC-02              | TBD    | `work/10-profiles/` (planned)     | Not started |
+| SPACE-01 | Source sync foundation                        | Now   | P0       | -                    | 43     | `work/01-source-sync/`            | In progress |
+| SPACE-02 | Space v2 artefact model: skill changeset (P0) | Next  | P0       | SPACE-01 (validation) | ~25    | `work/02-v2-skills/` (planned)    | Not started |
+| SPACE-03 | Space v2 artefact model: tooling and router   | Next  | P1       | SPACE-02              | ~15    | `work/03-v2-tooling/` (planned)   | Not started |
+| SPACE-04 | Publish pipeline: Jira                        | Next  | P1       | SPACE-02, SPACE-01     | ~20    | `work/04-publish-jira/` (planned) | Not started |
+| SPACE-05 | Publish pipeline: Confluence                  | Next  | P1       | SPACE-02, SPACE-01     | ~15    | `work/05-publish-conf/` (planned) | Not started |
+| SPACE-06 | Embedded workspace mode                       | Later | P2       | SPACE-02              | TBD    | `work/06-embedded/` (planned)     | Not started |
+| SPACE-07 | Additional source providers (Slack, Vercel)   | Later | P2       | SPACE-01              | TBD    | `work/07-providers/` (planned)    | Not started |
+| SPACE-08 | Multi-project Jira and incremental sync       | Later | P2       | SPACE-01              | TBD    | `work/08-jira-scale/` (planned)   | Not started |
+| SPACE-09 | Skill library expansion (regulated + ops)     | Later | P2       | SPACE-02              | TBD    | `work/09-skills-expand/` (plan)   | Not started |
+| SPACE-10 | Workspace profiles at scaffold                | Later | P2       | SPACE-02              | TBD    | `work/10-profiles/` (planned)     | Not started |
 
 ## 4. Epic detail
 
-### EPIC-01 -- Source sync foundation
+### SPACE-01 -- Source sync foundation
 
 **Scope:** Land the working `space sync jira` and `space sync confluence`
 commands; harden the scaffold template to include the `.space/`
@@ -103,7 +103,7 @@ SPACE-01 .. SPACE-16).
 
 **Status.** In progress.
 
-### EPIC-02 -- Space v2 artefact model: skill changeset (P0)
+### SPACE-02 -- Space v2 artefact model: skill changeset (P0)
 
 **Scope:** Implement the P0 row of
 `docs/design/space-artefact-model.md` Section 7.1. Add
@@ -121,14 +121,14 @@ for each skill listed above. Minor release of `@tpw/skills` (0.3.0).
 One example domain in `storefront-space` migrated to the new artefact
 set as validation.
 
-**Dependencies.** EPIC-01 delivers the source-sync substrate; v2 skills
+**Dependencies.** SPACE-01 delivers the source-sync substrate; v2 skills
 need that to demonstrate end-to-end publish readiness.
 
-**Work package.** `work/02-v2-skills/` (planned).
+**Work package.** `work/02-skills-v2/` (planned).
 
 **Status.** Not started.
 
-### EPIC-03 -- Space v2 artefact model: tooling and router
+### SPACE-03 -- Space v2 artefact model: tooling and router
 
 **Scope:** Implement the P1 tooling row of
 `docs/design/space-artefact-model.md` Section 7.2. Add `space-index`
@@ -138,14 +138,14 @@ loop in CI (`run_loop.py`); add `pnpm lint:docs` (frontmatter schema,
 link check, budgets); add the `plan-delivery` orchestrator for Phase 0;
 add the `refine-docs` sprint-end skill.
 
-**Dependencies.** EPIC-02 (the skills must exist before the index,
+**Dependencies.** SPACE-02 (the skills must exist before the index,
 router, and eval loop are meaningful).
 
 **Work package.** `work/03-v2-tooling/` (planned).
 
 **Status.** Not started.
 
-### EPIC-04 -- Publish pipeline: Jira
+### SPACE-04 -- Publish pipeline: Jira
 
 **Scope:** Implement `space publish jira` per
 `docs/design/space-artefact-model.md` Section 6. Source-aware behaviour
@@ -157,28 +157,28 @@ Gherkin acceptance criteria rendered per `ac_placement` config.
 domain and work-package backlogs; sidecar mapping; integration tests
 against msw fixtures; validation against `storefront-space`.
 
-**Dependencies.** EPIC-02 (schema lock-down); EPIC-01 (Jira mirror is
+**Dependencies.** SPACE-02 (schema lock-down); SPACE-01 (Jira mirror is
 the diff basis).
 
 **Work package.** `work/04-publish-jira/` (planned).
 
 **Status.** Not started.
 
-### EPIC-05 -- Publish pipeline: Confluence
+### SPACE-05 -- Publish pipeline: Confluence
 
 **Scope:** Implement `space publish confluence <path>`. Opt-in via
 `confluence_page_id` frontmatter. Markdown -> Confluence storage XHTML
 conversion. Version increment per the Confluence contract; local
 mirror overwritten from the API response.
 
-**Dependencies.** EPIC-02 (artefact layout stable); EPIC-01 (Confluence
+**Dependencies.** SPACE-02 (artefact layout stable); SPACE-01 (Confluence
 mirror is the local source of truth).
 
 **Work package.** `work/05-publish-conf/` (planned).
 
 **Status.** Not started.
 
-### EPIC-06 -- Embedded workspace mode
+### SPACE-06 -- Embedded workspace mode
 
 **Scope:** `--mode embedded` on `create-space`: scaffold Space into an
 existing code repo as a top-level subtree. Success condition: a team
@@ -187,39 +187,39 @@ second repo, with no loss of function compared to sibling mode.
 Sibling mode remains the correct choice for program-level workspaces
 that span multiple repos or need distinct access control.
 
-**Dependencies.** EPIC-02 (canonical artefact set must exist first so
+**Dependencies.** SPACE-02 (canonical artefact set must exist first so
 the embedded layout is settled).
 
 **Work package.** `work/06-embedded/` (planned).
 
 **Status.** Not started.
 
-### EPIC-07 -- Additional source providers (Slack, Vercel)
+### SPACE-07 -- Additional source providers (Slack, Vercel)
 
 **Scope:** `space sync slack` and `space sync vercel` writing
 native-format mirrors under `.space/sources/{provider}/`. Same atomic
 pattern and error handling as the Atlassian providers.
 
-**Dependencies.** EPIC-01 (pattern established).
+**Dependencies.** SPACE-01 (pattern established).
 
 **Work package.** `work/07-providers/` (planned).
 
 **Status.** Not started.
 
-### EPIC-08 -- Multi-project Jira and incremental sync
+### SPACE-08 -- Multi-project Jira and incremental sync
 
 **Scope:** Extend `sources.issues` from a single block to an array
 (additive schema change). Add `updatedDate > {last_sync}` JQL filtering
 for incremental pulls; preserve full-refresh as the explicit option.
 Same treatment applied to Confluence where viable.
 
-**Dependencies.** EPIC-01.
+**Dependencies.** SPACE-01.
 
 **Work package.** `work/08-jira-scale/` (planned).
 
 **Status.** Not started.
 
-### EPIC-09 -- Skill library expansion (regulated + ops)
+### SPACE-09 -- Skill library expansion (regulated + ops)
 
 **Scope:** Fill out the delivery lifecycle. Add `review-adr`,
 `validate`, `write-metrics` (promoted from deferred to stable after
@@ -228,20 +228,20 @@ first real use), `retrospective`, `incident-response`,
 `stage: deprecated-by-default`, usable only when a regulated-domain
 flag is set.
 
-**Dependencies.** EPIC-02.
+**Dependencies.** SPACE-02.
 
 **Work package.** `work/09-skills-expand/` (planned).
 
 **Status.** Not started.
 
-### EPIC-10 -- Workspace profiles at scaffold
+### SPACE-10 -- Workspace profiles at scaffold
 
 **Scope:** `--profile` flag on `create-space`; profile YAML files
 under `@tpw/skills/profiles/`; `space sync skills --profile X`
 materialises only the profile's skills. Starter profiles: `minimal`,
 `domain-team`, `platform`, `full`.
 
-**Dependencies.** EPIC-02 (enriched frontmatter); EPIC-03 (tooling).
+**Dependencies.** SPACE-02 (enriched frontmatter); SPACE-03 (tooling).
 
 **Work package.** `work/10-profiles/` (planned).
 
@@ -250,48 +250,48 @@ materialises only the profile's skills. Starter profiles: `minimal`,
 ## 5. Dependency graph
 
 ```text
-EPIC-01 (source sync)
-  +-- EPIC-02 (v2 skills)
-  |     +-- EPIC-03 (v2 tooling + router)
-  |     +-- EPIC-04 (publish jira)
-  |     +-- EPIC-05 (publish confluence)
-  |     +-- EPIC-06 (embedded mode)
-  |     +-- EPIC-09 (skills expansion)
-  |     +-- EPIC-10 (profiles)  <--  also depends on EPIC-03
-  +-- EPIC-07 (additional providers)
-  +-- EPIC-08 (jira scale)
+SPACE-01 (source sync)
+  +-- SPACE-02 (v2 skills)
+  |     +-- SPACE-03 (v2 tooling + router)
+  |     +-- SPACE-04 (publish jira)
+  |     +-- SPACE-05 (publish confluence)
+  |     +-- SPACE-06 (embedded mode)
+  |     +-- SPACE-09 (skills expansion)
+  |     +-- SPACE-10 (profiles)  <--  also depends on SPACE-03
+  +-- SPACE-07 (additional providers)
+  +-- SPACE-08 (jira scale)
 ```
 
 ## 6. Critical path
 
 ```text
-EPIC-01 --> EPIC-02 --> EPIC-03
-                    --> EPIC-04 (+ EPIC-05 in parallel)
+SPACE-01 --> SPACE-02 --> SPACE-03
+                    --> SPACE-04 (+ SPACE-05 in parallel)
 ```
 
-The artefact-model roll-out (EPIC-02) is the gating epic: every later
+The artefact-model roll-out (SPACE-02) is the gating epic: every later
 epic in the Next phase depends on the v2 skill set being stable.
 
 ## 7. Parallelisation opportunities
 
 | Workstream              | Can run in parallel with                   |
 | ----------------------- | ------------------------------------------ |
-| EPIC-04 (publish jira)  | EPIC-05 (publish confluence)               |
-| EPIC-07 (new providers) | Any Next-phase epic once EPIC-01 is stable |
-| EPIC-08 (jira scale)    | EPIC-07                                    |
+| SPACE-04 (publish jira)  | SPACE-05 (publish confluence)               |
+| SPACE-07 (new providers) | Any Next-phase epic once SPACE-01 is stable |
+| SPACE-08 (jira scale)    | SPACE-07                                    |
 
 ## 8. Minimum viable slice
 
 If scope pressure forces a cut, the smallest coherent release that
 delivers platform value end-to-end:
 
-- **EPIC-01** -- source sync
-- **EPIC-02** (subset) -- `write-solution`, `write-product` refactor,
+- **SPACE-01** -- source sync
+- **SPACE-02** (subset) -- `write-solution`, `write-product` refactor,
   negative-constraint blocks, description rewrites. Defer eval loop
   and tooling to a later slice.
 
 Result: Space can read from external systems and produce the canonical
-four-doc set in Markdown. Publish back (EPIC-04, EPIC-05) waits for
+four-doc set in Markdown. Publish back (SPACE-04, SPACE-05) waits for
 the next slice.
 
 ## 9. Assumptions
@@ -310,5 +310,5 @@ the next slice.
 | R1  | v2 artefact model adoption slower than Next phase assumes | Medium     | Medium | Roll out domain-by-domain; keep v0 artefacts legacy-compatible          |
 | R2  | Publish pipeline conversion (Markdown <-> XHTML) complex  | Medium     | Medium | Spike on one real Confluence page first; defer if conversion fails      |
 | R3  | Skill count grows past router scale before index ships    | Low        | Medium | Cap new-skill admission at 20 until `space-index` is green              |
-| R4  | `storefront-space` blocks on source sync, delays EPIC-02  | Low        | High   | Keep EPIC-02 scoped independently; validate in a fresh workspace        |
+| R4  | `storefront-space` blocks on source sync, delays SPACE-02  | Low        | High   | Keep SPACE-02 scoped independently; validate in a fresh workspace        |
 | R5  | Breaking schema change needed in `.space/config`          | Low        | High   | Stick to additive changes; require major version bump per solution §2.1 |
