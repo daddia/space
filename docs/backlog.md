@@ -1,377 +1,322 @@
 ---
-type: backlog
-scope: work-package
-work_package: space-monorepo
+type: Backlog
+scope: platform
 product: space
-version: '0.1'
+version: '1.0'
+owner: Horizon Platform
 status: Draft
-last_updated: 2026-04-22
-sources:
+last_updated: 2026-04-23
+parent_product: docs/product.md
+related:
   - docs/product.md
-  - docs/design.md
+  - docs/solution.md
+  - docs/roadmap.md
+  - docs/design/space-artefact-model.md
 ---
 
-# Backlog -- Space Monorepo
+<!--
+DO NOT INCLUDE in this document:
+  - Business-case narrative             (goes to docs/product.md)
+  - Architecture rationale              (goes to docs/solution.md or an ADR)
+  - Pattern definitions                 (goes to docs/solution.md)
+  - Story-level acceptance criteria     (goes to work/<wp>/backlog.md)
+-->
 
-Sprint-level backlog for the development of the `space` monorepo
-(`@tpw/skills`, `@tpw/create-space`, `@tpw/space`). Validation target is
-`storefront-space`, which provides a real Jira project (STORE) and Confluence
-space (STOREFRONT) to test against.
+# Backlog -- Space (platform)
+
+Platform-level epic backlog. Lists the epics Space will deliver, their
+objective, dependencies, status, and the work package that carries each
+one when active. Story-level detail lives in the per-work-package
+backlogs under `work/`.
+
+- **Product:** `docs/product.md`
+- **Solution:** `docs/solution.md`
+- **Phases, gates, milestones:** `docs/roadmap.md`
 
 ## 1. Summary
 
-**Product:** Space -- delivery workspace ecosystem
-**Priority:** P0 (source sync), P1 (template hardening + validation), P2 (CI quality)
-**Estimate:** 43 points across 16 stories
+**Objective.** Deliver Space in incremental, validation-gated phases:
+source sync now, artefact-model v2 and publish pipeline next, platform
+maturity (embedded mode, additional sources, expanded skill set) later.
 
-**Scope:** Implement the `@tpw/space` source sync commands (Jira and
-Confluence pull), harden the `@tpw/create-space` template to include
-`.space/` config and `@tpw/space` as a dependency, and validate end-to-end
-in `storefront-space` by committing the first real source mirrors.
+**Delivery approach.** Each epic ships a visible, testable slice behind
+its own work package. No epic is "in progress" without an active
+`work/<wp>/backlog.md` and matching `work/<wp>/design.md`. Phase gates
+live in `docs/roadmap.md`.
 
-**Current state:**
+**Prerequisites (complete).**
 
-| Package | Version | Status |
-| --- | --- | --- |
-| `@tpw/skills` | 0.2.0 | Complete -- 16 skills, `sync-skills` bin fully implemented |
-| `@tpw/create-space` | 0.1.1 | Mostly complete -- template missing `.space/` dir, `@tpw/space` dep, and npm scripts |
-| `@tpw/space` | 0.1.0 | CLI stubs only -- all commands print "not yet implemented" |
+- `@tpw/skills` base implementation; `sync-skills` postinstall bin.
+- `@tpw/create-space` base scaffolder; interactive prompt flow;
+  template directory.
+- `@tpw/space` CLI skeleton and Commander registration.
+- The three-package monorepo orchestration (pnpm, turborepo, changesets).
+- `storefront-space` available as the first validation workspace.
 
-**Out of scope (this backlog):**
+**Prerequisites (required before Next phase ships).**
 
-- `space publish confluence` (write-back to Confluence)
-- `space sync` dispatch for Slack and Vercel sources
-- Incremental sync (phase 1 is full-refresh)
-- Multi-project Jira sync
+- `@tpw/space` source-sync commands green against real Atlassian
+  credentials from `storefront-space` (EPIC-01).
+- `docs/design/space-artefact-model.md` reviewed and accepted (this is
+  the design that EPIC-02, -03, -04 implement against).
 
-**Deliverables:**
-
-- `@tpw/space` Jira sync: `space sync jira` pulls STORE into `.space/sources/jira/`
-- `@tpw/space` Confluence sync: `space sync confluence` pulls STOREFRONT into `.space/sources/confluence/`
-- `@tpw/space` unit + integration test suite passing in CI
-- `@tpw/create-space` template producing a workspace with `.space/config`, `@tpw/space` devDep, and working `sync` script
-- `storefront-space` first committed source mirrors (`.space/sources/jira/`, `.space/sources/confluence/`)
-
-**Dependencies:** None -- `@tpw/skills` and `@tpw/create-space` base implementations are complete.
-
-**Downstream consumers:**
-- `storefront-space` (validation environment)
-- `@tpw/crew` (reads `.space/sources/` at execution time)
-- Any new workspace scaffolded after the template fix
+**Out of scope (platform).** Scope for specific epics lives in each
+epic's work-package `design.md` and `backlog.md`. Platform-level
+out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 
 ## 2. Conventions
 
-| Convention | Value |
-| --- | --- |
-| Story ID format | `SPACE-{nn}` (e.g. `SPACE-01`) |
-| Status values | Not started, In progress, In review, Done, Blocked |
-| Priority levels | P0 (must have), P1 (should have), P2 (stretch) |
-| Estimation | Fibonacci story points (1, 2, 3, 5, 8, 13) |
-| Test framework | Vitest |
-| HTTP mocking | msw (Mock Service Worker) for integration tests |
-| Definition of Done | See section 5 |
+| Convention      | Value                                                             |
+| --------------- | ----------------------------------------------------------------- |
+| Epic ID format  | `EPIC-{nn}` (e.g. `EPIC-01`)                                      |
+| Story ID format | `SPACE-{nn}` (stored in the work-package backlog)                 |
+| Status values   | Not started, In progress, In review, Done, Blocked                |
+| Priority levels | P0 (must have), P1 (should have), P2 (stretch), P3 (defer)        |
+| Estimation      | Fibonacci story points (1, 2, 3, 5, 8, 13)                        |
+| Acceptance      | EARS + Gherkin at work-package scope (see artefact-model Sec 5.3) |
 
-## 3. Stories
+## 3. Epic breakdown
 
-### Stream 1 -- `@tpw/space` foundation
+| Epic    | Title                                         | Phase | Priority | Dependencies         | Points | Work package                      | Status      |
+| ------- | --------------------------------------------- | ----- | -------- | -------------------- | ------ | --------------------------------- | ----------- |
+| EPIC-01 | Source sync foundation                        | Now   | P0       | -                    | 43     | `work/01-source-sync/`            | In progress |
+| EPIC-02 | Space v2 artefact model: skill changeset (P0) | Next  | P0       | EPIC-01 (validation) | ~25    | `work/02-v2-skills/` (planned)    | Not started |
+| EPIC-03 | Space v2 artefact model: tooling and router   | Next  | P1       | EPIC-02              | ~15    | `work/03-v2-tooling/` (planned)   | Not started |
+| EPIC-04 | Publish pipeline: Jira                        | Next  | P1       | EPIC-02, EPIC-01     | ~20    | `work/04-publish-jira/` (planned) | Not started |
+| EPIC-05 | Publish pipeline: Confluence                  | Next  | P1       | EPIC-02, EPIC-01     | ~15    | `work/05-publish-conf/` (planned) | Not started |
+| EPIC-06 | Embedded workspace mode                       | Later | P2       | EPIC-02              | TBD    | `work/06-embedded/` (planned)     | Not started |
+| EPIC-07 | Additional source providers (Slack, Vercel)   | Later | P2       | EPIC-01              | TBD    | `work/07-providers/` (planned)    | Not started |
+| EPIC-08 | Multi-project Jira and incremental sync       | Later | P2       | EPIC-01              | TBD    | `work/08-jira-scale/` (planned)   | Not started |
+| EPIC-09 | Skill library expansion (regulated + ops)     | Later | P2       | EPIC-02              | TBD    | `work/09-skills-expand/` (plan)   | Not started |
+| EPIC-10 | Workspace profiles at scaffold                | Later | P2       | EPIC-02              | TBD    | `work/10-profiles/` (planned)     | Not started |
 
-- [x] **[SPACE-01] Config and credentials layer**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
-  - **Deliverable:** `src/config.ts` loads and validates `.space/config`; `src/credentials.ts` loads and validates `.env` credentials for each provider.
-  - **Acceptance:**
-    - [ ] `config.ts` walks up from `process.cwd()` to find `.space/config`; exits non-zero with `"Run from inside a space workspace"` if not found
-    - [ ] Parsed config satisfies the `WorkspaceConfig` TypeScript interface; unknown extra keys are allowed (forward-compatible)
-    - [ ] `credentials.ts` loads `.env` via `dotenv`; returns typed credential objects for `jira` and `confluence`; throws a descriptive error listing missing variable names when required vars are absent
-    - [ ] `pnpm typecheck` passes with no `any`; `pnpm test` passes
+## 4. Epic detail
 
-- [x] **[SPACE-02] Atomic write helper**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 2
-  - **Deliverable:** `src/fs.ts` with `atomicWrite(destDir, writer)` that buffers output to a `.tmp` sibling and renames on success.
-  - **Acceptance:**
-    - [ ] On success the `.tmp` directory is renamed to `destDir` and does not remain on disk
-    - [ ] On failure (writer throws) the existing `destDir` is untouched and `.tmp` is left in place for inspection
-    - [ ] `atomicWrite` is idempotent -- calling it twice in succession produces the same `destDir` contents
-    - [ ] Unit tests cover success path, failure path, and idempotent re-run
+### EPIC-01 -- Source sync foundation
 
-### Stream 2 -- Jira sync
+**Scope:** Land the working `space sync jira` and `space sync confluence`
+commands; harden the scaffold template to include the `.space/`
+directory, `@tpw/space` dev dependency, and `sync` script; commit the
+first real source mirrors inside `storefront-space`.
 
-- [ ] **[SPACE-03] Jira REST client**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
-  - **Deliverable:** `src/providers/jira/client.ts` -- typed HTTP client for Jira REST API v3 with pagination and retry.
-  - **Acceptance:**
-    - [ ] `searchIssues({ jql, fields, pageSize })` paginates via `startAt` offset until `total` is exhausted; returns a single flat array of all issues
-    - [ ] Retries on HTTP 429 with exponential back-off: 1 s, 2 s, 4 s; gives up after 3 retries and throws
-    - [ ] Throws a typed `JiraAuthError` on 401 or 403 (no retry)
-    - [ ] Uses Basic Auth (`user:apiToken` base64) constructed from the credentials object
-    - [ ] Unit tests cover pagination across 3 pages, 429 retry, and 401 error using msw fixtures
+**Key deliverables.** Jira client + sync + tests; Confluence client +
+sync + tests; `space sync` all-sources dispatch; scaffold template
+update and integration test; storefront-space smoke tests; path-traversal
+protection; skill structural lint in CI.
 
-- [ ] **[SPACE-04] Jira sync command**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 5
-  - **Deliverable:** `src/providers/jira/sync.ts` and wired `space sync jira` command; writes all four output files atomically.
-  - **Acceptance:**
-    - [ ] `space sync jira` reads `.space/config` and `.env`, fetches all issues for the configured project, and writes `.space/sources/jira/{issues,epics,links,meta}.json`
-    - [ ] `issues.json` is a `JiraIssue[]` sorted ascending by issue key; native Jira REST v3 shape; `description` field preserved as ADF
-    - [ ] `epics.json` is the subset of issues where `fields.issuetype.name === 'Epic'`; same sort order
-    - [ ] `links.json` is a deduped flat array of all `fields.issuelinks` entries across all issues
-    - [ ] `meta.json` contains `sync_at` (ISO 8601), `project`, `jql`, and `counts` (`total`, `epics`, `stories`, `bugs`)
-    - [ ] All four files are written atomically via `atomicWrite`; a simulated write failure leaves the existing mirror intact
-    - [ ] `space sync jira` exits 0 on success; exits non-zero on auth failure or network error with a message to stderr
+**Dependencies.** None (base package implementations complete).
 
-- [ ] **[SPACE-05] Jira sync integration tests**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
-  - **Dependencies:** SPACE-03, SPACE-04
-  - **Deliverable:** `src/providers/jira/sync.test.ts` with msw-recorded fixtures covering the full sync lifecycle.
-  - **Acceptance:**
-    - [ ] Happy-path test: 150 issues across 2 pages; output files match expected shapes and counts
-    - [ ] Idempotency test: running sync twice produces byte-identical `issues.json`
-    - [ ] 429 retry test: first two requests return 429; third succeeds; sync completes normally
-    - [ ] Auth failure test: 401 on first request; command exits non-zero; no output files written
-    - [ ] All tests pass in `pnpm test` with no live network calls (`msw` intercepts all fetches)
+**Work package.** `work/01-source-sync/backlog.md` (16 stories,
+SPACE-01 .. SPACE-16).
 
-### Stream 3 -- Confluence sync
+**Status.** In progress.
 
-- [ ] **[SPACE-06] Confluence REST client**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
-  - **Deliverable:** `src/providers/confluence/client.ts` -- typed HTTP client for Confluence REST API v2.
-  - **Acceptance:**
-    - [ ] `listPages({ spaceKey, limit })` paginates via cursor until all pages are returned; returns flat array of page summaries
-    - [ ] `getPage({ id })` fetches a single page with `body-format=storage`; returns the page object including `body.storage.value` (XHTML string)
-    - [ ] Page fetches are run concurrently with a configurable cap (default 5); accepts a `concurrency` option
-    - [ ] Retries on 429 with same back-off as the Jira client (1 s, 2 s, 4 s, max 3)
-    - [ ] Throws a typed `ConfluenceAuthError` on 401 or 403
-    - [ ] Unit tests cover pagination, concurrency cap, 429 retry, and 401 error
+### EPIC-02 -- Space v2 artefact model: skill changeset (P0)
 
-- [ ] **[SPACE-07] Confluence sync command**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 5
-  - **Deliverable:** `src/providers/confluence/sync.ts` and wired `space sync confluence` command; writes mirror atomically.
-  - **Acceptance:**
-    - [ ] `space sync confluence` fetches all pages in the configured space and writes `.space/sources/confluence/pages/{id}.xhtml` and `pages/{id}.meta.json` for each page
-    - [ ] `{id}.xhtml` contains the raw Confluence storage XHTML string, byte-identical to the API response
-    - [ ] `{id}.meta.json` contains `id`, `title`, `parentId`, `spaceKey`, `labels`, `version`, and `sync_at`
-    - [ ] `index.json` maps each `pageId` to `{ title, parentId }`
-    - [ ] `meta.json` contains `sync_at`, `space`, and `counts.total`
-    - [ ] Pages present in the existing mirror but absent from the current upstream response are deleted from the mirror on sync
-    - [ ] All output is written atomically via `atomicWrite`
-    - [ ] Command exits 0 on success; exits non-zero on auth failure
+**Scope:** Implement the P0 row of
+`docs/design/space-artefact-model.md` Section 7.1. Add
+`write-solution` (stub + full modes), refactor `write-product`
+(pitch + product modes), refactor `write-backlog` domain scope for
+phase-1-only depth, split `design` into walking-skeleton and TDD modes,
+add executable `write-contracts`, add negative-constraint comment
+blocks to every template, rewrite every skill description per
+Anthropic skill-creator rules, lock down the backlog schema
+(EARS + Gherkin), add the enriched frontmatter schema across every
+skill.
 
-- [ ] **[SPACE-08] Confluence sync integration tests**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 3
-  - **Dependencies:** SPACE-06, SPACE-07
-  - **Deliverable:** `src/providers/confluence/sync.test.ts` with msw fixtures.
-  - **Acceptance:**
-    - [ ] Happy-path test: 30 pages across 2 list pages; output files match expected shapes
-    - [ ] Stale page deletion test: second sync removes a page absent from the current fixture
-    - [ ] Idempotency test: two successive syncs produce byte-identical XHTML files
-    - [ ] 429 retry test: page list returns 429 twice before succeeding; sync completes
-    - [ ] All tests pass in `pnpm test` with no live network calls
+**Key deliverables.** New / revised `SKILL.md` and `template.md` files
+for each skill listed above. Minor release of `@tpw/skills` (0.3.0).
+One example domain in `storefront-space` migrated to the new artefact
+set as validation.
 
-- [ ] **[SPACE-09] `space sync` all-sources dispatch**
-  - **Status:** Not started | **Priority:** P0 | **Estimate:** 2
-  - **Dependencies:** SPACE-04, SPACE-07
-  - **Deliverable:** `space sync` (no provider argument) dispatches to all configured sources in `.space/config`.
-  - **Acceptance:**
-    - [ ] `space sync` reads `sources` from `.space/config` and dispatches sequentially to each configured provider
-    - [ ] Progress line printed to stdout before each provider sync (`syncing jira...`, `syncing confluence...`)
-    - [ ] If any provider sync fails, the command continues with remaining providers and exits non-zero after all complete
-    - [ ] If no sources are configured, prints a helpful message and exits 0
-    - [ ] Unit test covers: two sources succeed; one source fails (correct exit code); no sources configured
+**Dependencies.** EPIC-01 delivers the source-sync substrate; v2 skills
+need that to demonstrate end-to-end publish readiness.
 
-### Stream 4 -- `@tpw/create-space` template hardening
+**Work package.** `work/02-v2-skills/` (planned).
 
-- [ ] **[SPACE-10] Add `.space/` to scaffold template**
-  - **Status:** Not started | **Priority:** P1 | **Estimate:** 3
-  - **Deliverable:** `template/default/.space/` directory with `config`, `team`, and `raci` files; `package.json` updated with `@tpw/space` and npm scripts.
-  - **Acceptance:**
-    - [ ] `template/default/.space/config` exists; interpolates `{projectName}` and `{projectKey}` into the `project` block; `sources` block is present but commented out
-    - [ ] `template/default/.space/team` exists as an empty roster template with field headings
-    - [ ] `template/default/.space/raci` exists as an empty RACI skeleton
-    - [ ] `template/default/package.json` includes `@tpw/space` as a `devDependency` (version `"*"` or latest)
-    - [ ] `template/default/package.json` includes `"postinstall": "sync-skills"` and `"sync": "space sync"` npm scripts
-    - [ ] `create-space.ts` success output references `.space/config` not `.crew/config`
-    - [ ] Snapshot tests are updated to reflect the new template output
-    - [ ] `pnpm build && pnpm typecheck && pnpm test` all pass
+**Status.** Not started.
 
-- [ ] **[SPACE-11] `create-space` full scaffold integration test**
-  - **Status:** Not started | **Priority:** P1 | **Estimate:** 2
-  - **Dependencies:** SPACE-10
-  - **Deliverable:** Integration test that scaffolds into a temp directory and asserts the complete output tree and file contents.
-  - **Acceptance:**
-    - [ ] Test runs `createSpace(config, { skipInstall: true, disableGit: true })` into `os.tmpdir()`
-    - [ ] Asserts that `.space/config`, `.space/team`, `.space/raci` exist and contain no un-substituted template tokens (`{projectName}` etc.)
-    - [ ] Asserts `package.json` includes `@tpw/space` devDependency and the `postinstall` and `sync` scripts
-    - [ ] Asserts top-level directories `product/`, `architecture/`, `docs/`, `work/` all exist
-    - [ ] Test cleans up the temp directory on completion
+### EPIC-03 -- Space v2 artefact model: tooling and router
 
-### Stream 5 -- Validation in `storefront-space`
+**Scope:** Implement the P1 tooling row of
+`docs/design/space-artefact-model.md` Section 7.2. Add `space-index`
+router skill with CI-regenerated body; generate role views
+(`pm.md`, `architect.md`, `engineer.md`); add the description eval
+loop in CI (`run_loop.py`); add `pnpm lint:docs` (frontmatter schema,
+link check, budgets); add the `plan-delivery` orchestrator for Phase 0;
+add the `refine-docs` sprint-end skill.
 
-- [ ] **[SPACE-12] Install `@tpw/space` in `storefront-space`**
-  - **Status:** Not started | **Priority:** P1 | **Estimate:** 2
-  - **Deliverable:** `@tpw/space` installed in `storefront-space`; `.space/config` updated to match the canonical schema from `docs/design.md`.
-  - **Acceptance:**
-    - [ ] `pnpm add -D @tpw/space` succeeds in `storefront-space`
-    - [ ] `storefront-space/.space/config` includes `sources.issues` (Jira STORE) and `sources.docs` (Confluence STOREFRONT) blocks in the canonical format
-    - [ ] `space sync --help` runs without error from `storefront-space/` root
-    - [ ] `.env` in `storefront-space/` has `JIRA_USER`, `JIRA_API_TOKEN`, `CONFLUENCE_USER`, `CONFLUENCE_API_TOKEN` set (manual step; not committed)
+**Dependencies.** EPIC-02 (the skills must exist before the index,
+router, and eval loop are meaningful).
 
-- [ ] **[SPACE-13] Jira sync smoke test against STORE**
-  - **Status:** Not started | **Priority:** P1 | **Estimate:** 2
-  - **Dependencies:** SPACE-04, SPACE-12
-  - **Deliverable:** `.space/sources/jira/` committed to `storefront-space` with a real STORE snapshot.
-  - **Acceptance:**
-    - [ ] `space sync jira` exits 0 from `storefront-space/` root with valid credentials
-    - [ ] `.space/sources/jira/issues.json` exists, is valid JSON, and contains at least one issue with `key` starting with `STORE-`
-    - [ ] `.space/sources/jira/meta.json` contains a valid `sync_at` timestamp and non-zero `counts.total`
-    - [ ] Re-running `space sync jira` is idempotent: `git diff` produces no changes
-    - [ ] `.space/sources/jira/` is committed with message `chore(sync): jira STORE @ {date}`
+**Work package.** `work/03-v2-tooling/` (planned).
 
-- [ ] **[SPACE-14] Confluence sync smoke test against STOREFRONT**
-  - **Status:** Not started | **Priority:** P1 | **Estimate:** 2
-  - **Dependencies:** SPACE-07, SPACE-12
-  - **Deliverable:** `.space/sources/confluence/` committed to `storefront-space` with a real STOREFRONT snapshot.
-  - **Acceptance:**
-    - [ ] `space sync confluence` exits 0 from `storefront-space/` root with valid credentials
-    - [ ] `.space/sources/confluence/pages/` contains at least one `.xhtml` file with non-empty Confluence storage XHTML
-    - [ ] `.space/sources/confluence/index.json` maps page IDs to titles; all referenced page IDs have a corresponding `.xhtml` file
-    - [ ] Re-running `space sync confluence` is idempotent: `git diff` produces no changes
-    - [ ] `.space/sources/confluence/` is committed with message `chore(sync): confluence STOREFRONT @ {date}`
+**Status.** Not started.
 
-### Stream 6 -- `@tpw/skills` CI quality
+### EPIC-04 -- Publish pipeline: Jira
 
-- [ ] **[SPACE-15] Structural lint CI for skills**
-  - **Status:** Not started | **Priority:** P2 | **Estimate:** 2
-  - **Deliverable:** CI script `bin/lint-skills.js` that validates the structure and frontmatter of every skill directory.
-  - **Acceptance:**
-    - [ ] Script reads every subdirectory of the package root that does not start with `.` or `node_modules`
-    - [ ] Fails if any such directory is missing `SKILL.md`
-    - [ ] Fails if `SKILL.md` frontmatter is missing any of: `name`, `description`, `when_to_use`, `version`
-    - [ ] Fails if `name` in frontmatter does not match the directory name
-    - [ ] Script is added to the `validate` script in root `package.json`
-    - [ ] All existing skills pass the lint
+**Scope:** Implement `space publish jira` per
+`docs/design/space-artefact-model.md` Section 6. Source-aware behaviour
+(`issues.source: jira | markdown`); dry-run output; key-ownership rule
+with sidecar mapping at `.space/sources/jira/mapping.json`; EARS +
+Gherkin acceptance criteria rendered per `ac_placement` config.
 
-- [ ] **[SPACE-16] Path traversal protection in `sync-skills`**
-  - **Status:** Not started | **Priority:** P2 | **Estimate:** 2
-  - **Deliverable:** `sync-skills` validates all resolved destination paths are inside the workspace root before writing.
-  - **Acceptance:**
-    - [ ] A skill directory named `../escape` in the source is rejected; sync logs a warning and skips that skill
-    - [ ] A skill directory named `../../etc/passwd` is rejected in the same way
-    - [ ] Valid skill names (alphanumeric, hyphens) are not affected
-    - [ ] Unit test covers the two rejection cases and a valid case
+**Key deliverables.** Publish command + provider; schema parser for
+domain and work-package backlogs; sidecar mapping; integration tests
+against msw fixtures; validation against `storefront-space`.
 
-## 4. Traceability
+**Dependencies.** EPIC-02 (schema lock-down); EPIC-01 (Jira mirror is
+the diff basis).
 
-### Stories to design sections
+**Work package.** `work/04-publish-jira/` (planned).
 
-| Story | `docs/design.md` section |
-| --- | --- |
-| SPACE-01 | Package Design: `@tpw/space` -- Configuration loading |
-| SPACE-02 | Package Design: `@tpw/space` -- Atomicity |
-| SPACE-03 | Package Design: `@tpw/space` -- Jira sync -- API |
-| SPACE-04 | Package Design: `@tpw/space` -- Jira sync command |
-| SPACE-05 | Test Strategy -- `@tpw/space` integration |
-| SPACE-06 | Package Design: `@tpw/space` -- Confluence sync -- API |
-| SPACE-07 | Package Design: `@tpw/space` -- Confluence sync command |
-| SPACE-08 | Test Strategy -- `@tpw/space` integration |
-| SPACE-09 | Package Design: `@tpw/space` -- all-sources dispatch |
-| SPACE-10 | Package Design: `@tpw/create-space` -- Template directory structure |
-| SPACE-11 | Package Design: `@tpw/create-space` -- Integration test |
-| SPACE-12 | Data Models -- `.space/config` schema |
-| SPACE-13 | Data Models -- `.space/sources/` Jira layout |
-| SPACE-14 | Data Models -- `.space/sources/` Confluence layout |
-| SPACE-15 | Package Design: `@tpw/skills` -- Structural lint |
-| SPACE-16 | Security -- Path traversal protection |
+**Status.** Not started.
 
-### Stories to product outcomes
+### EPIC-05 -- Publish pipeline: Confluence
 
-| Story | Product outcome (from `docs/product.md` §5) |
-| --- | --- |
-| SPACE-01 -- SPACE-09 | "Any agent operating in a space has access to the full program context without live API access" |
-| SPACE-10 -- SPACE-11 | "Any team can stand up an agent-capable workspace from a single command" |
-| SPACE-12 -- SPACE-14 | "Program leads can sync Jira and Confluence into a workspace in the same session" |
-| SPACE-15 -- SPACE-16 | "Skill improvements compound -- versioned, distributed, adopted on next install" |
+**Scope:** Implement `space publish confluence <path>`. Opt-in via
+`confluence_page_id` frontmatter. Markdown -> Confluence storage XHTML
+conversion. Version increment per the Confluence contract; local
+mirror overwritten from the API response.
 
-## 5. Definition of Done
+**Dependencies.** EPIC-02 (artefact layout stable); EPIC-01 (Confluence
+mirror is the local source of truth).
 
-A story in this backlog is done when:
+**Work package.** `work/05-publish-conf/` (planned).
 
-- [ ] All acceptance criteria boxes are ticked
-- [ ] Unit and integration tests pass locally (`pnpm test`) and in CI
-- [ ] `pnpm typecheck` passes with no `any` (except where the Jira/Confluence API shapes require it, with a JSDoc comment)
-- [ ] `pnpm lint` passes with no new warnings
-- [ ] PR merged into `main`
+**Status.** Not started.
 
-The `@tpw/space` package is shippable when SPACE-01 through SPACE-09 are done and `pnpm validate` (install, build, typecheck, lint, test) passes clean.
+### EPIC-06 -- Embedded workspace mode
 
-## 6. Dependency graph
+**Scope:** `--mode embedded` on `create-space`: scaffold Space into an
+existing code repo as a top-level subtree. Success condition: a team
+with a single-repo initiative can adopt Space without maintaining a
+second repo, with no loss of function compared to sibling mode.
+Sibling mode remains the correct choice for program-level workspaces
+that span multiple repos or need distinct access control.
 
-```
-SPACE-01 (config + creds)
-  └── SPACE-03 (Jira client)
-        └── SPACE-04 (Jira sync cmd)
-              ├── SPACE-05 (Jira tests)
-              └── SPACE-09 (all-sources dispatch) ←── SPACE-07
+**Dependencies.** EPIC-02 (canonical artefact set must exist first so
+the embedded layout is settled).
 
-SPACE-02 (atomic write)
-  ├── SPACE-04
-  └── SPACE-07
+**Work package.** `work/06-embedded/` (planned).
 
-SPACE-06 (Confluence client)
-  └── SPACE-07 (Confluence sync cmd)
-        └── SPACE-08 (Confluence tests)
+**Status.** Not started.
 
-SPACE-10 (template .space/)
-  └── SPACE-11 (scaffold integration test)
+### EPIC-07 -- Additional source providers (Slack, Vercel)
 
-SPACE-12 (install in storefront-space)
-  ├── SPACE-13 (Jira smoke) ←── SPACE-04
-  └── SPACE-14 (Confluence smoke) ←── SPACE-07
+**Scope:** `space sync slack` and `space sync vercel` writing
+native-format mirrors under `.space/sources/{provider}/`. Same atomic
+pattern and error handling as the Atlassian providers.
+
+**Dependencies.** EPIC-01 (pattern established).
+
+**Work package.** `work/07-providers/` (planned).
+
+**Status.** Not started.
+
+### EPIC-08 -- Multi-project Jira and incremental sync
+
+**Scope:** Extend `sources.issues` from a single block to an array
+(additive schema change). Add `updatedDate > {last_sync}` JQL filtering
+for incremental pulls; preserve full-refresh as the explicit option.
+Same treatment applied to Confluence where viable.
+
+**Dependencies.** EPIC-01.
+
+**Work package.** `work/08-jira-scale/` (planned).
+
+**Status.** Not started.
+
+### EPIC-09 -- Skill library expansion (regulated + ops)
+
+**Scope:** Fill out the delivery lifecycle. Add `review-adr`,
+`validate`, `write-metrics` (promoted from deferred to stable after
+first real use), `retrospective`, `incident-response`,
+`post-deployment`. Keep `write-requirements` as optional
+`stage: deprecated-by-default`, usable only when a regulated-domain
+flag is set.
+
+**Dependencies.** EPIC-02.
+
+**Work package.** `work/09-skills-expand/` (planned).
+
+**Status.** Not started.
+
+### EPIC-10 -- Workspace profiles at scaffold
+
+**Scope:** `--profile` flag on `create-space`; profile YAML files
+under `@tpw/skills/profiles/`; `space sync skills --profile X`
+materialises only the profile's skills. Starter profiles: `minimal`,
+`domain-team`, `platform`, `full`.
+
+**Dependencies.** EPIC-02 (enriched frontmatter); EPIC-03 (tooling).
+
+**Work package.** `work/10-profiles/` (planned).
+
+**Status.** Not started.
+
+## 5. Dependency graph
+
+```text
+EPIC-01 (source sync)
+  +-- EPIC-02 (v2 skills)
+  |     +-- EPIC-03 (v2 tooling + router)
+  |     +-- EPIC-04 (publish jira)
+  |     +-- EPIC-05 (publish confluence)
+  |     +-- EPIC-06 (embedded mode)
+  |     +-- EPIC-09 (skills expansion)
+  |     +-- EPIC-10 (profiles)  <--  also depends on EPIC-03
+  +-- EPIC-07 (additional providers)
+  +-- EPIC-08 (jira scale)
 ```
 
-## 7. Critical path
+## 6. Critical path
 
-```
-SPACE-01 → SPACE-02 → SPACE-03 → SPACE-04 → SPACE-09 → SPACE-12 → SPACE-13
-                     → SPACE-06 → SPACE-07 →            SPACE-12 → SPACE-14
+```text
+EPIC-01 --> EPIC-02 --> EPIC-03
+                    --> EPIC-04 (+ EPIC-05 in parallel)
 ```
 
-SPACE-03 and SPACE-06 (Jira and Confluence clients) can be developed in
-parallel once SPACE-01 and SPACE-02 are done. SPACE-04 and SPACE-07 can
-similarly run in parallel. The storefront-space validation stream (SPACE-12
-onwards) unblocks after both sync commands are passing their integration tests.
+The artefact-model roll-out (EPIC-02) is the gating epic: every later
+epic in the Next phase depends on the v2 skill set being stable.
+
+## 7. Parallelisation opportunities
+
+| Workstream              | Can run in parallel with                   |
+| ----------------------- | ------------------------------------------ |
+| EPIC-04 (publish jira)  | EPIC-05 (publish confluence)               |
+| EPIC-07 (new providers) | Any Next-phase epic once EPIC-01 is stable |
+| EPIC-08 (jira scale)    | EPIC-07                                    |
 
 ## 8. Minimum viable slice
 
-If scope pressure forces a cut, the smallest coherent release that delivers
-value:
+If scope pressure forces a cut, the smallest coherent release that
+delivers platform value end-to-end:
 
-- **SPACE-01, SPACE-02** -- foundation
-- **SPACE-03, SPACE-04, SPACE-05** -- Jira sync end-to-end
-- **SPACE-12, SPACE-13** -- validated against real STORE data
+- **EPIC-01** -- source sync
+- **EPIC-02** (subset) -- `write-solution`, `write-product` refactor,
+  negative-constraint blocks, description rewrites. Defer eval loop
+  and tooling to a later slice.
 
-Result: `space sync jira` works in `storefront-space` with committed mirror.
-Confidence that the model is sound. Confluence sync (SPACE-06 -- SPACE-08,
-SPACE-14) ships in the next slice.
+Result: Space can read from external systems and produce the canonical
+four-doc set in Markdown. Publish back (EPIC-04, EPIC-05) waits for
+the next slice.
 
-## 9. Risks
+## 9. Assumptions
 
-| ID | Risk | Likelihood | Impact | Mitigation |
-| --- | --- | --- | --- | --- |
-| R1 | Atlassian rate limiting on large Confluence spaces makes full sync slow or unreliable | Medium | Medium | Phase 1 uses concurrency cap 5; add page-count threshold check before starting; fall back to sequential if cap causes 429s |
-| R2 | Jira API field shapes differ between Atlassian Cloud versions; ADF structure may not match expected types | Low | Medium | Store raw API response without type assertion on `description`; validate in integration test against a live fixture captured from STORE |
-| R3 | `storefront-space` Confluence space is large (>500 pages); first sync commit produces a noisy diff | Medium | Low | Check page count with `GET /wiki/api/v2/spaces/{key}/pages?limit=1` before syncing; document expected commit size in smoke test story |
-| R4 | `@tpw/space` not yet on npm; `create-space` template cannot reference a published version | Low | Medium | Use `"*"` as version in template; update to a pinned version after first publish |
-| R5 | Template change in SPACE-10 is a breaking change for workspaces scaffolded before it | Low | Low | No production workspaces scaffolded yet; storefront-space was hand-built, not scaffolded |
+| ID  | Assumption                                                           | Impact if wrong                                         |
+| --- | -------------------------------------------------------------------- | ------------------------------------------------------- |
+| A1  | Markdown skills will remain the cross-tool standard                  | Platform has to support a non-Markdown format; rework   |
+| A2  | Atlassian rate limits hold under full-space Confluence sync          | Need filtering / batch strategy sooner than Later phase |
+| A3  | `storefront-space` is representative of future initiative workspaces | Validation may miss domain-specific needs               |
+| A4  | Description-only LLM routing remains the agent-skill contract        | May need to layer an in-workspace router over the spec  |
 
-## 10. Handoff
+## 10. Risks
 
-When this backlog is complete:
-
-- `@tpw/space` sync commands are implemented, tested, and published
-- `@tpw/create-space` template produces a workspace with working `.space/config` and `space sync`
-- `storefront-space` has committed Jira and Confluence mirrors ready for agent consumption
-- `@tpw/crew` can read `.space/sources/` without any changes (content contract is stable)
-
-Next work packages:
-
-1. `@tpw/space` publish command -- `space publish confluence <path>` write-back for opted-in docs
-2. Skills backlog -- new and updated skills for the full delivery lifecycle (requirements, design, ADR, review)
-3. `@tpw/crew` integration -- crew reads `.space/sources/` in context assembly
+| ID  | Risk                                                      | Likelihood | Impact | Mitigation                                                              |
+| --- | --------------------------------------------------------- | ---------- | ------ | ----------------------------------------------------------------------- |
+| R1  | v2 artefact model adoption slower than Next phase assumes | Medium     | Medium | Roll out domain-by-domain; keep v0 artefacts legacy-compatible          |
+| R2  | Publish pipeline conversion (Markdown <-> XHTML) complex  | Medium     | Medium | Spike on one real Confluence page first; defer if conversion fails      |
+| R3  | Skill count grows past router scale before index ships    | Low        | Medium | Cap new-skill admission at 20 until `space-index` is green              |
+| R4  | `storefront-space` blocks on source sync, delays EPIC-02  | Low        | High   | Keep EPIC-02 scoped independently; validate in a fresh workspace        |
+| R5  | Breaking schema change needed in `.space/config`          | Low        | High   | Stick to additive changes; require major version bump per solution §2.1 |

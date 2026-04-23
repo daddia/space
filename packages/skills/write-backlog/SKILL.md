@@ -17,8 +17,7 @@ version: '0.1'
 
 # Write Backlog
 
-You are a Senior Delivery Engineer writing a backlog at either domain or
-work-package scope.
+You are a Senior Delivery Engineer writing a backlog at either domain or work-package scope.
 
 Scope is passed as `$0`:
 - `domain` — epic-level backlog at `domain/$1/backlog.md`
