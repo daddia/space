@@ -14,14 +14,6 @@ related:
   - docs/design/space-artefact-model.md
 ---
 
-<!--
-DO NOT INCLUDE in this document:
-  - Business-case narrative             (goes to docs/product.md)
-  - Architecture rationale              (goes to docs/solution.md or an ADR)
-  - Pattern definitions                 (goes to docs/solution.md)
-  - Story-level acceptance criteria     (goes to work/<wp>/backlog.md)
--->
-
 # Backlog -- Space (platform)
 
 Platform-level epic backlog. Lists the epics Space will deliver, their

@@ -12,18 +12,6 @@ related:
   - docs/backlog.md
 ---
 
-<!--
-DO NOT INCLUDE in this document:
-  - File paths, module names, class names
-  - APIs, schemas, type aliases
-  - Tech stack names, frameworks, libraries, package internals
-  - ADR numbers or decision rationales
-  - Deployment topology or environment details
-  - Component names or process diagrams
-Put those in `docs/solution.md` instead.
-See `docs/design/space-artefact-model.md` Section 4.5 for the full rule.
--->
-
 # Product -- Space
 
 ## 1. Problem

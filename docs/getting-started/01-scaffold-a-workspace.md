@@ -30,11 +30,11 @@ cd my-project-space
 
 The scaffolder prompts for:
 
-| Prompt | Example |
-|---|---|
-| Project name | `Checkout` |
-| Project key | `CHECKOUT` (used as a prefix for backlog item IDs) |
-| Package manager | `pnpm` |
+| Prompt          | Example                                            |
+| --------------- | -------------------------------------------------- |
+| Project name    | `Checkout`                                         |
+| Project key     | `CHECKOUT` (used as a prefix for backlog item IDs) |
+| Package manager | `pnpm`                                             |
 
 > Pass `--yes` to skip all prompts and accept defaults. Use `--key` to set the project key without entering interactive mode.
 
@@ -48,17 +48,17 @@ pnpm dlx @tpw/create-space my-project --yes --key ACME --use-pnpm
 
 ## What gets scaffolded
 
-| Path | Purpose |
-|---|---|
-| `AGENTS.md` | Agent instruction file -- describes the workspace conventions for any IDE agent |
-| `.space/config` | Project identity and source configuration |
-| `product/` | Product strategy documents |
-| `architecture/` | Architecture decision records and C4 diagrams |
-| `docs/` | Internal documentation |
-| `work/` | Task workspaces (one directory per Jira issue or work item) |
-| `reports/` | Generated reports and summaries |
-| `{project}.code-workspace` | VS Code / Cursor multi-root workspace file |
-| `package.json` | Declares `@tpw/skills` and `@tpw/space` as dev dependencies |
+| Path                       | Purpose                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `AGENTS.md`                | Agent instruction file -- describes the workspace conventions for any IDE agent |
+| `.space/config`            | Project identity and source configuration                                       |
+| `product/`                 | Product strategy documents                                                      |
+| `architecture/`            | Architecture decision records and C4 diagrams                                   |
+| `docs/`                    | Internal documentation                                                          |
+| `work/`                    | Task workspaces (one directory per Jira issue or work item)                     |
+| `reports/`                 | Generated reports and summaries                                                 |
+| `{project}.code-workspace` | VS Code / Cursor multi-root workspace file                                      |
+| `package.json`             | Declares `@tpw/skills` and `@tpw/space` as dev dependencies                     |
 
 ## Install dependencies
 
@@ -101,4 +101,5 @@ Commit the scaffolded files. The `skills/` directory is managed by `sync-skills`
 
 - [Configure your space](02-configure-your-space.md) -- wire up Jira, Confluence, and other sources
 - [Use skills](03-use-skills.md) -- install and invoke delivery activity skills
-- [Space overview](../overview.md) -- product strategy and how the packages fit together
+- [Space product](../product.md) -- why Space exists, who uses it, and what outcomes it targets
+- [Space solution](../solution.md) -- architecture of the three packages and how they fit together

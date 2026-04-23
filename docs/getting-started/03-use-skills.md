@@ -28,12 +28,12 @@ That single command does everything automatically:
 
 ### IDE skill paths
 
-| IDE | Skill path |
-|---|---|
-| Cursor | `.cursor/skills/` |
-| Claude Code | `.claude/skills/` |
+| IDE               | Skill path                                       |
+| ----------------- | ------------------------------------------------ |
+| Cursor            | `.cursor/skills/`                                |
+| Claude Code       | `.claude/skills/`                                |
 | Copilot (VS Code) | `.github/skills/` (if supported by your version) |
-| Windsurf | `.windsurf/skills/` |
+| Windsurf          | `.windsurf/skills/`                              |
 
 Symlinks for Cursor and Claude Code are created automatically. For other IDEs, create the link manually:
 
@@ -44,22 +44,22 @@ ln -s ../skills .windsurf/skills
 
 ## Available skills
 
-| Skill | What it does |
-|---|---|
-| `requirements` | Write a requirements document for an epic or task |
-| `design` | Write a technical design document for a feature or epic |
-| `implement` | Implement a feature or task using existing patterns and standards |
-| `write-product` | Write a product document for a platform or domain sub-product |
-| `write-backlog` | Write an epic-level domain backlog or a story-level work-package backlog |
-| `write-roadmap` | Write a phased delivery roadmap for a platform or domain |
+| Skill           | What it does                                                               |
+| --------------- | -------------------------------------------------------------------------- |
+| `requirements`  | Write a requirements document for an epic or task                          |
+| `design`        | Write a technical design document for a feature or epic                    |
+| `implement`     | Implement a feature or task using existing patterns and standards          |
+| `write-product` | Write a product document for a platform or domain sub-product              |
+| `write-backlog` | Write an epic-level domain backlog or a story-level work-package backlog   |
+| `write-roadmap` | Write a phased delivery roadmap for a platform or domain                   |
 | `write-metrics` | Write a metrics document defining north star, input, and guardrail metrics |
-| `write-adr` | Document a consequential architecture decision as an ADR |
-| `plan-adr` | Identify and prioritise the architecture decisions an epic needs |
-| `review-adr` | Review and finalise a draft Architecture Decision Record |
-| `review-code` | Perform a comprehensive code review of changes in a branch or MR |
-| `review-docs` | Review requirements and design documents before development begins |
-| `validate` | Perform a final stakeholder review that an epic is complete |
-| `create-mr` | Open a merge request for the current branch |
+| `write-adr`     | Document a consequential architecture decision as an ADR                   |
+| `plan-adr`      | Identify and prioritise the architecture decisions an epic needs           |
+| `review-adr`    | Review and finalise a draft Architecture Decision Record                   |
+| `review-code`   | Perform a comprehensive code review of changes in a branch or MR           |
+| `review-docs`   | Review requirements and design documents before development begins         |
+| `validate`      | Perform a final stakeholder review that an epic is complete                |
+| `create-mr`     | Open a merge request for the current branch                                |
 
 ## Invoke a skill
 
@@ -91,4 +91,5 @@ pnpm update @tpw/skills
 
 - [Scaffold a new workspace](01-scaffold-a-workspace.md) -- create a workspace before installing skills
 - [Configure your space](02-configure-your-space.md) -- give agents access to program context via source sync
-- [Space overview](../overview.md) -- product strategy and how the packages fit together
+- [Space product](../product.md) -- why Space exists, who uses it, and what outcomes it targets
+- [Space solution](../solution.md) -- architecture of the three packages and how they fit together

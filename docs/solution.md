@@ -14,17 +14,6 @@ related:
   - docs/design/space-artefact-model.md
 ---
 
-<!--
-DO NOT INCLUDE in this document:
-  - Commercial rationale or business case
-  - Target customer segments or personas
-  - Strategic thesis or product principles
-  - Positioning or messaging
-  - User quotes or narrative justifications
-Put those in `docs/product.md` instead.
-See `docs/design/space-artefact-model.md` Section 4.5 for the full rule.
--->
-
 # Solution -- Space
 
 Solution design for the `space` monorepo. Defines the architecture,

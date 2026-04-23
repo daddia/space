@@ -171,10 +171,10 @@ description: >
 when_to_use: Phase 0 stub or Phase 2 full; domain scope.
 allowed-tools: [Read, Write, Glob, Grep]
 artefact: solution.md
-phase: discovery        # discovery | definition | delivery | operation
+phase: discovery # discovery | definition | delivery | operation
 role: [architect, engineer]
-domain: architecture    # product | architecture | engineering | ops | qa
-stage: stable           # experimental | beta | stable | deprecated
+domain: architecture # product | architecture | engineering | ops | qa
+stage: stable # experimental | beta | stable | deprecated
 consumes: [product.md, contracts.md]
 produces: [solution.md]
 prerequisites: [product.md]
@@ -274,14 +274,14 @@ packages/skills/
 Five artefacts per domain, plus the pair per work package. This is the
 complete pre-code set.
 
-| # | Artefact                                    | Scope      | Length | Purpose                                     |
-| - | ------------------------------------------- | ---------- | ------ | ------------------------------------------- |
-| 1 | `domain/{d}/product.md` (pitch stage)       | Domain     | <=2 pp | Why, who, problem, appetite, no-gos         |
-| 2 | `domain/{d}/solution.md` (stub)             | Domain     | <=2 pp | Context + quality goals; rest `[CLARIFY]`   |
-| 3 | `domain/{d}/contracts.md` + `contracts/*.ts`| Domain     | src +1 | Executable types/schemas for skeleton slice |
-| 4 | `domain/{d}/backlog.md`                     | Domain     | 1-2 pp | Phase-1 epic list; later = placeholders     |
-| 5 | `work/{d}/01-foundations/design.md`         | WP (sprint)| 2-4 pp | Walking-skeleton sketch + acceptance gates  |
-| 6 | `work/{d}/01-foundations/backlog.md`        | WP (sprint)| 3-5 pp | Sprint-1 stories with EARS+Gherkin AC       |
+| #   | Artefact                                     | Scope       | Length | Purpose                                     |
+| --- | -------------------------------------------- | ----------- | ------ | ------------------------------------------- |
+| 1   | `domain/{d}/product.md` (pitch stage)        | Domain      | <=2 pp | Why, who, problem, appetite, no-gos         |
+| 2   | `domain/{d}/solution.md` (stub)              | Domain      | <=2 pp | Context + quality goals; rest `[CLARIFY]`   |
+| 3   | `domain/{d}/contracts.md` + `contracts/*.ts` | Domain      | src +1 | Executable types/schemas for skeleton slice |
+| 4   | `domain/{d}/backlog.md`                      | Domain      | 1-2 pp | Phase-1 epic list; later = placeholders     |
+| 5   | `work/{d}/01-foundations/design.md`          | WP (sprint) | 2-4 pp | Walking-skeleton sketch + acceptance gates  |
+| 6   | `work/{d}/01-foundations/backlog.md`         | WP (sprint) | 3-5 pp | Sprint-1 stories with EARS+Gherkin AC       |
 
 Plus always-on agent context: `AGENTS.md` at space root +
 `domain/{d}/AGENTS.md` overrides where domain conventions differ.
@@ -318,42 +318,58 @@ Only now does the team know enough to author these usefully.
 Legend: **OWN** = authoritative source; REF = may reference but not
 redefine; `-` = excluded (a smell if it appears here).
 
-| Content type                                   | product | solution | roadmap | backlog | contracts | metrics |
-| ---------------------------------------------- | :-----: | :------: | :-----: | :-----: | :-------: | :-----: |
-| Vision, strategic thesis                       | **OWN** |   REF    |   REF   |    -    |     -     |    -    |
-| Target user segments, personas                 | **OWN** |   REF    |    -    |   REF   |     -     |   REF   |
-| Problem statement, opportunity                 | **OWN** |   REF    |   REF   |   REF   |     -     |    -    |
-| Commercial / business rationale                | **OWN** |    -     |   REF   |    -    |     -     |    -    |
-| Outcome metric targets (North Star, KPIs)      | **OWN** |    -     |   REF   |   REF   |     -     |   REF   |
-| Outcome metric instrumentation, dashboards     |    -    |    -     |    -    |    -    |     -     | **OWN** |
-| Operational / SLO metrics (latency, uptime)    |    -    |   REF    |    -    |    -    |    REF    | **OWN** |
-| Product scope (in / out)                       | **OWN** |   REF    |   REF   |    -    |     -     |    -    |
-| Technical non-goals                            |   REF   | **OWN**  |    -    |    -    |     -     |    -    |
-| Feature flags (intent vs mechanism)            |   REF   | **OWN**  |   REF   |   REF   |    REF    |   REF   |
-| API contracts and schemas                      |    -    |   REF    |    -    |   REF   |  **OWN**  |    -    |
-| Component decomposition (C4 L2-L3)             |    -    | **OWN**  |    -    |    -    |     -     |    -    |
-| Data model, domain model                       |    -    | **OWN**  |    -    |    -    |    REF    |    -    |
-| Integration, BFF, anti-corruption layer        |    -    | **OWN**  |    -    |    -    |    REF    |    -    |
-| Error-handling strategy (taxonomy, retry)      |    -    | **OWN**  |    -    |   REF   |    REF    |   REF   |
-| Observability strategy                         |    -    | **OWN**  |    -    |    -    |    REF    |   REF   |
-| Phasing, sequencing                            |   REF   |   REF    | **OWN** |    -    |     -     |    -    |
-| Dependencies                                   |   REF   |   REF    | **OWN** |   REF   |     -     |    -    |
-| Product / market risks                         | **OWN** |    -     |   REF   |    -    |     -     |    -    |
-| Technical risks, debt                          |    -    | **OWN**  |   REF   |    -    |     -     |    -    |
-| User stories, acceptance criteria (EARS)       |    -    |    -     |    -    | **OWN** |    REF    |    -    |
-| NFRs, quality goals                            |   REF   | **OWN**  |    -    |   REF   |    REF    |   REF   |
-| Architectural decisions (ADRs, log)            |    -    | **OWN**  |    -    |    -    |     -     |    -    |
-| Technology selections                          |    -    | **OWN**  |    -    |    -    |     -     |    -    |
-| Rollout, migration plan                        |   REF   | **OWN**  |   REF   |   REF   |     -     |   REF   |
-| Experiments, A/B tests                         | **OWN** |   REF    |   REF   |   REF   |     -     |   REF   |
-| Glossary, ubiquitous language                  |   REF   | **OWN**  |    -    |    -    |    REF    |    -    |
-| Stakeholders, RACI                             | **OWN** |   REF    |    -    |    -    |     -     |    -    |
-| Constraints (regulatory, org, technical)       |   REF   | **OWN**  |    -    |    -    |     -     |    -    |
+| Content type                                | product | solution | roadmap | backlog | contracts | metrics |
+| ------------------------------------------- | :-----: | :------: | :-----: | :-----: | :-------: | :-----: |
+| Vision, strategic thesis                    | **OWN** |   REF    |   REF   |    -    |     -     |    -    |
+| Target user segments, personas              | **OWN** |   REF    |    -    |   REF   |     -     |   REF   |
+| Problem statement, opportunity              | **OWN** |   REF    |   REF   |   REF   |     -     |    -    |
+| Commercial / business rationale             | **OWN** |    -     |   REF   |    -    |     -     |    -    |
+| Outcome metric targets (North Star, KPIs)   | **OWN** |    -     |   REF   |   REF   |     -     |   REF   |
+| Outcome metric instrumentation, dashboards  |    -    |    -     |    -    |    -    |     -     | **OWN** |
+| Operational / SLO metrics (latency, uptime) |    -    |   REF    |    -    |    -    |    REF    | **OWN** |
+| Product scope (in / out)                    | **OWN** |   REF    |   REF   |    -    |     -     |    -    |
+| Technical non-goals                         |   REF   | **OWN**  |    -    |    -    |     -     |    -    |
+| Feature flags (intent vs mechanism)         |   REF   | **OWN**  |   REF   |   REF   |    REF    |   REF   |
+| API contracts and schemas                   |    -    |   REF    |    -    |   REF   |  **OWN**  |    -    |
+| Component decomposition (C4 L2-L3)          |    -    | **OWN**  |    -    |    -    |     -     |    -    |
+| Data model, domain model                    |    -    | **OWN**  |    -    |    -    |    REF    |    -    |
+| Integration, BFF, anti-corruption layer     |    -    | **OWN**  |    -    |    -    |    REF    |    -    |
+| Error-handling strategy (taxonomy, retry)   |    -    | **OWN**  |    -    |   REF   |    REF    |   REF   |
+| Observability strategy                      |    -    | **OWN**  |    -    |    -    |    REF    |   REF   |
+| Phasing, sequencing                         |   REF   |   REF    | **OWN** |    -    |     -     |    -    |
+| Dependencies                                |   REF   |   REF    | **OWN** |   REF   |     -     |    -    |
+| Product / market risks                      | **OWN** |    -     |   REF   |    -    |     -     |    -    |
+| Technical risks, debt                       |    -    | **OWN**  |   REF   |    -    |     -     |    -    |
+| User stories, acceptance criteria (EARS)    |    -    |    -     |    -    | **OWN** |    REF    |    -    |
+| NFRs, quality goals                         |   REF   | **OWN**  |    -    |   REF   |    REF    |   REF   |
+| Architectural decisions (ADRs, log)         |    -    | **OWN**  |    -    |    -    |     -     |    -    |
+| Technology selections                       |    -    | **OWN**  |    -    |    -    |     -     |    -    |
+| Rollout, migration plan                     |   REF   | **OWN**  |   REF   |   REF   |     -     |   REF   |
+| Experiments, A/B tests                      | **OWN** |   REF    |   REF   |   REF   |     -     |   REF   |
+| Glossary, ubiquitous language               |   REF   | **OWN**  |    -    |    -    |    REF    |    -    |
+| Stakeholders, RACI                          | **OWN** |   REF    |    -    |    -    |     -     |    -    |
+| Constraints (regulatory, org, technical)    |   REF   | **OWN**  |    -    |    -    |     -     |    -    |
 
 ### 4.5 Per-artefact negative constraints
 
-Each template begins with a `<!-- DO NOT INCLUDE -->` block. This is the
-enforcement mechanism for the WHAT/WHY vs HOW seam.
+Negative constraints are enforcement rules for the WHAT/WHY vs HOW
+seam. They live in **two** places:
+
+1. The skill's `SKILL.md` body, under a `## Negative constraints`
+   heading. The skill reads them every invocation and refuses to emit
+   prohibited content. This is the primary enforcement mechanism.
+2. The skill's `template.md`, as a top-of-file HTML comment the skill
+   can see while generating. Optional; redundant with (1) but useful
+   as an inline reminder when the template is edited by a human.
+
+Negative constraints **do not** appear in the generated output
+artefact. The final `product.md`, `solution.md`, `roadmap.md`, and
+`backlog.md` stand on their own; readers should not see meta-instructions
+that were directed at the skill. A doc-lint rule (`pnpm lint:docs`)
+asserts that no artefact under `docs/`, `domain/`, or `work/` contains
+`<!-- DO NOT INCLUDE -->`.
+
+The rules themselves:
 
 **`product.md`** must not contain:
 
@@ -374,15 +390,37 @@ enforcement mechanism for the WHAT/WHY vs HOW seam.
 
 **`roadmap.md`** must not contain:
 
-- Acceptance criteria or story-level detail
-- Component names, schemas, or file paths
-- Dates beyond "Now"
+- Epic IDs, story IDs, or any identifier from the backlog. A roadmap
+  is written before epics exist; it names outcomes, not the work
+  items that deliver them.
+- Story-level acceptance criteria, deliverables lists, or estimates.
+- Component names, schemas, file paths, API names, or any artefact
+  only the solution doc should own.
+- Dates beyond the current "Now" phase. Commitments evaporate; phase
+  gates hold.
+- A dependency table of work items. Dependencies at roadmap scope are
+  between the product domain and other teams, not between epics.
+
+A roadmap entry at any phase is a **customer-visible capability**
+(what the customer will be able to do) plus an **exit criterion**
+(what has to be true for the phase to close). If a line could be
+cut from the roadmap without the reader losing sight of what the
+customer gets or when the phase is done, that line belongs in the
+backlog.
 
 **`backlog.md`** must not contain:
 
-- Business-case narrative (belongs in product.md)
-- Architecture rationale (belongs in solution.md or ADRs)
-- Pattern definitions (belongs in solution.md)
+- Business-case narrative (belongs in product.md).
+- Architecture rationale (belongs in solution.md or ADRs).
+- Pattern definitions (belongs in solution.md).
+- Phase exit criteria. Phase scope ends where the backlog's epic
+  decomposition begins; exit criteria live in the roadmap and are
+  referenced by the backlog.
+
+The epic decomposition that **implements** a roadmap phase lives in
+the backlog. The mapping is many-to-one: several epics may deliver a
+single roadmap outcome. The roadmap does not cite epics; the backlog
+cites the roadmap phase each epic contributes to.
 
 **`contracts.md`** must not contain:
 
@@ -442,6 +480,37 @@ solution content.
 8. Deployment and environments
 9. Architectural decisions (ADR log, linked MADR entries)
 10. Risks, technical debt, open questions
+
+### 4.8 roadmap.md vs backlog.md -- the temporal seam
+
+Roadmap and backlog are written at different times against different
+audiences, and confusing the two produces the same failure mode every
+time: a roadmap that reads as a backlog table of contents.
+
+| Dimension        | `roadmap.md`                                 | `backlog.md`                                    |
+| ---------------- | -------------------------------------------- | ----------------------------------------------- |
+| When written     | Before epics exist                           | After the roadmap has sequenced outcomes        |
+| Unit             | Customer-visible capability + exit criterion | Epic + dependency + estimate                    |
+| Vocabulary       | Outcome, capability, phase, gate             | Epic, story, priority, points, work package     |
+| Stable over      | Life of the domain                           | Life of the phase                               |
+| Primary audience | Product, leads, stakeholders                 | Squad delivering the phase                      |
+| Cites the other? | No -- does not cite epics                    | Yes -- cites the roadmap phase each epic serves |
+
+Three concrete rules flow from this:
+
+1. **The roadmap is written first and never lists epics.** If a
+   roadmap entry needs an epic ID to make sense, the entry is not
+   outcome-shaped yet. Rewrite it as the customer-visible capability
+   that the future epic will deliver.
+2. **The backlog cites the roadmap, not the other way around.** Every
+   epic row references the phase of the roadmap it contributes to.
+   The mapping is many-to-one: several epics typically deliver one
+   roadmap outcome.
+3. **When a phase gate moves, the roadmap changes; the backlog
+   usually does not.** When a story's scope changes, the backlog
+   changes; the roadmap usually does not. If a change touches both,
+   either the outcome has genuinely shifted (rare) or the change has
+   been expressed in the wrong artefact.
 
 ## 5. Work-package model
 
@@ -541,17 +610,17 @@ Domain `backlog.md` carries a shorter epic schema:
 
 ### 6.1 Doc-to-destination mapping
 
-| Space artefact                            | Destination system | Jira type     | Notes                                         |
-| ----------------------------------------- | ------------------ | ------------- | --------------------------------------------- |
-| `docs/product.md` (platform)              | Confluence         | -             | Portfolio context page                        |
-| `docs/roadmap.md` (platform)              | Jira Plans + Conf  | Initiative    | Phases become fix versions                    |
-| `domain/{d}/product.md`                   | Confluence         | -             | Domain context page                           |
-| `domain/{d}/solution.md`                  | Confluence         | -             | Architecture page; linked from every Epic     |
-| `domain/{d}/contracts.md`                 | Confluence         | -             | Index page; links to source files             |
-| `domain/{d}/roadmap.md`                   | Jira Plans         | Phase labels  | Fix-version or release                        |
-| `domain/{d}/backlog.md`                   | Jira               | **Epic**      | One per row                                   |
-| `work/{d}/{wp}/design.md`                 | Confluence         | -             | Linked from the Jira Epic as design page      |
-| `work/{d}/{wp}/backlog.md`                | Jira               | **Story**     | Under the Epic; AC rendered per config        |
+| Space artefact               | Destination system | Jira type    | Notes                                     |
+| ---------------------------- | ------------------ | ------------ | ----------------------------------------- |
+| `docs/product.md` (platform) | Confluence         | -            | Portfolio context page                    |
+| `docs/roadmap.md` (platform) | Jira Plans + Conf  | Initiative   | Phases become fix versions                |
+| `domain/{d}/product.md`      | Confluence         | -            | Domain context page                       |
+| `domain/{d}/solution.md`     | Confluence         | -            | Architecture page; linked from every Epic |
+| `domain/{d}/contracts.md`    | Confluence         | -            | Index page; links to source files         |
+| `domain/{d}/roadmap.md`      | Jira Plans         | Phase labels | Fix-version or release                    |
+| `domain/{d}/backlog.md`      | Jira               | **Epic**     | One per row                               |
+| `work/{d}/{wp}/design.md`    | Confluence         | -            | Linked from the Jira Epic as design page  |
+| `work/{d}/{wp}/backlog.md`   | Jira               | **Story**    | Under the Epic; AC rendered per config    |
 
 Rule: **Confluence owns prose, Jira owns work.**
 
@@ -561,12 +630,12 @@ Configured in `.space/config`:
 
 ```yaml
 issues:
-  source: jira                  # jira | markdown
+  source: jira # jira | local
   provider: jira-cloud
   project: STORE
-  ac_format: ears+gherkin       # ears | gherkin | ears+gherkin
-  ac_placement: description     # description | subtasks | custom_field:AC
-  key_canonical: jira           # jira | local
+  ac_format: ears+gherkin # ears | gherkin | ears+gherkin
+  ac_placement: description # description | subtasks | custom_field:AC
+  key_canonical: jira # jira | local
 ```
 
 **When `source: jira`**: Jira is authoritative. The Jira key is the
@@ -602,19 +671,19 @@ space publish jira
 
 ### 6.4 Field mapping
 
-| Markdown field | Jira field                                         |
-| -------------- | -------------------------------------------------- |
-| `[ID]`         | External ID on first sync; key on subsequent       |
-| Title          | Summary                                            |
-| Status         | Status (via workflow transitions)                  |
-| Priority       | Priority                                           |
-| Estimate       | Story points                                       |
-| Epic           | Parent (Epic link)                                 |
-| Labels         | Labels                                             |
-| Depends on     | Issue link: `blocks` / `is blocked by`             |
-| Deliverable    | Description (first paragraph)                      |
-| Design         | Description (remote link to Confluence page)       |
-| Acceptance     | Description (checklist) or sub-tasks, per config   |
+| Markdown field | Jira field                                       |
+| -------------- | ------------------------------------------------ |
+| `[ID]`         | External ID on first sync; key on subsequent     |
+| Title          | Summary                                          |
+| Status         | Status (via workflow transitions)                |
+| Priority       | Priority                                         |
+| Estimate       | Story points                                     |
+| Epic           | Parent (Epic link)                               |
+| Labels         | Labels                                           |
+| Depends on     | Issue link: `blocks` / `is blocked by`           |
+| Deliverable    | Description (first paragraph)                    |
+| Design         | Description (remote link to Confluence page)     |
+| Acceptance     | Description (checklist) or sub-tasks, per config |
 
 ## 7. Skill changeset
 
@@ -622,40 +691,40 @@ The complete set of changes to `packages/skills/`. Ordered by priority.
 
 ### 7.1 P0 -- seam and routing
 
-| Action                                                                  | Skill                       |
-| ----------------------------------------------------------------------- | --------------------------- |
-| **Add** arc42-lite `write-solution` skill with stub and full modes      | `write-solution/`           |
-| **Refactor** `write-product`: pitch mode (Phase 0) + product mode (P2)  | `write-product/`            |
-| **Refactor** `write-backlog` domain scope: phase-1-only epic list       | `write-backlog/`            |
-| **Split** `design` into walking-skeleton and TDD modes                  | `design/` (rename/extend)   |
-| **Add** executable `write-contracts` skill                              | `write-contracts/`          |
-| **Add** negative-constraint comment blocks to every template            | all `template*.md`          |
-| **Rewrite** every skill description to Anthropic's rules                | all `SKILL.md`              |
-| **Lock down** backlog schema (EARS + Gherkin) in both templates         | `write-backlog/template*`   |
-| **Add** enriched frontmatter schema across all skills                   | all `SKILL.md`              |
+| Action                                                                 | Skill                     |
+| ---------------------------------------------------------------------- | ------------------------- |
+| **Add** arc42-lite `write-solution` skill with stub and full modes     | `write-solution/`         |
+| **Refactor** `write-product`: pitch mode (Phase 0) + product mode (P2) | `write-product/`          |
+| **Refactor** `write-backlog` domain scope: phase-1-only epic list      | `write-backlog/`          |
+| **Split** `design` into walking-skeleton and TDD modes                 | `design/` (rename/extend) |
+| **Add** executable `write-contracts` skill                             | `write-contracts/`        |
+| **Add** negative-constraint comment blocks to every template           | all `template*.md`        |
+| **Rewrite** every skill description to Anthropic's rules               | all `SKILL.md`            |
+| **Lock down** backlog schema (EARS + Gherkin) in both templates        | `write-backlog/template*` |
+| **Add** enriched frontmatter schema across all skills                  | all `SKILL.md`            |
 
 ### 7.2 P1 -- tooling, orchestration, views
 
-| Action                                                                  | Skill / location            |
-| ----------------------------------------------------------------------- | --------------------------- |
-| **Add** `space-index` router skill; body auto-generated in CI           | `space-index/`              |
-| **Add** generated role views: `pm.md`, `architect.md`, `engineer.md`    | `packages/skills/views/`    |
-| **Add** profile YAMLs and `space sync skills --profile X`               | `packages/skills/profiles/` |
-| **Add** description eval loop (`skill-creator run_loop.py`) in CI       | tooling                     |
-| **Add** `pnpm lint:docs`: frontmatter schema, link check, budgets       | tooling                     |
-| **Add** `plan-delivery` orchestrator for Phase-0 artefact sequencing    | `plan-delivery/`            |
-| **Add** `refine-docs` sprint-end skill (promote ADRs -> solution.md)    | `refine-docs/`              |
-| **Add** `space publish jira` with source-aware behaviour + dry-run      | `packages/space/`           |
+| Action                                                               | Skill / location            |
+| -------------------------------------------------------------------- | --------------------------- |
+| **Add** `space-index` router skill; body auto-generated in CI        | `space-index/`              |
+| **Add** generated role views: `pm.md`, `architect.md`, `engineer.md` | `packages/skills/views/`    |
+| **Add** profile YAMLs and `space sync skills --profile X`            | `packages/skills/profiles/` |
+| **Add** description eval loop (`skill-creator run_loop.py`) in CI    | tooling                     |
+| **Add** `pnpm lint:docs`: frontmatter schema, link check, budgets    | tooling                     |
+| **Add** `plan-delivery` orchestrator for Phase-0 artefact sequencing | `plan-delivery/`            |
+| **Add** `refine-docs` sprint-end skill (promote ADRs -> solution.md) | `refine-docs/`              |
+| **Add** `space publish jira` with source-aware behaviour + dry-run   | `packages/space/`           |
 
 ### 7.3 P2 -- optional and regulated-only
 
-| Action                                                                  | Skill / location            |
-| ----------------------------------------------------------------------- | --------------------------- |
-| **Retire** `write-requirements` from default profile; keep as optional  | `requirements/`             |
-| **Mark** `write-metrics`, `write-roadmap` as `stage: deferred`          | both `SKILL.md`             |
-| **Add** `space publish confluence` for prose docs                       | `packages/space/`           |
-| **Add** nested `AGENTS.md` template: root + per-domain                  | `packages/create-space/`    |
-| **Add** `write-adr` standalone skill (separate from `plan-adr`)         | `write-adr/`                |
+| Action                                                                 | Skill / location         |
+| ---------------------------------------------------------------------- | ------------------------ |
+| **Retire** `write-requirements` from default profile; keep as optional | `requirements/`          |
+| **Mark** `write-metrics`, `write-roadmap` as `stage: deferred`         | both `SKILL.md`          |
+| **Add** `space publish confluence` for prose docs                      | `packages/space/`        |
+| **Add** nested `AGENTS.md` template: root + per-domain                 | `packages/create-space/` |
+| **Add** `write-adr` standalone skill (separate from `plan-adr`)        | `write-adr/`             |
 
 ## 8. Migration plan for storefront-space
 
@@ -706,20 +775,20 @@ be invalidated. The migration is phased to minimise disruption.
 Cart is the most diverged domain (13 docs, 20-30 pages). Recommended fold-
 forward actions at the next phase gate:
 
-| Current file                                   | Action                                                         |
-| ---------------------------------------------- | -------------------------------------------------------------- |
-| `domain/cart/product.md` (175 lines)           | Trim to pitch + product-stage sections; strip tech content     |
-| `domain/cart/design.md` (425+ lines)           | Promote to `domain/cart/solution.md` (full mode)               |
-| `domain/cart/contracts.md`                     | Keep; align to executable schema                               |
-| `domain/cart/requirements.md` (381+ lines)     | Archive to `_legacy/`; AC already lives in WP backlogs         |
-| `domain/cart/metrics.md`                       | Keep; verify baselines are measured, not aspirational          |
-| `domain/cart/roadmap.md`                       | Trim to Now/Next/Later; remove epic-level detail               |
-| `domain/cart/backlog.md` (429+ lines)          | Trim to Alpha-phase epics; later phases -> placeholders        |
-| `domain/cart/dependencies/*.md`                | Keep as-is; these are real cross-squad artefacts               |
-| `domain/cart/decisions/proposed-adrs.md`       | Split into individual `ADR-NNNN-*.md` files                    |
-| `domain/cart/research/legacy-analysis.md`      | Keep as-is (one-off input artefact)                            |
-| `work/cart/01-foundations/design.md` (595 ln)  | Trim aggressively: reference `solution.md`, don't re-narrate   |
-| `work/cart/01-foundations/backlog.md`          | Normalise to the Section 5.3 schema                            |
+| Current file                                  | Action                                                       |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| `domain/cart/product.md` (175 lines)          | Trim to pitch + product-stage sections; strip tech content   |
+| `domain/cart/design.md` (425+ lines)          | Promote to `domain/cart/solution.md` (full mode)             |
+| `domain/cart/contracts.md`                    | Keep; align to executable schema                             |
+| `domain/cart/requirements.md` (381+ lines)    | Archive to `_legacy/`; AC already lives in WP backlogs       |
+| `domain/cart/metrics.md`                      | Keep; verify baselines are measured, not aspirational        |
+| `domain/cart/roadmap.md`                      | Trim to Now/Next/Later; remove epic-level detail             |
+| `domain/cart/backlog.md` (429+ lines)         | Trim to Alpha-phase epics; later phases -> placeholders      |
+| `domain/cart/dependencies/*.md`               | Keep as-is; these are real cross-squad artefacts             |
+| `domain/cart/decisions/proposed-adrs.md`      | Split into individual `ADR-NNNN-*.md` files                  |
+| `domain/cart/research/legacy-analysis.md`     | Keep as-is (one-off input artefact)                          |
+| `work/cart/01-foundations/design.md` (595 ln) | Trim aggressively: reference `solution.md`, don't re-narrate |
+| `work/cart/01-foundations/backlog.md`         | Normalise to the Section 5.3 schema                          |
 
 ## 9. Open questions
 
