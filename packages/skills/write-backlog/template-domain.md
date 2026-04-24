@@ -7,129 +7,142 @@ owner: <!-- Squad name -->
 status: Draft
 last_updated: <!-- YYYY-MM-DD -->
 figma: <!-- Figma link, or omit -->
-parent_product: product/product.md
+parent_product: <!-- domain/{d}/product.md or docs/product.md -->
 related:
-  - domain/{domain}/product.md
-  - domain/{domain}/roadmap.md
-  - domain/{domain}/metrics.md
-  - domain/{domain}/requirements.md
-  - domain/{domain}/design.md
-  - domain/{domain}/contracts.md
+  - <!-- domain/{d}/product.md -->
+  - <!-- domain/{d}/solution.md -->
+  - <!-- domain/{d}/roadmap.md -->
+  - <!-- domain/{d}/contracts.md -->
 ---
 
 # Backlog -- {Domain} (domain)
 
-Domain-level backlog for {domain}. Lists epics, objectives, dependencies,
-status, and the work package that carries each one when active. Story-level
-detail lives in per-work-package backlogs under `work/`.
+Domain-level epic backlog. Lists the epics the {domain} domain will deliver,
+their objective, dependencies, status, and the work package that carries each
+one when active. Story-level detail lives in per-work-package backlogs under
+`work/`.
+
+- **Product:** [`domain/{d}/product.md`](product.md)
+- **Solution:** [`domain/{d}/solution.md`](solution.md)
+- **Phases, gates, milestones:** [`domain/{d}/roadmap.md`](roadmap.md)
 
 ## 1. Summary
 
-### Objective
+**Objective.** <!-- What does this domain deliver and why? Reference the product strategy. -->
 
-<!-- What does this domain deliver and why? Reference the product strategy. -->
+**Delivery approach.** <!-- Staged increments or monolith? Wave delivery pattern? -->
 
-### Delivery approach
+**Prerequisites (complete).**
 
-<!-- Staged increments or monolith? Wave delivery pattern? -->
+- <!-- what is already in place -->
 
-### Prerequisites (complete)
+**Prerequisites (required before core work ships).**
 
-<!-- What is already in place that this domain depends on. -->
+- <!-- what must be resolved before the first epic can complete -->
 
-### Prerequisites (required before core work ships)
-
-<!-- What must be resolved before the first epic can complete. -->
-
-### Out of scope (this domain)
-
-<!-- Explicitly deferred work items with cross-references. -->
+**Out of scope.** The canonical list of no-gos lives in
+[`product.md`](product.md) §5. Phase-gated deferrals live in
+[`roadmap.md`](roadmap.md) §Later. This backlog does not restate either.
 
 ## 2. Conventions
 
 | Convention | Value |
-| ---------- | ----- |
-| Epic ID format | `{DOM}{00}` (e.g., `{DOM}01`) |
-| Story ID format | `{DOM}{00}-{00}` (stored in work-package backlog) |
-| Dependency ID | `<!-- BFF-ASK-{00} or CENTRAL-{00} etc. -->` |
-| Status values | Not started, In progress, In review, Done, Blocked |
-| Priority levels | P0 (must have), P1 (should have), P2 (stretch), P3 (defer) |
+| --- | --- |
+| Epic ID | `{DOM}{nn}` (e.g. `{DOM}01`) |
+| Story ID | `{DOM}{nn}-{nn}` (lives in the work-package backlog) |
+| Status | Not started, In progress, In review, Done, Blocked |
+| Priority | P0 (must have), P1 (should have), P2 (stretch), P3 (defer) |
 | Estimation | Fibonacci story points (1, 2, 3, 5, 8, 13) |
+| Acceptance format | EARS + Gherkin at work-package scope |
 
 ## 3. Epic breakdown
 
-| Epic | Title | Roadmap phase | Priority | Dependencies | Points | Work package | Status |
-| ---- | ----- | ------------- | -------- | ------------ | ------ | ------------ | ------ |
-| {DOM}01 | <!-- title --> | Phase 1 -- Alpha | P0 | None | TBD | `work/{domain}/01-{slug}/` | Not started |
+<!--
+Now-phase rows: full detail in §4 Epic detail.
+Next/Later-phase rows: single-line placeholder (no §4 entry unless --depth full).
+-->
 
-## 4. Traceability
+| Epic | Title | Phase | Priority | Deps | Points | Work package | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| {DOM}01 | <!-- Now-phase title --> | Now | P0 | - | TBD | `work/{d}/01-{slug}/` | Not started |
+| {DOM}02 | <!-- Now-phase title --> | Now | P0 | {DOM}01 | TBD | `work/{d}/02-{slug}/` | Not started |
+| {DOM}03 | <!-- Next-phase title --> | Next | P1 | {DOM}02 | TBD | `work/{d}/03-{slug}/` (planned) | Not started |
 
-### Requirements to epics
+## 4. Epic detail
 
-| Requirement | Epic(s) |
-| ----------- | ------- |
-| FR-01 <!-- name --> | {DOM}01 |
-
-### Figma frames to epics
-
-| Figma frame | Epic(s) |
-| ----------- | ------- |
-| <!-- frame name --> | {DOM}01 |
-
-## 5. Epics
-
----
+<!--
+Write a full entry for every Now-phase epic.
+Next/Later-phase epics are placeholders unless --depth full was passed.
+-->
 
 ### {DOM}01 -- {Title}
 
-**Scope:** <!-- What this epic delivers in one sentence. -->
+**Scope.** <!-- What this epic delivers in one paragraph. -->
 
-**Key deliverables:** <!-- comma-separated list of artefacts produced -->
+**Key deliverables.** <!-- comma-separated list -->
 
-**Dependencies:** <!-- None, or named epic / external dependency IDs -->
-**Status:** Not started.
-**Work package:** `work/{domain}/01-{slug}/` -- story detail in `work/{domain}/01-{slug}/backlog.md`.
+**Dependencies.** None (prerequisites satisfied).
+
+**Status.** Not started. **Work package:** `work/{d}/01-{slug}/` (planned).
 
 ---
 
-## 6. Dependency graph
+### {DOM}02 -- {Title}
+
+**Scope.** <!-- What this epic delivers. -->
+
+**Key deliverables.** <!-- comma-separated list -->
+
+**Dependencies.** {DOM}01.
+
+**Status.** Not started. **Work package:** `work/{d}/02-{slug}/` (planned).
+
+---
+
+## 5. Dependency graph
 
 ```text
-{DOM}01 Foundation
-    |
-    v
-{DOM}02   {DOM}03
-    \       /
-     v     v
-     {DOM}04
+{DOM}01 (foundation)
+  +-- {DOM}02
+        +-- {DOM}03
 ```
 
-### Critical path
+## 6. Critical path
 
-**{DOM}01 → {DOM}02 → {DOM}04** (narrative: why this is critical)
+```text
+{DOM}01 → {DOM}02 → {DOM}03
+```
 
-### Parallelisation
+<!-- One-line narrative: why this is the critical path. -->
 
-| Workstream | Sequence | Notes |
-| ---------- | -------- | ----- |
-| **A: core** | {DOM}01 → {DOM}02 | Critical path |
-| **B: supporting** | {DOM}03 | Independent after {DOM}01 |
+## 7. Parallelisation opportunities
 
-### Minimum viable slice
+| Workstream | Can run in parallel with |
+| --- | --- |
+| {DOM}02 | {DOM}03 (once {DOM}01 ships) |
 
-<!-- If scope pressure forces a cut, what is the smallest coherent delivery?
-List the epics and what is lost. -->
+## 8. Minimum viable slice
 
-## 7. Risks and assumptions
+If scope pressure forces a cut, the smallest coherent release:
 
-### Assumptions
+- **{DOM}01** — foundation.
+- **{DOM}02** — <!-- first user-visible slice -->.
+
+Result: <!-- one sentence on what the customer gets >.
+
+## 9. Assumptions
 
 | ID | Assumption | Impact if wrong |
-| -- | ---------- | --------------- |
+| --- | --- | --- |
 | A1 | <!-- assumption --> | <!-- impact --> |
 
-### Risks
+## 10. Risks (delivery-scoped)
+
+Technical and architecture-scoped risks are authoritative in
+[`solution.md`](solution.md) §10.1 and not duplicated here. This register
+covers delivery risks only: scheduling, baselines, and cross-squad
+coordination.
 
 | ID | Risk | Likelihood | Impact | Mitigation |
-| -- | ---- | ---------- | ------ | ---------- |
-| R1 | <!-- risk --> | Medium | Medium | <!-- mitigation --> |
+| --- | --- | --- | --- | --- |
+| R1 | <!-- delivery risk --> | Medium | Medium | <!-- mitigation --> |
