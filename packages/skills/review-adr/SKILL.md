@@ -1,6 +1,12 @@
 ---
 name: review-adr
-description: Review and finalise a draft Architecture Decision Record
+description: >
+  Reviews and finalises a draft Architecture Decision Record (ADR). Use when
+  the user mentions "review this ADR", "finalise ADR-{NNNN}", "check this
+  architecture decision", or "the ADR is ready for review". Checks completeness,
+  alternatives considered, and consequences stated. Do NOT use to create a new
+  ADR — use write-adr for that. Do NOT use to plan which ADRs are needed —
+  use plan-adr for that.
 when_to_use: >
   Use when an ADR has status Proposed or Draft and needs review before
   acceptance. Examples: "review ADR-0017", "finalise the workflow engine ADR".

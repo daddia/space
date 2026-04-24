@@ -1,6 +1,13 @@
 ---
 name: requirements
-description: Write a requirements document for an epic or task
+description: >
+  Drafts requirements.md for an epic in regulated or contractual contexts where
+  external traceability is required. Use when the user mentions "write
+  requirements" or "we need formal requirements for {epic}" and the domain is
+  regulated (payments, auth, compliance). Retired from the default profile —
+  most domains use story-level AC in backlog.md instead. Do NOT use for
+  standard epics — use write-backlog. Do NOT use for architecture — use
+  write-solution.
 when_to_use: >
   Use when starting a new epic and requirements need to be defined, or when
   refining requirements for an existing epic or task. Examples: "write

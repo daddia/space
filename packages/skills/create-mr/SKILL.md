@@ -1,6 +1,12 @@
 ---
 name: create-mr
-description: Create a merge request (or pull request) for the current branch
+description: >
+  Creates a merge request or pull request for the current branch after
+  implementation is complete. Use when the user mentions "create an MR", "open
+  a PR", "raise a pull request", or "merge this branch". Generates a title,
+  description, labels, and reviewer suggestions from the diff and any linked
+  story. Do NOT use for code review — use review-code. Do NOT use before
+  implementation is done — use implement first.
 when_to_use: >
   Use after implementation is complete and the code review has passed, to open
   a merge request targeting the default branch. Examples: "create an MR for

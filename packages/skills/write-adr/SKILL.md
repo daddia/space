@@ -1,6 +1,12 @@
 ---
 name: write-adr
-description: Document a consequential architecture decision as an ADR. Use when proposing a new dependency, architecture pattern, API design, infrastructure change, or any hard-to-reverse technical choice.
+description: >
+  Documents a consequential architecture decision as an ADR-NNNN.md file. Use
+  when the user mentions "write an ADR", "document this architecture decision",
+  "ADR for {choice}", or "record the decision about {topic}". Covers the
+  context, options considered, decision, and consequences. Do NOT use to
+  identify which decisions need ADRs — use plan-adr first. Do NOT use to
+  review a draft ADR — use review-adr.
 when_to_use: >
   Examples: "write an ADR for choosing Zustand", "document the BFF
   integration pattern decision", "write an ADR for the cart mutation

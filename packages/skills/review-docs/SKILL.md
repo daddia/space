@@ -1,6 +1,12 @@
 ---
 name: review-docs
-description: Review requirements and design documents for completeness and alignment before development begins
+description: >
+  Reviews product.md and solution.md for completeness and alignment before
+  development begins. Use when the user mentions "review the docs for {epic}",
+  "check the design and requirements are ready", "are these docs good enough to
+  start building", or "pre-implementation doc review". Flags gaps, inconsistencies,
+  and drift between documents. Do NOT use to review code — use review-code for
+  that. Do NOT use to review an ADR — use review-adr.
 when_to_use: >
   Use when requirements and/or design documents exist for an epic or task and
   need review before implementation starts. Examples: "review docs for

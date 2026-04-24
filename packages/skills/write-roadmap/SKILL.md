@@ -1,6 +1,12 @@
 ---
 name: write-roadmap
-description: Write a phased delivery roadmap for a platform or domain
+description: >
+  Drafts roadmap.md for a platform or domain in Now / Next / Later format with
+  outcome-based phases and exit criteria. Use when the user mentions "write the
+  roadmap for {domain}", "create the delivery roadmap", "sequence the phases",
+  or "what are the phases for {domain}". Produces outcome-based phases — not
+  an epic list. Do NOT use to list epics — use write-backlog for that. Do NOT
+  use before product.md exists — use write-product first.
 when_to_use: >
   Use when a domain's product doc is approved and delivery needs to be
   sequenced into phases with gates. Examples: "write the roadmap for cart",

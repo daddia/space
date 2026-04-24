@@ -1,6 +1,13 @@
 ---
 name: write-metrics
-description: Write a metrics document defining north star, input, and guardrail metrics for a domain
+description: >
+  Drafts metrics.md defining north-star, input, and guardrail metrics for a
+  domain. Use when the user mentions "write the metrics for {domain}", "define
+  success metrics", "create metrics.md", or "what should we measure". Deferred
+  by default — invoke after the walking skeleton has shipped and baselines are
+  measurable, not before. Do NOT use before the foundation sprint — baselines
+  cannot be defined without shipped code. Do NOT use for product outcomes —
+  those live in product.md §7.
 when_to_use: >
   Use when a domain needs its success metrics defined before or during
   discovery. Examples: "write the metrics for cart", "define success metrics

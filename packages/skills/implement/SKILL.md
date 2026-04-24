@@ -1,6 +1,12 @@
 ---
 name: implement
-description: Implement a feature or task using existing patterns and standards
+description: >
+  Implements code for a story or task against an approved design.md and
+  backlog.md. Use when the user mentions "implement", "build", "code this
+  story", "write the code for {story}", or "make this feature work". Reads the
+  design document first, then makes targeted changes following existing
+  patterns. Do NOT use before design is approved — use write-wp-design first.
+  Do NOT use for code review — use review-code after implementation.
 when_to_use: >
   Use when writing code for a task that has requirements and/or a design
   document. Examples: "implement PROJ-001", "build the context assembler

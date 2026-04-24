@@ -1,6 +1,12 @@
 ---
 name: plan-adr
-description: Identify and prioritise the architecture decisions that need ADRs for an epic or domain. Produces a prioritised proposed-ADR list — does not write full ADRs.
+description: >
+  Identifies and prioritises the architecture decisions that need ADRs before
+  technical design proceeds. Use when the user mentions "plan ADRs", "what ADRs
+  do we need", "identify architecture decisions for {domain}", or "which
+  decisions need documenting". Produces a prioritised proposed-ADR list —
+  does not write full ADRs. Do NOT use to write an ADR — use write-adr for
+  that. Do NOT use to review an existing ADR — use review-adr.
 when_to_use: >
   Use before starting technical design on an epic or domain to identify which
   decisions warrant ADRs before writing them. Examples: "plan ADRs for the

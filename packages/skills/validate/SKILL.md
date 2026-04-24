@@ -1,10 +1,12 @@
 ---
 name: validate
 description: >
-  Perform a final stakeholder review and validation that an epic is complete.
-  Use when an epic's implementation is finished and needs acceptance validation
-  before marking it done. Examples: "validate EPIC-01", "final review of EPIC-03",
-  "check EPIC-02 is complete".
+  Performs a final stakeholder validation that an epic is complete against its
+  backlog.md acceptance criteria. Use when the user mentions "validate {epic}",
+  "final review of {epic}", "check {epic} is complete", or "acceptance review".
+  Confirms every story's EARS and Gherkin criteria hold and the phase exit
+  criteria in roadmap.md are met. Do NOT use for code review — use review-code.
+  Do NOT use to review design docs before implementation — use review-docs.
 allowed-tools:
   - Read
   - Write

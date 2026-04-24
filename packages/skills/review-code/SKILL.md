@@ -1,6 +1,12 @@
 ---
 name: review-code
-description: Perform a comprehensive code review of changes in a branch or PR
+description: >
+  Performs a comprehensive code review of changes in a branch or PR. Use when
+  the user mentions "review this code", "review the PR", "check the diff for
+  {story}", or "code review feat/{branch}". Checks quality, correctness,
+  security, and compliance with design.md and backlog.md acceptance criteria.
+  Do NOT use before implementation is done — use implement first. Do NOT use to
+  review design documents — use review-docs for that.
 when_to_use: >
   Use when reviewing code for quality, correctness, security, and compliance
   with project standards before merge. Examples: "review the changes in this
