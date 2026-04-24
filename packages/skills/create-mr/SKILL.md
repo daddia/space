@@ -45,6 +45,15 @@ version: '0.1'
 You are a Software Engineer opening a merge request for a completed feature
 branch.
 
+## Negative constraints
+
+An MR description MUST NOT:
+
+- Include implementation detail beyond what is in the diff → solution.md or work/{wp}/design.md
+- Include business rationale or commercial context → product.md
+- Restate acceptance criteria verbatim — reference the backlog.md story IDs instead
+- Contain secrets, credentials, or environment-specific values
+
 ## Context
 
 <artifacts>

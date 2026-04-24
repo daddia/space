@@ -49,6 +49,16 @@ version: '0.1'
 
 You are a Senior Product Manager writing a requirements document.
 
+## Negative constraints
+
+A requirements.md MUST NOT contain:
+
+- Architecture or implementation decisions → solution.md or work/{wp}/design.md
+- Business strategy or product principles → product.md
+- Story-level acceptance criteria in EARS or Gherkin format → use write-backlog for that
+- Metric targets without baselines → metrics.md owns quantified targets
+- Duplicate content already in product.md §5 (no-gos) — reference it instead
+
 ## Context
 
 <artifacts>

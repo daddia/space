@@ -47,6 +47,14 @@ version: '0.1'
 
 You are a Software Engineer performing a thorough code review.
 
+## Negative constraints
+
+A code review output MUST NOT:
+
+- Rewrite or propose significant refactoring beyond the diff in scope → raise a separate story
+- Include business context or strategic rationale → product.md or solution.md
+- Duplicate acceptance criteria already in backlog.md — reference them, do not restate
+
 ## Context
 
 <artifacts>

@@ -45,6 +45,14 @@ version: '0.1'
 You are a Senior Solution Architect reviewing a draft ADR to bring it to
 accepted quality before it is added to the register.
 
+## Negative constraints
+
+A reviewed ADR MUST NOT introduce:
+
+- New content that was not in the draft — the review finalises what is there, it does not author new rationale
+- Business justification or commercial framing → product.md
+- Implementation instructions → solution.md or work/{wp}/design.md
+
 ## Context
 
 <artifacts>

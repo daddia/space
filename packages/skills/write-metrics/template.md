@@ -15,6 +15,16 @@ related:
   - domain/{domain}/backlog.md
 ---
 
+<!--
+DRAFTING AIDE — DELETE THIS BLOCK BEFORE SAVING THE OUTPUT FILE.
+DO NOT INCLUDE in metrics.md:
+  - Target values without a baseline                   → baselines must be measured before targets are set
+  - Business rationale for a metric                    → product.md §7
+  - Implementation detail (how events are fired)       → solution.md §7.2 or contracts.md §5
+  - Operational SLO alert thresholds                   → these are engineering config, not a metrics doc
+Metrics.md owns: north-star definition, input metrics, guardrail definitions, measurement sources, and review cadence.
+-->
+
 # Metrics -- {Domain}
 
 This document defines the metrics that govern the {domain} domain: the north

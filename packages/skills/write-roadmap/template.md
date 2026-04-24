@@ -16,6 +16,17 @@ related:
   - domain/{domain}/backlog.md
 ---
 
+<!--
+DRAFTING AIDE — DELETE THIS BLOCK BEFORE SAVING THE OUTPUT FILE.
+DO NOT INCLUDE in roadmap.md:
+  - Epic IDs or story IDs                              → backlog.md
+  - Story-level acceptance criteria or deliverable lists → work/{wp}/backlog.md
+  - Component names, schemas, or file paths            → solution.md
+  - Dates beyond the current "Now" phase               → commitments evaporate; phase gates hold
+  - Technical implementation detail                    → solution.md or work/{wp}/design.md
+A roadmap entry is: one customer-visible outcome + exit criteria for that phase.
+-->
+
 # Roadmap -- {Domain}
 
 ## 1. Roadmap intent

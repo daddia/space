@@ -10,6 +10,16 @@ related:
   - architecture/decisions/register.md
 ---
 
+<!--
+DRAFTING AIDE — DELETE THIS BLOCK BEFORE SAVING THE OUTPUT FILE.
+DO NOT INCLUDE in the ADR proposal list:
+  - Full ADR bodies or decisions                       → write each ADR separately using write-adr
+  - Epic scope or story decomposition                  → backlog.md
+  - Implementation detail                              → solution.md or work/{wp}/design.md
+  - Decisions already governed by an existing ADR      → reference the existing ADR instead
+This document lists decisions that need an ADR written; it does not write them.
+-->
+
 # Proposed ADRs -- {Epic ID or Domain}
 
 Prioritised list of Architecture Decision Records that need to be written
