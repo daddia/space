@@ -11,6 +11,28 @@ allowed-tools:
   - Glob
   - Grep
 argument-hint: '<domain-name>'
+artefact: metrics.md
+phase: definition
+role:
+  - pm
+  - engineer
+domain: product
+stage: deferred
+consumes:
+  - product.md
+produces:
+  - metrics.md
+prerequisites:
+  - product.md
+related:
+  - write-product
+  - write-roadmap
+  - write-backlog
+tags:
+  - metrics
+  - kpis
+  - north-star
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

@@ -13,6 +13,27 @@ allowed-tools:
   - Grep
 argument-hint: '<epic-id-or-domain>'
 disable-model-invocation: true
+artefact: adr-plan.md
+phase: delivery
+role:
+  - architect
+domain: architecture
+stage: stable
+consumes:
+  - solution.md
+produces:
+  - adr-plan.md
+prerequisites:
+  - solution.md
+related:
+  - write-adr
+  - review-adr
+  - write-solution
+tags:
+  - adr
+  - architecture
+  - planning
+owner: '@horizon-platform'
 ---
 
 # Plan Architecture Decision Records

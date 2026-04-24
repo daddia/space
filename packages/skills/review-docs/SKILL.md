@@ -15,6 +15,30 @@ argument-hint: '<epic-id> [task-id]'
 arguments:
   - epic_id
   - task_id
+artefact: doc review
+phase: definition
+role:
+  - pm
+  - architect
+  - engineer
+domain: product
+stage: stable
+consumes:
+  - product.md
+  - solution.md
+produces:
+  - review
+prerequisites: []
+related:
+  - write-product
+  - write-solution
+  - write-wp-design
+  - write-backlog
+tags:
+  - review
+  - docs
+  - requirements
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

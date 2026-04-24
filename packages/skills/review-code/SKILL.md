@@ -13,6 +13,27 @@ allowed-tools:
 argument-hint: '[branch-or-pr]'
 arguments:
   - target
+artefact: code review
+phase: delivery
+role:
+  - engineer
+domain: engineering
+stage: stable
+consumes:
+  - design.md
+  - backlog.md
+produces:
+  - review
+prerequisites: []
+related:
+  - implement
+  - create-mr
+  - review-docs
+tags:
+  - review
+  - code
+  - pr
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

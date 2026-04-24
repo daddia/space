@@ -13,6 +13,24 @@ allowed-tools:
 argument-hint: '[story-id]'
 arguments:
   - story_id
+artefact: MR description
+phase: delivery
+role:
+  - engineer
+domain: engineering
+stage: stable
+consumes: []
+produces:
+  - MR description
+prerequisites: []
+related:
+  - review-code
+  - implement
+tags:
+  - mr
+  - pull-request
+  - merge-request
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

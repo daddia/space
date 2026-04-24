@@ -12,6 +12,25 @@ allowed-tools:
 argument-hint: '<adr-path>'
 arguments:
   - adr_path
+artefact: ADR review
+phase: delivery
+role:
+  - architect
+domain: architecture
+stage: stable
+consumes:
+  - ADR-NNNN.md
+produces:
+  - review
+prerequisites: []
+related:
+  - write-adr
+  - plan-adr
+tags:
+  - adr
+  - review
+  - architecture
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

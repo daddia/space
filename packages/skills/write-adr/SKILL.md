@@ -12,6 +12,28 @@ allowed-tools:
   - Grep
 argument-hint: '<decision-title>'
 disable-model-invocation: true
+artefact: ADR-NNNN.md
+phase: delivery
+role:
+  - architect
+  - engineer
+domain: architecture
+stage: stable
+consumes:
+  - solution.md
+produces:
+  - ADR-NNNN.md
+prerequisites:
+  - solution.md
+related:
+  - plan-adr
+  - review-adr
+  - write-solution
+tags:
+  - adr
+  - architecture
+  - decision
+owner: '@horizon-platform'
 ---
 
 # Write Architecture Decision Record

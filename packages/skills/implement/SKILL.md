@@ -15,6 +15,29 @@ allowed-tools:
 argument-hint: '<story-id>'
 arguments:
   - story_id
+artefact: code
+phase: delivery
+role:
+  - engineer
+domain: engineering
+stage: stable
+consumes:
+  - design.md
+  - backlog.md
+produces:
+  - code
+prerequisites:
+  - design.md
+related:
+  - write-wp-design
+  - write-backlog
+  - review-code
+  - create-mr
+tags:
+  - implement
+  - code
+  - story
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

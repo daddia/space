@@ -17,6 +17,29 @@ allowed-tools:
 argument-hint: '<epic-id>'
 arguments:
   - epic_id
+artefact: validation report
+phase: delivery
+role:
+  - pm
+  - delivery
+domain: engineering
+stage: stable
+consumes:
+  - backlog.md
+  - solution.md
+produces:
+  - validation
+prerequisites:
+  - backlog.md
+related:
+  - write-backlog
+  - review-code
+  - review-docs
+tags:
+  - validate
+  - acceptance
+  - epic
+owner: '@horizon-platform'
 version: '0.1'
 ---
 

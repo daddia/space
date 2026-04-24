@@ -11,6 +11,27 @@ allowed-tools:
   - Glob
   - Grep
 argument-hint: '<scope: platform|domain> [<domain-name>]'
+artefact: roadmap.md
+phase: discovery
+role:
+  - pm
+domain: product
+stage: stable
+consumes:
+  - product.md
+produces:
+  - roadmap.md
+prerequisites:
+  - product.md
+related:
+  - write-product
+  - write-backlog
+  - write-solution
+tags:
+  - roadmap
+  - phases
+  - sequencing
+owner: '@horizon-platform'
 version: '0.1'
 ---
 
