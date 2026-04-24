@@ -1,7 +1,7 @@
 ---
 name: write-wp-design
 description: >
-  Drafts a work-package design in walking-skeleton mode (foundation sprint,
+  Drafts a work-package design.md in walking-skeleton mode (foundation sprint,
   2–4 pages) or TDD mode (sprint 2+, 5–10 pages). Use when the user mentions
   "design", "TDD", "technical design", "write the design for {epic}", or "how
   should we implement {story}". Walking-skeleton names the slice, files, and

@@ -1,12 +1,12 @@
 ---
 name: write-backlog
 description: >
-  Drafts a domain-level epic backlog or a sprint-level work-package story backlog.
-  Use when the user mentions "backlog", "epic list", "stories", "decompose", or
-  "write the backlog for {domain}". Domain scope defaults to the Now phase only —
-  use --depth full for all phases. Work-package scope produces EARS + Gherkin
-  acceptance criteria per the canonical story schema. Do NOT use for solution
-  architecture — use write-solution. Do NOT use for roadmaps — use write-roadmap.
+  Drafts a domain-level or work-package backlog.md. Use when the user mentions
+  "backlog", "epic list", "stories", "decompose", or "write the backlog for
+  {domain}". Domain scope defaults to the Now phase only — use --depth full for
+  all phases. Work-package scope produces EARS + Gherkin acceptance criteria
+  per the canonical story schema. Do NOT use for solution architecture — use
+  write-solution. Do NOT use for roadmaps — use write-roadmap.
 when_to_use: >
   Domain scope: use when a domain's epics need to be listed and sequenced.
   Work-package scope: use when a specific epic is about to start and needs

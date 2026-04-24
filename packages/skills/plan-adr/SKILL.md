@@ -1,12 +1,12 @@
 ---
 name: plan-adr
 description: >
-  Identifies and prioritises the architecture decisions that need ADRs before
-  technical design proceeds. Use when the user mentions "plan ADRs", "what ADRs
-  do we need", "identify architecture decisions for {domain}", or "which
-  decisions need documenting". Produces a prioritised proposed-ADR list —
-  does not write full ADRs. Do NOT use to write an ADR — use write-adr for
-  that. Do NOT use to review an existing ADR — use review-adr.
+  Identifies the architecture decisions that need ADRs and produces a
+  prioritised adr-plan.md before technical design proceeds. Use when the user
+  mentions "plan ADRs", "what ADRs do we need", "identify architecture
+  decisions for {domain}", or "which decisions need documenting". Produces a
+  list of proposed ADRs — does not write full ADRs. Do NOT use to write an
+  ADR — use write-adr. Do NOT use to review an existing ADR — use review-adr.
 when_to_use: >
   Use before starting technical design on an epic or domain to identify which
   decisions warrant ADRs before writing them. Examples: "plan ADRs for the
@@ -40,6 +40,7 @@ tags:
   - architecture
   - planning
 owner: '@horizon-platform'
+version: '0.2'
 ---
 
 # Plan Architecture Decision Records

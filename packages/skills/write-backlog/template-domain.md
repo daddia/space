@@ -15,6 +15,18 @@ related:
   - <!-- domain/{d}/contracts.md -->
 ---
 
+<!--
+DRAFTING AIDE — DELETE THIS BLOCK BEFORE SAVING THE OUTPUT FILE.
+DO NOT INCLUDE in this domain-scope backlog.md:
+  - Architecture patterns, module boundaries, or technical rationale → solution.md
+  - Business strategy, positioning, or target users                  → product.md
+  - Phase dates, milestones, or delivery sequencing prose            → roadmap.md
+  - Story-level acceptance criteria (EARS / Gherkin)                 → work/{d}/{wp}/backlog.md
+  - API shapes, schemas, type aliases, or code fences                → contracts.md
+  - Implementation detail for the epic currently in flight           → work/{d}/{wp}/design.md
+Later-phase (Next / Later) epics stay as single-line placeholders unless --depth full.
+-->
+
 # Backlog -- {Domain} (domain)
 
 Domain-level epic backlog. Lists the epics the {domain} domain will deliver,

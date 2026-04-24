@@ -26,10 +26,12 @@
     "node": ">=24.14.1"
   },
   "scripts": {
-    "postinstall": "sync-skills"
+    "postinstall": "sync-skills",
+    "lint": "node bin/lint-skills.js"
   },
   "bin": {
-    "sync-skills": "bin/sync-skills.js"
+    "sync-skills": "bin/sync-skills.js",
+    "lint-skills": "bin/lint-skills.js"
   },
   "files": [
     "bin/**",

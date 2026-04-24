@@ -8,6 +8,7 @@
     "typecheck": "pnpm --filter '@tpw/create-space' --filter '@tpw/space' run typecheck",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:skills": "pnpm --filter '@tpw/skills' run lint",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "test": "vitest run",
@@ -16,7 +17,7 @@
     "clean": "turbo clean",
     "validate": "pnpm validate:build && pnpm validate:quality && pnpm test",
     "validate:build": "pnpm install && pnpm build",
-    "validate:quality": "pnpm format:write && pnpm lint:fix && pnpm typecheck",
+    "validate:quality": "pnpm format:write && pnpm lint:fix && pnpm lint:skills && pnpm typecheck",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "pnpm build && changeset publish"

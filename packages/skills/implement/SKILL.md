@@ -80,6 +80,25 @@ standards, relevant existing codebase files]
 - Every new public function or interface must have a test
 - Do not create a single monolithic commit -- group related changes
 
+## Negative constraints
+
+The implement skill writes code against an approved design. It MUST NOT:
+
+- Modify architectural patterns, NFRs, or cross-cutting concerns — those live
+  in `solution.md` and should be raised as a new ADR via `write-adr`, not
+  changed unilaterally during implementation.
+- Rewrite acceptance criteria or add new stories — story scope is fixed by
+  `work/{d}/{wp}/backlog.md`; if scope needs to change, update the backlog
+  first.
+- Introduce new public APIs or contract shapes that are not specified in
+  `contracts.md` or the design — if required, pause and update `contracts.md`.
+- Perform unsolicited refactoring outside the story's declared `Files Changed`
+  set — scope creep invalidates the review.
+- Commit generated artefacts or build outputs — only source files tracked by
+  the repository's conventions.
+- Skip tests or mark failing tests as expected — failing tests must be fixed
+  or the story must be split.
+
 ## Output format
 
 After completing implementation, write a summary:

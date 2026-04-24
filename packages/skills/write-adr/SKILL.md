@@ -40,6 +40,7 @@ tags:
   - architecture
   - decision
 owner: '@horizon-platform'
+version: '0.2'
 ---
 
 # Write Architecture Decision Record

@@ -16,6 +16,19 @@ sources:
   - work/{d}/{wp}/design.md
 ---
 
+<!--
+DRAFTING AIDE — DELETE THIS BLOCK BEFORE SAVING THE OUTPUT FILE.
+DO NOT INCLUDE in this work-package backlog.md:
+  - Architecture patterns, NFRs, or cross-cutting concerns  → solution.md (cite by §)
+  - API shapes, schemas, type aliases, or code fences       → contracts.md (cite by §)
+  - How the code is implemented or sequenced into files     → work/{d}/{wp}/design.md
+  - Business rationale or target-user context               → product.md
+  - Cross-epic dependencies or later phases                 → domain/{d}/backlog.md
+  - Prose restating what solution.md or design.md already say
+Every story block MUST include: Status, Priority, Estimate, Epic, Labels,
+Depends on, Deliverable, Design, Acceptance (EARS), Acceptance (Gherkin).
+-->
+
 # Backlog -- {Title} ({EPIC-ID})
 
 Sprint-level backlog for the **{Title}** work package at
