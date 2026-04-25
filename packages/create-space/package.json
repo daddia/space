@@ -4,6 +4,9 @@
   "description": "Scaffold a new daddia delivery workspace",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/daddia/space.git",

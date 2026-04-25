@@ -88,4 +88,4 @@ pnpm release            # build and publish
 
 ## Licence
 
-(c) 2026 Temple & Webster
+(c) 2026 daddia
