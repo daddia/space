@@ -81,6 +81,7 @@ for the core flow. Enabled for internal stakeholders and external tester cohort.
 **Epics (additive):** CART04, CART05, CART06, CART08, CART13, CART14
 
 **BFF schema dependencies (Wave 2 activations):**
+
 - BFF-CART-07 (promo stacking) → unblocks CART08 auto-applied states
 - BFF-CART-08 (machine-readable error codes) → unblocks CART06 typed errors
 - BFF-CART-04 (cart-level savings + free delivery) → unblocks CART04 fidelity
@@ -148,24 +149,24 @@ shares, measure against legacy baselines, mark legacy basket deprecated.
 
 ## 4. Milestones
 
-| Milestone | Phase | Customer-visible? | Notes |
-| --------- | ----- | ----------------- | ----- |
-| Cart Alpha on staging | Phase 1 | Internal only | Flag off by default |
-| Cart Beta on staging | Phase 2 | Internal + external tester cohort | Legacy baselines captured in parallel |
-| Cart Feature-complete on staging | Phase 3 | Internal + employee dogfood | All BFF Wave 2 uplifts active |
-| Cart Canary in production (1%) | Phase 4 | 1% of AU traffic | Guardrail-led; can abort instantly |
-| Cart GA for 100% of AU traffic | Phase 4 | All AU shoppers | North star must match or improve baseline |
-| Legacy basket retirement | Post-roadmap | None | Central team work; tracked separately |
+| Milestone                        | Phase        | Customer-visible?                 | Notes                                     |
+| -------------------------------- | ------------ | --------------------------------- | ----------------------------------------- |
+| Cart Alpha on staging            | Phase 1      | Internal only                     | Flag off by default                       |
+| Cart Beta on staging             | Phase 2      | Internal + external tester cohort | Legacy baselines captured in parallel     |
+| Cart Feature-complete on staging | Phase 3      | Internal + employee dogfood       | All BFF Wave 2 uplifts active             |
+| Cart Canary in production (1%)   | Phase 4      | 1% of AU traffic                  | Guardrail-led; can abort instantly        |
+| Cart GA for 100% of AU traffic   | Phase 4      | All AU shoppers                   | North star must match or improve baseline |
+| Legacy basket retirement         | Post-roadmap | None                              | Central team work; tracked separately     |
 
 ## 5. Cross-domain dependencies
 
-| Dependency | Owner squad | Gates | Current status |
-| ---------- | ----------- | ----- | -------------- |
-| BFF `Cart_v0_1` schema uplift (Wave 2) | BFF squad | Phase 2 / Phase 3 | Tracked in `dependencies/bff-contract-uplift.md` |
-| PDP `PurchaseActions` client-component conversion | Shopping Experience | CART02 (Phase 1) | Coordinated with CART02; risk in backlog A5 |
-| Checkout domain readiness | Cart & Checkout squad | CART12 (Phase 4) | Express-checkout slot disabled if delayed |
-| Cloudflare Worker `/api/*` forwarding | Platform SRE | Phase 1 | Status quo; no change required |
-| Analytics event schema review | Analytics | Phase 2 (CART13) | Must align before Beta |
+| Dependency                                        | Owner squad           | Gates             | Current status                                   |
+| ------------------------------------------------- | --------------------- | ----------------- | ------------------------------------------------ |
+| BFF `Cart_v0_1` schema uplift (Wave 2)            | BFF squad             | Phase 2 / Phase 3 | Tracked in `dependencies/bff-contract-uplift.md` |
+| PDP `PurchaseActions` client-component conversion | Shopping Experience   | CART02 (Phase 1)  | Coordinated with CART02; risk in backlog A5      |
+| Checkout domain readiness                         | Cart & Checkout squad | CART12 (Phase 4)  | Express-checkout slot disabled if delayed        |
+| Cloudflare Worker `/api/*` forwarding             | Platform SRE          | Phase 1           | Status quo; no change required                   |
+| Analytics event schema review                     | Analytics             | Phase 2 (CART13)  | Must align before Beta                           |
 
 ## 6. Out of scope for this roadmap
 
@@ -176,6 +177,6 @@ shares, measure against legacy baselines, mark legacy basket deprecated.
 
 ## 7. Review cadence
 
-- **Weekly** (active execution): squad-internal review of phase progress against backlog AC and CM-G* guardrails.
+- **Weekly** (active execution): squad-internal review of phase progress against backlog AC and CM-G\* guardrails.
 - **Pre-phase-gate:** squad + Product + Engineering leads review all metrics.md §5 targets. Go/no-go decision logged in this document.
 - **Quarterly:** roadmap versioned; material changes require Product + Squad Lead sign-off.

@@ -5,9 +5,7 @@ import { loadCredentials } from '../credentials.js';
 import { syncJira } from '../providers/jira/sync.js';
 
 export function registerSyncCommand(program: Command): void {
-  const sync = program
-    .command('sync')
-    .description('Sync external sources into .space/sources/');
+  const sync = program.command('sync').description('Sync external sources into .space/sources/');
 
   sync
     .command('jira')

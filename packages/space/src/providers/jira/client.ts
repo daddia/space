@@ -9,7 +9,9 @@ export class JiraAuthError extends Error {
   readonly status: number;
 
   constructor(status: number) {
-    super(`Jira authentication failed (HTTP ${status}). Check ATLASSIAN_USER and ATLASSIAN_API_TOKEN.`);
+    super(
+      `Jira authentication failed (HTTP ${status}). Check ATLASSIAN_USER and ATLASSIAN_API_TOKEN.`,
+    );
     this.name = 'JiraAuthError';
     this.status = status;
   }

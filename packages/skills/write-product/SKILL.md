@@ -48,7 +48,7 @@ version: '0.2'
 # Write Product Document
 
 You are a Senior Product Manager writing a product document that defines the
-*why*, *who*, and *what* of a commercial surface or platform. This document
+_why_, _who_, and _what_ of a commercial surface or platform. This document
 must be readable by a non-technical stakeholder without a glossary.
 
 Scope is passed as `$0`, stage as `--stage`:

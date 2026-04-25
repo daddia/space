@@ -81,18 +81,13 @@ for (const { name: sourceName, dir: sourceDir } of sources) {
     continue;
   }
 
-  const sourcePkg = JSON.parse(
-    fs.readFileSync(path.join(sourceDir, 'package.json'), 'utf8'),
-  );
+  const sourcePkg = JSON.parse(fs.readFileSync(path.join(sourceDir, 'package.json'), 'utf8'));
 
   // Discover skill directories (must contain SKILL.md)
   const skillNames = fs.readdirSync(sourceDir).filter((entry) => {
     if (exclude.has(entry)) return false;
     const fullPath = path.join(sourceDir, entry);
-    return (
-      fs.statSync(fullPath).isDirectory() &&
-      fs.existsSync(path.join(fullPath, 'SKILL.md'))
-    );
+    return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'SKILL.md'));
   });
 
   const priorSkills = new Set(priorManifest[sourceName]?.skills ?? []);

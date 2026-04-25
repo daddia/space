@@ -2,11 +2,11 @@
 type: Backlog
 scope: domain
 domain: cart
-version: "2.0"
+version: '2.0'
 owner: Cart & Checkout Squad
 status: Draft
 last_updated: 2026-04-23
-figma: "https://www.figma.com/design/ZrCnkba5v8L833qSqkwIOo/Cart-Redesign?node-id=2937-104836"
+figma: 'https://www.figma.com/design/ZrCnkba5v8L833qSqkwIOo/Cart-Redesign?node-id=2937-104836'
 parent_product: domain/cart/product.md
 related:
   - domain/cart/product.md

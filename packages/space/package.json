@@ -1,6 +1,7 @@
 {
   "name": "@tpw/space",
   "version": "0.1.0",
+  "private": true,
   "description": "Operate a Horizon delivery space -- sync sources, publish docs",
   "type": "module",
   "license": "MIT",

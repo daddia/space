@@ -1,7 +1,7 @@
 ---
 type: Contracts
 domain: cart
-version: "1.0"
+version: '1.0'
 owner: Cart & Checkout Squad
 status: Draft
 last_updated: 2026-04-23
@@ -64,9 +64,9 @@ export interface CartViewModel {
   hasOnlyOutOfStock: boolean;
   checkoutCtaEnabled: boolean;
   lines: CartLineViewModel[];
-  subtotal: string;           // formatted, e.g. "$249.95"
+  subtotal: string; // formatted, e.g. "$249.95"
   total: string;
-  savings: string | null;     // null when Wave-1-gap field absent
+  savings: string | null; // null when Wave-1-gap field absent
   freeDelivery: FreeDeliveryViewModel | null;
   coupon: CouponViewModel | null;
   notices: NoticeViewModel[];
@@ -75,7 +75,7 @@ export interface CartViewModel {
 export interface CartLineViewModel {
   id: string;
   name: string;
-  brand: string | null;       // null until BFF-CART-01 ships
+  brand: string | null; // null until BFF-CART-01 ships
   thumbnailUrl: string | null;
   pdpUrl: string | null;
   variantLabel: string | null;
@@ -83,8 +83,8 @@ export interface CartLineViewModel {
   lineTotal: string;
   quantity: number;
   minQuantity: number;
-  maxQuantity: number;        // defaults to 99 when absent from BFF
-  quantityStep: number;       // defaults to 1 when absent
+  maxQuantity: number; // defaults to 99 when absent from BFF
+  quantityStep: number; // defaults to 1 when absent
   stockState: 'in_stock' | 'low_stock' | 'out_of_stock';
   savings: string | null;
 }
@@ -98,7 +98,7 @@ export interface CouponViewModel {
 
 export interface FreeDeliveryViewModel {
   threshold: string;
-  remaining: string | null;   // null until BFF-CART-04 ships
+  remaining: string | null; // null until BFF-CART-04 ships
   achieved: boolean;
 }
 
@@ -239,13 +239,13 @@ const example: AddCartLineRequest = {
 
 Next.js route handlers exposed by the cart domain under `app/api/cart/`.
 
-| Path | Method | Request schema | Response shape | Error codes |
-| ---- | ------ | -------------- | -------------- | ----------- |
-| `/api/cart/items` | POST | `AddCartLineSchema` | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `CART_FULL`, `OUT_OF_STOCK`, `MAX_QUANTITY_EXCEEDED`, `MIN_QUANTITY_REQUIRED`, `QUANTITY_STEP_INVALID`, `VERSION_CONFLICT`, `NETWORK_ERROR` |
-| `/api/cart/items/[lineId]` | PATCH | `UpdateCartLineSchema` | `CartMutationResult` | same as above minus `CART_FULL` |
-| `/api/cart/items/[lineId]` | DELETE | `RemoveCartLineSchema` | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `LINE_NOT_FOUND`, `VERSION_CONFLICT`, `NETWORK_ERROR` |
-| `/api/cart/promo-codes` | POST | `ApplyCouponSchema` | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `COUPON_INVALID`, `COUPON_EXPIRED`, `COUPON_MINIMUM_NOT_MET`, `COUPON_REGION`, `COUPON_ALREADY_APPLIED`, `PROMO_STACKING_CONFLICT`, `VERSION_CONFLICT` |
-| `/api/cart/promo-codes/[code]` | DELETE | `RemoveCouponSchema` | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `VERSION_CONFLICT`, `NETWORK_ERROR` |
+| Path                           | Method | Request schema         | Response shape       | Error codes                                                                                                                                                                                   |
+| ------------------------------ | ------ | ---------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/api/cart/items`              | POST   | `AddCartLineSchema`    | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `CART_FULL`, `OUT_OF_STOCK`, `MAX_QUANTITY_EXCEEDED`, `MIN_QUANTITY_REQUIRED`, `QUANTITY_STEP_INVALID`, `VERSION_CONFLICT`, `NETWORK_ERROR`            |
+| `/api/cart/items/[lineId]`     | PATCH  | `UpdateCartLineSchema` | `CartMutationResult` | same as above minus `CART_FULL`                                                                                                                                                               |
+| `/api/cart/items/[lineId]`     | DELETE | `RemoveCartLineSchema` | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `LINE_NOT_FOUND`, `VERSION_CONFLICT`, `NETWORK_ERROR`                                                                                                  |
+| `/api/cart/promo-codes`        | POST   | `ApplyCouponSchema`    | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `COUPON_INVALID`, `COUPON_EXPIRED`, `COUPON_MINIMUM_NOT_MET`, `COUPON_REGION`, `COUPON_ALREADY_APPLIED`, `PROMO_STACKING_CONFLICT`, `VERSION_CONFLICT` |
+| `/api/cart/promo-codes/[code]` | DELETE | `RemoveCouponSchema`   | `CartMutationResult` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `VERSION_CONFLICT`, `NETWORK_ERROR`                                                                                                                    |
 
 All routes use the shared `runCartMutation` helper (see `solution.md` §4.3).
 Every response is `CartMutationResult`. All bodies are validated with the Zod
@@ -260,10 +260,10 @@ Typed payloads for every `track()` call the cart domain fires, via
 // File: modules/cart/logic/analytics.ts (types only)
 
 interface CartEventEnvelope {
-  cart_id_hashed: string;     // SHA-256 of cart ID; no PII
-  cart_session_id: string;    // session-scoped correlation ID
+  cart_id_hashed: string; // SHA-256 of cart ID; no PII
+  cart_session_id: string; // session-scoped correlation ID
   items_count: number;
-  subtotal_aud: number;       // raw AUD value, not formatted string
+  subtotal_aud: number; // raw AUD value, not formatted string
 }
 
 interface AddToCartPayload extends CartEventEnvelope {

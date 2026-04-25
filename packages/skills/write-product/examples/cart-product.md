@@ -2,7 +2,7 @@
 type: Product
 domain: cart
 stage: product
-version: "2.0"
+version: '2.0'
 owner: Cart & Checkout Squad
 status: Draft
 last_updated: 2026-04-23

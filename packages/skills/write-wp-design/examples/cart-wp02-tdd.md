@@ -5,7 +5,7 @@ mode: tdd
 work_package: 02-add-to-cart
 epic: CART02
 domain: cart
-version: "1.0"
+version: '1.0'
 owner: Cart & Checkout Squad
 status: Draft
 last_updated: 2026-04-23
@@ -139,7 +139,7 @@ export const AddCartLineSchema = z.object({
   qty: z.number().int().positive().max(999),
   idempotencyKey: z.string().uuid(),
   cartVersion: z.number().int().nonnegative().optional(),
-  source: z.enum(["pdp", "plp-quickview", "cart-reorder"]).default("pdp"),
+  source: z.enum(['pdp', 'plp-quickview', 'cart-reorder']).default('pdp'),
 });
 
 export type AddCartLineRequest = z.infer<typeof AddCartLineSchema>;
@@ -189,9 +189,7 @@ Client hook returning a stable submit function plus pending / error state:
 
 ```typescript
 export function useAddCartLine(): {
-  addCartLine: (
-    input: Omit<AddCartLineRequest, "idempotencyKey">,
-  ) => Promise<CartMutationResult>;
+  addCartLine: (input: Omit<AddCartLineRequest, 'idempotencyKey'>) => Promise<CartMutationResult>;
   isPending: boolean;
   error: CartMutationErrorCode | null;
   reset: () => void;

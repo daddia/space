@@ -58,14 +58,14 @@ one when active. Story-level detail lives in per-work-package backlogs under
 
 ## 2. Conventions
 
-| Convention | Value |
-| --- | --- |
-| Epic ID | `{DOM}{nn}` (e.g. `{DOM}01`) |
-| Story ID | `{DOM}{nn}-{nn}` (lives in the work-package backlog) |
-| Status | Not started, In progress, In review, Done, Blocked |
-| Priority | P0 (must have), P1 (should have), P2 (stretch), P3 (defer) |
-| Estimation | Fibonacci story points (1, 2, 3, 5, 8, 13) |
-| Acceptance format | EARS + Gherkin at work-package scope |
+| Convention        | Value                                                      |
+| ----------------- | ---------------------------------------------------------- |
+| Epic ID           | `{DOM}{nn}` (e.g. `{DOM}01`)                               |
+| Story ID          | `{DOM}{nn}-{nn}` (lives in the work-package backlog)       |
+| Status            | Not started, In progress, In review, Done, Blocked         |
+| Priority          | P0 (must have), P1 (should have), P2 (stretch), P3 (defer) |
+| Estimation        | Fibonacci story points (1, 2, 3, 5, 8, 13)                 |
+| Acceptance format | EARS + Gherkin at work-package scope                       |
 
 ## 3. Epic breakdown
 
@@ -74,11 +74,11 @@ Now-phase rows: full detail in §4 Epic detail.
 Next/Later-phase rows: single-line placeholder (no §4 entry unless --depth full).
 -->
 
-| Epic | Title | Phase | Priority | Deps | Points | Work package | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| {DOM}01 | <!-- Now-phase title --> | Now | P0 | - | TBD | `work/{d}/01-{slug}/` | Not started |
-| {DOM}02 | <!-- Now-phase title --> | Now | P0 | {DOM}01 | TBD | `work/{d}/02-{slug}/` | Not started |
-| {DOM}03 | <!-- Next-phase title --> | Next | P1 | {DOM}02 | TBD | `work/{d}/03-{slug}/` (planned) | Not started |
+| Epic    | Title                     | Phase | Priority | Deps    | Points | Work package                    | Status      |
+| ------- | ------------------------- | ----- | -------- | ------- | ------ | ------------------------------- | ----------- |
+| {DOM}01 | <!-- Now-phase title -->  | Now   | P0       | -       | TBD    | `work/{d}/01-{slug}/`           | Not started |
+| {DOM}02 | <!-- Now-phase title -->  | Now   | P0       | {DOM}01 | TBD    | `work/{d}/02-{slug}/`           | Not started |
+| {DOM}03 | <!-- Next-phase title --> | Next  | P1       | {DOM}02 | TBD    | `work/{d}/03-{slug}/` (planned) | Not started |
 
 ## 4. Epic detail
 
@@ -129,9 +129,9 @@ Next/Later-phase epics are placeholders unless --depth full was passed.
 
 ## 7. Parallelisation opportunities
 
-| Workstream | Can run in parallel with |
-| --- | --- |
-| {DOM}02 | {DOM}03 (once {DOM}01 ships) |
+| Workstream | Can run in parallel with     |
+| ---------- | ---------------------------- |
+| {DOM}02    | {DOM}03 (once {DOM}01 ships) |
 
 ## 8. Minimum viable slice
 
@@ -144,9 +144,9 @@ Result: <!-- one sentence on what the customer gets >.
 
 ## 9. Assumptions
 
-| ID | Assumption | Impact if wrong |
-| --- | --- | --- |
-| A1 | <!-- assumption --> | <!-- impact --> |
+| ID  | Assumption          | Impact if wrong |
+| --- | ------------------- | --------------- |
+| A1  | <!-- assumption --> | <!-- impact --> |
 
 ## 10. Risks (delivery-scoped)
 
@@ -155,6 +155,6 @@ Technical and architecture-scoped risks are authoritative in
 covers delivery risks only: scheduling, baselines, and cross-squad
 coordination.
 
-| ID | Risk | Likelihood | Impact | Mitigation |
-| --- | --- | --- | --- | --- |
-| R1 | <!-- delivery risk --> | Medium | Medium | <!-- mitigation --> |
+| ID  | Risk                   | Likelihood | Impact | Mitigation          |
+| --- | ---------------------- | ---------- | ------ | ------------------- |
+| R1  | <!-- delivery risk --> | Medium     | Medium | <!-- mitigation --> |

@@ -5,7 +5,7 @@ project:
 
 workspace:
   path: .
-  work: work/{TASK_ID}/
+  work: docs/work/{TASK_ID}/
 
 sources:
   repo:

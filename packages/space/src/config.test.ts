@@ -2,21 +2,13 @@ import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtemp, rm, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { tmpdir } from 'node:os';
-import {
-  findWorkspaceRoot,
-  loadConfig,
-  WorkspaceNotFoundError,
-  ConfigError,
-} from './config.js';
+import { findWorkspaceRoot, loadConfig, WorkspaceNotFoundError, ConfigError } from './config.js';
 
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
-async function makeWorkspace(
-  base: string,
-  configContent: string,
-): Promise<string> {
+async function makeWorkspace(base: string, configContent: string): Promise<string> {
   await mkdir(path.join(base, '.space'), { recursive: true });
   await writeFile(path.join(base, '.space', 'config'), configContent);
   return base;

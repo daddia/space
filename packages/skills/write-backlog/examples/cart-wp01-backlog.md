@@ -4,11 +4,11 @@ scope: work-package
 work_package: 01-foundations
 epic: CART01
 domain: cart
-version: "2.0"
+version: '2.0'
 owner: Cart & Checkout Squad
 status: Done
 last_updated: 2026-04-23
-figma: "https://www.figma.com/design/ZrCnkba5v8L833qSqkwIOo/Cart-Redesign?node-id=2937-104836"
+figma: 'https://www.figma.com/design/ZrCnkba5v8L833qSqkwIOo/Cart-Redesign?node-id=2937-104836'
 sources:
   - domain/cart/solution.md
   - domain/cart/contracts.md

@@ -69,15 +69,15 @@ Alpha (foundation + internal) → Beta (commercially viable) → Feature-complet
 
 ## 4. Milestones
 
-| Milestone | Phase | Customer-visible? | Notes |
-| --------- | ----- | ----------------- | ----- |
-| <!-- e.g. Alpha on staging --> | Phase 1 | Internal only | |
+| Milestone                      | Phase   | Customer-visible? | Notes |
+| ------------------------------ | ------- | ----------------- | ----- |
+| <!-- e.g. Alpha on staging --> | Phase 1 | Internal only     |       |
 
 ## 5. Cross-domain dependencies
 
-| Dependency | Owner squad | Gates | Current status |
-| ---------- | ----------- | ----- | -------------- |
-| <!-- what this domain needs from another --> | <!-- squad --> | <!-- which phase / epic --> | Not started |
+| Dependency                                   | Owner squad    | Gates                       | Current status |
+| -------------------------------------------- | -------------- | --------------------------- | -------------- |
+| <!-- what this domain needs from another --> | <!-- squad --> | <!-- which phase / epic --> | Not started    |
 
 ## 6. Out of scope for this roadmap
 

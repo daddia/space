@@ -33,7 +33,7 @@ maturity (embedded mode, additional sources, expanded skill set) later.
 
 **Delivery approach.** Each epic ships a visible, testable slice behind
 its own work package. No epic is "in progress" without an active
-`work/<wp>/backlog.md` and matching `work/<wp>/design.md`. Phase gates
+`docs/work/<wp>/backlog.md` and matching `docs/work/<wp>/design.md`. Phase gates
 live in `docs/roadmap.md`.
 
 **Prerequisites (complete).**
@@ -71,16 +71,16 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 
 | Epic    | Title                                         | Phase | Priority | Dependencies         | Points | Work package                      | Status      |
 | ------- | --------------------------------------------- | ----- | -------- | -------------------- | ------ | --------------------------------- | ----------- |
-| SPACE-01 | Source sync foundation                        | Now   | P0       | -                    | 43     | `work/01-source-sync/`            | In progress |
-| SPACE-02 | Space v2 artefact model: skill changeset (P0) | Next  | P0       | SPACE-01 (validation) | ~25    | `work/02-v2-skills/` (planned)    | Not started |
-| SPACE-03 | Space v2 artefact model: tooling and router   | Next  | P1       | SPACE-02              | ~15    | `work/03-v2-tooling/` (planned)   | Not started |
-| SPACE-04 | Publish pipeline: Jira                        | Next  | P1       | SPACE-02, SPACE-01     | ~20    | `work/04-publish-jira/` (planned) | Not started |
-| SPACE-05 | Publish pipeline: Confluence                  | Next  | P1       | SPACE-02, SPACE-01     | ~15    | `work/05-publish-conf/` (planned) | Not started |
-| SPACE-06 | Embedded workspace mode                       | Later | P2       | SPACE-02              | TBD    | `work/06-embedded/` (planned)     | Not started |
-| SPACE-07 | Additional source providers (Slack, Vercel)   | Later | P2       | SPACE-01              | TBD    | `work/07-providers/` (planned)    | Not started |
-| SPACE-08 | Multi-project Jira and incremental sync       | Later | P2       | SPACE-01              | TBD    | `work/08-jira-scale/` (planned)   | Not started |
-| SPACE-09 | Skill library expansion (regulated + ops)     | Later | P2       | SPACE-02              | TBD    | `work/09-skills-expand/` (plan)   | Not started |
-| SPACE-10 | Workspace profiles at scaffold                | Later | P2       | SPACE-02              | TBD    | `work/10-profiles/` (planned)     | Not started |
+| SPACE-01 | Source sync foundation                        | Now   | P0       | -                    | 43     | `docs/work/01-source-sync/`            | In progress |
+| SPACE-02 | Space v2 artefact model: skill changeset (P0) | Next  | P0       | SPACE-01 (validation) | ~25    | `docs/work/02-v2-skills/` (planned)    | Not started |
+| SPACE-03 | Space v2 artefact model: tooling and router   | Next  | P1       | SPACE-02              | ~15    | `docs/work/03-tooling-v2/` (planned)   | Not started |
+| SPACE-04 | Publish pipeline: Jira                        | Next  | P1       | SPACE-02, SPACE-01     | ~20    | `docs/work/04-publish-jira/` (planned) | Not started |
+| SPACE-05 | Publish pipeline: Confluence                  | Next  | P1       | SPACE-02, SPACE-01     | ~15    | `docs/work/05-publish-conf/` (planned) | Not started |
+| SPACE-06 | Embedded workspace mode                       | Later | P2       | SPACE-02              | TBD    | `docs/work/06-embedded/` (planned)     | Not started |
+| SPACE-07 | Additional source providers (Slack, Vercel)   | Later | P2       | SPACE-01              | TBD    | `docs/work/07-providers/` (planned)    | Not started |
+| SPACE-08 | Multi-project Jira and incremental sync       | Later | P2       | SPACE-01              | TBD    | `docs/work/08-jira-scale/` (planned)   | Not started |
+| SPACE-09 | Skill library expansion (regulated + ops)     | Later | P2       | SPACE-02              | TBD    | `docs/work/09-skills-expand/` (plan)   | Not started |
+| SPACE-10 | Workspace profiles at scaffold                | Later | P2       | SPACE-02              | TBD    | `docs/work/10-profiles/` (planned)     | Not started |
 
 ## 4. Epic detail
 
@@ -124,9 +124,9 @@ set as validation.
 **Dependencies.** SPACE-01 delivers the source-sync substrate; v2 skills
 need that to demonstrate end-to-end publish readiness.
 
-**Work package.** `work/02-skills-v2/` (planned).
+**Work package.** `docs/work/02-skills-v2/` (planned).
 
-**Status.** Not started.
+**Status.** Done.
 
 ### SPACE-03 -- Space v2 artefact model: tooling and router
 
@@ -141,7 +141,7 @@ add the `refine-docs` sprint-end skill.
 **Dependencies.** SPACE-02 (the skills must exist before the index,
 router, and eval loop are meaningful).
 
-**Work package.** `work/03-v2-tooling/` (planned).
+**Work package.** `docs/work/03-tooling-v2/` (planned).
 
 **Status.** Not started.
 

@@ -47,6 +47,7 @@ You are a Senior Delivery Lead writing a phased delivery roadmap that
 sequences epics, quality gates, and exit criteria against a product strategy.
 
 Scope is passed as `$0`:
+
 - `platform` — the top-level roadmap (`product/roadmap.md`)
 - `domain` — a domain roadmap (`domain/$1/roadmap.md`)
 

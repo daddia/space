@@ -79,13 +79,19 @@ describe('searchIssues -- pagination', () => {
 
   it('returns all 150 issues across 3 pages', async () => {
     const client = createJiraClient(credentials, noDelay);
-    const issues = await client.searchIssues({ jql: 'project = TEST ORDER BY key ASC', pageSize: 50 });
+    const issues = await client.searchIssues({
+      jql: 'project = TEST ORDER BY key ASC',
+      pageSize: 50,
+    });
     expect(issues).toHaveLength(150);
   });
 
   it('returns issues in page order (page 1 first, page 3 last)', async () => {
     const client = createJiraClient(credentials, noDelay);
-    const issues = await client.searchIssues({ jql: 'project = TEST ORDER BY key ASC', pageSize: 50 });
+    const issues = await client.searchIssues({
+      jql: 'project = TEST ORDER BY key ASC',
+      pageSize: 50,
+    });
     expect(issues[0]?.key).toBe('TEST-1');
     expect(issues[149]?.key).toBe('TEST-150');
   });
@@ -183,9 +189,7 @@ describe('searchIssues -- 429 retry', () => {
   });
 
   it('throws JiraRateLimitError after 3 retries all return 429', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => new HttpResponse(null, { status: 429 })),
-    );
+    server.use(http.get(SEARCH_URL, () => new HttpResponse(null, { status: 429 })));
 
     const client = createJiraClient(credentials, noDelay);
     await expect(client.searchIssues({ jql: 'project = TEST' })).rejects.toThrow(
@@ -194,9 +198,7 @@ describe('searchIssues -- 429 retry', () => {
   });
 
   it('JiraRateLimitError records the number of retries attempted', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => new HttpResponse(null, { status: 429 })),
-    );
+    server.use(http.get(SEARCH_URL, () => new HttpResponse(null, { status: 429 })));
 
     const client = createJiraClient(credentials, noDelay);
     try {
@@ -215,27 +217,21 @@ describe('searchIssues -- 429 retry', () => {
 
 describe('searchIssues -- auth errors', () => {
   it('throws JiraAuthError on 401', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => new HttpResponse(null, { status: 401 })),
-    );
+    server.use(http.get(SEARCH_URL, () => new HttpResponse(null, { status: 401 })));
 
     const client = createJiraClient(credentials, noDelay);
     await expect(client.searchIssues({ jql: 'project = TEST' })).rejects.toThrow(JiraAuthError);
   });
 
   it('throws JiraAuthError on 403', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => new HttpResponse(null, { status: 403 })),
-    );
+    server.use(http.get(SEARCH_URL, () => new HttpResponse(null, { status: 403 })));
 
     const client = createJiraClient(credentials, noDelay);
     await expect(client.searchIssues({ jql: 'project = TEST' })).rejects.toThrow(JiraAuthError);
   });
 
   it('JiraAuthError records the HTTP status', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => new HttpResponse(null, { status: 401 })),
-    );
+    server.use(http.get(SEARCH_URL, () => new HttpResponse(null, { status: 401 })));
 
     const client = createJiraClient(credentials, noDelay);
     try {
@@ -270,9 +266,7 @@ describe('searchIssues -- auth errors', () => {
 
 describe('searchIssues -- edge cases', () => {
   it('returns an empty array when total is 0', async () => {
-    server.use(
-      http.get(SEARCH_URL, () => HttpResponse.json(makePage([], 0, 0))),
-    );
+    server.use(http.get(SEARCH_URL, () => HttpResponse.json(makePage([], 0, 0))));
 
     const client = createJiraClient(credentials, noDelay);
     const issues = await client.searchIssues({ jql: 'project = TEST' });
@@ -282,9 +276,7 @@ describe('searchIssues -- edge cases', () => {
   it('returns issues from a single partial page (fewer than pageSize)', async () => {
     const threeIssues = [makeIssue('TEST-1'), makeIssue('TEST-2'), makeIssue('TEST-3')];
 
-    server.use(
-      http.get(SEARCH_URL, () => HttpResponse.json(makePage(threeIssues, 0, 3, 100))),
-    );
+    server.use(http.get(SEARCH_URL, () => HttpResponse.json(makePage(threeIssues, 0, 3, 100))));
 
     const client = createJiraClient(credentials, noDelay);
     const issues = await client.searchIssues({ jql: 'project = TEST', pageSize: 100 });

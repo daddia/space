@@ -60,14 +60,14 @@ Companion artefacts:
 
 ## 2. Conventions
 
-| Convention | Value |
-| --- | --- |
-| Story ID | `{EPIC-ID}-{nn}` (e.g. `{EPIC-ID}-01`) |
-| Status | Not started, In progress, In review, Done, Blocked |
-| Priority | P0, P1, P2, P3 |
-| Estimation | Fibonacci story points |
-| Acceptance format | EARS + Gherkin per `docs/design/space-artefact-model.md` §5.3 |
-| AC placement | Rendered in Jira description as checklist + Gherkin code fence |
+| Convention        | Value                                                          |
+| ----------------- | -------------------------------------------------------------- |
+| Story ID          | `{EPIC-ID}-{nn}` (e.g. `{EPIC-ID}-01`)                         |
+| Status            | Not started, In progress, In review, Done, Blocked             |
+| Priority          | P0, P1, P2, P3                                                 |
+| Estimation        | Fibonacci story points                                         |
+| Acceptance format | EARS + Gherkin per `docs/design/space-artefact-model.md` §5.3  |
+| AC placement      | Rendered in Jira description as checklist + Gherkin code fence |
 
 ## 3. Stories
 
@@ -118,16 +118,16 @@ Copy and fill in each field. Delete no fields.
 
 ### Stories to solution sections
 
-| Story | `domain/{d}/solution.md` section |
-| --- | --- |
-| {EPIC-ID}-01 | §N.M <!-- section title --> |
-| {EPIC-ID}-02 | §N.M <!-- section title --> |
+| Story        | `domain/{d}/solution.md` section |
+| ------------ | -------------------------------- |
+| {EPIC-ID}-01 | §N.M <!-- section title -->      |
+| {EPIC-ID}-02 | §N.M <!-- section title -->      |
 
 ### Stories to product outcomes
 
-| Story | Outcome (from `domain/{d}/product.md` §7) |
-| --- | --- |
-| {EPIC-ID}-01 | "<!-- outcome description -->" |
+| Story        | Outcome (from `domain/{d}/product.md` §7) |
+| ------------ | ----------------------------------------- |
+| {EPIC-ID}-01 | "<!-- outcome description -->"            |
 
 ## 5. Definition of Done
 
@@ -146,9 +146,9 @@ criteria in [`domain/{d}/roadmap.md`](../../../domain/{d}/roadmap.md) hold.
 
 ## 6. Risks (work-package specific)
 
-| ID | Risk | Likelihood | Impact | Mitigation |
-| --- | --- | --- | --- | --- |
-| F1 | <!-- WP-specific risk --> | Low | Medium | <!-- mitigation --> |
+| ID  | Risk                      | Likelihood | Impact | Mitigation          |
+| --- | ------------------------- | ---------- | ------ | ------------------- |
+| F1  | <!-- WP-specific risk --> | Low        | Medium | <!-- mitigation --> |
 
 Broader domain risks are in [`domain/{d}/backlog.md`](../../../domain/{d}/backlog.md) §10.
 

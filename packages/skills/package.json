@@ -1,11 +1,11 @@
 {
   "name": "@tpw/skills",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
   "license": "UNLICENSED",
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "repository": {
     "type": "git",

@@ -81,10 +81,7 @@ const skillDirs = fs
   .filter((entry) => {
     if (entry === 'bin' || entry.startsWith('.')) return false;
     const fullPath = path.join(packageDir, entry);
-    return (
-      fs.statSync(fullPath).isDirectory() &&
-      fs.existsSync(path.join(fullPath, 'SKILL.md'))
-    );
+    return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'SKILL.md'));
   })
   .filter((name) => skillFilter.length === 0 || skillFilter.includes(name))
   .sort();
@@ -152,11 +149,7 @@ for (const skill of skills) {
   // ─── Consumes graph integrity ──────────────────────────────────────────
   for (const item of fm.consumes ?? []) {
     if (!produced.has(item)) {
-      err(
-        name,
-        'graph.consumes',
-        `consumes "${item}" but no other skill produces it`,
-      );
+      err(name, 'graph.consumes', `consumes "${item}" but no other skill produces it`);
     }
   }
 
@@ -164,11 +157,7 @@ for (const skill of skills) {
   const desc = fm.description ?? '';
   if (!isAlias) {
     if (desc.length < 200 || desc.length > 500) {
-      err(
-        name,
-        'desc.length',
-        `description is ${desc.length} chars (expected 200–500)`,
-      );
+      err(name, 'desc.length', `description is ${desc.length} chars (expected 200–500)`);
     }
     if (!DESCRIPTION_VERB_RE.test(desc)) {
       err(
@@ -203,11 +192,7 @@ for (const skill of skills) {
 
     const normalised = desc.replace(/\s+/g, ' ').trim();
     if (descriptionIndex.has(normalised)) {
-      err(
-        name,
-        'desc.unique',
-        `description collides with ${descriptionIndex.get(normalised)}`,
-      );
+      err(name, 'desc.unique', `description collides with ${descriptionIndex.get(normalised)}`);
     } else {
       descriptionIndex.set(normalised, name);
     }
@@ -226,9 +211,7 @@ for (const skill of skills) {
       const tplContent = fs.readFileSync(tpl, 'utf8');
       // Allow the block to appear either above the frontmatter or between
       // the frontmatter and the first heading.
-      const hasBlock = /<!--[\s\S]*?(DRAFTING AIDE|DO NOT INCLUDE)[\s\S]*?-->/m.test(
-        tplContent,
-      );
+      const hasBlock = /<!--[\s\S]*?(DRAFTING AIDE|DO NOT INCLUDE)[\s\S]*?-->/m.test(tplContent);
       if (!hasBlock) {
         err(
           name,
@@ -352,7 +335,12 @@ function parseFrontmatter(src) {
       if (isList) {
         const items = [];
         while (i < lines.length && /^\s+-\s+/.test(lines[i])) {
-          items.push(lines[i].replace(/^\s+-\s+/, '').trim().replace(/^['"]|['"]$/g, ''));
+          items.push(
+            lines[i]
+              .replace(/^\s+-\s+/, '')
+              .trim()
+              .replace(/^['"]|['"]$/g, ''),
+          );
           i++;
         }
         out[key] = items;

@@ -12,12 +12,12 @@ This file gives implementation context to AI coding assistants working in the `s
 
 ## Repository Structure
 
-| Directory | Package | Purpose |
-|---|---|---|
-| `packages/skills/` | `@tpw/skills` | Delivery activity skills (Markdown only, no build step) |
-| `packages/create-space/` | `@tpw/create-space` | Scaffolding CLI for new delivery workspaces |
-| `packages/space/` | `@tpw/space` | Space operations CLI (`space sync`, `space publish`) |
-| `tooling/` | `@tpw/*-config` | Shared internal configs (eslint, prettier, typescript) |
+| Directory                | Package             | Purpose                                                 |
+| ------------------------ | ------------------- | ------------------------------------------------------- |
+| `packages/skills/`       | `@tpw/skills`       | Delivery activity skills (Markdown only, no build step) |
+| `packages/create-space/` | `@tpw/create-space` | Scaffolding CLI for new delivery workspaces             |
+| `packages/space/`        | `@tpw/space`        | Space operations CLI (`space sync`, `space publish`)    |
+| `tooling/`               | `@tpw/*-config`     | Shared internal configs (eslint, prettier, typescript)  |
 
 Each package has its own `AGENTS.md` with package-specific implementation context.
 
@@ -38,14 +38,14 @@ No package in this repo depends on `@tpw/crew`.
 
 Run from the repo root:
 
-| Command | Description |
-|---|---|
-| `pnpm build` | Build `create-space` and `space` |
-| `pnpm typecheck` | Type-check all packages |
-| `pnpm test` | Run Vitest suite |
-| `pnpm lint` | Run ESLint |
-| `pnpm format:write` | Format with Prettier |
-| `pnpm validate` | Full pre-publish check (install, build, quality, test) |
+| Command             | Description                                            |
+| ------------------- | ------------------------------------------------------ |
+| `pnpm build`        | Build `create-space` and `space`                       |
+| `pnpm typecheck`    | Type-check all packages                                |
+| `pnpm test`         | Run Vitest suite                                       |
+| `pnpm lint`         | Run ESLint                                             |
+| `pnpm format:write` | Format with Prettier                                   |
+| `pnpm validate`     | Full pre-publish check (install, build, quality, test) |
 
 ## Adding a New Package
 

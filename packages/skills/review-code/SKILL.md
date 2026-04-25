@@ -33,6 +33,7 @@ produces:
 prerequisites: []
 related:
   - implement
+  - refactor-code
   - create-mr
   - review-docs
 tags:

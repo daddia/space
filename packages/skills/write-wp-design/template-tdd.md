@@ -195,10 +195,10 @@ surface:
 
 <!-- Omit this section if no cross-squad interface exists. -->
 
-| Interface | Owner | Notes |
-| --- | --- | --- |
-| `{ComponentName}` location | {This squad} | Lives in `modules/{d}/ui/{surface}/`; {consumer} imports it |
-| `{Shape}` fields consumed | {Other squad} | Stable; no changes for {EPIC-ID} |
+| Interface                  | Owner         | Notes                                                       |
+| -------------------------- | ------------- | ----------------------------------------------------------- |
+| `{ComponentName}` location | {This squad}  | Lives in `modules/{d}/ui/{surface}/`; {consumer} imports it |
+| `{Shape}` fields consumed  | {Other squad} | Stable; no changes for {EPIC-ID}                            |
 
 A contract test in the {other} squad's test suite asserts that the required
 fields are present. Failure blocks {other} CI before the {d} domain is affected.
@@ -207,13 +207,13 @@ fields are present. Failure blocks {other} CI before the {d} domain is affected.
 
 `{D}MutationErrorCode` coverage for this WP (copy per foundation sprint):
 
-| Code | {Surface} treatment |
-| --- | --- |
-| `NETWORK_ERROR` | Inline error + Retry; Retry generates a new idempotencyKey |
-| `{DOMAIN_CODE}` | <!-- surface-specific treatment --> |
-| `SESSION_EXPIRED` | Redirect to `/signin?from={surface}&id=...`; persist pending action to `sessionStorage` (5-min TTL, no PII) |
-| `VERSION_CONFLICT` | One silent retry inside the route; on repeat, reload and retry |
-| `UNKNOWN` | Inline generic + Retry; log with full context |
+| Code               | {Surface} treatment                                                                                         |
+| ------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `NETWORK_ERROR`    | Inline error + Retry; Retry generates a new idempotencyKey                                                  |
+| `{DOMAIN_CODE}`    | <!-- surface-specific treatment -->                                                                         |
+| `SESSION_EXPIRED`  | Redirect to `/signin?from={surface}&id=...`; persist pending action to `sessionStorage` (5-min TTL, no PII) |
+| `VERSION_CONFLICT` | One silent retry inside the route; on repeat, reload and retry                                              |
+| `UNKNOWN`          | Inline generic + Retry; log with full context                                                               |
 
 ## 8. Observability
 
@@ -230,15 +230,15 @@ This WP adds:
 
 ## 9. Testing strategy
 
-| Layer | Scope | Target |
-| --- | --- | --- |
-| Unit (Vitest) | `{Action}Schema`: valid / invalid / edge cases | 100% branches |
-| Unit (Vitest) | `use{Action}`: happy path, each error path, idempotency | 100% branches |
-| Route handler (Vitest) | `POST /api/{d}/{resource}`: 200, 400, 401, 409, 5xx | Happy + every error |
-| Component (Vitest + RTL) | `{Component}.client.tsx`: pending state, retry | Happy + error |
-| Integration (Playwright) | Real navigation: {surface} -> {action} -> {result} | Phase 1 happy |
-| Contract test | `track('{event}', payload)` matches `contracts.md` §6 | Blocks CI |
-| Accessibility (axe-core) | `{Component}` + inline error states | Pass on every PR |
+| Layer                    | Scope                                                   | Target              |
+| ------------------------ | ------------------------------------------------------- | ------------------- |
+| Unit (Vitest)            | `{Action}Schema`: valid / invalid / edge cases          | 100% branches       |
+| Unit (Vitest)            | `use{Action}`: happy path, each error path, idempotency | 100% branches       |
+| Route handler (Vitest)   | `POST /api/{d}/{resource}`: 200, 400, 401, 409, 5xx     | Happy + every error |
+| Component (Vitest + RTL) | `{Component}.client.tsx`: pending state, retry          | Happy + error       |
+| Integration (Playwright) | Real navigation: {surface} -> {action} -> {result}      | Phase 1 happy       |
+| Contract test            | `track('{event}', payload)` matches `contracts.md` §6   | Blocks CI           |
+| Accessibility (axe-core) | `{Component}` + inline error states                     | Pass on every PR    |
 
 ## 10. Acceptance gates (Alpha subset for this WP)
 

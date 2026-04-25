@@ -6,20 +6,20 @@
 
 ## Commands
 
-| Command | Description | Status |
-|---|---|---|
-| `space sync jira` | Sync Jira project into `.space/sources/jira/` | Planned |
+| Command                 | Description                                             | Status  |
+| ----------------------- | ------------------------------------------------------- | ------- |
+| `space sync jira`       | Sync Jira project into `.space/sources/jira/`           | Planned |
 | `space sync confluence` | Sync Confluence space into `.space/sources/confluence/` | Planned |
-| `space sync` | Sync all configured sources | Planned |
+| `space sync`            | Sync all configured sources                             | Planned |
 
 ## Key Areas
 
-| Path | Responsibility |
-|---|---|
-| `src/index.ts` | CLI entry point and command registration |
-| `src/commands/` | One file per command group |
+| Path             | Responsibility                                   |
+| ---------------- | ------------------------------------------------ |
+| `src/index.ts`   | CLI entry point and command registration         |
+| `src/commands/`  | One file per command group                       |
 | `src/providers/` | Provider-specific API clients (jira, confluence) |
-| `src/config.ts` | Reads `.space/config` from the workspace root |
+| `src/config.ts`  | Reads `.space/config` from the workspace root    |
 
 ## Design Constraints
 
@@ -36,8 +36,8 @@ See `docs/design/source-sync.md` (repo root) for the full design.
 
 Run from `packages/space`:
 
-| Command | Description |
-|---|---|
-| `pnpm build` | Compile TypeScript |
+| Command          | Description                 |
+| ---------------- | --------------------------- |
+| `pnpm build`     | Compile TypeScript          |
 | `pnpm typecheck` | Type-check without emitting |
-| `pnpm dev` | Watch mode |
+| `pnpm dev`       | Watch mode                  |

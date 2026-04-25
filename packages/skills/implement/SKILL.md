@@ -38,6 +38,7 @@ related:
   - write-wp-design
   - write-backlog
   - review-code
+  - refactor-code
   - create-mr
 tags:
   - implement
@@ -79,6 +80,9 @@ standards, relevant existing codebase files]
 - Commits must not contain secrets or credentials
 - Every new public function or interface must have a test
 - Do not create a single monolithic commit -- group related changes
+- Code comments must explain non-obvious intent or trade-offs in plain
+  language; do not add comments that trace back to tickets, story IDs,
+  or markdown document sections — the code must be self-contained
 
 ## Negative constraints
 
@@ -98,6 +102,10 @@ The implement skill writes code against an approved design. It MUST NOT:
   the repository's conventions.
 - Skip tests or mark failing tests as expected — failing tests must be fixed
   or the story must be split.
+- Add comments that cite external markdown documents, ticket IDs, or
+  cross-repo file paths (e.g. `CART02-07 | domain/cart/solution.md §5.1`).
+  Code must stand on its own. Comments should explain non-obvious intent or
+  trade-offs in plain language — not trace back to planning artefacts.
 
 ## Output format
 

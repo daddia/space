@@ -1,9 +1,5 @@
 import type { AtlassianCredentials } from '../../credentials.js';
-import type {
-  ConfluencePage,
-  ConfluencePageListResponse,
-  ConfluencePageSummary,
-} from './types.js';
+import type { ConfluencePage, ConfluencePageListResponse, ConfluencePageSummary } from './types.js';
 
 // ---------------------------------------------------------------------------
 // Errors
@@ -115,9 +111,7 @@ export function createConfluenceClient(
       }
 
       if (!response.ok) {
-        throw new Error(
-          `Confluence API error: HTTP ${response.status} ${response.statusText}`,
-        );
+        throw new Error(`Confluence API error: HTTP ${response.status} ${response.statusText}`);
       }
 
       try {
@@ -141,7 +135,8 @@ export function createConfluenceClient(
         `${credentials.baseUrl}/wiki/api/v2/spaces/${spaceKey}/pages?limit=${limit}`;
 
       while (nextUrl) {
-        const data: ConfluencePageListResponse = await fetchWithRetry<ConfluencePageListResponse>(nextUrl);
+        const data: ConfluencePageListResponse =
+          await fetchWithRetry<ConfluencePageListResponse>(nextUrl);
         allPages.push(...data.results);
 
         const next: string | undefined = data._links.next;

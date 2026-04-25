@@ -1,10 +1,10 @@
 ---
 type: adr
 id: ADR-{NUMBER}
-title: {Decision title}
+title: { Decision title }
 status: Proposed
-date: {YYYY-MM-DD}
-deciders: [{Role}, {Role}]
+date: { YYYY-MM-DD }
+deciders: [{ Role }, { Role }]
 supersedes: null
 ---
 

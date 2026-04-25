@@ -222,8 +222,8 @@ live as named constants in `modules/{d}/logic/constants.ts`:
 
 <!-- Closed enum of error codes + per-code UX treatment table -->
 
-| Code | Customer-facing treatment |
-| ---- | ------------------------- |
+| Code     | Customer-facing treatment                     |
+| -------- | --------------------------------------------- |
 | `{CODE}` | {What the user sees and what the system does} |
 
 Copy lives in `modules/{d}/logic/error-messages.ts`.
@@ -251,12 +251,12 @@ Flag-based or worker-routing-based; per-environment defaults are in code. -->
 
 ### 7.7 Testing strategy
 
-| Layer | Scope | Target |
-| ----- | ----- | ------ |
-| Unit (Vitest) | {scope} | {coverage target} |
-| Integration | {scope} | {happy + error paths} |
-| Contract tests | {scope} | Blocks CI |
-| axe-core (CI) | {scope} | Pass on every PR |
+| Layer          | Scope   | Target                |
+| -------------- | ------- | --------------------- |
+| Unit (Vitest)  | {scope} | {coverage target}     |
+| Integration    | {scope} | {happy + error paths} |
+| Contract tests | {scope} | Blocks CI             |
+| axe-core (CI)  | {scope} | Pass on every PR      |
 
 ## 8. Deployment and environments
 
@@ -282,9 +282,9 @@ Candidate domain-specific ADRs — not yet written:
 
 ### 10.1 Risks
 
-| ID | Risk | Likelihood | Impact | Mitigation |
-| --- | ---- | ---------- | ------ | ---------- |
-| R1 | {risk} | {Low/Medium/High} | {Low/Medium/High} | {mitigation} |
+| ID  | Risk   | Likelihood        | Impact            | Mitigation   |
+| --- | ------ | ----------------- | ----------------- | ------------ |
+| R1  | {risk} | {Low/Medium/High} | {Low/Medium/High} | {mitigation} |
 
 ### 10.2 Technical debt
 
@@ -300,6 +300,6 @@ Several patterns in this design are generic across domains. When a second
 domain adopts the same pattern, lift it to `architecture/patterns/` and replace
 the local section here with a pointer. Do not lift speculatively.
 
-| Pattern | Current home (this doc) | Graduate to | Trigger |
-| ------- | ----------------------- | ----------- | ------- |
-| {pattern name} | §{N.M} | `architecture/patterns/{name}.md` | {Second domain that adopts it} |
+| Pattern        | Current home (this doc) | Graduate to                       | Trigger                        |
+| -------------- | ----------------------- | --------------------------------- | ------------------------------ |
+| {pattern name} | §{N.M}                  | `architecture/patterns/{name}.md` | {Second domain that adopts it} |

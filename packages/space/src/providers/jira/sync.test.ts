@@ -11,11 +11,7 @@ import type { JiraClient } from './client.js';
 // Fixtures
 // ---------------------------------------------------------------------------
 
-function makeIssue(
-  key: string,
-  typeName: string,
-  links: unknown[] = [],
-): JiraIssue {
+function makeIssue(key: string, typeName: string, links: unknown[] = []): JiraIssue {
   return {
     id: key.replace('-', ''),
     key,
@@ -80,8 +76,9 @@ describe('sortByKey', () => {
   });
 
   it('sorts across a hundred issues correctly (natural order, not lexicographic)', () => {
-    const shuffled = Array.from({ length: 100 }, (_, i) => makeIssue(`STORE-${i + 1}`, 'Story'))
-      .reverse();
+    const shuffled = Array.from({ length: 100 }, (_, i) =>
+      makeIssue(`STORE-${i + 1}`, 'Story'),
+    ).reverse();
     const sorted = sortByKey(shuffled);
     expect(sorted[0]?.key).toBe('STORE-1');
     expect(sorted[99]?.key).toBe('STORE-100');
@@ -152,7 +149,10 @@ describe('syncJira', () => {
   }
 
   async function readJson<T>(file: string): Promise<T> {
-    const content = await readFile(path.join(workspaceRoot, '.space', 'sources', 'jira', file), 'utf-8');
+    const content = await readFile(
+      path.join(workspaceRoot, '.space', 'sources', 'jira', file),
+      'utf-8',
+    );
     return JSON.parse(content) as T;
   }
 
@@ -205,7 +205,12 @@ describe('syncJira', () => {
     ];
     await syncJira({ sourceConfig, credentials, workspaceRoot, client: makeClient(issues) });
 
-    const meta = await readJson<{ counts: Record<string, number>; project: string; jql: string; sync_at: string }>('meta.json');
+    const meta = await readJson<{
+      counts: Record<string, number>;
+      project: string;
+      jql: string;
+      sync_at: string;
+    }>('meta.json');
     expect(meta.counts['total']).toBe(5);
     expect(meta.counts['epics']).toBe(1);
     expect(meta.counts['stories']).toBe(2);
@@ -216,7 +221,12 @@ describe('syncJira', () => {
   });
 
   it('writes all four output files', async () => {
-    await syncJira({ sourceConfig, credentials, workspaceRoot, client: makeClient([makeIssue('STORE-1', 'Story')]) });
+    await syncJira({
+      sourceConfig,
+      credentials,
+      workspaceRoot,
+      client: makeClient([makeIssue('STORE-1', 'Story')]),
+    });
 
     const dir = path.join(workspaceRoot, '.space', 'sources', 'jira');
     expect(existsSync(path.join(dir, 'issues.json'))).toBe(true);
@@ -226,7 +236,12 @@ describe('syncJira', () => {
   });
 
   it('leaves no .tmp sibling after a successful sync', async () => {
-    await syncJira({ sourceConfig, credentials, workspaceRoot, client: makeClient([makeIssue('STORE-1', 'Story')]) });
+    await syncJira({
+      sourceConfig,
+      credentials,
+      workspaceRoot,
+      client: makeClient([makeIssue('STORE-1', 'Story')]),
+    });
 
     const tmp = path.join(workspaceRoot, '.space', 'sources', 'jira.tmp');
     expect(existsSync(tmp)).toBe(false);
@@ -239,7 +254,9 @@ describe('syncJira', () => {
     await writeFile(path.join(existingDir, 'issues.json'), '"original"');
 
     const failingClient: JiraClient = {
-      searchIssues: async () => { throw new Error('network error'); },
+      searchIssues: async () => {
+        throw new Error('network error');
+      },
     };
 
     await expect(

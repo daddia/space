@@ -51,9 +51,7 @@ export function loadCredentials(workspaceRoot: string): AtlassianCredentials {
  * Exported separately so tests can pass a mock env without touching
  * process.env or the filesystem.
  */
-export function parseCredentials(
-  env: Record<string, string | undefined>,
-): AtlassianCredentials {
+export function parseCredentials(env: Record<string, string | undefined>): AtlassianCredentials {
   const baseUrl = env['ATLASSIAN_BASE_URL'];
   const user = env['ATLASSIAN_USER'];
   const apiToken = env['ATLASSIAN_API_TOKEN'];

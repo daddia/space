@@ -36,8 +36,8 @@ refer back to this document.
 
 The {domain} has one north-star metric. Everything else exists to move it.
 
-| ID | Metric | Definition | Baseline | Target | Measurement source |
-| -- | ------ | ---------- | -------- | ------ | ------------------ |
+| ID     | Metric               | Definition                            | Baseline                            | Target                         | Measurement source                        |
+| ------ | -------------------- | ------------------------------------- | ----------------------------------- | ------------------------------ | ----------------------------------------- |
 | {D}-01 | <!-- metric name --> | <!-- precise definition as a rate --> | **TBD** -- legacy baseline required | **Match or improve** vs legacy | <!-- analytics / RUM / server metrics --> |
 
 <!-- Explain why this metric, and what it does NOT capture (to avoid confusion
@@ -47,11 +47,11 @@ with adjacent metrics owned by other domains). -->
 
 Input metrics describe what drives the north star.
 
-| ID | Metric | Definition | Target | Source |
-| -- | ------ | ---------- | ------ | ------ |
+| ID      | Metric        | Definition          | Target                  | Source          |
+| ------- | ------------- | ------------------- | ----------------------- | --------------- |
 | {D}-I01 | <!-- name --> | <!-- definition --> | Match or improve legacy | <!-- source --> |
-| {D}-I02 | | | | |
-| {D}-I03 | | | | |
+| {D}-I02 |               |                     |                         |                 |
+| {D}-I03 |               |                     |                         |                 |
 
 ## 3. Guardrail metrics
 
@@ -59,41 +59,41 @@ Guardrails must **not** regress. A guardrail breach is a release blocker.
 
 ### Performance
 
-| ID | Metric | Definition | Target | Source |
-| -- | ------ | ---------- | ------ | ------ |
-| {D}-G01 | LCP p75 (mobile) | Largest contentful paint at p75 on mobile | **< 2.5s** | RUM / Lighthouse |
-| {D}-G02 | INP p75 (mobile) | Interaction to next paint at p75 on mobile | **< 200ms** | RUM |
-| {D}-G03 | CLS p75 (mobile) | Cumulative layout shift at p75 on mobile | **< 0.1** | RUM |
-| {D}-G04 | JS bundle (gzipped) | Client-side JS shipped with this route | **< 40KB** | CI bundle analyser |
-| {D}-G05 | Mutation perceived latency (p75) | Time from user gesture to UI confirmation | **< 500ms** | RUM custom timing |
-| {D}-G06 | Mutation server round-trip (p75) | API route entry to BFF response | **< 800ms** | Distributed tracing |
+| ID      | Metric                           | Definition                                 | Target      | Source              |
+| ------- | -------------------------------- | ------------------------------------------ | ----------- | ------------------- |
+| {D}-G01 | LCP p75 (mobile)                 | Largest contentful paint at p75 on mobile  | **< 2.5s**  | RUM / Lighthouse    |
+| {D}-G02 | INP p75 (mobile)                 | Interaction to next paint at p75 on mobile | **< 200ms** | RUM                 |
+| {D}-G03 | CLS p75 (mobile)                 | Cumulative layout shift at p75 on mobile   | **< 0.1**   | RUM                 |
+| {D}-G04 | JS bundle (gzipped)              | Client-side JS shipped with this route     | **< 40KB**  | CI bundle analyser  |
+| {D}-G05 | Mutation perceived latency (p75) | Time from user gesture to UI confirmation  | **< 500ms** | RUM custom timing   |
+| {D}-G06 | Mutation server round-trip (p75) | API route entry to BFF response            | **< 800ms** | Distributed tracing |
 
 ### Reliability
 
-| ID | Metric | Definition | Target | Source |
-| -- | ------ | ---------- | ------ | ------ |
-| {D}-G07 | <!-- primary success rate --> | <!-- definition --> | **> 99%** | Server metrics |
-| {D}-G08 | Mutation error rate (5xx) | 5xx / total mutation invocations | **< 0.5%** | API route logs |
-| {D}-G09 | Mutation error rate (4xx non-domain) | Non-domain 4xx / total | **< 0.1%** | API route logs |
+| ID      | Metric                               | Definition                       | Target     | Source         |
+| ------- | ------------------------------------ | -------------------------------- | ---------- | -------------- |
+| {D}-G07 | <!-- primary success rate -->        | <!-- definition -->              | **> 99%**  | Server metrics |
+| {D}-G08 | Mutation error rate (5xx)            | 5xx / total mutation invocations | **< 0.5%** | API route logs |
+| {D}-G09 | Mutation error rate (4xx non-domain) | Non-domain 4xx / total           | **< 0.1%** | API route logs |
 
 ### Experience
 
-| ID | Metric | Definition | Target | Source |
-| -- | ------ | ---------- | ------ | ------ |
-| {D}-G10 | Abandonment rate | Sessions reaching this surface that do not proceed to the next step | Match or improve legacy | Analytics funnel |
-| {D}-G11 | Accessibility (WCAG 2.1 AA) | axe-core automated + manual keyboard / screen-reader review | **Pass** | CI axe-core + QA |
-| {D}-G12 | Error UX completeness | Every error code has an observed customer-facing path | **100%** | QA review |
+| ID      | Metric                      | Definition                                                          | Target                  | Source           |
+| ------- | --------------------------- | ------------------------------------------------------------------- | ----------------------- | ---------------- |
+| {D}-G10 | Abandonment rate            | Sessions reaching this surface that do not proceed to the next step | Match or improve legacy | Analytics funnel |
+| {D}-G11 | Accessibility (WCAG 2.1 AA) | axe-core automated + manual keyboard / screen-reader review         | **Pass**                | CI axe-core + QA |
+| {D}-G12 | Error UX completeness       | Every error code has an observed customer-facing path               | **100%**                | QA review        |
 
 ## 4. Baselines
 
 Legacy baselines are required before any migration decision. Development can
 start without them, but they must be captured before production ramp-up.
 
-| Metric | Capture method | Owner | Due | Status |
-| ------ | -------------- | ----- | --- | ------ |
-| {D}-01 | <!-- analytics query --> | <!-- squad --> | Before Beta gate | Not started |
-| {D}-I01 | | | | |
-| {D}-G10 | | | | |
+| Metric  | Capture method           | Owner          | Due              | Status      |
+| ------- | ------------------------ | -------------- | ---------------- | ----------- |
+| {D}-01  | <!-- analytics query --> | <!-- squad --> | Before Beta gate | Not started |
+| {D}-I01 |                          |                |                  |             |
+| {D}-G10 |                          |                |                  |             |
 
 ## 5. Targets by phase
 
@@ -124,35 +124,35 @@ phases unless explicitly raised.
 
 ## 6. Measurement sources
 
-| Layer | Tool / system | Notes |
-| ----- | ------------- | ----- |
-| Client analytics events | `@/lib/analytics` `track()` | Typed payloads; schema owned by this domain |
-| Client performance | RUM | Core Web Vitals, custom timings |
-| Server traces | Distributed tracing via `@tw/observability` | Span per mutation: API route → `bffClient` → BFF |
-| Server logs | `@tw/logging` | Correlation ID, hashed identifiers, no PII |
-| RED metrics | Service metrics | Rate / Errors / Duration per mutation action |
-| Funnel analytics | Analytics platform | Full conversion funnel |
-| Bundle size | CI bundle analyser | Per-route JS budget enforced on PR |
-| Accessibility | axe-core in CI + manual QA | Runs from first UI epic onwards |
+| Layer                   | Tool / system                               | Notes                                            |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------ |
+| Client analytics events | `@/lib/analytics` `track()`                 | Typed payloads; schema owned by this domain      |
+| Client performance      | RUM                                         | Core Web Vitals, custom timings                  |
+| Server traces           | Distributed tracing via `@tw/observability` | Span per mutation: API route → `bffClient` → BFF |
+| Server logs             | `@tw/logging`                               | Correlation ID, hashed identifiers, no PII       |
+| RED metrics             | Service metrics                             | Rate / Errors / Duration per mutation action     |
+| Funnel analytics        | Analytics platform                          | Full conversion funnel                           |
+| Bundle size             | CI bundle analyser                          | Per-route JS budget enforced on PR               |
+| Accessibility           | axe-core in CI + manual QA                  | Runs from first UI epic onwards                  |
 
 ## 7. Instrumentation status
 
-| Source | Status | Gap to close | Tracked in |
-| ------ | ------ | ------------ | ---------- |
-| Client analytics | Library present; events undefined | Define + fire domain events | <!-- EPIC-ID --> |
-| RUM | Present on other routes | Verify reporting for this route | <!-- EPIC-ID --> |
-| Distributed tracing | Present | Add per-mutation spans | <!-- EPIC-ID --> |
-| RED metrics | Not present | Emit per-action Rate/Errors/Duration | <!-- EPIC-ID --> |
-| axe-core in CI | Present | Scope to this domain's routes | <!-- EPIC-ID --> |
+| Source              | Status                            | Gap to close                         | Tracked in       |
+| ------------------- | --------------------------------- | ------------------------------------ | ---------------- |
+| Client analytics    | Library present; events undefined | Define + fire domain events          | <!-- EPIC-ID --> |
+| RUM                 | Present on other routes           | Verify reporting for this route      | <!-- EPIC-ID --> |
+| Distributed tracing | Present                           | Add per-mutation spans               | <!-- EPIC-ID --> |
+| RED metrics         | Not present                       | Emit per-action Rate/Errors/Duration | <!-- EPIC-ID --> |
+| axe-core in CI      | Present                           | Scope to this domain's routes        | <!-- EPIC-ID --> |
 
 ## 8. Review cadence and ownership
 
-| Cadence | Audience | Metrics reviewed | Action |
-| ------- | -------- | ---------------- | ------ |
-| Daily (Alpha/Beta) | Squad standup | Key reliability metrics | Block release on breach |
-| Weekly | Squad + Platform | All guardrails | Raise follow-up stories for degradation |
-| Pre-phase-gate | Squad + Product + Engineering | All metrics | Go/no-go against roadmap exit criteria |
-| Ongoing (production) | Squad + Platform SRE | All, via dashboards | Alert on primary success rate breach |
+| Cadence              | Audience                      | Metrics reviewed        | Action                                  |
+| -------------------- | ----------------------------- | ----------------------- | --------------------------------------- |
+| Daily (Alpha/Beta)   | Squad standup                 | Key reliability metrics | Block release on breach                 |
+| Weekly               | Squad + Platform              | All guardrails          | Raise follow-up stories for degradation |
+| Pre-phase-gate       | Squad + Product + Engineering | All metrics             | Go/no-go against roadmap exit criteria  |
+| Ongoing (production) | Squad + Platform SRE          | All, via dashboards     | Alert on primary success rate breach    |
 
 ### Ownership
 

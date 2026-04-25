@@ -129,9 +129,7 @@ function validateConfig(data: unknown): WorkspaceConfig {
         throw new ConfigError('.space/config: sources.issues.provider must be "jira"');
       }
       if (typeof issues['project'] !== 'string' || issues['project'].trim() === '') {
-        throw new ConfigError(
-          '.space/config: sources.issues.project must be a non-empty string',
-        );
+        throw new ConfigError('.space/config: sources.issues.project must be a non-empty string');
       }
     }
 
@@ -144,9 +142,7 @@ function validateConfig(data: unknown): WorkspaceConfig {
         throw new ConfigError('.space/config: sources.docs.provider must be "confluence"');
       }
       if (typeof docs['space'] !== 'string' || docs['space'].trim() === '') {
-        throw new ConfigError(
-          '.space/config: sources.docs.space must be a non-empty string',
-        );
+        throw new ConfigError('.space/config: sources.docs.space must be a non-empty string');
       }
     }
   }

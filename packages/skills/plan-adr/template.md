@@ -28,11 +28,11 @@ already governed by existing ADRs are excluded.
 
 ## Summary
 
-| # | Title | Priority | Epic(s) impacted | Related existing ADRs |
-| - | ----- | -------- | ---------------- | --------------------- |
-| 1 | {Specific decision title} | Blocking | {EPIC-ID} | {ADR-XXXX or None} |
-| 2 | {Specific decision title} | Blocking | {EPIC-ID} | {ADR-XXXX or None} |
-| 3 | {Specific decision title} | Deferrable | {EPIC-ID} | {ADR-XXXX or None} |
+| #   | Title                     | Priority   | Epic(s) impacted | Related existing ADRs |
+| --- | ------------------------- | ---------- | ---------------- | --------------------- |
+| 1   | {Specific decision title} | Blocking   | {EPIC-ID}        | {ADR-XXXX or None}    |
+| 2   | {Specific decision title} | Blocking   | {EPIC-ID}        | {ADR-XXXX or None}    |
+| 3   | {Specific decision title} | Deferrable | {EPIC-ID}        | {ADR-XXXX or None}    |
 
 {N} ADRs total; {N} Blocking, {N} Deferrable.
 

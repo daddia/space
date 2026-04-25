@@ -93,11 +93,7 @@ export function extractLinks(issues: JiraIssue[]): JiraIssueLink[] {
 // Internal helpers
 // ---------------------------------------------------------------------------
 
-function buildMeta(options: {
-  issues: JiraIssue[];
-  project: string;
-  jql: string;
-}): JiraSyncMeta {
+function buildMeta(options: { issues: JiraIssue[]; project: string; jql: string }): JiraSyncMeta {
   const { issues, project, jql } = options;
   let epics = 0;
   let stories = 0;

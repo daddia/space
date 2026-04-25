@@ -9,11 +9,11 @@ agents work.
 
 ## Packages
 
-| Package | Version | Description |
-|---|---|---|
-| [`@tpw/skills`](packages/skills/) | 0.2.0 | Delivery activity skills for AI coding agents |
-| [`@tpw/create-space`](packages/create-space/) | 0.1.1 | Scaffold a new delivery workspace |
-| [`@tpw/space`](packages/space/) | 0.1.0 | Operate a workspace -- sync sources, publish docs |
+| Package                                       | Version | Description                                       |
+| --------------------------------------------- | ------- | ------------------------------------------------- |
+| [`@tpw/skills`](packages/skills/)             | 0.2.0   | Delivery activity skills for AI coding agents     |
+| [`@tpw/create-space`](packages/create-space/) | 0.1.1   | Scaffold a new delivery workspace                 |
+| [`@tpw/space`](packages/space/)               | 0.1.0   | Operate a workspace -- sync sources, publish docs |
 
 ## Scaffolding a new workspace
 

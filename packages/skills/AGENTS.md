@@ -36,14 +36,14 @@ version: '0.1'
 
 Skills use the `{verb}-{topic}` pattern. Canonical verbs:
 
-| Verb | Usage |
-|---|---|
-| `write-` | Author a document from scratch (product, design, requirements, ADR, backlog, metrics, roadmap) |
-| `review-` | Review an existing document or artefact (code, docs, ADR) |
-| `plan-` | Orchestrate or plan a multi-step activity (e.g. `plan-adr`) |
-| `implement` | Execute a story against approved requirements and design |
-| `validate` | Final acceptance check that an epic is complete |
-| `create-` | Automate a process that creates an external artefact (e.g. `create-mr`) |
+| Verb        | Usage                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------- |
+| `write-`    | Author a document from scratch (product, design, requirements, ADR, backlog, metrics, roadmap) |
+| `review-`   | Review an existing document or artefact (code, docs, ADR)                                      |
+| `plan-`     | Orchestrate or plan a multi-step activity (e.g. `plan-adr`)                                    |
+| `implement` | Execute a story against approved requirements and design                                       |
+| `validate`  | Final acceptance check that an epic is complete                                                |
+| `create-`   | Automate a process that creates an external artefact (e.g. `create-mr`)                        |
 
 ## Adding a Skill
 

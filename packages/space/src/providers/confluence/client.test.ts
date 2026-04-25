@@ -1,11 +1,7 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, afterAll } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import {
-  createConfluenceClient,
-  ConfluenceAuthError,
-  ConfluenceRateLimitError,
-} from './client.js';
+import { createConfluenceClient, ConfluenceAuthError, ConfluenceRateLimitError } from './client.js';
 import type { ConfluencePage, ConfluencePageListResponse, ConfluencePageSummary } from './types.js';
 
 // ---------------------------------------------------------------------------
@@ -126,9 +122,7 @@ describe('listPages -- pagination', () => {
   });
 
   it('returns an empty array when the space has no pages', async () => {
-    server.use(
-      http.get(LIST_PAGES_URL, () => HttpResponse.json(makeListResponse([]))),
-    );
+    server.use(http.get(LIST_PAGES_URL, () => HttpResponse.json(makeListResponse([]))));
     const client = createConfluenceClient(credentials, { delay: noDelay });
     expect(await client.listPages({ spaceKey: 'TEST' })).toEqual([]);
   });
@@ -283,9 +277,7 @@ describe('429 retry', () => {
   });
 
   it('throws ConfluenceRateLimitError after 3 retries all return 429', async () => {
-    server.use(
-      http.get(GET_PAGE_URL, () => new HttpResponse(null, { status: 429 })),
-    );
+    server.use(http.get(GET_PAGE_URL, () => new HttpResponse(null, { status: 429 })));
     const client = createConfluenceClient(credentials, { delay: noDelay });
     await expect(client.getPage({ id: '1' })).rejects.toThrow(ConfluenceRateLimitError);
   });

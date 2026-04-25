@@ -137,11 +137,11 @@ const body: {ActionName}Request = {
 
 <!-- One-line preamble: every Next.js route handler this domain exposes -->
 
-| Path | Method | Request schema | Response shape | Error codes |
-| ---- | ------ | -------------- | -------------- | ----------- |
-| `/api/{domain}/{resource}` | POST | `{ActionName}Schema` | `{DomainMutationResult}` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `VERSION_CONFLICT`, `NETWORK_ERROR` |
-| `/api/{domain}/{resource}/[id]` | PATCH | `{UpdateSchema}` | `{DomainMutationResult}` | see above |
-| `/api/{domain}/{resource}/[id]` | DELETE | — | `{DomainMutationResult}` | see above |
+| Path                            | Method | Request schema       | Response shape           | Error codes                                                                |
+| ------------------------------- | ------ | -------------------- | ------------------------ | -------------------------------------------------------------------------- |
+| `/api/{domain}/{resource}`      | POST   | `{ActionName}Schema` | `{DomainMutationResult}` | `VALIDATION_ERROR`, `SESSION_EXPIRED`, `VERSION_CONFLICT`, `NETWORK_ERROR` |
+| `/api/{domain}/{resource}/[id]` | PATCH  | `{UpdateSchema}`     | `{DomainMutationResult}` | see above                                                                  |
+| `/api/{domain}/{resource}/[id]` | DELETE | —                    | `{DomainMutationResult}` | see above                                                                  |
 
 ## 6. Analytics event schema
 

@@ -4,11 +4,11 @@ Workspace ecosystem for Horizon delivery spaces.
 
 ## Packages
 
-| Package | Description |
-|---|---|
-| [`@tpw/skills`](packages/skills/) | Delivery activity skills for AI coding agents |
-| [`@tpw/create-space`](packages/create-space/) | Scaffold a new Horizon delivery workspace |
-| [`@tpw/space`](packages/space/) | Operate a space -- sync external sources, publish docs |
+| Package                                       | Description                                            |
+| --------------------------------------------- | ------------------------------------------------------ |
+| [`@tpw/skills`](packages/skills/)             | Delivery activity skills for AI coding agents          |
+| [`@tpw/create-space`](packages/create-space/) | Scaffold a new Horizon delivery workspace              |
+| [`@tpw/space`](packages/space/)               | Operate a space -- sync external sources, publish docs |
 
 ## Quick start
 

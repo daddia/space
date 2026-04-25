@@ -70,14 +70,14 @@ document, and access to the application codebase]
 
 You need the following for the target epic:
 
-| Input | Location | Required |
-|---|---|---|
-| Backlog | `product/backlog.md` | Yes |
-| Requirements | `work/{EPIC_ID}/requirements.md` | If exists |
-| Design | `work/{EPIC_ID}/design.md` | If exists |
-| Application code | `../carinyaforce` | Yes |
-| Solution architecture | `architecture/solution.md` | If relevant |
-| ADRs | `architecture/decisions/` | If relevant |
+| Input                 | Location                         | Required    |
+| --------------------- | -------------------------------- | ----------- |
+| Backlog               | `product/backlog.md`             | Yes         |
+| Requirements          | `work/{EPIC_ID}/requirements.md` | If exists   |
+| Design                | `work/{EPIC_ID}/design.md`       | If exists   |
+| Application code      | `../carinyaforce`                | Yes         |
+| Solution architecture | `architecture/solution.md`       | If relevant |
+| ADRs                  | `architecture/decisions/`        | If relevant |
 
 ## Steps
 
@@ -93,8 +93,8 @@ You need the following for the target epic:
 
 For every story in the epic, build a table of acceptance criteria with columns:
 
-| Story | Criterion | Evidence | Status |
-|---|---|---|---|
+| Story    | Criterion                    | Evidence                             | Status                |
+| -------- | ---------------------------- | ------------------------------------ | --------------------- |
 | CF-XX-YY | Description of the criterion | File path, test name, or observation | pass / fail / partial |
 
 - **pass**: Criterion fully satisfied with evidence in the codebase
@@ -126,14 +126,14 @@ If a design document exists:
 
 ### Phase 5: Cross-cutting checks
 
-| Check | What to verify |
-|---|---|
-| Tests | Unit and integration tests exist and cover each public interface |
-| Types | No `any` casts that bypass type safety on public boundaries |
-| Error handling | Errors handled as specified in design; no silent swallows |
-| Documentation | README, runbooks, or inline docs updated if required by acceptance criteria |
-| Environment | New environment variables added to `.env.example` |
-| Dependencies | No unused or undeclared dependencies |
+| Check          | What to verify                                                              |
+| -------------- | --------------------------------------------------------------------------- |
+| Tests          | Unit and integration tests exist and cover each public interface            |
+| Types          | No `any` casts that bypass type safety on public boundaries                 |
+| Error handling | Errors handled as specified in design; no silent swallows                   |
+| Documentation  | README, runbooks, or inline docs updated if required by acceptance criteria |
+| Environment    | New environment variables added to `.env.example`                           |
+| Dependencies   | No unused or undeclared dependencies                                        |
 
 ### Phase 6: Update the backlog
 
@@ -183,18 +183,18 @@ After completing validation, produce a report structured as follows.
 
 ### Acceptance Matrix
 
-| Story | Criterion | Evidence | Status |
-|---|---|---|---|
-| CF-XX-01 | Description | `path/to/file.ts` L12-45 | pass |
-| CF-XX-01 | Description | `path/to/test.ts::test name` | pass |
-| CF-XX-02 | Description | Not found in codebase | fail |
+| Story    | Criterion   | Evidence                                        | Status  |
+| -------- | ----------- | ----------------------------------------------- | ------- |
+| CF-XX-01 | Description | `path/to/file.ts` L12-45                        | pass    |
+| CF-XX-01 | Description | `path/to/test.ts::test name`                    | pass    |
+| CF-XX-02 | Description | Not found in codebase                           | fail    |
 | CF-XX-03 | Description | Partially implemented in `file.ts` -- missing X | partial |
 
 ### Design Deviations
 
-| Area | Design spec | Actual implementation | Assessment |
-|---|---|---|---|
-| API method | `POST /api/foo` | `PUT /api/foo` | Acceptable -- aligned with REST conventions |
+| Area       | Design spec     | Actual implementation | Assessment                                  |
+| ---------- | --------------- | --------------------- | ------------------------------------------- |
+| API method | `POST /api/foo` | `PUT /api/foo`        | Acceptable -- aligned with REST conventions |
 
 (Omit this section if no deviations found.)
 

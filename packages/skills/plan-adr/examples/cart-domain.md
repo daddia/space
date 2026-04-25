@@ -29,13 +29,13 @@ to the ADR register.
 
 ## Summary
 
-| # | Title | Priority | Epic(s) impacted | Related existing ADRs |
-| - | ----- | -------- | ---------------- | --------------------- |
-| 1 | Cart mutation business-rule pre-validation strategy | Blocking | CART01, CART02, CART03, CART06 | ADR-0011, ADR-0015 |
-| 2 | Cart mutation error-code taxonomy ownership and BFF contract | Blocking | CART01, CART06; unblocks BFF-CART-08 | ADR-0015 |
-| 3 | Idempotency guarantee contract for cart mutations | Blocking | CART01, CART02, CART03, CART08 | ADR-0015 |
-| 4 | `CartViewModel` as the cross-domain cart contract | Blocking | CART01; consumed by Checkout domain | ADR-0011, ADR-0012 |
-| 5 | Basket merge on sign-in -- trigger and recovery strategy | Deferrable | FR-18b follow-on (auth + cart) | ADR-0014 |
+| #   | Title                                                        | Priority   | Epic(s) impacted                     | Related existing ADRs |
+| --- | ------------------------------------------------------------ | ---------- | ------------------------------------ | --------------------- |
+| 1   | Cart mutation business-rule pre-validation strategy          | Blocking   | CART01, CART02, CART03, CART06       | ADR-0011, ADR-0015    |
+| 2   | Cart mutation error-code taxonomy ownership and BFF contract | Blocking   | CART01, CART06; unblocks BFF-CART-08 | ADR-0015              |
+| 3   | Idempotency guarantee contract for cart mutations            | Blocking   | CART01, CART02, CART03, CART08       | ADR-0015              |
+| 4   | `CartViewModel` as the cross-domain cart contract            | Blocking   | CART01; consumed by Checkout domain  | ADR-0011, ADR-0012    |
+| 5   | Basket merge on sign-in -- trigger and recovery strategy     | Deferrable | FR-18b follow-on (auth + cart)       | ADR-0014              |
 
 Five ADRs total; four Blocking, one Deferrable. The list is deliberately
 short — remaining design choices (optimistic reducer pattern, route-handler
