@@ -1,0 +1,31 @@
+project:
+  name: Space
+  key: SPACE
+  description: daddia workspace
+
+workspace:
+  path: .
+  work: docs/work/{TASK_ID}/
+
+sources:
+  repo:
+    provider: github
+    path: daddia/space
+    url: https://github.com/daddia/space
+
+# Uncomment and configure when Jira / Confluence sync is set up:
+#
+#  issues:
+#    provider: jira
+#    base_url: https://your-org.atlassian.net
+#    project: SPACE
+#    url: https://your-org.atlassian.net/browse/SPACE
+#
+#  docs:
+#    provider: confluence
+#    space: YOUR_SPACE_KEY
+#    url: https://your-org.atlassian.net/wiki/spaces/YOUR_SPACE_KEY/overview
+#
+#  chat:
+#    provider: slack
+#    channel: '#your-channel'

@@ -1,0 +1,47 @@
+{
+  "name": "@daddia/skills",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Delivery activity skills for AI coding agents -- works with any IDE",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daddia/space.git",
+    "directory": "packages/skills"
+  },
+  "keywords": [
+    "daddia",
+    "space",
+    "skills",
+    "delivery",
+    "ai-agents",
+    "cursor",
+    "claude-code",
+    "copilot"
+  ],
+  "engines": {
+    "node": ">=24.14.1"
+  },
+  "scripts": {
+    "postinstall": "node bin/sync-skills.js",
+    "lint": "node bin/lint-skills.js"
+  },
+  "bin": {
+    "sync-skills": "bin/sync-skills.js",
+    "lint-skills": "bin/lint-skills.js"
+  },
+  "files": [
+    "bin/**",
+    "*/SKILL.md",
+    "*/template.md",
+    "*/template-*.md",
+    "*/template.*.md",
+    "*/examples/**",
+    "*/scripts/**",
+    "README.md",
+    "CHANGELOG.md"
+  ]
+}

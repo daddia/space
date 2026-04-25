@@ -1,0 +1,31 @@
+project:
+  name: {projectName}
+  key: {projectKey}
+
+# External source configuration for `space sync`.
+# Uncomment and fill in to enable Jira and Confluence sync.
+#
+# sources:
+#   issues:
+#     provider: jira
+#     base_url: https://your-org.atlassian.net
+#     project: {projectKey}
+#
+#   docs:
+#     provider: confluence
+#     space: YOUR_SPACE_KEY
+#     url: https://your-org.atlassian.net/wiki/spaces/YOUR_SPACE_KEY
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+  runs: runs/
+
+source:
+  repo: {sourceRepo}
+  path: {sourcePath}
+
+llm:
+  default_model: {llmDefaultModel}
+  providers:
+{llmProviders}

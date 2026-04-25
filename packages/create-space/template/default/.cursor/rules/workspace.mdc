@@ -1,0 +1,42 @@
+---
+description: Workspace layout, repos, and conventions
+alwaysApply: true
+---
+
+# {projectName} Workspace
+
+This is the delivery workspace for **{projectName}**.
+
+Refer to `AGENTS.md` for the full repo layout, key documents, and conventions.
+
+## Required reading
+
+Before starting any task, you **MUST** read:
+
+- `AGENTS.md` -- repo layout, key documents, conventions
+- `product/product.md` -- product strategy and requirements
+- `product/roadmap.md` -- phased roadmap
+- `architecture/solution.md` -- solution architecture
+- `architecture/decisions/register.md` -- architecture decision records
+- `docs/conventions/definition-of-ready.md` -- when a story is ready to implement
+- `docs/conventions/definition-of-done.md` -- when a story is actually done
+
+These documents contain decisions and patterns that override general knowledge.
+
+## Repositories
+
+| Repo | Role |
+|------|------|
+| `{project}-space` (this repo) | Delivery artifacts: product, architecture, backlog, epics, reports |
+| `{project}` (`../{project}`) | Application code |
+
+## Skills
+
+Delivery activity skills are provided by `@daddia/skills` and discovered automatically from `.cursor/skills/`. Skills include prompts for requirements writing, technical design, ADRs, code review, and more. Type `/` to see available skills.
+
+## Conventions
+
+- All delivery artifacts are Markdown with YAML frontmatter
+- Epic artifacts go in `work/{EPIC_ID}/`
+- Architecture decisions follow the template at `architecture/decisions/adr-template.md`
+- This workspace contains no application code -- that belongs in the `{project}` repo
