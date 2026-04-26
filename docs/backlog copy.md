@@ -3,7 +3,7 @@ type: Backlog
 scope: platform
 product: space
 version: '1.0'
-owner: Horizon Platform
+owner: daddia
 status: Draft
 last_updated: 2026-04-26
 parent_product: docs/product.md
@@ -39,16 +39,16 @@ live in `docs/roadmap.md`.
 
 **Prerequisites (complete).**
 
-- `@tpw/skills` base implementation; `sync-skills` postinstall bin.
-- `@tpw/create-space` base scaffolder; interactive prompt flow;
+- `@daddia/skills` base implementation; `sync-skills` postinstall bin.
+- `@daddia/create-space` base scaffolder; interactive prompt flow;
   template directory.
-- `@tpw/space` CLI skeleton and Commander registration.
+- `@daddia/space` CLI skeleton and Commander registration.
 - The three-package monorepo orchestration (pnpm, turborepo, changesets).
 - `storefront-space` available as the first validation workspace.
 
 **Prerequisites (required before Next phase ships).**
 
-- `@tpw/space` source-sync commands green against real Atlassian
+- `@daddia/space` source-sync commands green against real Atlassian
   credentials from `storefront-space` (SPACE-01).
 - `docs/design/space-artefact-model.md` reviewed and accepted (this is
   the design that SPACE-02, -03, -04 implement against).
@@ -77,7 +77,7 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 | SPACE-03 | Space v2 artefact model: tooling and router   | Next  | P1       | SPACE-02              | ~15    | `docs/work/03-tooling-v2/` (planned)   | Not started |
 | SPACE-04 | Publish pipeline: Jira                        | Next  | P1       | SPACE-02, SPACE-01     | ~20    | `docs/work/04-publish-jira/` (planned) | Not started |
 | SPACE-05 | Publish pipeline: Confluence                  | Next  | P1       | SPACE-02, SPACE-01     | ~15    | `docs/work/05-publish-conf/` (planned) | Not started |
-| SPACE-06 | Workspace init lifecycle                      | Later | P1       | SPACE-02              | ~25    | `docs/work/06-init-lifecycle/`           | In progress |
+| SPACE-06 | Workspace init lifecycle                      | Later | P1       | SPACE-02              | TBD    | `docs/work/06-init-lifecycle/` (planned) | Not started |
 | SPACE-07 | Additional source providers (Slack, Vercel)   | Later | P2       | SPACE-01              | TBD    | `docs/work/07-providers/` (planned)    | Not started |
 | SPACE-08 | Multi-project Jira and incremental sync       | Later | P2       | SPACE-01              | TBD    | `docs/work/08-jira-scale/` (planned)   | Not started |
 | SPACE-09 | Skill library expansion (regulated + ops)     | Later | P2       | SPACE-02              | TBD    | `docs/work/09-skills-expand/` (plan)   | Not started |
@@ -90,7 +90,7 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 
 **Scope:** Land the working `space sync jira` and `space sync confluence`
 commands; harden the scaffold template to include the `.space/`
-directory, `@tpw/space` dev dependency, and `sync` script; commit the
+directory, `@daddia/space` dev dependency, and `sync` script; commit the
 first real source mirrors inside `storefront-space`.
 
 **Key deliverables.** Jira client + sync + tests; Confluence client +
@@ -119,7 +119,7 @@ Anthropic skill-creator rules, lock down the backlog schema
 skill.
 
 **Key deliverables.** New / revised `SKILL.md` and `template.md` files
-for each skill listed above. Minor release of `@tpw/skills` (0.3.0).
+for each skill listed above. Minor release of `@daddia/skills` (0.3.0).
 One example domain in `storefront-space` migrated to the new artefact
 set as validation.
 
@@ -186,21 +186,21 @@ mirror is the local source of truth).
 `git init`-style semantics. Both entry points become safe to run inside
 an existing directory:
 
-- `pnpm dlx @tpw/create-space <project>` -- scaffolder. If the target
+- `pnpm dlx @daddia/create-space <project>` -- scaffolder. If the target
   directory is empty, behaves as today (full template render). If the
   target directory exists and already contains a Space workspace
   (detected by `.space/config`), reinitialises in place: ensures
   missing template files, additively merges new keys into `.space/config`,
-  ensures `package.json` declares `@tpw/space` and `@tpw/skills`
+  ensures `package.json` declares `@daddia/space` and `@daddia/skills`
   with the `sync-skills` postinstall, and (re)creates `.cursor/skills`
   / `.claude/skills` symlinks. If the directory exists but is not yet
   a Space workspace, initialises it in place rather than refusing.
-- `space init` -- new subcommand on `@tpw/space`. Same idempotent
+- `space init` -- new subcommand on `@daddia/space`. Same idempotent
   behaviour, run from inside an installed workspace. The natural way
   to repair a workspace that already has `space` as a dev dep.
 
-Both commands install the default packages (`@tpw/space` and
-`@tpw/skills`) via the resolved package manager. Both never
+Both commands install the default packages (`@daddia/space` and
+`@daddia/skills`) via the resolved package manager. Both never
 overwrite authored content -- product, architecture, work, and any
 other Markdown is left untouched. Both print a `git init`-style
 status line:
@@ -212,7 +212,7 @@ status line:
 behaviour in favour of an existence check that distinguishes
 greenfield, partial, and complete workspaces; idempotent template
 renderer (skip-if-exists per file, additive YAML merge for
-`.space/config`); `space init` command in `@tpw/space`; shared
+`.space/config`); `space init` command in `@daddia/space`; shared
 init-detection logic (duplicated minimally, since the monorepo rule
 forbids cross-package deps); status reporter; integration tests
 covering the three workspace states; smoke validation against an
@@ -230,10 +230,9 @@ expected).
 manual upgrades per release). Layout mode (`--mode embedded`)
 delegated to SPACE-11.
 
-**Work package.** `docs/work/06-init-lifecycle/backlog.md` (25 stories,
-SPACE-06-01 .. SPACE-06-07).
+**Work package.** `docs/work/06-init-lifecycle/` (planned).
 
-**Status.** In progress.
+**Status.** Not started.
 
 ### SPACE-07 -- Additional source providers (Slack, Vercel)
 
@@ -278,7 +277,7 @@ flag is set.
 ### SPACE-10 -- Workspace profiles at scaffold
 
 **Scope:** `--profile` flag on `create-space`; profile YAML files
-under `@tpw/skills/profiles/`; `space sync skills --profile X`
+under `@daddia/skills/profiles/`; `space sync skills --profile X`
 materialises only the profile's skills. Starter profiles: `minimal`,
 `domain-team`, `platform`, `full`.
 

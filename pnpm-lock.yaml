@@ -17,6 +17,9 @@ importers:
       '@tpw/prettier-config':
         specifier: workspace:*
         version: link:tooling/prettier-config
+      '@tpw/skills':
+        specifier: workspace:*
+        version: link:packages/skills
       '@tpw/typescript-config':
         specifier: workspace:*
         version: link:tooling/typescript-config
