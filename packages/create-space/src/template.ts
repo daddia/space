@@ -64,7 +64,7 @@ async function copyDir(
         }
       } else {
         await fs.writeFile(destPath, content);
-        created.push(path.relative(dest, destPath));
+        created.push(path.relative(rootDest, destPath));
       }
     }
   }
@@ -99,7 +99,12 @@ async function mergeSpaceConfig(destPath: string, templateContent: string): Prom
   return true;
 }
 
-/** Returns the set of top-level YAML key names found in content. */
+/** Returns the set of top-level YAML key names found in content.
+ * Uses a line scan so that comments and block scalars are never re-parsed
+ * as structure. Trade-off: a key that literally appears at column 0 inside
+ * a quoted or block scalar value would be misclassified, but the .space/config
+ * shape never has such values.
+ */
 function extractTopLevelKeys(content: string): Set<string> {
   const keys = new Set<string>();
   for (const line of content.split('\n')) {

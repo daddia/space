@@ -126,7 +126,8 @@ describe('renderTemplate', () => {
 
       expect(files).toHaveLength(2);
       expect(files).toContain('root.txt');
-      expect(files).toContain('child.txt');
+      // nested files are root-relative in both greenfield and idempotent modes
+      expect(files).toContain('sub/child.txt');
     });
 
     it('returns empty array for an empty template directory', async () => {
