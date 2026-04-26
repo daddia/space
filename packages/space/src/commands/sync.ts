@@ -3,9 +3,36 @@ import pc from 'picocolors';
 import { findWorkspaceRoot, loadConfig, ConfigError } from '../config.js';
 import { loadCredentials } from '../credentials.js';
 import { syncJira } from '../providers/jira/sync.js';
+import {
+  resolveProfileName,
+  loadSkillsProfile,
+  syncSkillsWithProfile,
+  SkillsProfileNotFoundError,
+} from '../skills/sync.js';
 
 export function registerSyncCommand(program: Command): void {
   const sync = program.command('sync').description('Sync external sources into .space/sources/');
+
+  sync
+    .command('skills')
+    .description('Sync @tpw/skills into the workspace, filtered to a profile')
+    .option('--profile <name>', 'Profile to activate (overrides .space/profile.yaml)')
+    .action(async (opts: { profile?: string }) => {
+      try {
+        const root = findWorkspaceRoot();
+        const profileName = resolveProfileName(root, opts.profile);
+        const skills = loadSkillsProfile(root, profileName);
+        await syncSkillsWithProfile(root, profileName, skills);
+      } catch (err) {
+        if (err instanceof SkillsProfileNotFoundError) {
+          process.stderr.write(pc.red(`space: ${err.message}\n`));
+        } else {
+          const msg = err instanceof Error ? err.message : String(err);
+          process.stderr.write(pc.red(`space: ${msg}\n`));
+        }
+        process.exit(1);
+      }
+    });
 
   sync
     .command('jira')
