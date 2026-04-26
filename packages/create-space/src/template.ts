@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 
 export type TemplateVars = Record<string, string>;
 export type RenderMode = 'greenfield' | 'idempotent';
@@ -73,9 +72,9 @@ async function copyDir(
 
 /**
  * Merges top-level keys from templateContent into the existing config file.
- * Keys already present in the existing file are preserved as-is.
- * If the existing file cannot be parsed as YAML the template content is
- * written directly (treating the existing file as corrupt).
+ * Keys already present in the existing file are preserved as-is; only absent
+ * top-level blocks are appended. No YAML library is used — detection is done
+ * by scanning for lines that start at column 0 with `key:`.
  * Returns true when the file was written, false when it was unchanged.
  */
 async function mergeSpaceConfig(destPath: string, templateContent: string): Promise<boolean> {
@@ -83,44 +82,56 @@ async function mergeSpaceConfig(destPath: string, templateContent: string): Prom
   try {
     existing = await fs.readFile(destPath, 'utf-8');
   } catch {
-    // File does not exist yet — write the full template content
     await fs.mkdir(path.dirname(destPath), { recursive: true });
     await fs.writeFile(destPath, templateContent);
     return true;
   }
 
-  let existingData: Record<string, unknown>;
-  try {
-    const parsed = parseYaml(existing);
-    existingData = parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
-  } catch {
-    // Unparseable YAML — overwrite with template and warn
-    console.warn(`Warning: .space/config could not be parsed as YAML; overwriting with template.`);
-    await fs.writeFile(destPath, templateContent);
-    return true;
-  }
+  const existingKeys = extractTopLevelKeys(existing);
+  const templateBlocks = splitIntoTopLevelBlocks(templateContent);
 
-  let templateData: Record<string, unknown>;
-  try {
-    const parsed = parseYaml(templateContent);
-    templateData = parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
-  } catch {
-    return false;
-  }
+  const blocksToAppend = templateBlocks.filter(({ key }) => !existingKeys.has(key));
+  if (blocksToAppend.length === 0) return false;
 
-  // Add only keys that are absent from the existing config
-  let changed = false;
-  for (const [key, value] of Object.entries(templateData)) {
-    if (!(key in existingData)) {
-      existingData[key] = value;
-      changed = true;
+  const suffix = blocksToAppend.map(({ block }) => block).join('\n');
+  const separator = existing.endsWith('\n') ? '\n' : '\n\n';
+  await fs.writeFile(destPath, existing + separator + suffix);
+  return true;
+}
+
+/** Returns the set of top-level YAML key names found in content. */
+function extractTopLevelKeys(content: string): Set<string> {
+  const keys = new Set<string>();
+  for (const line of content.split('\n')) {
+    const match = /^([a-zA-Z_][\w-]*):/.exec(line);
+    if (match) keys.add(match[1]!);
+  }
+  return keys;
+}
+
+/**
+ * Splits YAML content into top-level blocks. Each block starts at a line
+ * whose first character is a key identifier and runs until the next such
+ * line. Comment and blank lines that precede the first top-level key are
+ * discarded; those that follow a key belong to that key's block.
+ */
+function splitIntoTopLevelBlocks(content: string): Array<{ key: string; block: string }> {
+  const lines = content.split('\n');
+  const blocks: Array<{ key: string; lines: string[] }> = [];
+  let current: { key: string; lines: string[] } | null = null;
+
+  for (const line of lines) {
+    const match = /^([a-zA-Z_][\w-]*):/.exec(line);
+    if (match) {
+      if (current) blocks.push(current);
+      current = { key: match[1]!, lines: [line] };
+    } else if (current) {
+      current.lines.push(line);
     }
   }
+  if (current) blocks.push(current);
 
-  if (!changed) return false;
-
-  await fs.writeFile(destPath, stringifyYaml(existingData));
-  return true;
+  return blocks.map(({ key, lines }) => ({ key, block: lines.join('\n') }));
 }
 
 async function fileExists(filePath: string): Promise<boolean> {

@@ -36,8 +36,7 @@
     "commander": "^14.0.3",
     "cross-spawn": "^7.0.6",
     "picocolors": "^1.1.1",
-    "update-check": "^1.5.4",
-    "yaml": "^2.8.3"
+    "update-check": "^1.5.4"
   },
   "devDependencies": {
     "@tpw/typescript-config": "workspace:*",
