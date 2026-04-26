@@ -1,16 +1,17 @@
 ---
-type: Product
-domain: <!-- domain name, or omit for platform -->
+type: Product Strategy
+scope: <!-- product | domain -->
+name: <!-- product or domain name -->
 stage: product
 version: '0.1'
 owner: <!-- Squad name -->
 status: Draft
 last_updated: <!-- YYYY-MM-DD -->
-parent_product: <!-- docs/product.md, or omit for platform -->
+parent_product: <!-- product/product.md, or omit for product scope -->
 related:
-  - <!-- domain/{d}/solution.md -->
-  - <!-- domain/{d}/roadmap.md -->
-  - <!-- domain/{d}/backlog.md -->
+  - <!-- solution.md -->
+  - <!-- roadmap.md -->
+  - <!-- backlog.md -->
 ---
 
 <!--

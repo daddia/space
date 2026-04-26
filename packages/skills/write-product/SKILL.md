@@ -1,26 +1,33 @@
 ---
 name: write-product
 description: >
-  Drafts product.md for a platform or domain sub-product in pitch mode (Phase 0,
-  Shape Up, ≤2 pages) or product mode (Phase 2+, ≤5 pages). Use when the user
-  mentions "product doc", "PRD", "product strategy", "what are we building",
-  "why are we building this", or "product brief". Pitch mode is written before
-  any epics exist; product mode extends it post-foundation-sprint. Do NOT include
-  tech stack, APIs, or component names — use write-solution. Do NOT use for
-  roadmaps — use write-roadmap.
+  Drafts product.md at portfolio, product, or domain scope. Portfolio scope:
+  one document binding multiple products (thesis, sequencing, commercial model).
+  Product scope: single-product strategy in pitch mode (Phase 0, ≤2 pages) or
+  extended mode (Phase 2+, ≤5 pages). Domain scope: bounded-context sub-product
+  strategy within a product. Use when the user mentions "product doc", "PRD",
+  "product strategy", "product brief", "portfolio overview", "what are we
+  building", or "why are we building this". Do NOT include tech stack, APIs, or
+  component names — use write-solution. Do NOT use for roadmaps — use
+  write-roadmap. Do NOT use to review an existing strategy — use review-product.
 when_to_use: >
-  Pitch mode: Phase 0, before the foundation sprint starts. Use when you have a
-  problem statement and an appetite but no epics yet.
-  Product mode: Phase 2+, after the walking skeleton has shipped. Use when you
-  need to extend the pitch with target users, outcome metrics, and stakeholders.
-  Examples: "write a product pitch for checkout", "write the product doc for the
-  PDP domain", "create product.md for the storefront platform".
+  Portfolio scope: when the workspace contains multiple distinct products and a
+  single top-level doc must bind them (thesis, sequencing, commercial model).
+  Product scope — pitch: Phase 0, before the foundation sprint. Use when you
+  have a problem statement and an appetite but no epics yet.
+  Product scope — product: Phase 2+, after the walking skeleton has shipped.
+  Use when you need to extend the pitch with target users, outcome metrics, and
+  stakeholders.
+  Domain scope: when a bounded context within a product needs its own strategy
+  doc — either pitch or extended format.
+  Examples: "write the portfolio strategy", "write a product pitch for checkout",
+  "write the product doc for the PDP domain", "create product.md for storefront".
 allowed-tools:
   - Read
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: platform|domain> <name> [--stage pitch|product]'
+argument-hint: '<scope: portfolio|product|domain> <name> [--stage pitch|product]'
 artefact: product.md
 phase: discovery
 role:
@@ -33,6 +40,7 @@ produces:
   - product.md
 prerequisites: []
 related:
+  - review-product
   - write-solution
   - write-roadmap
   - write-backlog
@@ -41,32 +49,53 @@ tags:
   - prd
   - brief
   - strategy
-owner: '@horizon-platform'
-version: '0.2'
+  - portfolio
+owner: '@daddia'
+version: '0.3'
 ---
 
 # Write Product Document
 
 You are a Senior Product Manager writing a product document that defines the
-_why_, _who_, and _what_ of a commercial surface or platform. This document
-must be readable by a non-technical stakeholder without a glossary.
+_why_, _who_, and _what_ of a product or portfolio. This document must be
+readable by a non-technical stakeholder without a glossary.
 
-Scope is passed as `$0`, stage as `--stage`:
+## Scope and stage
 
-- `platform` — the top-level product (`docs/product.md`)
-- `domain` — a sub-product (`domain/$1/product.md`)
+Scope is passed as `$0`, stage as `--stage` (not applicable for portfolio scope):
 
-Stage:
+- `portfolio` — the workspace contains multiple distinct products. Writes the
+  top-level binding document at `product/product.md`. No stage flag.
+- `product` — a single product strategy. Saves to `product/product.md` in a
+  single-product workspace, or `product/{name}/product.md` within a portfolio.
+- `domain` — a bounded context within a product. Saves to
+  `domain/{name}/product.md` (or `product/{name}/domain/{name}/product.md`).
+
+Stage (applies to `product` and `domain` scope only):
 
 - `--stage pitch` — Phase 0 (pre-foundation-sprint): Shape Up format, ≤2 pages.
   Write before epics exist. Sections: Problem / Appetite / Sketch / Rabbit holes
   / No-gos.
-- `--stage product` — Phase 2+ (post-walking-skeleton): extended format, ≤5 pages.
-  Extends the pitch sections with: Target users / Outcome metrics / Product
-  principles / Stakeholders and RACI / Relationship to parent product.
+- `--stage product` — Phase 2+ (post-walking-skeleton): extended format.
+  Extends the pitch with: Target users / Outcome metrics / Product principles /
+  Stakeholders and RACI / Relationship to parent.
 
-When no `--stage` is provided, ask the caller: "Are you writing this before the
-foundation sprint (pitch) or after the walking skeleton has shipped (product)?"
+When scope is `product` or `domain` and no `--stage` is provided, ask the
+caller: "Are you writing this before the foundation sprint (pitch) or after the
+walking skeleton has shipped (product)?"
+
+## Frontmatter convention
+
+Every product.md MUST include `type: Product Strategy` and `scope:` in its
+frontmatter:
+
+```yaml
+type: Product Strategy
+scope: portfolio   # portfolio | product | domain
+```
+
+For domain scope, also include `parent_product:` pointing to the owning
+product's `product/product.md`.
 
 ## Negative constraints
 
@@ -85,12 +114,33 @@ The product.md MUST NOT contain:
 
 <artifacts>
 [Provided by the caller:
-  Pitch stage: problem statement, appetite (time/team budget), known constraints
+  Portfolio scope: the products being bound, their theses, commercial model,
+  sequencing rationale, boundary decisions, open questions.
+  Pitch stage: problem statement, appetite (time/team budget), known constraints.
   Product stage: pitch-stage product.md, user research, metric baselines,
-  stakeholder map, parent product strategy]
+  stakeholder map, parent product strategy.]
 </artifacts>
 
-## Steps (pitch stage)
+## Steps (portfolio scope)
+
+1. Read all provided context before writing anything
+2. Write §1 What we are building — two to three sentences per product: what it
+   is and who it is for. No strategy, no implementation.
+3. Write §2 Core thesis — why these products belong together. What is the
+   combined bet? What would break if either product were missing?
+4. Write §3 Commercial model — how the portfolio makes money. Name the
+   give-away vs premium split, licensing stances, and distribution preferences.
+5. Write §4 Product responsibilities — a boundary table: which concerns each
+   product owns, reads, or does not touch. Make every boundary explicit.
+6. Write §5 Strategic discipline — the no-crossing rules. Which primitives must
+   stay in which product and why. Name the failure mode if a boundary erodes.
+7. Write §6 Sequencing — which product ships first and why. What the second
+   product depends on the first having proven.
+8. Write §7 Open questions — decisions that must be made but are not yet made.
+   State a preferred direction where one exists.
+9. **Delete the `DRAFTING AIDE` comment block before saving.**
+
+## Steps (pitch stage — product or domain scope)
 
 1. Read all provided context before writing anything
 2. Write §1 Problem — what is currently broken or missing? Specific, evidence-based bullet points
@@ -100,7 +150,7 @@ The product.md MUST NOT contain:
 6. Write §5 No-gos — explicit out-of-scope for this cycle; each item with a one-line reason
 7. **Delete the `DRAFTING AIDE` comment block before saving.**
 
-## Steps (product stage)
+## Steps (product stage — product or domain scope)
 
 1. Read all provided context and the existing pitch-stage product.md if present
 2. Carry forward §1–§5 from the pitch, updated if needed
@@ -108,13 +158,17 @@ The product.md MUST NOT contain:
 4. Write §7 Outcome metrics — product-level outcomes only; numeric thresholds live in `solution.md §2.1` and `metrics.md`; reference those docs rather than restating numbers
 5. Write §8 Product principles — commercial / product-level principles only; engineering principles belong in `solution.md`
 6. Write §9 Stakeholders and RACI — who owns what, consulted or informed
-7. Write §10 Relationship to the parent product — how this domain fits the platform sequencing; what downstream phases depend on it
+7. Write §10 Relationship to the parent — how this product or domain fits the wider sequencing; what downstream phases depend on it
 8. **Delete the `DRAFTING AIDE` comment block before saving.**
 
 ## Quality rules
 
 - Must read as-is to a non-technical stakeholder without a glossary
-- Pitch stage: ≤2 pages. Domain product stage: ≤3 pages. Platform product stage: ≤5 pages
+- Portfolio scope: ≤4 pages
+- Pitch stage: ≤2 pages
+- Domain product stage: ≤3 pages. Product product stage: ≤5 pages
+- Portfolio §4 boundary table must have a row for every cross-product concern
+- Portfolio §5 must name at least one primitive that must NOT cross the boundary
 - §4 Rabbit holes must be opinionated — name what the product will NOT do
 - §7 Outcome metrics must NOT contain raw numeric thresholds — say "meet the bar in solution.md §2.1" or "match or improve vs legacy baseline"
 - §8 Product principles must be commercial, not technical — if a principle names a framework or pattern, it belongs in `solution.md`
@@ -123,17 +177,18 @@ The product.md MUST NOT contain:
 
 ## Output format
 
-Write as a Markdown file with YAML frontmatter.
+Write as a Markdown file with YAML frontmatter including `type: Product Strategy`
+and `scope: portfolio|product|domain`.
 
-- Platform scope: save as `docs/product.md`
-- Domain scope: save as `domain/$1/product.md`
+- Portfolio scope: save as `product/product.md`
+- Product scope (single-product workspace): save as `product/product.md`
+- Product scope (within a portfolio): save as `product/{name}/product.md`
+- Domain scope: save as `domain/{name}/product.md`
 
-Use `template-pitch.md` for pitch stage, `template-product.md` for product stage.
-
-See `examples/cart-product.md` for a domain-scope product-stage example and
-`examples/space-product.md` for a platform-scope product-stage example.
+Use `template-portfolio.md` for portfolio scope, `template-pitch.md` for
+pitch stage, `template-product.md` for product stage.
 
 <example>
 See `examples/cart-product.md` (domain scope, product stage)
-See `examples/space-product.md` (platform scope, product stage)
+See `examples/space-product.md` (product scope, product stage)
 </example>

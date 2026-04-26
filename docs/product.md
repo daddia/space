@@ -7,10 +7,10 @@ owner: daddia
 status: Current
 last_updated: 2026-04-26
 related:
-  - product/product.md
-  - product/space/roadmap.md
-  - product/space/backlog.md
-  - architecture/solution.md
+  - ../../crew-space/product/product.md
+  - roadmap.md
+  - ../../crew-space/product/space/backlog.md
+  - ../architecture/solution.md
 ---
 
 # Product -- Space
@@ -87,7 +87,7 @@ different platform.
 Risks that Space will deliberately stay out of:
 
 - **Building an agent runtime.** Executing skills is a separate
-  concern, owned by `@daddia/space`. Space ships the substrate; Space runs
+  concern, owned by `@daddia/crew`. Space ships the substrate; Crew runs
   on top of it.
 - **Authoring a proprietary skill DSL.** Skills are Markdown so they
   work across every current and future AI coding tool that reads
@@ -96,9 +96,13 @@ Risks that Space will deliberately stay out of:
 - **Interpreting external data on the way in.** Program mirrors store
   what the upstream system returned, unchanged. Converting on ingest
   introduces lossy assumptions and makes two-way sync untrustworthy.
-- **Centralising credentials or multi-tenant management.** Every
-  workspace manages its own credentials through standard local
-  mechanisms. No shared credential vault, no Space service to operate.
+- **Centralising credentials or multi-tenant management.** Space ships
+  a local-only CLI that reads credentials from the workspace's local
+  `.env`. It is not a credential vault: credentials never leave the
+  workspace machine, Space does not host them, and Space does not
+  multiplex across tenants. Every workspace manages its own credentials
+  through standard local mechanisms. No shared credential vault, no
+  hosted Space service.
 - **Generating derived documents automatically from source mirrors.**
   Sync is a one-way copy; humans and agents decide what to author
   against the mirror. Space does not auto-generate reports, summaries,
@@ -116,7 +120,9 @@ Explicit out-of-scope for the product:
   itself.
 - A browser UI or dashboard for Space management.
 - Skill content for domains outside engineering delivery.
-- Acting as a credential vault or secret manager.
+- Acting as a hosted credential vault or secret manager. (Space's
+  local CLI reads credentials from the workspace `.env`; that is not
+  a vault. See §4 Rabbit holes for the full calibration.)
 
 ## 6. Target users
 
@@ -140,8 +146,8 @@ Explicit out-of-scope for the product:
 
 ### Secondary
 
-- **The `@daddia/space` autonomous runtime.** Space reads the workspace at
-  execution time. Space owns the substrate; Space owns the execution
+- **The Crew team (`@daddia/crew`).** Crew reads the workspace at
+  execution time. Space owns the substrate; Crew owns the execution
   model.
 
 ### Out of scope segments
@@ -178,7 +184,7 @@ Success indicators, not metric targets:
 ## 8. Product principles
 
 These are commercial / product-level principles. Engineering principles
-are separate and live in `architecture/solution.md`.
+are separate and live in `../architecture/solution.md`.
 
 1. **The workspace is a product.** A space is designed, versioned, and
    maintained alongside the code it supports, not a side-effect of
@@ -204,21 +210,21 @@ are separate and live in `architecture/solution.md`.
 | Engineering leads (initiative)   | Adopt Space for new initiatives; govern workspace quality per convention            | R       |
 | Engineering squads (initiative)  | Consume skills; contribute improvements back through the skill library              | R       |
 | Program and transformation leads | Operate sync; author documents published back to the knowledge base                 | R       |
-| `@daddia/space` team                 | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
+| Crew team (`@daddia/crew`)      | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
 | AI tooling vendors (indirect)    | Support the Markdown skill format; no commitments from Space                        | I       |
 
 ## 10. About daddia
 
-daddia is the organisation behind Space. Space is the platform that makes
+daddia is the organisation behind Space and Crew. Space is the platform that makes
 every daddia initiative's delivery workspace consistent and capable.
 The relationship is vertical:
 
-- **daddia** -- the organisation behind Space.
+- **daddia** -- the organisation behind Space and Crew.
 - **Initiative workspaces** (e.g. storefront-space) -- the consumers of
   Space. Each is scaffolded from Space, installs the skill library, and
-  uses the operations tool.
-- **Space** (this product) -- the workspace ecosystem.
-- **Space** -- the autonomous delivery runtime; reads from the workspace
+  uses the operations tool. Each may also run Crew for autonomous delivery.
+- **Space** (this product) -- the workspace ecosystem: skills, scaffolder, operations CLI.
+- **Crew** (`@daddia/crew`) -- the autonomous delivery runtime; reads from the workspace
   at execution time.
 
 The compounding logic runs top-to-bottom: improvements to Space benefit
@@ -229,4 +235,13 @@ substrate, and each initiative governs its own work within the
 conventions Space defines.
 
 The first validation workspace is `storefront-space`. The next
-initiatives to adopt are gated on the roadmap; see `product/space/roadmap.md`.
+initiatives to adopt are gated on the roadmap; see `roadmap.md`.
+
+## 11. Long-term thesis
+
+The artefacts of software delivery -- strategy, architecture, decisions, issues, knowledge, skills -- should live in one coherent, versioned, agent-readable substrate co-located with code. Every session that begins by rebuilding context from scratch, every prompt that evaporates at chat end, every convention that lives in one engineer's head and nowhere else, is a symptom of the same structural gap: there is no agreed place for delivery knowledge to live.
+
+Space is a candidate for filling that gap. Not by adding another SaaS tool to the stack, but by treating the workspace itself as a first-class product artefact -- versioned, reviewable, and co-located with the code it describes. When the workspace is the substrate, agents inherit context automatically, conventions travel with the repo, and improvements compound across every team that installs them.
+
+The measure of success is not adoption metrics. It is whether an agent working in a Space workspace produces meaningfully better artefacts than one working without it -- requirements that close open questions, designs that reference agreed architecture, reviews that cite the agreed definition of done. That is the bar Space is built to clear.
+

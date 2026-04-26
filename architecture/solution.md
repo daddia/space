@@ -451,7 +451,14 @@ project:
   name: string # required; human-readable name
   key: string # required; short uppercase key
 
-space: # optional; autonomous runtime configuration
+# Optional consumer-runtime blocks: opaque to Space.
+# Space does not interpret these; they are a passthrough region of .space/config
+# that consumer runtimes read for their own configuration.
+# Crew uses a top-level `llm:` block for provider configuration; other
+# runtimes may use a different top-level key.
+
+llm: # optional; LLM provider config (consumed by Crew runtime)
+  default_model: string
   providers:
     { provider-name }:
       api_key_env: string
@@ -474,6 +481,8 @@ issues: # controls Jira publish (future)
   ac_format: ears+gherkin
   ac_placement: description
 ```
+
+**Boundary discipline:** Space owns the `project:`, `sources:`, and `issues:` blocks (it interprets and validates them). Any other top-level block is opaque to Space and reserved for consumer runtimes. The Crew runtime currently uses `llm:` for provider configuration; other runtimes may use other keys. This keeps Space's contract minimal and prevents runtime concerns from leaking into the substrate.
 
 ### 6.3 `.space/sources/` layout
 
