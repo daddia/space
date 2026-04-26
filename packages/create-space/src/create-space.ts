@@ -273,6 +273,9 @@ async function runReinit(
     const isOnline = await getOnline();
     tryInstall(absTarget, config.packageManager, isOnline);
   }
+  // git init is intentionally skipped for partial/complete workspaces: the
+  // directory already has files and may already be a git repo. Disturbing the
+  // VCS state during a reinit would be unexpected and potentially destructive.
 }
 
 /**
