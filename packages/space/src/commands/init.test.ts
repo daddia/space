@@ -160,6 +160,98 @@ describe('runInit', () => {
   });
 });
 
+describe('space init integration: three workspace states', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'space-init-int-'));
+    targetDir = join(tempBase, 'my-workspace');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('greenfield: creates .space/config, injects deps, creates symlinks, prints Initialized empty', async () => {
+    const logs: string[] = [];
+    vi.mocked(console.log).mockImplementation((...args: unknown[]) => {
+      logs.push(args.map(String).join(' '));
+    });
+
+    await runInit({ targetDir, skipInstall: true });
+
+    const config = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+    expect(config).toContain('project:');
+
+    const pkg = JSON.parse(await readFile(join(targetDir, 'package.json'), 'utf-8')) as {
+      devDependencies?: Record<string, string>;
+    };
+    expect(pkg.devDependencies).toHaveProperty('@tpw/space');
+    expect(pkg.devDependencies).toHaveProperty('@tpw/skills');
+
+    const cursorStat = await lstat(join(targetDir, '.cursor', 'skills'));
+    expect(cursorStat.isSymbolicLink()).toBe(true);
+
+    expect(logs.join('\n')).toContain('Initialized empty Space workspace in');
+  });
+
+  it('partial: preserves existing file, adds .space/config, injects deps, prints Reinitialized existing', async () => {
+    await mkdir(targetDir, { recursive: true });
+    const originalContent = '# Existing README\n\nPre-existing content.\n';
+    await writeFile(join(targetDir, 'README.md'), originalContent);
+
+    const logs: string[] = [];
+    vi.mocked(console.log).mockImplementation((...args: unknown[]) => {
+      logs.push(args.map(String).join(' '));
+    });
+
+    await runInit({ targetDir, skipInstall: true });
+
+    const readme = await readFile(join(targetDir, 'README.md'), 'utf-8');
+    expect(readme).toBe(originalContent);
+
+    const config = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+    expect(config).toContain('project:');
+
+    const pkg = JSON.parse(await readFile(join(targetDir, 'package.json'), 'utf-8')) as {
+      devDependencies?: Record<string, string>;
+    };
+    expect(pkg.devDependencies).toHaveProperty('@tpw/space');
+    expect(pkg.devDependencies).toHaveProperty('@tpw/skills');
+
+    expect(logs.join('\n')).toContain('Reinitialized existing Space workspace in');
+  });
+
+  it('complete: preserves authored content, retains config values, prints Reinitialized existing', async () => {
+    await runInit({ targetDir, skipInstall: true });
+
+    const configBefore = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+
+    await mkdir(join(targetDir, 'docs'), { recursive: true });
+    const authoredContent = '# Custom notes\n\nAdded after init.\n';
+    await writeFile(join(targetDir, 'docs', 'notes.md'), authoredContent);
+
+    const logs: string[] = [];
+    vi.mocked(console.log).mockImplementation((...args: unknown[]) => {
+      logs.push(args.map(String).join(' '));
+    });
+
+    await runInit({ targetDir, skipInstall: true });
+
+    const notes = await readFile(join(targetDir, 'docs', 'notes.md'), 'utf-8');
+    expect(notes).toBe(authoredContent);
+
+    const configAfter = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+    expect(configAfter).toBe(configBefore);
+
+    expect(logs.join('\n')).toContain('Reinitialized existing Space workspace in');
+  });
+});
+
 async function readdir(dir: string, recursive: boolean): Promise<string[]> {
   const { readdir: fsReaddir } = await import('node:fs/promises');
   const entries = await fsReaddir(dir, { recursive, withFileTypes: false });
