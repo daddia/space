@@ -1,0 +1,52 @@
+[
+  { "query": "write the product doc for our checkout domain", "expected": "write-product" },
+  { "query": "which skill should I use?", "expected": "space-index" },
+  { "query": "design the foundation sprint for the cart epic", "expected": "write-wp-design" },
+  { "query": "implement story CART02-03", "expected": "implement" },
+  { "query": "review the PR for feat/cart-foundation", "expected": "review-code" },
+  { "query": "write the architecture for the payments domain", "expected": "write-solution" },
+  { "query": "write the backlog for the search domain", "expected": "write-backlog" },
+  { "query": "write an ADR for our database choice", "expected": "write-adr" },
+  { "query": "create the delivery roadmap for the auth domain", "expected": "write-roadmap" },
+  {
+    "query": "validate that the cart epic is complete against its acceptance criteria",
+    "expected": "validate"
+  },
+  { "query": "define the types and schemas for the cart module", "expected": "write-contracts" },
+  { "query": "raise a pull request for this branch", "expected": "create-mr" },
+  {
+    "query": "are the product and solution docs ready to start development?",
+    "expected": "review-docs"
+  },
+  { "query": "which architecture decisions need formal ADRs this sprint?", "expected": "plan-adr" },
+  {
+    "query": "review this architecture decision record for the caching approach",
+    "expected": "review-adr"
+  },
+  {
+    "query": "address the review feedback and clean up the cart foundation code",
+    "expected": "refactor-code"
+  },
+  {
+    "query": "promote the ADR candidates from this sprint into solution.md",
+    "expected": "refine-docs"
+  },
+  {
+    "query": "how do I plan delivery for the checkout domain from scratch?",
+    "expected": "plan-delivery"
+  },
+  { "query": "what skills are available in this workspace?", "expected": "space-index" },
+  {
+    "query": "define the north-star and guardrail metrics for the cart domain",
+    "expected": "write-metrics"
+  },
+  {
+    "query": "build the cart mutation endpoint as described in the design",
+    "expected": "implement"
+  },
+  { "query": "why are we building this feature and who is it for?", "expected": "write-product" },
+  {
+    "query": "how should we implement the search pagination story technically?",
+    "expected": "write-wp-design"
+  }
+]
