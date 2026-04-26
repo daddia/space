@@ -1,6 +1,6 @@
 {
   "name": "@tpw/skills",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
   "license": "UNLICENSED",
@@ -44,6 +44,7 @@
     "*/examples/**",
     "*/scripts/**",
     "views/**",
+    "profiles/**",
     "README.md",
     "CHANGELOG.md"
   ]
