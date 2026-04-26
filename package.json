@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:skills": "pnpm --filter '@tpw/skills' run lint",
+    "lint:docs": "node scripts/lint-docs.js",
     "format": "prettier --check .",
     "format:write": "prettier --write .",
     "test": "vitest run",
