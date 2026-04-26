@@ -27,7 +27,9 @@
   },
   "scripts": {
     "postinstall": "sync-skills",
-    "lint": "node bin/lint-skills.js"
+    "lint": "node bin/lint-skills.js",
+    "generate:index": "node bin/generate-index.js",
+    "generate:views": "node bin/generate-views.js"
   },
   "bin": {
     "sync-skills": "bin/sync-skills.js",
@@ -41,6 +43,7 @@
     "*/template.*.md",
     "*/examples/**",
     "*/scripts/**",
+    "views/**",
     "README.md",
     "CHANGELOG.md"
   ]
