@@ -58,7 +58,7 @@ async function mergeOrCreateConfig(targetDir: string, templateConfigPath: string
   const configPath = path.join(targetDir, '.space', 'config');
   const templateContent = await fs.readFile(templateConfigPath, 'utf-8');
 
-  let existing: string | null = null;
+  let existing: string;
   try {
     existing = await fs.readFile(configPath, 'utf-8');
   } catch {
@@ -72,9 +72,7 @@ async function mergeOrCreateConfig(targetDir: string, templateConfigPath: string
   try {
     const parsed = parseYaml(existing);
     existingData =
-      parsed != null && typeof parsed === 'object'
-        ? (parsed as Record<string, unknown>)
-        : {};
+      parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
   } catch {
     // Unparseable YAML — leave untouched to avoid data loss
     return;
@@ -84,9 +82,7 @@ async function mergeOrCreateConfig(targetDir: string, templateConfigPath: string
   try {
     const parsed = parseYaml(templateContent);
     templateData =
-      parsed != null && typeof parsed === 'object'
-        ? (parsed as Record<string, unknown>)
-        : {};
+      parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
   } catch {
     return;
   }
