@@ -1,6 +1,6 @@
 # @daddia/create-space
 
-Scaffold a new Space delivery workspace for daddia.
+Scaffold a new Crew delivery workspace for Horizon.
 
 ## Quick start
 

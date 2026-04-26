@@ -56,7 +56,7 @@ const program = new Command();
 
 program
   .name(pkg.name)
-  .description('Scaffold a new daddia delivery workspace')
+  .description('Scaffold a new Horizon delivery workspace')
   .version(pkg.version, '-V, --version', 'Output the current version.')
   .argument('[project-name]', 'Name of the project')
   .usage('[project-name] [options]')

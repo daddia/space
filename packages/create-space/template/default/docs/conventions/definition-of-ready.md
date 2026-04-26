@@ -37,7 +37,7 @@ A work item is **ready** when the team has enough clarity to begin implementatio
 
 ## When to use
 
-Apply this checklist before starting implementation. For stories run via `space implement`, the planner sub-agent checks these conditions during the planning phase and flags gaps.
+Apply this checklist before starting implementation. For stories run via `crew implement`, the planner sub-agent checks these conditions during the planning phase and flags gaps.
 
 ## Customising
 

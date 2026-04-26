@@ -1,19 +1,19 @@
 {
   "name": "@daddia/skills",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "type": "module",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "publishConfig": {
-    "access": "public"
+    "access": "restricted"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daddia/space.git",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
     "directory": "packages/skills"
   },
   "keywords": [
-    "daddia",
+    "horizon",
     "space",
     "skills",
     "delivery",
@@ -26,8 +26,10 @@
     "node": ">=24.14.1"
   },
   "scripts": {
-    "postinstall": "node bin/sync-skills.js",
-    "lint": "node bin/lint-skills.js"
+    "postinstall": "sync-skills",
+    "lint": "node bin/lint-skills.js",
+    "generate:index": "node bin/generate-index.js",
+    "generate:views": "node bin/generate-views.js"
   },
   "bin": {
     "sync-skills": "bin/sync-skills.js",
@@ -41,6 +43,8 @@
     "*/template.*.md",
     "*/examples/**",
     "*/scripts/**",
+    "views/**",
+    "profiles/**",
     "README.md",
     "CHANGELOG.md"
   ]

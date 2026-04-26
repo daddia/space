@@ -1,0 +1,28 @@
+{
+  "@tpw/skills": {
+    "version": "0.4.0",
+    "skills": [
+      "create-mr",
+      "design",
+      "implement",
+      "plan-adr",
+      "plan-delivery",
+      "refactor-code",
+      "refine-docs",
+      "requirements",
+      "review-adr",
+      "review-code",
+      "review-docs",
+      "space-index",
+      "validate",
+      "write-adr",
+      "write-backlog",
+      "write-contracts",
+      "write-metrics",
+      "write-product",
+      "write-roadmap",
+      "write-solution",
+      "write-wp-design"
+    ]
+  }
+}

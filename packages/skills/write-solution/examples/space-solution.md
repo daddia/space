@@ -3,7 +3,7 @@ type: Solution
 product: space
 stage: full
 version: '1.0'
-owner: daddia
+owner: Horizon Platform
 status: Draft
 last_updated: 2026-04-23
 parent_product: docs/product.md
@@ -52,7 +52,7 @@ scaffolded.
                             |
                             v
              +--------------+---------------+
-             |     @daddia/space (external)     |
+             |     @daddia/crew (external)     |
              |  reads skills/ and           |
              |  .space/sources/ at runtime  |
              +------------------------------+
@@ -69,7 +69,7 @@ Space owns:
 
 Space does not own:
 
-- The runtime that executes skills (Space).
+- The runtime that executes skills (Crew).
 - The code the consumer workspace describes (the team's product).
 - Upstream systems (Jira, Confluence, etc.).
 
@@ -79,7 +79,7 @@ Space does not own:
 - **Atlassian Jira (Cloud)** -- issue source; read via REST API v3.
 - **Atlassian Confluence (Cloud)** -- page source; read via REST API v2.
 - **Consumer workspaces** -- downstream; consume the three packages.
-- **@daddia/space** -- downstream; reads the workspace file-system
+- **@daddia/crew** -- downstream; reads the workspace file-system
   conventions at runtime.
 - **AI coding tools** (Cursor, Claude Code, etc.) -- downstream; read
   synced skill files from the workspace.
@@ -119,7 +119,7 @@ Ordered; the top goal dominates when goals conflict.
 
 - **Technical:** pnpm workspace; TypeScript for CLIs; Markdown-only for
   skills; Node 18+; no custom runtime.
-- **Organisational:** single team of 1-2 engineers; daddia-internal
+- **Organisational:** single team of 1-2 engineers; Horizon-internal
   users first; OSS deferred.
 - **Regulatory:** program mirrors may contain sensitive business data;
   workspace repos inherit the parent organisation's access controls.
@@ -452,7 +452,7 @@ project:
   name: string # required; human-readable name
   key: string # required; short uppercase key
 
-space: # optional; autonomous runtime configuration
+crew: # optional; autonomous runtime configuration
   providers:
     { provider-name }:
       api_key_env: string
@@ -478,7 +478,7 @@ issues: # controls Jira publish (future)
 
 ### 6.3 `.space/sources/` layout
 
-Content contract between Space and `@daddia/space`. Changes to file names
+Content contract between Space and `@daddia/crew`. Changes to file names
 or shapes are breaking and require a major version bump.
 
 ```text
@@ -549,7 +549,7 @@ produces: [solution.md]
 prerequisites: [product.md]
 related: [write-product, write-adr, write-contracts]
 tags: [architecture, arc42, c4]
-owner: '@daddia'
+owner: '@horizon-platform'
 ---
 ```
 
@@ -693,7 +693,7 @@ invoked by the router.
 - **Versioning:** changesets (`pnpm changeset`) per package.
 - **Publish:** `pnpm release` after `pnpm validate` (install, build,
   typecheck, lint, test) passes clean.
-- **Distribution channel:** npm registry, public; `@daddia` scope.
+- **Distribution channel:** npm registry, public; `@tpw` scope.
 - **Consumer update path:** `pnpm update @daddia/skills` (or any package).
 
 ### 8.2 CI/CD shape

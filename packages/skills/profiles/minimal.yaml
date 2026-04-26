@@ -1,0 +1,7 @@
+name: minimal
+description: Foundation skills for any engineer working with AI in a delivery workspace.
+skills:
+  - implement
+  - review-code
+  - create-mr
+  - write-adr

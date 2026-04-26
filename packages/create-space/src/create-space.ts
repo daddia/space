@@ -6,6 +6,7 @@ import type { SpaceConfig, LlmProvider } from './config.js';
 import { getLlmConfig, buildSourceRepo, shouldSkipPrompts, type CliOptions } from './config.js';
 import { renderTemplate, type TemplateVars } from './template.js';
 import { validateProjectName, validateTargetDir } from './helpers/validate.js';
+import { detectWorkspaceState } from './helpers/workspace-state.js';
 import { tryGitInit } from './helpers/git.js';
 import { tryInstall } from './helpers/install.js';
 import { getOnline } from './helpers/is-online.js';
@@ -97,10 +98,77 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
     throw new Error(dirResult.reason);
   }
 
+  const state = await detectWorkspaceState(config.targetDir);
+  const templateDir = path.join(import.meta.dirname, '..', 'template');
+  const spaceStatusPath = `${path.join(absTarget, '.space')}/`;
+
+  if (state === 'greenfield') {
+    const source = await runGreenfield(config, absTarget, templateDir, options);
+    console.log(`Initialized empty Space workspace in ${spaceStatusPath}`);
+    console.log();
+
+    const needsSourceSetup = !source.gitRemote;
+    const needsWorkspaceSetup = config.skipInstall || config.disableGit || !source.gitRemote;
+
+    if (needsSourceSetup || needsWorkspaceSetup) {
+      console.log(pc.bold('To get started:'));
+      console.log();
+    }
+
+    let step = 1;
+
+    if (needsSourceSetup) {
+      console.log(pc.bold(`  ${step}. Set up your source code repository`));
+      console.log(`     ${pc.cyan(`cd ${source.sourcePath}`)}`);
+      console.log(`     ${pc.cyan('git init')} or ${pc.cyan('git clone <url>')}`);
+      console.log();
+      step++;
+    }
+
+    if (needsWorkspaceSetup) {
+      console.log(pc.bold(`  ${step}. Configure your workspace`));
+      console.log(`     ${pc.cyan(`cd ${config.targetDir}`)}`);
+
+      if (config.skipInstall) {
+        console.log(`     ${pc.cyan(`${config.packageManager} install`)}`);
+      }
+
+      if (config.disableGit) {
+        console.log(`     ${pc.cyan('git init')}`);
+      }
+
+      if (!source.gitRemote) {
+        console.log(`     ${pc.cyan('git remote add origin <url>')}`);
+        if (config.sourceProvider !== 'none') {
+          console.log(
+            `     Edit ${pc.cyan('.space/config')} -- update source.repo with your ${config.sourceProvider} org`,
+          );
+        }
+      }
+      console.log();
+    }
+
+    if (!needsSourceSetup && !needsWorkspaceSetup) {
+      console.log(`  ${pc.cyan(`cd ${config.targetDir}`)}`);
+      console.log();
+    }
+  } else {
+    await runReinit(config, absTarget, templateDir);
+    console.log(`Reinitialized existing Space workspace in ${spaceStatusPath}`);
+    console.log();
+  }
+}
+
+async function runGreenfield(
+  config: SpaceConfig,
+  absTarget: string,
+  templateDir: string,
+  options: CliOptions,
+): Promise<SourceInfo> {
   const skipPrompts = shouldSkipPrompts(options);
 
   console.log();
-  console.log(`${pc.cyan('>>>')} Creating a space workspace at ${pc.bold(config.targetDir)} ...`);
+  console.log(`${pc.cyan('>>>')} Creating a crew workspace at ${pc.bold(config.targetDir)} ...`);
   console.log();
   console.log(`  Project name:  ${pc.cyan(config.projectName)}`);
   console.log(`  Project key:   ${pc.cyan(config.projectKey)}`);
@@ -115,7 +183,7 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
     projectName: config.projectName,
     projectKey: config.projectKey,
     project: config.project,
-    sourceRepo: sourceRepo,
+    sourceRepo,
     sourcePath: source.sourcePath,
     llmDefaultModel: llmConfig.defaultModel,
     llmProviders: llmConfig.providers,
@@ -124,7 +192,6 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
   console.log(`Initializing workspace with template: ${pc.cyan('default')}`);
   console.log();
 
-  const templateDir = path.join(import.meta.dirname, '..', 'template');
   await renderTemplate(templateDir, absTarget, vars);
 
   console.log('Creating product artifacts');
@@ -167,56 +234,81 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
   }
   console.log();
 
+  return source;
+}
+
+async function runReinit(
+  config: SpaceConfig,
+  absTarget: string,
+  templateDir: string,
+): Promise<void> {
+  console.log();
   console.log(
-    `${pc.cyan('>>>')} ${pc.bold(pc.green('Success!'))} Created ${pc.bold(config.targetDir)} at ${pc.green(absTarget)}`,
+    `${pc.cyan('>>>')} Reinitializing Space workspace at ${pc.bold(config.targetDir)} ...`,
   );
   console.log();
 
-  const needsSourceSetup = !source.gitRemote;
-  const needsWorkspaceSetup = config.skipInstall || config.disableGit || !source.gitRemote;
+  const llmConfig = getLlmConfig(config.llmProvider);
+  const sourceRepo = buildSourceRepo(config.sourceProvider, config.project);
 
-  if (needsSourceSetup || needsWorkspaceSetup) {
-    console.log(pc.bold('To get started:'));
-    console.log();
+  const vars: TemplateVars = {
+    projectName: config.projectName,
+    projectKey: config.projectKey,
+    project: config.project,
+    sourceRepo,
+    sourcePath: `../${config.project}`,
+    llmDefaultModel: llmConfig.defaultModel,
+    llmProviders: llmConfig.providers,
+  };
+
+  await renderTemplate(templateDir, absTarget, vars, 'idempotent');
+  await ensurePackageJsonDeps(absTarget);
+
+  const agentDirs = getAgentDirs(config.llmProvider);
+  for (const dir of agentDirs) {
+    await createAgentDir(absTarget, dir);
   }
 
-  let step = 1;
+  if (!config.skipInstall) {
+    const isOnline = await getOnline();
+    tryInstall(absTarget, config.packageManager, isOnline);
+  }
+  // git init is intentionally skipped for partial/complete workspaces: the
+  // directory already has files and may already be a git repo. Disturbing the
+  // VCS state during a reinit would be unexpected and potentially destructive.
+}
 
-  if (needsSourceSetup) {
-    console.log(pc.bold(`  ${step}. Set up your source code repository`));
-    console.log(`     ${pc.cyan(`cd ${source.sourcePath}`)}`);
-    console.log(`     ${pc.cyan('git init')} or ${pc.cyan('git clone <url>')}`);
-    console.log();
-    step++;
+/**
+ * Adds @daddia/space and @daddia/skills to devDependencies in the target
+ * package.json if they are not already present. Creates a minimal
+ * package.json if none exists.
+ */
+async function ensurePackageJsonDeps(targetDir: string): Promise<void> {
+  const pkgPath = path.join(targetDir, 'package.json');
+
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = JSON.parse(await fs.readFile(pkgPath, 'utf-8')) as Record<string, unknown>;
+  } catch {
+    pkg = { private: true };
   }
 
-  if (needsWorkspaceSetup) {
-    console.log(pc.bold(`  ${step}. Configure your workspace`));
-    console.log(`     ${pc.cyan(`cd ${config.targetDir}`)}`);
+  const devDeps = (pkg['devDependencies'] as Record<string, string> | undefined) ?? {};
+  let changed = false;
 
-    if (config.skipInstall) {
-      console.log(`     ${pc.cyan(`${config.packageManager} install`)}`);
-    }
-
-    if (config.disableGit) {
-      console.log(`     ${pc.cyan('git init')}`);
-    }
-
-    if (!source.gitRemote) {
-      console.log(`     ${pc.cyan('git remote add origin <url>')}`);
-      if (config.sourceProvider !== 'none') {
-        console.log(
-          `     Edit ${pc.cyan('.space/config')} -- update source.repo with your ${config.sourceProvider} org`,
-        );
-      }
-    }
-    console.log();
+  if (!('@daddia/space' in devDeps)) {
+    devDeps['@daddia/space'] = '*';
+    changed = true;
+  }
+  if (!('@daddia/skills' in devDeps)) {
+    devDeps['@daddia/skills'] = '*';
+    changed = true;
   }
 
-  if (!needsSourceSetup && !needsWorkspaceSetup) {
-    console.log(`  ${pc.cyan(`cd ${config.targetDir}`)}`);
-    console.log();
-  }
+  if (!changed) return;
+
+  pkg['devDependencies'] = devDeps;
+  await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 }
 
 async function forceSymlink(target: string, linkPath: string): Promise<void> {

@@ -1,20 +1,17 @@
 {
   "name": "@daddia/create-space",
-  "version": "0.1.0",
-  "description": "Scaffold a new daddia delivery workspace",
+  "version": "0.1.1",
+  "description": "Scaffold a new Horizon delivery workspace",
   "type": "module",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daddia/space.git",
+    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
     "directory": "packages/create-space"
   },
   "keywords": [
-    "daddia",
-    "space",
+    "horizon",
+    "crew",
     "workspace",
     "scaffold",
     "delivery"
@@ -42,7 +39,7 @@
     "update-check": "^1.5.4"
   },
   "devDependencies": {
-    "@repo/typescript": "workspace:*",
+    "@daddia/typescript-config": "workspace:*",
     "@types/cross-spawn": "^6.0.6",
     "@types/node": "^25.5.2",
     "typescript": "^6.0.2"

@@ -1,0 +1,21 @@
+name: full
+description: All stable skills. Use when you want the complete library without filtering.
+skills:
+  - create-mr
+  - implement
+  - plan-adr
+  - refactor-code
+  - review-adr
+  - review-code
+  - review-docs
+  - space-index
+  - validate
+  - write-adr
+  - write-backlog
+  - write-contracts
+  - plan-delivery
+  - refine-docs
+  - write-product
+  - write-roadmap
+  - write-solution
+  - write-wp-design

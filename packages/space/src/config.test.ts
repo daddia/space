@@ -119,7 +119,7 @@ project:
 workspace:
   path: .
   work: work/{TASK_ID}/
-space:
+crew:
   providers:
     anthropic:
       api_key_env: ANTHROPIC_API_KEY

@@ -17,7 +17,7 @@ This file gives implementation context to AI coding assistants working in the `s
 | `packages/skills/`       | `@daddia/skills`       | Delivery activity skills (Markdown only, no build step) |
 | `packages/create-space/` | `@daddia/create-space` | Scaffolding CLI for new delivery workspaces             |
 | `packages/space/`        | `@daddia/space`        | Space operations CLI (`space sync`, `space publish`)    |
-| `tooling/`               | `@repo/*`     | Shared internal configs (eslint, prettier, typescript)  |
+| `tooling/`               | `@daddia/*-config`     | Shared internal configs (eslint, prettier, typescript)  |
 
 Each package has its own `AGENTS.md` with package-specific implementation context.
 
@@ -32,7 +32,7 @@ skills        →  nothing (Markdown files only)
 tooling/*     →  build configs only (devDependencies)
 ```
 
-No package in this repo has cross-package dependencies — each package depends on third-party only.
+No package in this repo depends on `@daddia/crew`.
 
 ## Development Commands
 

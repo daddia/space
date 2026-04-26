@@ -64,7 +64,7 @@ The story is not done until the delivered artifact works from the user's perspec
 
 ## When to use
 
-Apply this checklist before marking a story as complete. For stories run via `space implement`, the self-review and pr-author sub-agents check applicable items. The `space verify` command (when available) automates AC coverage checking.
+Apply this checklist before marking a story as complete. For stories run via `crew implement`, the self-review and pr-author sub-agents check applicable items. The `crew verify` command (when available) automates AC coverage checking.
 
 ## Customising
 

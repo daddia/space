@@ -3,7 +3,7 @@ type: Product
 product: space
 stage: product
 version: '1.0'
-owner: daddia
+owner: Horizon Platform
 status: Draft
 last_updated: 2026-04-23
 related:
@@ -52,7 +52,7 @@ opinionated increments every few weeks; each increment proves itself
 against a real team doing real delivery before the next is started.
 
 We will not run a generalised beta programme. Adoption is deliberate,
-workspace-by-workspace, inside the daddia programme first. External
+workspace-by-workspace, inside the Horizon programme first. External
 open-source release is deferred until the model has been validated
 against at least three initiative workspaces.
 
@@ -86,7 +86,7 @@ different platform.
 Risks that Space will deliberately stay out of:
 
 - **Building an agent runtime.** Executing skills is a separate
-  concern, owned by `@daddia/space`. Space ships the substrate; Space runs
+  concern, owned by `@daddia/crew`. Space ships the substrate; Crew runs
   on top of it.
 - **Authoring a proprietary skill DSL.** Skills are Markdown so they
   work across every current and future AI coding tool that reads
@@ -139,15 +139,15 @@ Explicit out-of-scope for the product:
 
 ### Secondary
 
-- **The `@daddia/space` autonomous runtime.** Space reads the workspace at
-  execution time. Space owns the substrate; Space owns the execution
+- **The `@daddia/crew` autonomous runtime.** Crew reads the workspace at
+  execution time. Space owns the substrate; Crew owns the execution
   model.
 
 ### Out of scope segments
 
 - End users of products built by Space-using teams.
 - Non-engineering business functions.
-- Teams outside the daddia programme that have not adopted the
+- Teams outside the Horizon programme that have not adopted the
   workspace conventions (until Phase Later, per the roadmap).
 
 ## 7. Outcome metrics
@@ -158,15 +158,15 @@ Targets only; instrumentation and dashboards live in a future
 | Outcome                                                          | Baseline                    | Target (12 mo)                     |
 | ---------------------------------------------------------------- | --------------------------- | ---------------------------------- |
 | Time from zero to a fully operational agent-ready workspace      | Days (manual configuration) | <= 30 minutes                      |
-| Share of daddia workspaces scaffolded from Space     | 0                           | 100% of new initiatives            |
-| daddia initiatives running current skill library version        | N/A                         | >= 80% within 30 days of release   |
+| Share of Horizon initiative workspaces scaffolded from Space     | 0                           | 100% of new initiatives            |
+| Horizon initiatives running current skill library version        | N/A                         | >= 80% within 30 days of release   |
 | Agent sessions that can reason over program context offline      | 0                           | 100% of sessions in a synced space |
 | Skill improvements adopted across teams without manual migration | Ad hoc                      | Automatic on next install          |
 | Cross-tool portability of skills (Cursor, Claude Code, etc.)     | 0                           | 100% of skills                     |
 
 Success indicators, not metric targets:
 
-- A new engineer can navigate any daddia workspace on their first day
+- A new engineer can navigate any Horizon workspace on their first day
   because the conventions are identical.
 - Agents produce higher-quality artefacts in a space than outside one
   (requirements that close open questions, designs that reference
@@ -199,25 +199,25 @@ are separate and live in `docs/solution.md`.
 
 | Stakeholder                      | Responsibility                                                                      | R/A/C/I |
 | -------------------------------- | ----------------------------------------------------------------------------------- | ------- |
-| daddia team            | Builds and maintains Space; owns the skill library, scaffolder, and operations tool | R, A    |
+| Horizon Platform team            | Builds and maintains Space; owns the skill library, scaffolder, and operations tool | R, A    |
 | Engineering leads (initiative)   | Adopt Space for new initiatives; govern workspace quality per convention            | R       |
 | Engineering squads (initiative)  | Consume skills; contribute improvements back through the skill library              | R       |
 | Program and transformation leads | Operate sync; author documents published back to the knowledge base                 | R       |
-| `@daddia/space` team                 | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
+| `@daddia/crew` team                 | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
 | AI tooling vendors (indirect)    | Support the Markdown skill format; no commitments from Space                        | I       |
 
-## 10. About daddia
+## 10. Relationship to Horizon
 
-daddia is the organisation behind Space. Space is the platform that makes
-every daddia initiative's delivery workspace consistent and capable.
+Horizon is a transformation programme. Space is the platform that makes
+every Horizon initiative's delivery workspace consistent and capable.
 The relationship is vertical:
 
-- **daddia** -- the organisation behind Space.
+- **Horizon** -- the transformation programme; many initiatives.
 - **Initiative workspaces** (e.g. storefront-space) -- the consumers of
   Space. Each is scaffolded from Space, installs the skill library, and
   uses the operations tool.
 - **Space** (this product) -- the workspace ecosystem.
-- **Space** -- the autonomous delivery runtime; reads from the workspace
+- **Crew** -- the autonomous delivery runtime; reads from the workspace
   at execution time.
 
 The compounding logic runs top-to-bottom: improvements to Space benefit

@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { isFolderEmpty } from './is-folder-empty.js';
 
 const WINDOWS_RESERVED = new Set([
   'CON',
@@ -86,13 +85,6 @@ export async function validateTargetDir(targetDir: string): Promise<ValidationRe
     return {
       valid: false,
       reason: `Path exists but is not a directory: ${absTarget}`,
-    };
-  }
-
-  if (!(await isFolderEmpty(absTarget, path.basename(absTarget)))) {
-    return {
-      valid: false,
-      reason: `Directory contains conflicting files: ${absTarget}`,
     };
   }
 

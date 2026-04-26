@@ -46,6 +46,15 @@ const exclude = new Set(consumerConfig.exclude ?? []);
 const manifestPath = path.join(destDir, '.sources.json');
 
 // ---------------------------------------------------------------------------
+// Skill filter (written by `space sync skills --profile X` when active)
+// ---------------------------------------------------------------------------
+
+const filterPath = path.join(projectRoot, '.space', '.skill-filter.json');
+const skillFilter = fs.existsSync(filterPath)
+  ? new Set(JSON.parse(fs.readFileSync(filterPath, 'utf8')).skills ?? [])
+  : null; // null means "no filter; copy all skills"
+
+// ---------------------------------------------------------------------------
 // Sources
 // ---------------------------------------------------------------------------
 
@@ -86,6 +95,7 @@ for (const { name: sourceName, dir: sourceDir } of sources) {
   // Discover skill directories (must contain SKILL.md)
   const skillNames = fs.readdirSync(sourceDir).filter((entry) => {
     if (exclude.has(entry)) return false;
+    if (skillFilter !== null && !skillFilter.has(entry)) return false;
     const fullPath = path.join(sourceDir, entry);
     return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'SKILL.md'));
   });

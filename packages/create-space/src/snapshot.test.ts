@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { mkdtemp, rm, readFile, readdir, lstat } from 'node:fs/promises';
+import { mkdtemp, rm, readFile, readdir, lstat, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createSpace } from './create-space.js';
@@ -72,5 +72,86 @@ describe('template output snapshots', () => {
     await createSpace(makeConfig(targetDir), { yes: true });
     const content = await readFile(join(targetDir, '.space/config'), 'utf-8');
     expect(content).toMatchSnapshot();
+  });
+});
+
+describe('reinit path', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-reinit-'));
+    targetDir = join(tempBase, 'acme-space');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('does not overwrite authored content on complete workspace reinit', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const customContent = '# Custom DoD\n\nCustom content added after initial scaffold.\n';
+    await writeFile(join(targetDir, 'docs/conventions/definition-of-done.md'), customContent);
+
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const content = await readFile(
+      join(targetDir, 'docs/conventions/definition-of-done.md'),
+      'utf-8',
+    );
+    expect(content).toBe(customContent);
+  });
+
+  it('prints Reinitialized status line on complete workspace reinit', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const logs: string[] = [];
+    vi.mocked(console.log).mockImplementation((...args: unknown[]) => {
+      logs.push(args.map(String).join(' '));
+    });
+
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    expect(logs.join('\n')).toContain('Reinitialized existing Space workspace in');
+  });
+
+  it('prints Initialized status line on greenfield run', async () => {
+    const logs: string[] = [];
+    vi.mocked(console.log).mockImplementation((...args: unknown[]) => {
+      logs.push(args.map(String).join(' '));
+    });
+
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    expect(logs.join('\n')).toContain('Initialized empty Space workspace in');
+  });
+
+  it('ensures @daddia/space and @daddia/skills in devDependencies on partial workspace reinit', async () => {
+    await mkdir(targetDir, { recursive: true });
+    await writeFile(join(targetDir, 'README.md'), '# Partial workspace\n');
+    await writeFile(
+      join(targetDir, 'package.json'),
+      JSON.stringify({ private: true }, null, 2) + '\n',
+    );
+
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const pkg = JSON.parse(await readFile(join(targetDir, 'package.json'), 'utf-8')) as {
+      devDependencies?: Record<string, string>;
+    };
+    expect(pkg.devDependencies).toHaveProperty('@daddia/space');
+    expect(pkg.devDependencies).toHaveProperty('@daddia/skills');
+  });
+
+  it('matches the reinit file tree snapshot', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+    await writeFile(join(targetDir, 'docs/conventions/definition-of-done.md'), '# Custom DoD\n');
+    await createSpace(makeConfig(targetDir), { yes: true });
+    const tree = await collectTree(targetDir);
+    expect(tree).toMatchSnapshot();
   });
 });

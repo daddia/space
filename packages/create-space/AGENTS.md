@@ -25,5 +25,5 @@ Run from `packages/create-space`:
 - Interactive mode uses `@inquirer/prompts`; non-interactive mode is driven by CLI flags via `commander`.
 - The `--yes` flag skips all prompts and accepts defaults.
 - The `--key` flag sets the project key (e.g. `ACME`) used in backlog item IDs.
-- Keep the template directory in sync with the canonical `space-space` structure.
+- Keep the template directory in sync with the canonical `crew-space` structure.
 - Avoid adding dependencies that are not required at scaffolding time.

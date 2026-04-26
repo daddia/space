@@ -1,6 +1,6 @@
 # {projectName} Workspace
 
-Delivery workspace for **{projectName}** by daddia.
+Delivery workspace for **{projectName}** by Horizon.
 
 This repo is managed as a VS Code multi-root workspace via `{project}.code-workspace`.
 
@@ -13,7 +13,7 @@ This repo is managed as a VS Code multi-root workspace via `{project}.code-works
 
 ```
 {project}-space/
-  .space/
+  .crew/
   product/                       # Product strategy artifacts
   architecture/                  # Solution architecture and ADRs
     decisions/
@@ -26,7 +26,7 @@ This repo is managed as a VS Code multi-root workspace via `{project}.code-works
 ## Setup
 
 ```bash
-git clone git@github.com:daddia/{project}-space.git
+git clone git@github.com:horizon/{project}-space.git
 cd {project}-space
 pnpm install
 ```

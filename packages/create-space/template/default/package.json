@@ -5,7 +5,7 @@
     "sync": "space sync"
   },
   "devDependencies": {
-    "@daddia/skills": "^0.1.0",
+    "@daddia/skills": "^0.2.0",
     "@daddia/space": "*"
   }
 }

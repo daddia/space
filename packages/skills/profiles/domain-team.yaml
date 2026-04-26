@@ -1,0 +1,17 @@
+name: domain-team
+description: >
+  Standard skills for a squad building a new domain — delivery activities, artefact
+  authoring, and code quality. Adds plan-delivery and refine-docs when those skills
+  ship in @daddia/skills v0.4.0.
+skills:
+  - implement
+  - review-code
+  - create-mr
+  - write-adr
+  - write-product
+  - write-solution
+  - write-backlog
+  - write-contracts
+  - write-wp-design
+  - plan-delivery
+  - refine-docs
