@@ -1,12 +1,12 @@
 ---
 name: refactor-code
 description: >
-  Refactors existing code to address issues raised in a code review or to
-  improve quality without changing behaviour. Use when the user mentions
-  "refactor", "fix the review comments", "address the feedback", "clean this
-  up", or "fix the issues from the code review". Do NOT use to add new
-  features — use implement for that. Do NOT use to review code — use
-  review-code for that.
+  Performs targeted code refactoring to address issues raised in a code
+  review or to improve quality without changing behaviour. Use when the
+  user mentions "refactor", "fix the review comments", "address the
+  feedback", "clean this up", or "fix the issues from the code review".
+  Do NOT use to add new features — use implement for that. Do NOT use to
+  review code — use review-code for that.
 when_to_use: >
   Use after a code review has identified blocking issues, warnings, or
   suggestions that need to be resolved before merge. Examples: "refactor
@@ -29,7 +29,7 @@ role:
 domain: engineering
 stage: stable
 consumes:
-  - review output
+  - review
   - code
 produces:
   - code
@@ -74,7 +74,7 @@ be refactored, relevant existing codebase files]
    change; fix any failures before moving on
 7. Review the full diff with `git diff` before committing
 8. Commit in logical units tied to the findings: `refactor(module): what
-   and why`
+and why`
 
 ## Quality rules
 
@@ -138,4 +138,4 @@ After completing the refactor, write a summary:
 - Lint: pass (no new warnings)
 - Typecheck: pass
 - Tests: 14/14 pass
-</example>
+  </example>
