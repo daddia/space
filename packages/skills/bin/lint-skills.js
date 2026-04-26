@@ -62,13 +62,13 @@ const REQUIRED_FIELDS = [
   'allowed-tools',
   'version',
   'artefact',
-  'phase',
+  'track',
   'role',
   'produces',
 ];
 
 const DESCRIPTION_VERB_RE =
-  /^(Drafts|Creates|Implements|Reviews|Performs|Documents|Produces|Identifies)\b/;
+  /^(Drafts|Creates|Implements|Reviews|Performs|Documents|Produces|Identifies|Refines)\b/;
 
 const ALIAS_MARKER_RE = /^<!--\s*Alias:/m;
 

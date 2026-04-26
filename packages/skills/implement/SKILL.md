@@ -22,9 +22,8 @@ argument-hint: '<story-id>'
 arguments:
   - story_id
 artefact: code
-phase: delivery
-role:
-  - engineer
+track: delivery
+role: engineer
 domain: engineering
 stage: stable
 consumes:
@@ -44,14 +43,14 @@ tags:
   - implement
   - code
   - story
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Implement Feature
 
-You are a Software Engineer implementing a story that has approved requirements
-and a design document.
+You are a Senior Software Engineer implementing a story that has approved
+requirements and a design document.
 
 ## Context
 

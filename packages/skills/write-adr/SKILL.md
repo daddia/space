@@ -19,9 +19,9 @@ allowed-tools:
 argument-hint: '<decision-title>'
 disable-model-invocation: true
 artefact: ADR-NNNN.md
-phase: delivery
-role:
-  - architect
+track: architecture
+role: architect
+also-relevant-to-roles:
   - engineer
 domain: architecture
 stage: stable
@@ -39,8 +39,8 @@ tags:
   - adr
   - architecture
   - decision
-owner: '@horizon-platform'
-version: '0.2'
+owner: '@daddia'
+version: '0.3'
 ---
 
 # Write Architecture Decision Record

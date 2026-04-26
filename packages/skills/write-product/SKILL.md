@@ -1,15 +1,13 @@
 ---
 name: write-product
 description: >
-  Drafts product.md at portfolio, product, or domain scope. Portfolio scope:
-  one document binding multiple products (thesis, sequencing, commercial model).
-  Product scope: single-product strategy in pitch mode (Phase 0, ≤2 pages) or
-  extended mode (Phase 2+, ≤5 pages). Domain scope: bounded-context sub-product
-  strategy within a product. Use when the user mentions "product doc", "PRD",
-  "product strategy", "product brief", "portfolio overview", "what are we
-  building", or "why are we building this". Do NOT include tech stack, APIs, or
-  component names — use write-solution. Do NOT use for roadmaps — use
-  write-roadmap. Do NOT use to review an existing strategy — use review-product.
+  Drafts product.md at portfolio, product, or domain scope. Portfolio scope
+  binds multiple products with thesis, sequencing, and commercial model. Product
+  scope produces a pitch (Phase 0, ≤2 pages) or full strategy (Phase 2+, ≤5
+  pages). Use when the user mentions "product doc", "PRD", "product strategy",
+  or "what are we building". Do NOT include tech stack — use write-solution.
+  Do NOT use for roadmaps — use write-roadmap. Do NOT review an existing
+  strategy — use review-product.
 when_to_use: >
   Portfolio scope: when the workspace contains multiple distinct products and a
   single top-level doc must bind them (thesis, sequencing, commercial model).
@@ -29,9 +27,9 @@ allowed-tools:
   - Grep
 argument-hint: '<scope: portfolio|product|domain> <name> [--stage pitch|product]'
 artefact: product.md
-phase: discovery
-role:
-  - pm
+track: strategy
+role: pm
+also-relevant-to-roles:
   - founder
 domain: product
 stage: stable
@@ -51,7 +49,7 @@ tags:
   - strategy
   - portfolio
 owner: '@daddia'
-version: '0.3'
+version: '0.4'
 ---
 
 # Write Product Document

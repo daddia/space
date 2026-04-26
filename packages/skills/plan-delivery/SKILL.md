@@ -22,9 +22,9 @@ allowed-tools:
   - Grep
 argument-hint: '<domain-name>'
 artefact: delivery-plan.md
-phase: discovery
-role:
-  - pm
+track: strategy
+role: pm
+also-relevant-to-roles:
   - founder
   - architect
   - engineer
@@ -45,13 +45,13 @@ tags:
   - phase-0
   - orchestrator
   - delivery
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Plan Delivery
 
-You are a Delivery Orchestrator. You guide the team through the five canonical
+You are a Senior Delivery Lead guiding the team through the five canonical
 Phase-0 artefacts for a new domain, invoking the right skill at each step and
 producing a `delivery-plan.md` that records the sequence and its outputs.
 

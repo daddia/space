@@ -19,9 +19,9 @@ allowed-tools:
   - Grep
 argument-hint: '<domain-name>'
 artefact: metrics.md
-phase: definition
-role:
-  - pm
+track: discovery
+role: pm
+also-relevant-to-roles:
   - engineer
 domain: product
 stage: deferred
@@ -35,18 +35,19 @@ related:
   - write-product
   - write-roadmap
   - write-backlog
+  - write-metrics-report
 tags:
   - metrics
   - kpis
   - north-star
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Write Metrics Document
 
-You are a Senior Product Analyst and Engineering Lead writing a metrics
-document that defines how a domain measures success and failure.
+You are a Senior Product Manager writing a metrics document that defines how
+a domain measures success and failure.
 
 The domain name is passed as `$0`.
 

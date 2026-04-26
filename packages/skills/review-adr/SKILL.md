@@ -19,9 +19,8 @@ argument-hint: '<adr-path>'
 arguments:
   - adr_path
 artefact: ADR review
-phase: delivery
-role:
-  - architect
+track: architecture
+role: architect
 domain: architecture
 stage: stable
 consumes:
@@ -32,12 +31,14 @@ prerequisites: []
 related:
   - write-adr
   - plan-adr
+  - review-solution
+  - write-solution
 tags:
   - adr
   - review
   - architecture
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Review Architecture Decision Record

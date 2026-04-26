@@ -19,9 +19,11 @@ allowed-tools:
   - Grep
 argument-hint: '<scope: domain|work-package> <domain-or-package-name> [--depth full]'
 artefact: backlog.md
-phase: definition
-role:
-  - pm
+track: strategy
+also-relevant-to-tracks:
+  - discovery
+role: pm
+also-relevant-to-roles:
   - delivery
   - engineer
 domain: engineering
@@ -38,13 +40,15 @@ related:
   - write-solution
   - write-roadmap
   - write-wp-design
+  - review-backlog
+  - refine-backlog
 tags:
   - backlog
   - epics
   - stories
   - ac
 owner: '@daddia'
-version: '0.3'
+version: '0.4'
 ---
 
 # Write Backlog

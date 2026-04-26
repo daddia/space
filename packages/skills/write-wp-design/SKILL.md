@@ -21,9 +21,9 @@ allowed-tools:
   - Grep
 argument-hint: '<work-package-path> [--mode walking-skeleton|tdd]'
 artefact: design.md
-phase: delivery
-role:
-  - architect
+track: discovery
+role: architect
+also-relevant-to-roles:
   - engineer
 domain: engineering
 stage: stable
@@ -38,13 +38,14 @@ related:
   - write-solution
   - write-backlog
   - write-contracts
+  - review-design
 tags:
   - design
   - tdd
   - walking-skeleton
   - work-package
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Write Work-Package Design Document

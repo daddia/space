@@ -22,10 +22,8 @@ arguments:
   - epic_id
   - task_id
 artefact: requirements.md
-phase: definition
-role:
-  - pm
-  - engineer
+track: discovery
+role: pm
 domain: product
 stage: deprecated
 consumes:
@@ -41,7 +39,7 @@ related:
 tags:
   - requirements
   - prd
-owner: '@horizon-platform'
+owner: '@daddia'
 version: '0.1'
 ---
 

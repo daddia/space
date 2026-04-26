@@ -35,14 +35,14 @@ import { fileURLToPath } from 'url';
  */
 export function buildIndexTable(skills) {
   const header =
-    '| Skill | Description (excerpt) | Artefact | Phase | Role | Consumes | Produces |';
+    '| Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |';
   const sep = '| --- | --- | --- | --- | --- | --- | --- |';
 
   const rows = skills.map(({ name, fm }) => {
     const desc = typeof fm.description === 'string' ? fm.description : '';
     const excerpt = desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
     const artefact = fm.artefact ?? '—';
-    const phase = fm.phase ?? '—';
+    const phase = fm.track ?? fm.phase ?? '—';
     const role = Array.isArray(fm.role) ? fm.role.join(', ') : (fm.role ?? '—');
     const consumes =
       Array.isArray(fm.consumes) && fm.consumes.length > 0 ? fm.consumes.join(', ') : '—';

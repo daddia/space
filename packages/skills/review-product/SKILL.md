@@ -1,17 +1,12 @@
 ---
 name: review-product
 description: >
-  Review and improve a product strategy document (product.md) at any scope —
-  portfolio, product, or domain. Acts as a critical Senior Product Manager
-  review: checks strategy coherence, problem specificity, scope discipline,
-  commercial validity, and internal consistency. Directly amends the document
-  and records a review summary. Use when the user mentions "review the product
-  strategy", "critique the product doc", "review product.md for {name}", or
-  "is this product strategy any good". Can be triggered at any time — after
-  drafting, after a sprint, with new market research, or before a planning
-  cycle. Do NOT use to write a product doc from scratch — use write-product.
-  Do NOT use to review code — use review-code. Do NOT use to review
-  implementation design — use review-docs.
+  Reviews product.md at portfolio, product, or domain scope as a critical Senior
+  Product Manager — checking strategy coherence, problem specificity, scope
+  discipline, and commercial validity. Amends the document and appends a verdict.
+  Use when the user mentions "review the product strategy", "critique product.md",
+  or "is this strategy any good". Do NOT use to write a strategy — use
+  write-product. Do NOT use to review implementation design — use review-design.
 when_to_use: >
   Use at any point in the product lifecycle when product.md needs a critical
   content review:
@@ -31,9 +26,9 @@ allowed-tools:
   - Grep
 argument-hint: '<path-to-product.md> [--context <additional-context>]'
 artefact: product.md review
-phase: discovery
-role:
-  - pm
+track: strategy
+role: pm
+also-relevant-to-roles:
   - founder
 domain: product
 stage: stable
@@ -47,13 +42,15 @@ related:
   - write-product
   - write-roadmap
   - write-backlog
+  - review-roadmap
+  - review-backlog
 tags:
   - product
   - review
   - strategy
   - prd
 owner: '@daddia'
-version: '0.1'
+version: '0.2'
 ---
 
 # Review Product Strategy

@@ -1,15 +1,12 @@
 ---
 name: write-roadmap
 description: >
-  Drafts roadmap.md at portfolio, product, or domain scope. Portfolio scope:
-  a combined sequencing document binding multiple products with cross-product
-  phase gates. Product scope: a phased delivery plan for a single product.
-  Domain scope: a phased delivery plan for a bounded context within a product.
-  All scopes use outcome-based phases with exit criteria, not epic lists. Use
-  when the user mentions "write the roadmap for {name}", "create the delivery
-  roadmap", "sequence the phases", or "what are the phases for {name}".
-  Do NOT use to list epics — use write-backlog for that. Do NOT use before
-  product.md exists — use write-product first.
+  Drafts roadmap.md at portfolio, product, or domain scope using outcome-based
+  phases with exit criteria, not epic lists. Portfolio scope sequences multiple
+  products; product scope phases a single product; domain scope phases a bounded
+  context. Use when the user mentions "write the roadmap for {name}", "create the
+  delivery roadmap", or "sequence the phases". Do NOT use to list epics — use
+  write-backlog. Do NOT use before product.md exists — use write-product first.
 when_to_use: >
   Portfolio scope: when the workspace contains multiple products and delivery
   needs to be sequenced across them.
@@ -26,9 +23,10 @@ allowed-tools:
   - Grep
 argument-hint: '<scope: portfolio|product|domain> [<name>]'
 artefact: roadmap.md
-phase: discovery
-role:
-  - pm
+track: strategy
+role: pm
+also-relevant-to-roles:
+  - delivery
 domain: product
 stage: stable
 consumes:
@@ -41,13 +39,15 @@ related:
   - write-product
   - write-backlog
   - write-solution
+  - review-roadmap
+  - refine-roadmap
 tags:
   - roadmap
   - phases
   - sequencing
   - portfolio
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Write Delivery Roadmap
@@ -60,6 +60,15 @@ Scope is passed as `$0`:
 - `portfolio` — a combined roadmap binding multiple products (`product/roadmap.md`)
 - `product` — a single-product roadmap (`product/roadmap.md` or `product/{name}/roadmap.md`)
 - `domain` — a domain roadmap (`domain/{name}/roadmap.md`)
+
+## Negative constraints
+
+roadmap.md MUST NOT contain:
+
+- Story-level acceptance criteria or epic detail → belongs in `backlog.md`
+- Implementation patterns, tech stack, or module names → belongs in `solution.md`
+- Business strategy or commercial model → belongs in `product.md`
+- Metrics definitions or baselines → belongs in `metrics.md`
 
 ## Context
 

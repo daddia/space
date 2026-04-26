@@ -20,9 +20,8 @@ allowed-tools:
 argument-hint: '<epic-id-or-domain>'
 disable-model-invocation: true
 artefact: adr-plan.md
-phase: delivery
-role:
-  - architect
+track: architecture
+role: architect
 domain: architecture
 stage: stable
 consumes:
@@ -39,8 +38,8 @@ tags:
   - adr
   - architecture
   - planning
-owner: '@horizon-platform'
-version: '0.2'
+owner: '@daddia'
+version: '0.3'
 ---
 
 # Plan Architecture Decision Records

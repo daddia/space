@@ -19,9 +19,11 @@ allowed-tools:
   - Grep
 argument-hint: '<scope: product|domain> <name>'
 artefact: contracts.md
-phase: discovery
-role:
-  - architect
+track: architecture
+also-relevant-to-tracks:
+  - discovery
+role: architect
+also-relevant-to-roles:
   - engineer
 domain: architecture
 stage: stable
@@ -42,7 +44,7 @@ tags:
   - zod
   - openapi
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Write Contracts Document

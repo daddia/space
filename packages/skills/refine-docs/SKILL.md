@@ -20,9 +20,11 @@ allowed-tools:
   - Grep
 argument-hint: '<work-package-path> [--domain <domain-name>]'
 artefact: refine-session.md
-phase: delivery
-role:
-  - architect
+track: refine
+also-relevant-to-tracks:
+  - architecture
+role: architect
+also-relevant-to-roles:
   - engineer
 domain: architecture
 stage: stable
@@ -35,24 +37,27 @@ prerequisites:
   - solution.md
   - design.md
 related:
-  - review-docs
+  - review-design
+  - review-solution
   - write-adr
   - write-solution
   - write-wp-design
+  - refine-solution
 tags:
   - sprint-end
   - adr
   - refinement
   - docs
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Refine Docs
 
-You are a Documentation Refiner. At the end of a sprint or work package you
-promote decisions that deserve permanent homes in `solution.md` and clean up
-WP-local design sections that no longer carry new information.
+You are a Senior Solution Architect doing a sprint-end documentation pass.
+At the end of a sprint or work package you promote decisions that deserve
+permanent homes in `solution.md` and clean up WP-local design sections that
+no longer carry new information.
 
 ## Scope
 

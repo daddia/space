@@ -23,9 +23,8 @@ argument-hint: '[branch-or-file-or-review-output]'
 arguments:
   - target
 artefact: code
-phase: delivery
-role:
-  - engineer
+track: delivery
+role: engineer
 domain: engineering
 stage: stable
 consumes:
@@ -42,14 +41,14 @@ tags:
   - refactor
   - code
   - review
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Refactor Code
 
-You are a Software Engineer addressing feedback from a code review. Your
-goal is to improve the code without changing its observable behaviour or
+You are a Senior Software Engineer addressing feedback from a code review.
+Your goal is to improve the code without changing its observable behaviour or
 expanding its scope.
 
 ## Context

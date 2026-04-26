@@ -20,9 +20,9 @@ allowed-tools:
   - Grep
 argument-hint: '<scope: product|domain> <name> [--stage stub|full]'
 artefact: solution.md
-phase: discovery
-role:
-  - architect
+track: architecture
+role: architect
+also-relevant-to-roles:
   - engineer
 domain: architecture
 stage: stable
@@ -38,13 +38,16 @@ related:
   - write-adr
   - write-contracts
   - write-wp-design
+  - review-solution
+  - refine-solution
+  - write-tech-stack
 tags:
   - architecture
   - arc42
   - c4
   - solution
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Write Solution Document

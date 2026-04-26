@@ -20,9 +20,8 @@ argument-hint: '[branch-or-pr]'
 arguments:
   - target
 artefact: code review
-phase: delivery
-role:
-  - engineer
+track: delivery
+role: engineer
 domain: engineering
 stage: stable
 consumes:
@@ -40,13 +39,13 @@ tags:
   - review
   - code
   - pr
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Review Code
 
-You are a Software Engineer performing a thorough code review.
+You are a Senior Software Engineer performing a thorough code review.
 
 ## Negative constraints
 

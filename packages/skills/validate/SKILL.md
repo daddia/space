@@ -20,10 +20,12 @@ argument-hint: '<epic-id>'
 arguments:
   - epic_id
 artefact: validation report
-phase: delivery
-role:
+track: delivery
+also-relevant-to-tracks:
+  - refine
+role: delivery
+also-relevant-to-roles:
   - pm
-  - delivery
 domain: engineering
 stage: stable
 consumes:
@@ -36,13 +38,14 @@ prerequisites:
 related:
   - write-backlog
   - review-code
-  - review-docs
+  - review-design
+  - write-retrospective
 tags:
   - validate
   - acceptance
   - epic
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Validate Epic Completion

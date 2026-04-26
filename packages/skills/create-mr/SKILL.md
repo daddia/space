@@ -20,9 +20,8 @@ argument-hint: '[story-id]'
 arguments:
   - story_id
 artefact: MR description
-phase: delivery
-role:
-  - engineer
+track: delivery
+role: engineer
 domain: engineering
 stage: stable
 consumes: []
@@ -36,14 +35,14 @@ tags:
   - mr
   - pull-request
   - merge-request
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Create Merge Request
 
-You are a Software Engineer opening a merge request for a completed feature
-branch.
+You are a Senior Software Engineer opening a merge request for a completed
+feature branch.
 
 ## Negative constraints
 
