@@ -25,7 +25,8 @@
     "space": "./dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "template"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.json",
