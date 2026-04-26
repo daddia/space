@@ -9,7 +9,7 @@ related:
   - product/product.md
   - product/space/product.md
   - product/space/backlog.md
-  - architecture/space/solution.md
+  - architecture/solution.md
 ---
 
 # Roadmap -- Space

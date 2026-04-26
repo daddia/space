@@ -10,7 +10,7 @@ related:
   - product/product.md
   - product/space/roadmap.md
   - product/space/backlog.md
-  - architecture/space/solution.md
+  - architecture/solution.md
 ---
 
 # Product -- Space
@@ -178,7 +178,7 @@ Success indicators, not metric targets:
 ## 8. Product principles
 
 These are commercial / product-level principles. Engineering principles
-are separate and live in `architecture/space/solution.md`.
+are separate and live in `architecture/solution.md`.
 
 1. **The workspace is a product.** A space is designed, versioned, and
    maintained alongside the code it supports, not a side-effect of
