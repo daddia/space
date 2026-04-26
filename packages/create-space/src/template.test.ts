@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { mkdtemp, rm, writeFile, readFile, mkdir, readdir } from 'node:fs/promises';
+import { mkdtemp, rm, writeFile, readFile, mkdir, readdir, stat } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { renderTemplate, type TemplateVars } from './template.js';
@@ -132,6 +132,108 @@ describe('renderTemplate', () => {
     it('returns empty array for an empty template directory', async () => {
       const files = await renderTemplate(templateRoot, targetDir, VARS);
       expect(files).toEqual([]);
+    });
+  });
+
+  describe('idempotent mode', () => {
+    it('does not overwrite a file that already exists at the destination', async () => {
+      const customContent = '# custom authored content\n';
+      await writeFile(join(defaultDir, 'README.md'), '# {projectName}\n');
+      await mkdir(join(targetDir, 'docs', 'conventions'), { recursive: true });
+      await writeFile(join(targetDir, 'README.md'), customContent);
+
+      await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+
+      const content = await readFile(join(targetDir, 'README.md'), 'utf-8');
+      expect(content).toBe(customContent);
+    });
+
+    it('does not include skipped files in the returned list', async () => {
+      await writeFile(join(defaultDir, 'README.md'), '# {projectName}\n');
+      await writeFile(join(targetDir, 'README.md'), 'existing');
+
+      const files = await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+
+      expect(files).not.toContain('README.md');
+    });
+
+    it('does not change the mtime of a skipped file', async () => {
+      await writeFile(join(defaultDir, 'README.md'), '# {projectName}\n');
+      await writeFile(join(targetDir, 'README.md'), 'existing');
+
+      const before = (await stat(join(targetDir, 'README.md'))).mtimeMs;
+      await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+      const after = (await stat(join(targetDir, 'README.md'))).mtimeMs;
+
+      expect(after).toBe(before);
+    });
+
+    it('writes a file that does not yet exist at the destination', async () => {
+      await writeFile(join(defaultDir, 'new-file.md'), 'hello {projectName}');
+
+      const files = await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+
+      const content = await readFile(join(targetDir, 'new-file.md'), 'utf-8');
+      expect(content).toBe('hello My Cool App');
+      expect(files).toContain('new-file.md');
+    });
+
+    it('merges new top-level keys into an existing .space/config without changing existing values', async () => {
+      await mkdir(join(defaultDir, '.space'), { recursive: true });
+      await writeFile(
+        join(defaultDir, '.space', 'config'),
+        'project:\n  name: {projectName}\nnewkey:\n  value: from-template\n',
+      );
+
+      await mkdir(join(targetDir, '.space'), { recursive: true });
+      await writeFile(
+        join(targetDir, '.space', 'config'),
+        'project:\n  name: Existing Project\n',
+      );
+
+      await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+
+      const content = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+      expect(content).toContain('Existing Project');
+      expect(content).toContain('newkey');
+    });
+
+    it('does not change .space/config when no new keys are introduced', async () => {
+      await mkdir(join(defaultDir, '.space'), { recursive: true });
+      await writeFile(join(defaultDir, '.space', 'config'), 'project:\n  name: {projectName}\n');
+
+      await mkdir(join(targetDir, '.space'), { recursive: true });
+      const existingConfig = 'project:\n  name: Existing Project\n';
+      await writeFile(join(targetDir, '.space', 'config'), existingConfig);
+
+      const before = (await stat(join(targetDir, '.space', 'config'))).mtimeMs;
+      await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+      const after = (await stat(join(targetDir, '.space', 'config'))).mtimeMs;
+
+      expect(after).toBe(before);
+    });
+
+    it('creates .space/config when it does not exist', async () => {
+      await mkdir(join(defaultDir, '.space'), { recursive: true });
+      await writeFile(
+        join(defaultDir, '.space', 'config'),
+        'project:\n  name: {projectName}\n',
+      );
+
+      await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
+
+      const content = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+      expect(content).toContain('My Cool App');
+    });
+
+    it('greenfield mode writes all files unconditionally', async () => {
+      await writeFile(join(defaultDir, 'README.md'), '# {projectName}\n');
+      await writeFile(join(targetDir, 'README.md'), 'existing content');
+
+      await renderTemplate(templateRoot, targetDir, VARS, 'greenfield');
+
+      const content = await readFile(join(targetDir, 'README.md'), 'utf-8');
+      expect(content).toBe('# My Cool App\n');
     });
   });
 });
