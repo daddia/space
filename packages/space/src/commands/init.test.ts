@@ -85,6 +85,22 @@ describe('runInit', () => {
       expect(after).toBe(before);
     });
 
+    it('preserves comments in .space/config when a new template key is merged', async () => {
+      // Write a config that already has the keys in the template but also
+      // has inline comments that must survive a reinit that adds a new key.
+      const configWithComments =
+        'project:\n  name: my-project\n  key: MY-PROJECT\n# Important comment\nworkspace:\n  path: .\n  work: work/{TASK_ID}/\n  runs: runs/\n';
+      await writeFile(join(targetDir, '.space', 'config'), configWithComments);
+
+      // The template only has project + workspace keys, so nothing will be
+      // appended and the file must remain exactly as written.
+      await runInit({ targetDir, skipInstall: true });
+
+      const after = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+      expect(after).toBe(configWithComments);
+      expect(after).toContain('# Important comment');
+    });
+
     it('prints Reinitialized existing status line', async () => {
       const logs: string[] = [];
       vi.mocked(console.log).mockImplementation((...args: unknown[]) => {

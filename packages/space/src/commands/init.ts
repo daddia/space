@@ -3,7 +3,6 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import type { Command } from 'commander';
 import pc from 'picocolors';
-import { parse as parseYaml, stringify as stringifyYaml } from 'yaml';
 import { detectWorkspaceState } from '../helpers/workspace-state.js';
 
 export interface InitOptions {
@@ -22,7 +21,7 @@ export async function runInit(options: InitOptions = {}): Promise<void> {
   await createAgentSymlinks(targetDir);
 
   if (!options.skipInstall) {
-    runInstall(targetDir);
+    await runInstall(targetDir);
   }
 
   const spaceStatusPath = `${path.join(targetDir, '.space')}/`;
@@ -38,9 +37,10 @@ export function registerInitCommand(program: Command): void {
   program
     .command('init')
     .description('Initialise or reinitialise the Space workspace in the current directory')
-    .action(async () => {
+    .option('--skip-install', 'Skip package manager install after init')
+    .action(async (opts: { skipInstall?: boolean }) => {
       try {
-        await runInit();
+        await runInit({ skipInstall: opts.skipInstall });
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
         console.error(pc.red(`space: ${msg}`));
@@ -52,7 +52,9 @@ export function registerInitCommand(program: Command): void {
 /**
  * Creates .space/config from the template when it does not exist.
  * When it does exist, merges any top-level keys that are absent from the
- * existing file without touching existing values.
+ * existing file by appending the missing blocks. The existing file content
+ * is preserved byte-for-byte — no YAML round-trip, so comments and key
+ * ordering are never lost.
  */
 async function mergeOrCreateConfig(targetDir: string, templateConfigPath: string): Promise<void> {
   const configPath = path.join(targetDir, '.space', 'config');
@@ -62,42 +64,61 @@ async function mergeOrCreateConfig(targetDir: string, templateConfigPath: string
   try {
     existing = await fs.readFile(configPath, 'utf-8');
   } catch {
-    // Config does not exist — write fresh from template
     await fs.mkdir(path.dirname(configPath), { recursive: true });
     await fs.writeFile(configPath, templateContent);
     return;
   }
 
-  let existingData: Record<string, unknown>;
-  try {
-    const parsed = parseYaml(existing);
-    existingData =
-      parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
-  } catch {
-    // Unparseable YAML — leave untouched to avoid data loss
-    return;
-  }
+  const existingKeys = extractTopLevelKeys(existing);
+  const templateBlocks = splitIntoTopLevelBlocks(templateContent);
 
-  let templateData: Record<string, unknown>;
-  try {
-    const parsed = parseYaml(templateContent);
-    templateData =
-      parsed != null && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {};
-  } catch {
-    return;
-  }
+  const blocksToAppend = templateBlocks.filter(({ key }) => !existingKeys.has(key));
+  if (blocksToAppend.length === 0) return;
 
-  let changed = false;
-  for (const [key, value] of Object.entries(templateData)) {
-    if (!(key in existingData)) {
-      existingData[key] = value;
-      changed = true;
+  const suffix = blocksToAppend.map(({ block }) => block).join('\n');
+  const separator = existing.endsWith('\n') ? '\n' : '\n\n';
+  await fs.writeFile(configPath, existing + separator + suffix);
+}
+
+/**
+ * Returns the set of top-level YAML key names found in content.
+ * Uses a line scan rather than a YAML parser so that comments and block
+ * scalars are never misread as structure. The trade-off: a key name that
+ * appears inside a quoted scalar or block scalar value at column 0 would
+ * be misclassified, but the .space/config shape never has such values.
+ */
+function extractTopLevelKeys(content: string): Set<string> {
+  const keys = new Set<string>();
+  for (const line of content.split('\n')) {
+    const match = /^([a-zA-Z_][\w-]*):/.exec(line);
+    if (match) keys.add(match[1]!);
+  }
+  return keys;
+}
+
+/**
+ * Splits YAML content into top-level blocks. Each block starts at a line
+ * whose first character is a key identifier and runs until the next such
+ * line. Comment and blank lines that precede the first top-level key are
+ * discarded; those that follow a key belong to that key's block.
+ */
+function splitIntoTopLevelBlocks(content: string): Array<{ key: string; block: string }> {
+  const lines = content.split('\n');
+  const blocks: Array<{ key: string; lines: string[] }> = [];
+  let current: { key: string; lines: string[] } | null = null;
+
+  for (const line of lines) {
+    const match = /^([a-zA-Z_][\w-]*):/.exec(line);
+    if (match) {
+      if (current) blocks.push(current);
+      current = { key: match[1]!, lines: [line] };
+    } else if (current) {
+      current.lines.push(line);
     }
   }
+  if (current) blocks.push(current);
 
-  if (changed) {
-    await fs.writeFile(configPath, stringifyYaml(existingData));
-  }
+  return blocks.map(({ key, lines }) => ({ key, block: lines.join('\n') }));
 }
 
 /**
@@ -151,15 +172,40 @@ async function forceSymlink(target: string, linkPath: string): Promise<void> {
   }
 }
 
-function runInstall(targetDir: string): void {
-  const result = spawnSync('npm', ['install'], {
+/**
+ * Detects the package manager in use by checking for lockfiles. Prefers
+ * pnpm, then yarn, then bun; falls back to npm when no lockfile is found.
+ */
+async function detectPackageManager(
+  targetDir: string,
+): Promise<'npm' | 'pnpm' | 'yarn' | 'bun'> {
+  const candidates: Array<[string, 'npm' | 'pnpm' | 'yarn' | 'bun']> = [
+    ['pnpm-lock.yaml', 'pnpm'],
+    ['yarn.lock', 'yarn'],
+    ['bun.lockb', 'bun'],
+    ['package-lock.json', 'npm'],
+  ];
+  for (const [lockfile, pm] of candidates) {
+    try {
+      await fs.access(path.join(targetDir, lockfile));
+      return pm;
+    } catch {
+      // lockfile not present, try next
+    }
+  }
+  return 'npm';
+}
+
+async function runInstall(targetDir: string): Promise<void> {
+  const pm = await detectPackageManager(targetDir);
+  const result = spawnSync(pm, ['install'], {
     cwd: targetDir,
     stdio: 'inherit',
     env: { ...process.env, NODE_ENV: 'development', ADBLOCK: '1', DISABLE_OPENCOLLECTIVE: '1' },
   });
 
   if (result.status !== 0) {
-    console.log(`  ${pc.yellow('Skipped')} install (npm install failed)`);
-    console.log(`  Run ${pc.cyan('npm install')} manually to install dependencies.`);
+    console.log(`  ${pc.yellow('Skipped')} install (${pm} install failed)`);
+    console.log(`  Run ${pc.cyan(`${pm} install`)} manually to install dependencies.`);
   }
 }
