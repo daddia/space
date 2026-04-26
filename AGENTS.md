@@ -18,8 +18,22 @@ This file gives implementation context to AI coding assistants working in the `s
 | `packages/create-space/` | `@daddia/create-space` | Scaffolding CLI for new delivery workspaces             |
 | `packages/space/`        | `@daddia/space`        | Space operations CLI (`space sync`, `space publish`)    |
 | `tooling/`               | `@daddia/*-config`     | Shared internal configs (eslint, prettier, typescript)  |
+| `docs/product.md`        | --                     | Product strategy (copy; canonical in `crew-space`)      |
+| `docs/roadmap.md`        | --                     | Roadmap (copy; canonical in `crew-space`)               |
+| `docs/getting-started/`  | --                     | User-facing getting started guides                      |
 
 Each package has its own `AGENTS.md` with package-specific implementation context.
+
+## Key documents
+
+- `docs/product.md` -- Space product strategy
+- `docs/roadmap.md` -- Space phased roadmap
+
+The canonical versions of these documents, along with the full backlog, solution architecture, and work packages, live in the portfolio delivery workspace at `../crew-space`:
+
+- `../crew-space/product/space/`
+- `../crew-space/architecture/space/`
+- `../crew-space/work/SPACE-{nn}/`
 
 ## Dependency Rules
 
