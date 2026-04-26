@@ -5,7 +5,7 @@ product: space
 version: '1.0'
 owner: daddia
 status: Draft
-last_updated: 2026-04-23
+last_updated: 2026-04-26
 parent_product: docs/product.md
 related:
   - docs/product.md
@@ -29,7 +29,8 @@ backlogs under `work/`.
 
 **Objective.** Deliver Space in incremental, validation-gated phases:
 source sync now, artefact-model v2 and publish pipeline next, platform
-maturity (embedded mode, additional sources, expanded skill set) later.
+maturity (init lifecycle, embedded layout, additional sources, expanded
+skill set) later.
 
 **Delivery approach.** Each epic ships a visible, testable slice behind
 its own work package. No epic is "in progress" without an active
@@ -76,11 +77,12 @@ out-of-scope is captured in `docs/product.md` Section 5 ("No-gos").
 | SPACE-03 | Space v2 artefact model: tooling and router   | Next  | P1       | SPACE-02              | ~15    | `docs/work/03-tooling-v2/` (planned)   | Not started |
 | SPACE-04 | Publish pipeline: Jira                        | Next  | P1       | SPACE-02, SPACE-01     | ~20    | `docs/work/04-publish-jira/` (planned) | Not started |
 | SPACE-05 | Publish pipeline: Confluence                  | Next  | P1       | SPACE-02, SPACE-01     | ~15    | `docs/work/05-publish-conf/` (planned) | Not started |
-| SPACE-06 | Embedded workspace mode                       | Later | P2       | SPACE-02              | TBD    | `docs/work/06-embedded/` (planned)     | Not started |
+| SPACE-06 | Workspace init lifecycle                      | Later | P1       | SPACE-02              | TBD    | `docs/work/06-init-lifecycle/` (planned) | Not started |
 | SPACE-07 | Additional source providers (Slack, Vercel)   | Later | P2       | SPACE-01              | TBD    | `docs/work/07-providers/` (planned)    | Not started |
 | SPACE-08 | Multi-project Jira and incremental sync       | Later | P2       | SPACE-01              | TBD    | `docs/work/08-jira-scale/` (planned)   | Not started |
 | SPACE-09 | Skill library expansion (regulated + ops)     | Later | P2       | SPACE-02              | TBD    | `docs/work/09-skills-expand/` (plan)   | Not started |
 | SPACE-10 | Workspace profiles at scaffold                | Later | P2       | SPACE-02              | TBD    | `docs/work/10-profiles/` (planned)     | Not started |
+| SPACE-11 | Embedded workspace layout                     | Later | P2       | SPACE-02, SPACE-06    | TBD    | `docs/work/11-embedded/` (planned)     | Not started |
 
 ## 4. Epic detail
 
@@ -178,19 +180,57 @@ mirror is the local source of truth).
 
 **Status.** Not started.
 
-### SPACE-06 -- Embedded workspace mode
+### SPACE-06 -- Workspace init lifecycle
 
-**Scope:** `--mode embedded` on `create-space`: scaffold Space into an
-existing code repo as a top-level subtree. Success condition: a team
-with a single-repo initiative can adopt Space without maintaining a
-second repo, with no loss of function compared to sibling mode.
-Sibling mode remains the correct choice for program-level workspaces
-that span multiple repos or need distinct access control.
+**Scope:** Make workspace initialisation idempotent and repairable, with
+`git init`-style semantics. Both entry points become safe to run inside
+an existing directory:
 
-**Dependencies.** SPACE-02 (canonical artefact set must exist first so
-the embedded layout is settled).
+- `pnpm dlx @daddia/create-space <project>` -- scaffolder. If the target
+  directory is empty, behaves as today (full template render). If the
+  target directory exists and already contains a Space workspace
+  (detected by `.space/config`), reinitialises in place: ensures
+  missing template files, additively merges new keys into `.space/config`,
+  ensures `package.json` declares `@daddia/space` and `@daddia/skills`
+  with the `sync-skills` postinstall, and (re)creates `.cursor/skills`
+  / `.claude/skills` symlinks. If the directory exists but is not yet
+  a Space workspace, initialises it in place rather than refusing.
+- `space init` -- new subcommand on `@daddia/space`. Same idempotent
+  behaviour, run from inside an installed workspace. The natural way
+  to repair a workspace that already has `space` as a dev dep.
 
-**Work package.** `work/06-embedded/` (planned).
+Both commands install the default packages (`@daddia/space` and
+`@daddia/skills`) via the resolved package manager. Both never
+overwrite authored content -- product, architecture, work, and any
+other Markdown is left untouched. Both print a `git init`-style
+status line:
+
+- `Initialized empty Space workspace in <abs path>/.space/`
+- `Reinitialized existing Space workspace in <abs path>/.space/`
+
+**Key deliverables.** Drop `validateTargetDir` "non-empty rejects"
+behaviour in favour of an existence check that distinguishes
+greenfield, partial, and complete workspaces; idempotent template
+renderer (skip-if-exists per file, additive YAML merge for
+`.space/config`); `space init` command in `@daddia/space`; shared
+init-detection logic (duplicated minimally, since the monorepo rule
+forbids cross-package deps); status reporter; integration tests
+covering the three workspace states; smoke validation against an
+existing partially-initialised workspace (e.g. `carinyaforce-space`).
+
+**Success condition.** A partially-initialised existing workspace
+becomes fully operational with one command, with no manual file edits
+and no loss of authored content.
+
+**Dependencies.** SPACE-02 (the canonical artefact set determines
+which keys belong in `.space/config` and which template files are
+expected).
+
+**Out of scope.** Rewriting authored Markdown (handled as documented
+manual upgrades per release). Layout mode (`--mode embedded`)
+delegated to SPACE-11.
+
+**Work package.** `docs/work/06-init-lifecycle/` (planned).
 
 **Status.** Not started.
 
@@ -247,6 +287,24 @@ materialises only the profile's skills. Starter profiles: `minimal`,
 
 **Status.** Not started.
 
+### SPACE-11 -- Embedded workspace layout
+
+**Scope:** `--mode embedded` on `create-space` and `space init`:
+scaffold or initialise Space into an existing code repo as a
+top-level subtree. Success condition: a team with a single-repo
+initiative can adopt Space without maintaining a second repo, with
+no loss of function compared to sibling mode. Sibling mode remains
+the default and the correct choice for program-level workspaces that
+span multiple repos or need distinct access control.
+
+**Dependencies.** SPACE-02 (canonical artefact set must exist first
+so the embedded layout is settled); SPACE-06 (init lifecycle must
+understand both layout modes).
+
+**Work package.** `docs/work/11-embedded/` (planned).
+
+**Status.** Not started.
+
 ## 5. Dependency graph
 
 ```text
@@ -255,7 +313,8 @@ SPACE-01 (source sync)
   |     +-- SPACE-03 (v2 tooling + router)
   |     +-- SPACE-04 (publish jira)
   |     +-- SPACE-05 (publish confluence)
-  |     +-- SPACE-06 (embedded mode)
+  |     +-- SPACE-06 (workspace init lifecycle)
+  |     |     +-- SPACE-11 (embedded workspace layout)
   |     +-- SPACE-09 (skills expansion)
   |     +-- SPACE-10 (profiles)  <--  also depends on SPACE-03
   +-- SPACE-07 (additional providers)
