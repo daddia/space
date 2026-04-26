@@ -20,7 +20,8 @@
     "validate:quality": "pnpm format:write && pnpm lint:fix && pnpm lint:skills && pnpm typecheck",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && changeset publish",
+    "postinstall": "sync-skills"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [

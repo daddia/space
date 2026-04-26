@@ -32,7 +32,7 @@ Companion artefacts:
 - **Epic.** SPACE-02 -- Space v2 artefact model: skill changeset (P0)
 - **Phase.** Next (see [`docs/roadmap.md`](../../docs/roadmap.md))
 - **Priority.** P0
-- **Estimate.** 29 points across 9 stories
+- **Estimate.** 30 points across 10 stories
 
 **Scope.** Implement the P0 changeset from `docs/design/space-artefact-model.md` §7.1. Add two new skills (`write-solution`, `write-contracts`), refactor three skills (`write-product`, `write-backlog`, `design`→`write-wp-design`), enrich frontmatter on all 14 skills, rewrite every description to Anthropic skill-creator rules, add negative-constraint template blocks, and release `@tpw/skills@0.3.0` validated against the cart exemplar.
 
@@ -299,15 +299,15 @@ Companion artefacts:
 
 ### Stream 4 -- Release and validation
 
-- [x] **[SPACE-02-09] Release `@tpw/skills@0.3.0` and validate against cart exemplar**
-  - **Status:** Done | **Priority:** P0 | **Estimate:** 2
+- [ ] **[SPACE-02-09] Release `@tpw/skills@0.3.0` and validate against cart exemplar**
+  - **Status:** In progress | **Priority:** P0 | **Estimate:** 2
   - **Epic:** SPACE-02 | **Labels:** phase:next, domain:engineering, type:release
   - **Depends on:** SPACE-02-01, SPACE-02-02, SPACE-02-03, SPACE-02-04, SPACE-02-05, SPACE-02-06, SPACE-02-07, SPACE-02-08
   - **Deliverable:** `@tpw/skills@0.3.0` published to npm. `CHANGELOG.md` updated. One human validation session in `storefront-space` confirming `write-product`, `write-solution`, `write-backlog`, and `write-wp-design` produce outputs matching the cart exemplar without substantive manual editing.
   - **Design:** [`./design.md#5-release-and-validation`](design.md#5-release-and-validation)
   - **Acceptance (EARS):**
     - THE SYSTEM SHALL update `packages/skills/package.json` version to `0.3.0` and `CHANGELOG.md` with the v0.3.0 entry.
-    - WHEN `pnpm validate` runs from the monorepo root, THE SYSTEM SHALL pass with zero errors (install, build, typecheck, lint, test).
+    - WHEN `pnpm validate` runs from the monorepo root, THE SYSTEM SHALL pass with zero errors (install, build, typecheck, lint, test). -- blocked: `bin/lint-skills.js` exits 1 due to `refactor-code` skill errors (graph.consumes dangling + desc.verb); see SPACE-02-10.
     - THE SYSTEM SHALL publish `@tpw/skills@0.3.0` to the npm registry.
     - WHEN `write-product --stage product` is invoked in `storefront-space` using `domain/cart/` context as input, THE SYSTEM SHALL produce a product.md that a human reviewer confirms requires no substantive edits to match the `domain/cart/product.md` exemplar.
     - WHEN `write-solution --stage full` is invoked using `work/cart/01-foundations/design.md` + ADRs as input, THE SYSTEM SHALL produce a solution.md that a human reviewer confirms is structurally equivalent to `domain/cart/solution.md`.
@@ -334,6 +334,26 @@ Companion artefacts:
       When a workspace that uses the old "design" skill name runs space sync skills
       Then the alias SKILL.md is copied to skills/design/SKILL.md in the workspace
       And the alias directs the agent to use write-wp-design instead
+    ```
+
+- [ ] **[SPACE-02-10] Fix `refactor-code` skill lint errors**
+  - **Status:** Not started | **Priority:** P0 | **Estimate:** 1
+  - **Epic:** SPACE-02 | **Labels:** phase:next, domain:engineering, type:bug
+  - **Depends on:** SPACE-02-09
+  - **Deliverable:** `packages/skills/refactor-code/SKILL.md` fixed so that `bin/lint-skills.js` exits 0 for that skill. Two fixes required: (1) change `consumes: [review output]` to `consumes: [review]` to resolve the dangling `graph.consumes` reference (review-code produces `review`, not `review output`); (2) rewrite the `description` to open with an approved third-person verb-ing form from the set `(Drafts|Creates|Implements|Reviews|Performs|Documents|Produces|Identifies)` — current opening "Refactors" is not in the lint allowlist.
+  - **Design:** [`./design.md`](design.md)
+  - **Acceptance (EARS):**
+    - WHEN `bin/lint-skills.js` runs, THE SYSTEM SHALL report zero errors for `refactor-code`.
+    - THE SYSTEM SHALL update `consumes` to reference an artefact produced by at least one other skill in the package.
+    - THE SYSTEM SHALL rewrite `description` to open with an approved verb-ing form, preserving 200–500 char length and all existing trigger phrases and disambiguation clauses.
+  - **Acceptance (Gherkin):**
+
+    ```gherkin
+    Scenario: refactor-code passes full lint
+      Given the corrected refactor-code/SKILL.md
+      When bin/lint-skills.js runs
+      Then zero errors are reported for refactor-code
+      And the total error count across all skills is zero
     ```
 
 ## 4. Traceability
