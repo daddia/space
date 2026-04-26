@@ -1,0 +1,8 @@
+project:
+  name: my-project
+  key: MY-PROJECT
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+  runs: runs/
