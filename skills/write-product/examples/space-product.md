@@ -86,7 +86,7 @@ different platform.
 Risks that Space will deliberately stay out of:
 
 - **Building an agent runtime.** Executing skills is a separate
-  concern, owned by `@tpw/crew`. Space ships the substrate; Crew runs
+  concern, owned by `@daddia/crew`. Space ships the substrate; Crew runs
   on top of it.
 - **Authoring a proprietary skill DSL.** Skills are Markdown so they
   work across every current and future AI coding tool that reads
@@ -139,7 +139,7 @@ Explicit out-of-scope for the product:
 
 ### Secondary
 
-- **The `@tpw/crew` autonomous runtime.** Crew reads the workspace at
+- **The `@daddia/crew` autonomous runtime.** Crew reads the workspace at
   execution time. Space owns the substrate; Crew owns the execution
   model.
 
@@ -203,7 +203,7 @@ are separate and live in `docs/solution.md`.
 | Engineering leads (initiative)   | Adopt Space for new initiatives; govern workspace quality per convention            | R       |
 | Engineering squads (initiative)  | Consume skills; contribute improvements back through the skill library              | R       |
 | Program and transformation leads | Operate sync; author documents published back to the knowledge base                 | R       |
-| `@tpw/crew` team                 | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
+| `@daddia/crew` team              | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
 | AI tooling vendors (indirect)    | Support the Markdown skill format; no commitments from Space                        | I       |
 
 ## 10. Relationship to Horizon

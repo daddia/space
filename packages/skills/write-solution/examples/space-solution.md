@@ -167,8 +167,8 @@ How the strategy satisfies the quality goals:
 
 ### 4.1 Level 1 -- the three packages
 
-| Package             | Role                                           | Language                   | Runtime          |
-| ------------------- | ---------------------------------------------- | -------------------------- | ---------------- |
+| Package                | Role                                           | Language                   | Runtime          |
+| ---------------------- | ---------------------------------------------- | -------------------------- | ---------------- |
 | `@daddia/skills`       | Versioned delivery-activity skill library      | Markdown + a tiny sync bin | npm postinstall  |
 | `@daddia/create-space` | Interactive CLI that scaffolds a new workspace | TypeScript (CLI)           | Node (one-shot)  |
 | `@daddia/space`        | Operations CLI: sync and (future) publish      | TypeScript (CLI)           | Node (on-demand) |
@@ -610,11 +610,11 @@ Per-command behaviours:
 
 **`sync-skills`:**
 
-| Condition                    | Behaviour                                      |
-| ---------------------------- | ---------------------------------------------- |
+| Condition                       | Behaviour                                      |
+| ------------------------------- | ---------------------------------------------- |
 | `@daddia/skills` not resolvable | Exit non-zero with install instruction         |
-| `skills/` creation fails     | Exit non-zero with OS error                    |
-| Individual file copy fails   | Warn to stderr; continue; do not block install |
+| `skills/` creation fails        | Exit non-zero with OS error                    |
+| Individual file copy fails      | Warn to stderr; continue; do not block install |
 
 ### 7.3 Observability
 

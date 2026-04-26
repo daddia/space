@@ -18,7 +18,7 @@ related:
 
 Solution design for the `space` monorepo. Defines the architecture,
 cross-cutting concepts, data contracts, and key decisions behind the
-three packages (`@tpw/skills`, `@tpw/create-space`, `@tpw/space`). Uses
+three packages (`@daddia/skills`, `@daddia/create-space`, `@daddia/space`). Uses
 the arc42-lite structure described in
 `docs/design/space-artefact-model.md` Section 4.7.
 
@@ -35,7 +35,7 @@ scaffolded.
 ```text
                           npm registry
   +-------------------+-------------------+-------------------+
-  | @tpw/skills       | @tpw/create-space | @tpw/space        |
+  | @daddia/skills       | @daddia/create-space | @daddia/space        |
   |  markdown library |  scaffold CLI     |  operations CLI   |
   +---------+---------+---------+---------+---------+---------+
             |                   |                   |
@@ -43,7 +43,7 @@ scaffolded.
   +----------------------- Consumer workspace -----------------------+
   |  (e.g. storefront-space)                                          |
   |    .space/          workspace identity, config, source mirrors    |
-  |    skills/          synced from @tpw/skills by postinstall bin    |
+  |    skills/          synced from @daddia/skills by postinstall bin    |
   |    docs/, work/,                                                  |
   |    domain/,         human / agent-authored artefacts              |
   |    architecture/                                                  |
@@ -52,7 +52,7 @@ scaffolded.
                             |
                             v
              +--------------+---------------+
-             |     @tpw/crew (external)     |
+             |     @daddia/crew (external)     |
              |  reads skills/ and           |
              |  .space/sources/ at runtime  |
              +------------------------------+
@@ -79,7 +79,7 @@ Space does not own:
 - **Atlassian Jira (Cloud)** -- issue source; read via REST API v3.
 - **Atlassian Confluence (Cloud)** -- page source; read via REST API v2.
 - **Consumer workspaces** -- downstream; consume the three packages.
-- **@tpw/crew** -- downstream; reads the workspace file-system
+- **@daddia/crew** -- downstream; reads the workspace file-system
   conventions at runtime.
 - **AI coding tools** (Cursor, Claude Code, etc.) -- downstream; read
   synced skill files from the workspace.
@@ -167,16 +167,16 @@ How the strategy satisfies the quality goals:
 
 ### 4.1 Level 1 -- the three packages
 
-| Package             | Role                                           | Language                   | Runtime          |
-| ------------------- | ---------------------------------------------- | -------------------------- | ---------------- |
-| `@tpw/skills`       | Versioned delivery-activity skill library      | Markdown + a tiny sync bin | npm postinstall  |
-| `@tpw/create-space` | Interactive CLI that scaffolds a new workspace | TypeScript (CLI)           | Node (one-shot)  |
-| `@tpw/space`        | Operations CLI: sync and (future) publish      | TypeScript (CLI)           | Node (on-demand) |
+| Package                | Role                                           | Language                   | Runtime          |
+| ---------------------- | ---------------------------------------------- | -------------------------- | ---------------- |
+| `@daddia/skills`       | Versioned delivery-activity skill library      | Markdown + a tiny sync bin | npm postinstall  |
+| `@daddia/create-space` | Interactive CLI that scaffolds a new workspace | TypeScript (CLI)           | Node (one-shot)  |
+| `@daddia/space`        | Operations CLI: sync and (future) publish      | TypeScript (CLI)           | Node (on-demand) |
 
 The packages have no runtime imports between them. Coupling is purely
 through the file-system layout they all agree on.
 
-### 4.2 Level 2 -- @tpw/skills
+### 4.2 Level 2 -- @daddia/skills
 
 Responsibilities:
 
@@ -211,24 +211,24 @@ Canonical verb set:
 
 1. Resolve workspace root -- the directory containing the nearest
    `package.json` above `process.cwd()`.
-2. Resolve source from `node_modules/@tpw/skills/`.
+2. Resolve source from `node_modules/@daddia/skills/`.
 3. For each skill directory in source, copy `SKILL.md`, `template*.md`,
    `examples/`, `scripts/` into `{workspace-root}/skills/{skill-name}/`.
 4. Never delete a destination skill directory that has no counterpart
    in source (preserves project-local skills).
 5. Write `skills/.manifest.json` recording which skills came from
-   `@tpw/skills` and at which version.
+   `@daddia/skills` and at which version.
 
 Published file patterns: `bin/**`, `*/SKILL.md`, `*/template*.md`,
 `*/examples/**`, `*/scripts/**`, `README.md`, `CHANGELOG.md`. No
 TypeScript source, no `dist/`.
 
-### 4.3 Level 2 -- @tpw/create-space
+### 4.3 Level 2 -- @daddia/create-space
 
 CLI interface:
 
 ```text
-pnpm create @tpw/space [project-name] [options]
+pnpm create @daddia/space [project-name] [options]
 
 Options:
   --yes             Accept all defaults; non-interactive (CI-safe)
@@ -250,7 +250,7 @@ Interactive prompts (skipped when `--yes`, `--key`, or `CI=true`):
 Scaffolding sequence:
 
 1. Validate target directory is empty; prompt to overwrite if not.
-2. Check npm registry for a newer version of `@tpw/create-space`; warn
+2. Check npm registry for a newer version of `@daddia/create-space`; warn
    if stale.
 3. Copy `template/default/` into the target directory, interpolating
    template tokens in file content.
@@ -266,7 +266,7 @@ Template layout:
 template/default/
   AGENTS.md                             templated; describes workspace layout
   README.md
-  package.json                          includes @tpw/skills, @tpw/space as
+  package.json                          includes @daddia/skills, @daddia/space as
                                         devDependencies; postinstall: sync-skills;
                                         sync: space sync
   .gitignore                            includes .env, work/, node_modules/
@@ -289,7 +289,7 @@ template/default/
 Symlinks (`.cursor/skills`, `.claude/skills`) are created by the
 `sync-skills` postinstall step, not included in the template directory.
 
-### 4.4 Level 2 -- @tpw/space
+### 4.4 Level 2 -- @daddia/space
 
 CLI interface:
 
@@ -336,10 +336,10 @@ Triggered by `npm install` / `pnpm install` in the consumer workspace.
 
 ```text
 pnpm install
-  -> reads @tpw/skills from node_modules
+  -> reads @daddia/skills from node_modules
   -> runs postinstall: sync-skills
      1. Resolve workspace root
-     2. Copy skills from node_modules/@tpw/skills/ to workspace skills/
+     2. Copy skills from node_modules/@daddia/skills/ to workspace skills/
      3. Preserve project-local skills (never delete non-source entries)
      4. Write skills/.manifest.json
 ```
@@ -349,7 +349,7 @@ them through npm at invocation time.
 
 ### 5.2 One-shot scaffold
 
-Triggered by `pnpm create @tpw/space {name}` in an empty directory.
+Triggered by `pnpm create @daddia/space {name}` in an empty directory.
 
 ```text
 create-space
@@ -435,12 +435,12 @@ separately in `docs/design/space-artefact-model.md` Section 6.
   into the workspace.
 - **Mirror** -- the local copy of upstream state, stored under
   `.space/sources/{provider}/` in native upstream format.
-- **Profile** -- a YAML file in `@tpw/skills/profiles/` listing which
+- **Profile** -- a YAML file in `@daddia/skills/profiles/` listing which
   skills a workspace activates (see
   `docs/design/space-artefact-model.md` Section 3.7).
 - **Provider** -- a named upstream integration (`jira`, `confluence`).
-- **Consumer workspace** -- any workspace that installs `@tpw/skills`
-  and optionally `@tpw/space`.
+- **Consumer workspace** -- any workspace that installs `@daddia/skills`
+  and optionally `@daddia/space`.
 
 ### 6.2 `.space/config` schema
 
@@ -478,7 +478,7 @@ issues: # controls Jira publish (future)
 
 ### 6.3 `.space/sources/` layout
 
-Content contract between Space and `@tpw/crew`. Changes to file names
+Content contract between Space and `@daddia/crew`. Changes to file names
 or shapes are breaking and require a major version bump.
 
 ```text
@@ -563,7 +563,7 @@ disambiguation, artefact names verbatim, 200-500 chars. See
 ### 7.1 Security
 
 - **No credentials in source control.** `.env` is gitignored by
-  `create-space`. `@tpw/space` reads credentials only via `dotenv`;
+  `create-space`. `@daddia/space` reads credentials only via `dotenv`;
   never from config or CLI arguments.
 - **No secrets in mirrors.** Jira and Confluence responses may contain
   sensitive business data. Consumer repos inherit the org's access
@@ -610,11 +610,11 @@ Per-command behaviours:
 
 **`sync-skills`:**
 
-| Condition                    | Behaviour                                      |
-| ---------------------------- | ---------------------------------------------- |
-| `@tpw/skills` not resolvable | Exit non-zero with install instruction         |
-| `skills/` creation fails     | Exit non-zero with OS error                    |
-| Individual file copy fails   | Warn to stderr; continue; do not block install |
+| Condition                       | Behaviour                                      |
+| ------------------------------- | ---------------------------------------------- |
+| `@daddia/skills` not resolvable | Exit non-zero with install instruction         |
+| `skills/` creation fails        | Exit non-zero with OS error                    |
+| Individual file copy fails      | Warn to stderr; continue; do not block install |
 
 ### 7.3 Observability
 
@@ -630,7 +630,7 @@ and errors to stderr.
 
 Per package.
 
-**`@tpw/skills`:**
+**`@daddia/skills`:**
 
 - Structural lint (CI): every directory contains `SKILL.md`; frontmatter
   includes required fields; directory name matches `name`.
@@ -641,7 +641,7 @@ Per package.
   copy; manifest written with accurate origins; project-local skills
   preserved; path-traversal inputs rejected.
 
-**`@tpw/create-space`:**
+**`@daddia/create-space`:**
 
 | Layer       | Scope                                                           | Target           |
 | ----------- | --------------------------------------------------------------- | ---------------- |
@@ -651,7 +651,7 @@ Per package.
 | Snapshot    | Rendered `.space/config` and `AGENTS.md` per LLM + source combo | All permutations |
 | Integration | Full scaffold into a temp dir; assert output tree matches       | `--yes` + happy  |
 
-**`@tpw/space`:**
+**`@daddia/space`:**
 
 | Layer       | Scope                                                           | Target           |
 | ----------- | --------------------------------------------------------------- | ---------------- |
@@ -694,7 +694,7 @@ invoked by the router.
 - **Publish:** `pnpm release` after `pnpm validate` (install, build,
   typecheck, lint, test) passes clean.
 - **Distribution channel:** npm registry, public; `@tpw` scope.
-- **Consumer update path:** `pnpm update @tpw/skills` (or any package).
+- **Consumer update path:** `pnpm update @daddia/skills` (or any package).
 
 ### 8.2 CI/CD shape
 
@@ -735,7 +735,7 @@ defended:
 
 ### 10.1 Risks
 
-1. **`@tpw/space` package home.** Currently inside the space monorepo.
+1. **`@daddia/space` package home.** Currently inside the space monorepo.
    If the CLI grows substantially, extract to its own repo (following
    the `skills` precedent). No action required now.
 2. **Confluence sync volume.** Phase 1 syncs the full space. If page
@@ -753,7 +753,7 @@ defended:
    `sources.issues` as a single block. When multi-project is needed,
    extend to an array; additive, backward-compatible schema change.
 6. **`sync-skills` copy vs symlink.** Current approach copies files.
-   Symlinking directly from `node_modules/@tpw/skills` is cleaner but
+   Symlinking directly from `node_modules/@daddia/skills` is cleaner but
    breaks in some monorepo setups. Copy is portable. Revisit if
    copy-on-update friction proves significant.
 7. **Skill version staleness.** `SKILL.md` frontmatter carries

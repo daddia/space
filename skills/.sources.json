@@ -1,5 +1,5 @@
 {
-  "@tpw/skills": {
+  "@daddia/skills": {
     "version": "0.4.0",
     "skills": [
       "create-mr",

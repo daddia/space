@@ -4,8 +4,8 @@ Workspace ecosystem for Horizon delivery spaces.
 
 ## Packages
 
-| Package                                       | Description                                            |
-| --------------------------------------------- | ------------------------------------------------------ |
+| Package                                          | Description                                            |
+| ------------------------------------------------ | ------------------------------------------------------ |
 | [`@daddia/skills`](packages/skills/)             | Delivery activity skills for AI coding agents          |
 | [`@daddia/create-space`](packages/create-space/) | Scaffold a new Horizon delivery workspace              |
 | [`@daddia/space`](packages/space/)               | Operate a space -- sync external sources, publish docs |

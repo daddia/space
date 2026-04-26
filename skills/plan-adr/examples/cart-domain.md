@@ -81,7 +81,7 @@ wishlist) will adopt the same pattern, so the decision is precedent-setting.
 error set. `dependencies/bff-contract-uplift.md` item BFF-CART-08 asks the
 BFF to align its `code` field with this taxonomy on every 4xx. Alternative
 approaches — HTTP-status-only mapping, BFF-owned taxonomy with storefront
-translation, or a shared enum in `@tpw/bff-client-types` — each imply
+translation, or a shared enum in `@daddia/bff-client-types` — each imply
 different ownership, evolution rules, and failure modes when codes drift. The
 choice commits the BFF squad to a typed-error contract and determines whether
 the storefront or the BFF owns new codes as new mutation actions appear.
@@ -130,8 +130,8 @@ and how double-fires are surfaced to analytics.
 **Rationale (why consequential):** `contracts.md` Sections 3 and 9 declare
 `CartViewModel` as the single contract between cart data and every consumer,
 including the Checkout domain. Alternative shapes — (a) Checkout imports
-`@tpw/bff-client-types` directly and does its own mapping; (b) cart + checkout
-share a neutral `@tpw/cart-view-model` package; (c) cart exposes only `BffCart`
+`@daddia/bff-client-types` directly and does its own mapping; (b) cart + checkout
+share a neutral `@daddia/cart-view-model` package; (c) cart exposes only `BffCart`
 and lets each consumer map — each change where cart owns the display-level
 abstractions and how easily cart can evolve its internal mapper without breaking
 consumers. This is precedent-setting for every future cross-domain contract.

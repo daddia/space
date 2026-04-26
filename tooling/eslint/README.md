@@ -4,8 +4,8 @@ Shared ESLint flat configurations for daddia repositories.
 
 ## Available configs
 
-| Export                              | Use case                                    |
-| ----------------------------------- | ------------------------------------------- |
+| Export                                 | Use case                                    |
+| -------------------------------------- | ------------------------------------------- |
 | `@daddia/eslint-config/base`           | Base config (TypeScript + Prettier + Turbo) |
 | `@daddia/eslint-config/library`        | Node.js library packages (`packages/*`)     |
 | `@daddia/eslint-config/nest-js`        | NestJS applications (`apps/api`)            |

@@ -35,7 +35,7 @@ Domain-level epic backlog. Lists the epics the cart domain will deliver, their o
 
 **Prerequisites (complete).**
 
-- `bffClient` from `@/lib/bff` available; `@tpw/bff-client-types` generated from the `storefront-bff` OpenAPI spec.
+- `bffClient` from `@/lib/bff` available; `@daddia/bff-client-types` generated from the `storefront-bff` OpenAPI spec.
 - `@tw/http` (`HttpStatusError`) and `@tw/logging` available.
 - Existing mini-cart module (read-only popover) under `modules/cart/ui/mini-cart/`.
 - `(checkout)` route group with layout (referenced but not modified by this domain).

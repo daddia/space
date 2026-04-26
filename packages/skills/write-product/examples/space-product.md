@@ -203,7 +203,7 @@ are separate and live in `docs/solution.md`.
 | Engineering leads (initiative)   | Adopt Space for new initiatives; govern workspace quality per convention            | R       |
 | Engineering squads (initiative)  | Consume skills; contribute improvements back through the skill library              | R       |
 | Program and transformation leads | Operate sync; author documents published back to the knowledge base                 | R       |
-| `@daddia/crew` team                 | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
+| `@daddia/crew` team              | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
 | AI tooling vendors (indirect)    | Support the Markdown skill format; no commitments from Space                        | I       |
 
 ## 10. Relationship to Horizon

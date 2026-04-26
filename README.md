@@ -9,8 +9,8 @@ agents work.
 
 ## Packages
 
-| Package                                       | Version | Description                                       |
-| --------------------------------------------- | ------- | ------------------------------------------------- |
+| Package                                          | Version | Description                                       |
+| ------------------------------------------------ | ------- | ------------------------------------------------- |
 | [`@daddia/skills`](packages/skills/)             | 0.2.0   | Delivery activity skills for AI coding agents     |
 | [`@daddia/create-space`](packages/create-space/) | 0.1.1   | Scaffold a new delivery workspace                 |
 | [`@daddia/space`](packages/space/)               | 0.1.0   | Operate a workspace -- sync sources, publish docs |

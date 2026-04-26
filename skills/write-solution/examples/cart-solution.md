@@ -51,7 +51,7 @@ Customer Browser
        |
        +-- getCart()
        |     -> bffClient.json('/carts', { apiVersion: 'v0.1' })
-       |     -> Cart_v0_1  (from @tpw/bff-client-types)
+       |     -> Cart_v0_1  (from @daddia/bff-client-types)
        |     -> cartToViewModel()  ->  CartViewModel
        |
        +-- CartContent.client.tsx
@@ -115,7 +115,7 @@ Full metric tree with IDs (`CM-01`, `CM-I01..08`, `CM-G01..15`), baselines, phas
 
 ### 2.2 Constraints
 
-- **Technical:** Next.js App Router + React Server Components; BFF-only integration (no direct backend calls); `@tpw/bff-client-types` is the generated type source; Webster UI primitives for visual components.
+- **Technical:** Next.js App Router + React Server Components; BFF-only integration (no direct backend calls); `@daddia/bff-client-types` is the generated type source; Webster UI primitives for visual components.
 - **Legacy parity:** inherited business rules from the legacy basket -- quantity limits, minimum-order quantity, forced quantity multiplier, GST-inclusive pricing, AU locale. Canonical list and rationale in §6.3.
 - **Regulatory:** WCAG 2.1 AA. No PII in logs or analytics payloads.
 - **Organisational:** Single squad (Cart & Checkout). Cross-squad dependencies on BFF, Shopping Experience, Analytics, Trade, and Platform SRE -- tracked per phase in [`domain/cart/roadmap.md`](roadmap.md).
@@ -139,7 +139,7 @@ Consequences:
 
 All cart reads and mutations flow through `bffClient` from `@/lib/bff`. `bffClient.json(...)` for reads; `bffClient.request(...)` with `method: 'PUT'` for mutations. Module code never makes direct HTTP calls to Central or any other backend.
 
-`@/lib/bff` (wrapping `@tw/bff-client`) is the application boundary. The `storefront-bff` OpenAPI contract is the upstream contract. Types derive from `@tpw/bff-client-types`. Any upstream schema additions are absorbed inside the mapper rather than leaking into module callers.
+`@/lib/bff` (wrapping `@tw/bff-client`) is the application boundary. The `storefront-bff` OpenAPI contract is the upstream contract. Types derive from `@daddia/bff-client-types`. Any upstream schema additions are absorbed inside the mapper rather than leaking into module callers.
 
 ### 3.3 Server-first rendering with client islands
 
@@ -389,7 +389,7 @@ Anonymous customer signs in while on /cart
 
 Canonical definitions live in [`domain/cart/contracts.md`](contracts.md) (Sections 1-8):
 
-- Section 1: BFF type imports from `@tpw/bff-client-types`.
+- Section 1: BFF type imports from `@daddia/bff-client-types`.
 - Section 2: `BffCart` shape (alias of `Cart_v0_1`).
 - Section 3: `CartViewModel` and all slice types.
 - Section 4: `CartMutationErrorCode` enum and `CartMutationResult` shape.

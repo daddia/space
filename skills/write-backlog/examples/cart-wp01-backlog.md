@@ -313,10 +313,10 @@ The epic (CART01) is done when every story is done **and** the Alpha exit criter
 
 ## 6. Risks (work-package specific)
 
-| ID  | Risk                                                                                              | Likelihood | Impact | Mitigation                                                                   |
-| --- | ------------------------------------------------------------------------------------------------- | ---------- | ------ | ---------------------------------------------------------------------------- |
-| F1  | `@tpw/bff-client-types` drifts from the `storefront-bff` OpenAPI spec during the initial scaffold | Low        | Medium | Regenerate at sprint start; pin version; update fixture builders in lockstep |
-| F2  | `/cart` mis-classification causes caching                                                         | Low        | High   | CART01-06 asserts `Cache-Control: no-store` via smoke test                   |
+| ID  | Risk                                                                                                 | Likelihood | Impact | Mitigation                                                                   |
+| --- | ---------------------------------------------------------------------------------------------------- | ---------- | ------ | ---------------------------------------------------------------------------- |
+| F1  | `@daddia/bff-client-types` drifts from the `storefront-bff` OpenAPI spec during the initial scaffold | Low        | Medium | Regenerate at sprint start; pin version; update fixture builders in lockstep |
+| F2  | `/cart` mis-classification causes caching                                                            | Low        | High   | CART01-06 asserts `Cache-Control: no-store` via smoke test                   |
 
 Broader cart-domain risks are in [`domain/cart/backlog.md`](../../../domain/cart/backlog.md) Section 10.
 

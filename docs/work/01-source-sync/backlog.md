@@ -5,6 +5,7 @@ work_package: 01-source-sync
 epic: EPIC-01
 product: space
 version: '1.1'
+owner: daddia
 status: In progress
 last_updated: 2026-04-23
 sources:

@@ -12,8 +12,8 @@ This file gives implementation context to AI coding assistants working in the `s
 
 ## Repository Structure
 
-| Directory                | Package             | Purpose                                                 |
-| ------------------------ | ------------------- | ------------------------------------------------------- |
+| Directory                | Package                | Purpose                                                 |
+| ------------------------ | ---------------------- | ------------------------------------------------------- |
 | `packages/skills/`       | `@daddia/skills`       | Delivery activity skills (Markdown only, no build step) |
 | `packages/create-space/` | `@daddia/create-space` | Scaffolding CLI for new delivery workspaces             |
 | `packages/space/`        | `@daddia/space`        | Space operations CLI (`space sync`, `space publish`)    |

@@ -1,15 +1,15 @@
-# `@tpw/eslint-config`
+# `@daddia/eslint-config`
 
 Shared ESLint flat configurations for Horizon repositories.
 
 ## Available configs
 
-| Export                              | Use case                                    |
-| ----------------------------------- | ------------------------------------------- |
-| `@tpw/eslint-config/base`           | Base config (TypeScript + Prettier + Turbo) |
-| `@tpw/eslint-config/library`        | Node.js library packages (`packages/*`)     |
-| `@tpw/eslint-config/nest-js`        | NestJS applications (`apps/api`)            |
-| `@tpw/eslint-config/next-js`        | Next.js applications (`apps/web`)           |
-| `@tpw/eslint-config/react-internal` | Shared React component libraries            |
+| Export                                 | Use case                                    |
+| -------------------------------------- | ------------------------------------------- |
+| `@daddia/eslint-config/base`           | Base config (TypeScript + Prettier + Turbo) |
+| `@daddia/eslint-config/library`        | Node.js library packages (`packages/*`)     |
+| `@daddia/eslint-config/nest-js`        | NestJS applications (`apps/api`)            |
+| `@daddia/eslint-config/next-js`        | Next.js applications (`apps/web`)           |
+| `@daddia/eslint-config/react-internal` | Shared React component libraries            |
 
 Project-level `eslint.config.mjs` files import a config and add overrides.

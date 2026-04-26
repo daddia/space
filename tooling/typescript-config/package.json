@@ -1,5 +1,5 @@
 {
-  "name": "@tpw/typescript-config",
+  "name": "@daddia/typescript-config",
   "version": "0.0.0",
   "private": true,
   "exports": {

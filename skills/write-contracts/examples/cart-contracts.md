@@ -24,14 +24,14 @@ coordination with documented consumers.
 
 ## 1. BFF types
 
-Type aliases over `@tpw/bff-client-types` generated from
+Type aliases over `@daddia/bff-client-types` generated from
 `api-contracts/contracts/storefront-bff/openapi.v1.yaml`.
 
 ```typescript
 // File: modules/cart/logic/types.ts
-// Source: @tpw/bff-client-types (generated from storefront-bff OpenAPI spec)
+// Source: @daddia/bff-client-types (generated from storefront-bff OpenAPI spec)
 
-import type { components } from '@tpw/bff-client-types';
+import type { components } from '@daddia/bff-client-types';
 
 // Aliases used throughout the cart module
 export type BffCart = components['schemas']['Cart_v0_1'];

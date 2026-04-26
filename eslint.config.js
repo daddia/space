@@ -1,4 +1,4 @@
-import { libraryConfig } from '@tpw/eslint-config/library';
+import { libraryConfig } from '@daddia/eslint-config/library';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [

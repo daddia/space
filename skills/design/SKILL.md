@@ -2,7 +2,7 @@
 name: design
 description: >
   Alias for write-wp-design. Use write-wp-design instead. This alias will be
-  removed in @tpw/skills v0.4.0. write-wp-design drafts a work-package design
+  removed in @daddia/skills v0.4.0. write-wp-design drafts a work-package design
   document in walking-skeleton mode (foundation sprint, 2–4 pages) or TDD mode
   (sprint 2+, 5–10 pages). Use when the user mentions "design", "TDD", "write
   the design for {epic}", or "how should we implement {story}".
@@ -25,7 +25,7 @@ related:
 
 > **This skill has been renamed. Use `write-wp-design` instead.**
 >
-> This alias will be removed in `@tpw/skills v0.4.0`.
+> This alias will be removed in `@daddia/skills v0.4.0`.
 
 `write-wp-design` replaces `design` with:
 
