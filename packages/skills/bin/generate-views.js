@@ -64,18 +64,13 @@ export function buildRoleView(roleTitle, skills) {
 
   const rows = skills.map(({ name, fm }) => {
     const desc = typeof fm.description === 'string' ? fm.description : '';
-    const excerpt =
-      desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
+    const excerpt = desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
     const artefact = fm.artefact ?? '\u2014';
     const phase = fm.phase ?? '\u2014';
     const consumes =
-      Array.isArray(fm.consumes) && fm.consumes.length > 0
-        ? fm.consumes.join(', ')
-        : '\u2014';
+      Array.isArray(fm.consumes) && fm.consumes.length > 0 ? fm.consumes.join(', ') : '\u2014';
     const produces =
-      Array.isArray(fm.produces) && fm.produces.length > 0
-        ? fm.produces.join(', ')
-        : '\u2014';
+      Array.isArray(fm.produces) && fm.produces.length > 0 ? fm.produces.join(', ') : '\u2014';
     return `| ${name} | ${excerpt} | ${artefact} | ${phase} | ${consumes} | ${produces} |`;
   });
 
@@ -111,19 +106,13 @@ export function generateViews(packageDir) {
     .filter((entry) => {
       if (entry === 'bin' || entry === 'views' || entry.startsWith('.')) return false;
       const fullPath = path.join(packageDir, entry);
-      return (
-        fs.statSync(fullPath).isDirectory() &&
-        fs.existsSync(path.join(fullPath, 'SKILL.md'))
-      );
+      return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'SKILL.md'));
     })
     .sort();
 
   const allSkills = skillDirs
     .map((name) => {
-      const content = fs.readFileSync(
-        path.join(packageDir, name, 'SKILL.md'),
-        'utf8',
-      );
+      const content = fs.readFileSync(path.join(packageDir, name, 'SKILL.md'), 'utf8');
       const { frontmatter } = splitFrontmatter(content);
       const fm = parseFrontmatter(frontmatter);
       return { name, fm };
@@ -157,9 +146,7 @@ export function generateViews(packageDir) {
     const newContent = buildRoleView(title, filtered);
     const filePath = path.join(viewsDir, file);
 
-    const currentContent = fs.existsSync(filePath)
-      ? fs.readFileSync(filePath, 'utf8')
-      : null;
+    const currentContent = fs.existsSync(filePath) ? fs.readFileSync(filePath, 'utf8') : null;
 
     if (currentContent !== newContent) {
       fs.writeFileSync(filePath, newContent, 'utf8');
@@ -194,9 +181,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   process.stdout.write(`generate-views: views/ (${summary})\n`);
 
   if (changed) {
-    process.stderr.write(
-      'generate-views: output was stale — commit the updated views/ files\n',
-    );
+    process.stderr.write('generate-views: output was stale — commit the updated views/ files\n');
     process.exit(1);
   }
 }
@@ -240,13 +225,7 @@ function parseFrontmatter(src) {
     const key = match[1];
     const inline = match[2];
 
-    if (
-      inline === '' ||
-      inline === '|' ||
-      inline === '>' ||
-      inline === '>-' ||
-      inline === '|-'
-    ) {
+    if (inline === '' || inline === '|' || inline === '>' || inline === '>-' || inline === '|-') {
       const block = [];
       const isList = inline === '' && lines[i + 1]?.match(/^\s+-\s+/);
       i++;
@@ -266,10 +245,7 @@ function parseFrontmatter(src) {
         continue;
       }
 
-      while (
-        i < lines.length &&
-        (lines[i].startsWith('  ') || lines[i].trim() === '')
-      ) {
+      while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
         if (lines[i].trim()) block.push(lines[i].trim());
         i++;
       }

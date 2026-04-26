@@ -263,10 +263,7 @@ describe('generateIndex', () => {
     expect(result.changed).toBe(true);
 
     // The written file should now contain the new skill row
-    const written = fs.readFileSync(
-      path.join(packageDir, 'space-index', 'SKILL.md'),
-      'utf8',
-    );
+    const written = fs.readFileSync(path.join(packageDir, 'space-index', 'SKILL.md'), 'utf8');
     expect(written).toContain('new-skill');
   });
 
@@ -297,10 +294,7 @@ describe('generateIndex', () => {
 
     generateIndex(packageDir);
 
-    const written = fs.readFileSync(
-      path.join(packageDir, 'space-index', 'SKILL.md'),
-      'utf8',
-    );
+    const written = fs.readFileSync(path.join(packageDir, 'space-index', 'SKILL.md'), 'utf8');
     expect(written).toContain('stable-skill');
     expect(written).not.toContain('deprecated-skill');
   });
@@ -312,10 +306,7 @@ describe('generateIndex', () => {
 
     generateIndex(packageDir);
 
-    const written = fs.readFileSync(
-      path.join(packageDir, 'space-index', 'SKILL.md'),
-      'utf8',
-    );
+    const written = fs.readFileSync(path.join(packageDir, 'space-index', 'SKILL.md'), 'utf8');
     expect(written).toContain('space-index');
   });
 });
@@ -353,8 +344,7 @@ describe('buildIndexTable snapshot', () => {
       {
         name: 'space-index',
         fm: {
-          description:
-            'Identifies the right skill for a vague or open-ended request.',
+          description: 'Identifies the right skill for a vague or open-ended request.',
           artefact: 'skill-routing',
           phase: 'discovery',
           role: ['pm', 'founder', 'architect', 'engineer'],

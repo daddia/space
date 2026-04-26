@@ -1,0 +1,17 @@
+name: platform
+description: >
+  All domain-team skills plus architecture decision tooling and the space-index router.
+  Intended for squads that also govern platform architecture across multiple domains.
+skills:
+  - implement
+  - review-code
+  - create-mr
+  - write-adr
+  - write-product
+  - write-solution
+  - write-backlog
+  - write-contracts
+  - write-wp-design
+  - plan-adr
+  - review-adr
+  - space-index

@@ -116,7 +116,10 @@ describe('createSpace integration: three workspace states', () => {
     await createSpace(makeConfig(targetDir), { yes: true });
 
     // Authored Markdown must not be overwritten
-    const dodAfter = await readFile(join(targetDir, 'docs/conventions/definition-of-done.md'), 'utf-8');
+    const dodAfter = await readFile(
+      join(targetDir, 'docs/conventions/definition-of-done.md'),
+      'utf-8',
+    );
     expect(dodAfter).toBe(customDod);
 
     // Config must preserve the original project.name value

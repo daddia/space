@@ -40,19 +40,14 @@ export function buildIndexTable(skills) {
 
   const rows = skills.map(({ name, fm }) => {
     const desc = typeof fm.description === 'string' ? fm.description : '';
-    const excerpt =
-      desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
+    const excerpt = desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
     const artefact = fm.artefact ?? '—';
     const phase = fm.phase ?? '—';
     const role = Array.isArray(fm.role) ? fm.role.join(', ') : (fm.role ?? '—');
     const consumes =
-      Array.isArray(fm.consumes) && fm.consumes.length > 0
-        ? fm.consumes.join(', ')
-        : '—';
+      Array.isArray(fm.consumes) && fm.consumes.length > 0 ? fm.consumes.join(', ') : '—';
     const produces =
-      Array.isArray(fm.produces) && fm.produces.length > 0
-        ? fm.produces.join(', ')
-        : '—';
+      Array.isArray(fm.produces) && fm.produces.length > 0 ? fm.produces.join(', ') : '—';
     return `| ${name} | ${excerpt} | ${artefact} | ${phase} | ${role} | ${consumes} | ${produces} |`;
   });
 
@@ -74,16 +69,12 @@ export function replaceGeneratedSection(fileContent, newTable) {
 
   const beginIdx = fileContent.indexOf(BEGIN);
   if (beginIdx === -1) {
-    throw new Error(
-      'space-index/SKILL.md is missing the <!-- BEGIN GENERATED --> sentinel',
-    );
+    throw new Error('space-index/SKILL.md is missing the <!-- BEGIN GENERATED --> sentinel');
   }
 
   const endIdx = fileContent.indexOf(END);
   if (endIdx === -1) {
-    throw new Error(
-      'space-index/SKILL.md is missing the <!-- END GENERATED --> sentinel',
-    );
+    throw new Error('space-index/SKILL.md is missing the <!-- END GENERATED --> sentinel');
   }
 
   const beginLineEnd = fileContent.indexOf('\n', beginIdx);
@@ -110,19 +101,13 @@ export function generateIndex(packageDir) {
     .filter((entry) => {
       if (entry === 'bin' || entry.startsWith('.')) return false;
       const fullPath = path.join(packageDir, entry);
-      return (
-        fs.statSync(fullPath).isDirectory() &&
-        fs.existsSync(path.join(fullPath, 'SKILL.md'))
-      );
+      return fs.statSync(fullPath).isDirectory() && fs.existsSync(path.join(fullPath, 'SKILL.md'));
     })
     .sort();
 
   const skills = skillDirs
     .map((name) => {
-      const content = fs.readFileSync(
-        path.join(packageDir, name, 'SKILL.md'),
-        'utf8',
-      );
+      const content = fs.readFileSync(path.join(packageDir, name, 'SKILL.md'), 'utf8');
       const { frontmatter } = splitFrontmatter(content);
       const fm = parseFrontmatter(frontmatter);
       return { name, fm };
@@ -215,13 +200,7 @@ function parseFrontmatter(src) {
     const key = match[1];
     const inline = match[2];
 
-    if (
-      inline === '' ||
-      inline === '|' ||
-      inline === '>' ||
-      inline === '>-' ||
-      inline === '|-'
-    ) {
+    if (inline === '' || inline === '|' || inline === '>' || inline === '>-' || inline === '|-') {
       const block = [];
       const isList = inline === '' && lines[i + 1]?.match(/^\s+-\s+/);
       i++;
@@ -241,10 +220,7 @@ function parseFrontmatter(src) {
         continue;
       }
 
-      while (
-        i < lines.length &&
-        (lines[i].startsWith('  ') || lines[i].trim() === '')
-      ) {
+      while (i < lines.length && (lines[i].startsWith('  ') || lines[i].trim() === '')) {
         if (lines[i].trim()) block.push(lines[i].trim());
         i++;
       }

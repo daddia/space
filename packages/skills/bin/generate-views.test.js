@@ -112,9 +112,7 @@ describe('buildRoleView', () => {
 
   it('has the correct 6-column table header', () => {
     const content = buildRoleView('Engineer', fixtures);
-    expect(content).toContain(
-      '| Skill | What it does | Artefact | Phase | Consumes | Produces |',
-    );
+    expect(content).toContain('| Skill | What it does | Artefact | Phase | Consumes | Produces |');
   });
 
   it('contains one row per skill', () => {
@@ -136,9 +134,7 @@ describe('buildRoleView', () => {
   });
 
   it('renders em-dash for absent consumes', () => {
-    const noConsumes = [
-      { name: 'y', fm: { description: 'test', produces: ['x'] } },
-    ];
+    const noConsumes = [{ name: 'y', fm: { description: 'test', produces: ['x'] } }];
     const content = buildRoleView('Test', noConsumes);
     // consumes column should be —
     expect(content).toMatch(/\| — \|/);
@@ -217,8 +213,20 @@ describe('generateViews', () => {
 
   it('excludes deprecated skills from all views', async () => {
     packageDir = await createPackageDir([
-      { name: 'live-skill', description: 'live', role: ['engineer'], produces: ['x'], stage: 'stable' },
-      { name: 'old-skill', description: 'old', role: ['engineer'], produces: ['x'], stage: 'deprecated' },
+      {
+        name: 'live-skill',
+        description: 'live',
+        role: ['engineer'],
+        produces: ['x'],
+        stage: 'stable',
+      },
+      {
+        name: 'old-skill',
+        description: 'old',
+        role: ['engineer'],
+        produces: ['x'],
+        stage: 'deprecated',
+      },
     ]);
     generateViews(packageDir);
     const engContent = fs.readFileSync(path.join(packageDir, 'views', 'engineer.md'), 'utf8');
@@ -230,7 +238,7 @@ describe('generateViews', () => {
     packageDir = await createPackageDir([
       { name: 'impl', description: 'test', role: ['engineer'], produces: ['code'] },
     ]);
-    generateViews(packageDir);       // first run — writes
+    generateViews(packageDir); // first run — writes
     const second = generateViews(packageDir); // second run — no change
     expect(second.changed).toBe(false);
   });
@@ -240,11 +248,7 @@ describe('generateViews', () => {
       { name: 'impl', description: 'test', role: ['engineer'], produces: ['code'] },
     ]);
     await mkdir(path.join(packageDir, 'views'), { recursive: true });
-    await writeFile(
-      path.join(packageDir, 'views', 'engineer.md'),
-      '# stale content',
-      'utf8',
-    );
+    await writeFile(path.join(packageDir, 'views', 'engineer.md'), '# stale content', 'utf8');
     const result = generateViews(packageDir);
     expect(result.changed).toBe(true);
   });
@@ -321,8 +325,7 @@ describe('buildRoleView snapshot', () => {
       {
         name: 'review-code',
         fm: {
-          description:
-            'Performs a comprehensive code review of changes in a branch or PR.',
+          description: 'Performs a comprehensive code review of changes in a branch or PR.',
           artefact: 'code review',
           phase: 'delivery',
           consumes: ['design.md', 'backlog.md'],
@@ -332,8 +335,7 @@ describe('buildRoleView snapshot', () => {
       {
         name: 'write-wp-design',
         fm: {
-          description:
-            'Drafts a work-package design.md in walking-skeleton mode or TDD mode.',
+          description: 'Drafts a work-package design.md in walking-skeleton mode or TDD mode.',
           artefact: 'design.md',
           phase: 'delivery',
           consumes: ['solution.md', 'backlog.md'],

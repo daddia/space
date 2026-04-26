@@ -243,7 +243,9 @@ async function runReinit(
   templateDir: string,
 ): Promise<void> {
   console.log();
-  console.log(`${pc.cyan('>>>')} Reinitializing Space workspace at ${pc.bold(config.targetDir)} ...`);
+  console.log(
+    `${pc.cyan('>>>')} Reinitializing Space workspace at ${pc.bold(config.targetDir)} ...`,
+  );
   console.log();
 
   const llmConfig = getLlmConfig(config.llmProvider);

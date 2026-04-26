@@ -186,10 +186,7 @@ describe('renderTemplate', () => {
       );
 
       await mkdir(join(targetDir, '.space'), { recursive: true });
-      await writeFile(
-        join(targetDir, '.space', 'config'),
-        'project:\n  name: Existing Project\n',
-      );
+      await writeFile(join(targetDir, '.space', 'config'), 'project:\n  name: Existing Project\n');
 
       await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
 
@@ -215,10 +212,7 @@ describe('renderTemplate', () => {
 
     it('creates .space/config when it does not exist', async () => {
       await mkdir(join(defaultDir, '.space'), { recursive: true });
-      await writeFile(
-        join(defaultDir, '.space', 'config'),
-        'project:\n  name: {projectName}\n',
-      );
+      await writeFile(join(defaultDir, '.space', 'config'), 'project:\n  name: {projectName}\n');
 
       await renderTemplate(templateRoot, targetDir, VARS, 'idempotent');
 

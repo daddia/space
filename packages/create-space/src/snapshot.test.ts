@@ -99,7 +99,10 @@ describe('reinit path', () => {
 
     await createSpace(makeConfig(targetDir), { yes: true });
 
-    const content = await readFile(join(targetDir, 'docs/conventions/definition-of-done.md'), 'utf-8');
+    const content = await readFile(
+      join(targetDir, 'docs/conventions/definition-of-done.md'),
+      'utf-8',
+    );
     expect(content).toBe(customContent);
   });
 
@@ -130,7 +133,10 @@ describe('reinit path', () => {
   it('ensures @tpw/space and @tpw/skills in devDependencies on partial workspace reinit', async () => {
     await mkdir(targetDir, { recursive: true });
     await writeFile(join(targetDir, 'README.md'), '# Partial workspace\n');
-    await writeFile(join(targetDir, 'package.json'), JSON.stringify({ private: true }, null, 2) + '\n');
+    await writeFile(
+      join(targetDir, 'package.json'),
+      JSON.stringify({ private: true }, null, 2) + '\n',
+    );
 
     await createSpace(makeConfig(targetDir), { yes: true });
 
