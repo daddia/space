@@ -1,22 +1,30 @@
 ---
 name: write-roadmap
 description: >
-  Drafts roadmap.md for a platform or domain in Now / Next / Later format with
-  outcome-based phases and exit criteria. Use when the user mentions "write the
-  roadmap for {domain}", "create the delivery roadmap", "sequence the phases",
-  or "what are the phases for {domain}". Produces outcome-based phases — not
-  an epic list. Do NOT use to list epics — use write-backlog for that. Do NOT
-  use before product.md exists — use write-product first.
+  Drafts roadmap.md at portfolio, product, or domain scope. Portfolio scope:
+  a combined sequencing document binding multiple products with cross-product
+  phase gates. Product scope: a phased delivery plan for a single product.
+  Domain scope: a phased delivery plan for a bounded context within a product.
+  All scopes use outcome-based phases with exit criteria, not epic lists. Use
+  when the user mentions "write the roadmap for {name}", "create the delivery
+  roadmap", "sequence the phases", or "what are the phases for {name}".
+  Do NOT use to list epics — use write-backlog for that. Do NOT use before
+  product.md exists — use write-product first.
 when_to_use: >
-  Use when a domain's product doc is approved and delivery needs to be
-  sequenced into phases with gates. Examples: "write the roadmap for cart",
-  "create the storefront platform roadmap", "sequence the checkout epics".
+  Portfolio scope: when the workspace contains multiple products and delivery
+  needs to be sequenced across them.
+  Product scope: when a product's strategy is approved and delivery needs
+  phasing into gates.
+  Domain scope: when a domain's product doc is approved and implementation
+  needs sequencing into phases.
+  Examples: "write the portfolio roadmap for crew-space", "write the roadmap
+  for cart", "create the storefront product roadmap".
 allowed-tools:
   - Read
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: platform|domain> [<domain-name>]'
+argument-hint: '<scope: portfolio|product|domain> [<name>]'
 artefact: roadmap.md
 phase: discovery
 role:
@@ -37,33 +45,53 @@ tags:
   - roadmap
   - phases
   - sequencing
-owner: '@horizon-platform'
-version: '0.1'
+  - portfolio
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Write Delivery Roadmap
 
 You are a Senior Delivery Lead writing a phased delivery roadmap that
-sequences epics, quality gates, and exit criteria against a product strategy.
+sequences products or epics against a product strategy.
 
 Scope is passed as `$0`:
 
-- `platform` — the top-level roadmap (`product/roadmap.md`)
-- `domain` — a domain roadmap (`domain/$1/roadmap.md`)
+- `portfolio` — a combined roadmap binding multiple products (`product/roadmap.md`)
+- `product` — a single-product roadmap (`product/roadmap.md` or `product/{name}/roadmap.md`)
+- `domain` — a domain roadmap (`domain/{name}/roadmap.md`)
 
 ## Context
 
 <artifacts>
-[Provided by the caller: product.md (problem, thesis, scope, success
-definition), backlog.md (epic list with dependencies), metrics.md (quality
-gates), cross-squad dependency context]
+[Provided by the caller:
+  Portfolio scope: portfolio product.md (thesis, sequencing rationale), each
+  product's product.md (status, phase), cross-product dependencies.
+  Product/domain scope: product.md (problem, thesis, scope, success
+  definition), backlog.md (epic list with dependencies), metrics.md (quality
+  gates), cross-squad dependency context.]
 </artifacts>
 
-## Steps
+## Steps (portfolio scope)
+
+1. Read the portfolio product.md and each per-product product.md before writing
+2. Define the sequencing logic — why the products ship in this order; what the
+   first product must prove before the second can depend on it
+3. Define 2-5 portfolio phases, each with:
+   - Name and objective (one sentence)
+   - Which product(s) are in flight
+   - What this phase proves or unlocks for the portfolio
+   - Exit criteria (specific and testable)
+4. Map cross-product dependencies: what product B depends on product A having
+   shipped; name the dependency and the gate
+5. List items explicitly deferred beyond this roadmap cycle
+
+## Steps (product or domain scope)
 
 1. Read the product.md and backlog.md before writing anything
 2. Define the roadmap intent — what this roadmap sequences and why phasing matters
-3. Articulate 3-5 sequencing principles that drive the phase order (e.g. foundation before features, prove pipeline early, upstream deps in parallel)
+3. Articulate 3-5 sequencing principles that drive the phase order (e.g.
+   foundation before features, prove pipeline early, upstream deps in parallel)
 4. Define each phase:
    - Name and objective (one sentence)
    - Epics included (reference backlog IDs)
@@ -71,25 +99,28 @@ gates), cross-squad dependency context]
    - Exit criteria (specific, testable — not "feels complete")
    - What is explicitly out of scope for this phase
 5. Build a milestones table: milestone, phase, customer-visibility, notes
-6. Map cross-domain dependencies: what this domain needs from others, who owns it, what it gates, current status
-7. List items explicitly deferred out of this roadmap cycle (capture so they are not lost)
+6. Map cross-domain dependencies: what this domain needs from others, who owns
+   it, what it gates, current status
+7. List items explicitly deferred out of this roadmap cycle
 8. Define the review cadence: weekly, pre-phase-gate, quarterly
 
 ## Quality rules
 
 - Every phase must have named exit criteria — no subjective gates
-- Every quality gate must reference a metric ID from metrics.md
-- Every cross-domain dependency must have a named owner squad
+- Product/domain: every quality gate must reference a metric ID from metrics.md
+- Product/domain: every cross-domain dependency must have a named owner squad
 - No phase can have exit criteria that depend on work not assigned to any epic
 - Phases must be sequential; parallelism lives within phases, not between them
-- 5-8 pages
+- Portfolio scope: 2-4 pages. Product/domain scope: 5-8 pages.
 
 ## Output format
 
 Write as a Markdown file with YAML frontmatter.
 
-- Platform scope: save as `product/roadmap.md`
-- Domain scope: save as `domain/$1/roadmap.md`
+- Portfolio scope: save as `product/roadmap.md`
+- Product scope (single-product workspace): save as `product/roadmap.md`
+- Product scope (within a portfolio): save as `product/{name}/roadmap.md`
+- Domain scope: save as `domain/{name}/roadmap.md`
 
 Use `template.md` as your structural scaffold. See `examples/cart-roadmap.md`
 for a domain-scope roadmap at the expected depth.

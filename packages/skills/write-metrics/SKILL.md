@@ -39,8 +39,8 @@ tags:
   - metrics
   - kpis
   - north-star
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Write Metrics Document
@@ -87,7 +87,8 @@ existing analytics instrumentation, legacy baseline data if available]
 ## Output format
 
 Write as a Markdown file with YAML frontmatter, saved as
-`domain/$0/metrics.md`.
+`domain/$0/metrics.md`. In a portfolio workspace, a product-level metrics
+document saves to `product/{name}/metrics.md` using the same structure.
 
 Use `template.md` as your structural scaffold. See `examples/cart-metrics.md`
 for an example at the expected depth.

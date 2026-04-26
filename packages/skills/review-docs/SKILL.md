@@ -6,7 +6,8 @@ description: >
   "check the design and requirements are ready", "are these docs good enough to
   start building", or "pre-implementation doc review". Flags gaps, inconsistencies,
   and drift between documents. Do NOT use to review code — use review-code for
-  that. Do NOT use to review an ADR — use review-adr.
+  that. Do NOT use to review an ADR — use review-adr. Do NOT use for a
+  strategic content review of a product strategy — use review-product for that.
 when_to_use: >
   Use when requirements and/or design documents exist for an epic or task and
   need review before implementation starts. Examples: "review docs for
@@ -36,6 +37,7 @@ produces:
   - review
 prerequisites: []
 related:
+  - review-product
   - write-product
   - write-solution
   - write-wp-design
@@ -44,8 +46,8 @@ tags:
   - review
   - docs
   - requirements
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Review Documents

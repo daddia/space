@@ -43,8 +43,8 @@ tags:
   - epics
   - stories
   - ac
-owner: '@horizon-platform'
-version: '0.2'
+owner: '@daddia'
+version: '0.3'
 ---
 
 # Write Backlog
@@ -54,7 +54,9 @@ work-package scope.
 
 Scope is passed as `$0`, depth as `--depth`:
 
-- `domain` — epic-level backlog at `domain/$1/backlog.md`
+- `domain` — epic-level backlog at `domain/$1/backlog.md`. In a portfolio
+  workspace, a product-level backlog uses this same scope and saves to
+  `product/{name}/backlog.md` instead.
 - `work-package` — story-level backlog at `work/$1/backlog.md`
 
 Depth (domain scope only):

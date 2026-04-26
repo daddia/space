@@ -18,7 +18,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: platform|domain> <domain-name> [--stage stub|full]'
+argument-hint: '<scope: product|domain> <name> [--stage stub|full]'
 artefact: solution.md
 phase: discovery
 role:
@@ -43,8 +43,8 @@ tags:
   - arc42
   - c4
   - solution
-owner: '@horizon-platform'
-version: '0.1'
+owner: '@daddia'
+version: '0.2'
 ---
 
 # Write Solution Document
@@ -54,8 +54,8 @@ architecture of a domain legible to engineers, adjacent squads, and AI agents.
 
 Scope is passed as `$0`, stage as `--stage`:
 
-- `platform` — the platform-level solution (`docs/solution.md`)
-- `domain` — a domain solution (`domain/$1/solution.md`)
+- `product` — the product-level solution (`product/solution.md` or `product/{name}/solution.md`)
+- `domain` — a domain solution (`domain/{name}/solution.md`)
 
 Stage:
 
@@ -127,8 +127,9 @@ The solution.md MUST NOT contain:
 
 Write as a Markdown file with YAML frontmatter.
 
-- Platform scope: save as `docs/solution.md`
-- Domain scope: save as `domain/$1/solution.md`
+- Product scope (single-product workspace): save as `product/solution.md`
+- Product scope (within a portfolio): save as `product/{name}/solution.md`
+- Domain scope: save as `domain/{name}/solution.md`
 
 Use `template-stub.md` for stub stage, `template-full.md` for full stage.
 
