@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtemp, rm, writeFile, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -81,11 +81,9 @@ describe('validateTargetDir', () => {
 
   beforeEach(async () => {
     tempBase = await mkdtemp(join(tmpdir(), 'cs-test-'));
-    vi.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(async () => {
-    vi.restoreAllMocks();
     await rm(tempBase, { recursive: true, force: true });
   });
 
@@ -102,16 +100,15 @@ describe('validateTargetDir', () => {
     expect(result).toEqual({ valid: true });
   });
 
-  it('rejects an existing directory with conflicting files', async () => {
+  it('accepts a non-empty directory (non-empty dirs are no longer rejected)', async () => {
     const target = join(tempBase, 'non-empty');
     await mkdir(target);
     await writeFile(join(target, 'file.txt'), 'content');
     const result = await validateTargetDir(target);
-    expect(result.valid).toBe(false);
-    if (!result.valid) expect(result.reason).toContain('conflicting files');
+    expect(result).toEqual({ valid: true });
   });
 
-  it('accepts an existing directory with only ignorable files', async () => {
+  it('accepts an existing directory with ignorable files', async () => {
     const target = join(tempBase, 'ignorable');
     await mkdir(target);
     await writeFile(join(target, '.DS_Store'), '');
