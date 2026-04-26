@@ -3,7 +3,7 @@ import { mkdtemp, rm, readFile, writeFile, mkdir, lstat } from 'node:fs/promises
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { runInit } from './init.js';
+import { runInit, detectPackageManager } from './init.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -85,20 +85,38 @@ describe('runInit', () => {
       expect(after).toBe(before);
     });
 
-    it('preserves comments in .space/config when a new template key is merged', async () => {
-      // Write a config that already has the keys in the template but also
-      // has inline comments that must survive a reinit that adds a new key.
+    it('preserves comments in .space/config when no new keys are merged', async () => {
       const configWithComments =
         'project:\n  name: my-project\n  key: MY-PROJECT\n# Important comment\nworkspace:\n  path: .\n  work: work/{TASK_ID}/\n  runs: runs/\n';
       await writeFile(join(targetDir, '.space', 'config'), configWithComments);
 
-      // The template only has project + workspace keys, so nothing will be
-      // appended and the file must remain exactly as written.
+      // Template has project + workspace keys, so no append happens.
       await runInit({ targetDir, skipInstall: true });
 
       const after = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
       expect(after).toBe(configWithComments);
       expect(after).toContain('# Important comment');
+    });
+
+    it('preserves comments in .space/config when a new key is merged', async () => {
+      // Existing config is missing the template's `workspace` key but has
+      // an inline comment that must survive when the workspace block is
+      // appended by the merge.
+      const configWithCommentAndMissingKey =
+        'project:\n  name: my-project\n  key: MY-PROJECT\n# Do-not-touch comment\n';
+      await writeFile(join(targetDir, '.space', 'config'), configWithCommentAndMissingKey);
+
+      await runInit({ targetDir, skipInstall: true });
+
+      const after = await readFile(join(targetDir, '.space', 'config'), 'utf-8');
+      // Comment must survive verbatim
+      expect(after).toContain('# Do-not-touch comment');
+      // Existing keys must remain unchanged
+      expect(after).toContain('name: my-project');
+      // The missing template key must have been appended
+      expect(after).toContain('workspace:');
+      // The original prefix must appear at the start of the file
+      expect(after.startsWith(configWithCommentAndMissingKey)).toBe(true);
     });
 
     it('prints Reinitialized existing status line', async () => {
@@ -273,3 +291,51 @@ async function readdir(dir: string, recursive: boolean): Promise<string[]> {
   const entries = await fsReaddir(dir, { recursive, withFileTypes: false });
   return entries as unknown as string[];
 }
+
+describe('detectPackageManager', () => {
+  let tempBase: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'pm-detect-'));
+  });
+
+  afterEach(async () => {
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('returns npm when no lockfile is present', async () => {
+    expect(await detectPackageManager(tempBase)).toBe('npm');
+  });
+
+  it('returns pnpm when pnpm-lock.yaml is present', async () => {
+    await writeFile(join(tempBase, 'pnpm-lock.yaml'), '');
+    expect(await detectPackageManager(tempBase)).toBe('pnpm');
+  });
+
+  it('returns yarn when yarn.lock is present', async () => {
+    await writeFile(join(tempBase, 'yarn.lock'), '');
+    expect(await detectPackageManager(tempBase)).toBe('yarn');
+  });
+
+  it('returns bun when bun.lockb is present', async () => {
+    await writeFile(join(tempBase, 'bun.lockb'), '');
+    expect(await detectPackageManager(tempBase)).toBe('bun');
+  });
+
+  it('returns npm when package-lock.json is present', async () => {
+    await writeFile(join(tempBase, 'package-lock.json'), '{}');
+    expect(await detectPackageManager(tempBase)).toBe('npm');
+  });
+
+  it('prefers pnpm over npm when both lockfiles are present', async () => {
+    await writeFile(join(tempBase, 'pnpm-lock.yaml'), '');
+    await writeFile(join(tempBase, 'package-lock.json'), '{}');
+    expect(await detectPackageManager(tempBase)).toBe('pnpm');
+  });
+
+  it('prefers yarn over npm when both lockfiles are present', async () => {
+    await writeFile(join(tempBase, 'yarn.lock'), '');
+    await writeFile(join(tempBase, 'package-lock.json'), '{}');
+    expect(await detectPackageManager(tempBase)).toBe('yarn');
+  });
+});

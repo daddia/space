@@ -176,7 +176,7 @@ async function forceSymlink(target: string, linkPath: string): Promise<void> {
  * Detects the package manager in use by checking for lockfiles. Prefers
  * pnpm, then yarn, then bun; falls back to npm when no lockfile is found.
  */
-async function detectPackageManager(
+export async function detectPackageManager(
   targetDir: string,
 ): Promise<'npm' | 'pnpm' | 'yarn' | 'bun'> {
   const candidates: Array<[string, 'npm' | 'pnpm' | 'yarn' | 'bun']> = [
