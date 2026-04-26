@@ -149,7 +149,7 @@ Implement `space publish confluence <path>` per
 
 ### 1.3 Capabilities this work package delivers
 
-Mapped to story-level AC in [`./backlog.md`](backlog.md):
+Mapped to story-level AC in `./backlog.md`:
 
 - **Frontmatter parser** (split + opt-in validation): SPACE-05-01.
 - **Markdown to storage-XHTML converter** (v1 subset): SPACE-05-02.

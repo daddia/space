@@ -7,6 +7,7 @@ product: space
 version: '1.1'
 status: In progress
 last_updated: 2026-04-23
+owner: Horizon Platform
 sources:
   - docs/product.md
   - docs/solution.md

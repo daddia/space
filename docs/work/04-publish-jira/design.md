@@ -104,7 +104,7 @@ Implement `space publish jira` per
 
 ### 1.3 Capabilities this work package delivers
 
-Mapped to story-level AC in [`./backlog.md`](backlog.md):
+Mapped to story-level AC in `./backlog.md`:
 
 - **Backlog parser** (epics + stories, schema enforcement): SPACE-04-01.
 - **Plan phase** (parse + diff + dry-run output): SPACE-04-02.
