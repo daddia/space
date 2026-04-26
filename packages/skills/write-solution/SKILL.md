@@ -18,7 +18,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: product|domain> <name> [--stage stub|full]'
+argument-hint: '<scope: portfolio|product|domain> <name> [--stage stub|full]'
 artefact: solution.md
 track: architecture
 role: architect
@@ -47,7 +47,7 @@ tags:
   - c4
   - solution
 owner: '@daddia'
-version: '0.3'
+version: '0.4'
 ---
 
 # Write Solution Document
@@ -57,8 +57,9 @@ architecture of a domain legible to engineers, adjacent squads, and AI agents.
 
 Scope is passed as `$0`, stage as `--stage`:
 
-- `product` — the product-level solution (`product/solution.md` or `product/{name}/solution.md`)
-- `domain` — a domain solution (`domain/{name}/solution.md`)
+- `portfolio` — cross-product solution overview (`architecture/solution.md`)
+- `product <name>` — single-product solution (in portfolio: `product/{name}/architecture/solution.md`; in single-product workspace: `architecture/solution.md`)
+- `domain <name>` — domain-scoped solution (`domain/{name}/solution.md`)
 
 Stage:
 
@@ -130,9 +131,12 @@ The solution.md MUST NOT contain:
 
 Write as a Markdown file with YAML frontmatter.
 
-- Product scope (single-product workspace): save as `product/solution.md`
-- Product scope (within a portfolio): save as `product/{name}/solution.md`
-- Domain scope: save as `domain/{name}/solution.md`
+| Scope | Save path |
+| --- | --- |
+| `portfolio` | `architecture/solution.md` |
+| `product` (single-product workspace) | `architecture/solution.md` |
+| `product <name>` (portfolio sub-product) | `product/{name}/architecture/solution.md` |
+| `domain <name>` | `domain/{name}/solution.md` |
 
 Use `template-stub.md` for stub stage, `template-full.md` for full stage.
 

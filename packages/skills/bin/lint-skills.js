@@ -127,6 +127,13 @@ for (const skill of skills) {
   const { name, fm, body, templates, dir } = skill;
   const isAlias = fm.stage === 'deprecated' || ALIAS_MARKER_RE.test(body);
 
+  // ─── Relative path check ────────────────────────────────────────────────
+  // Skills must use the {source}:{path} URI scheme for cross-repo references.
+  // Bare ../ paths are fragile and workspace-specific.
+  if (!isAlias && body.includes('../')) {
+    err(name, 'path.relative', 'skill body contains ../ relative path — use {source}:{path} URI scheme for cross-repo references (see AGENTS.md)');
+  }
+
   // ─── Required fields ────────────────────────────────────────────────────
   if (!isAlias) {
     for (const field of REQUIRED_FIELDS) {

@@ -17,7 +17,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: domain|work-package> <domain-or-package-name> [--depth full]'
+argument-hint: '<scope: portfolio|product|domain|work-package> <name> [--depth full]'
 artefact: backlog.md
 track: strategy
 also-relevant-to-tracks:
@@ -48,39 +48,42 @@ tags:
   - stories
   - ac
 owner: '@daddia'
-version: '0.4'
+version: '0.5'
 ---
 
 # Write Backlog
 
-You are a Senior Delivery Engineer writing a backlog at either domain or
-work-package scope.
+You are a Senior Delivery Engineer writing a backlog at portfolio, product,
+domain, or work-package scope.
 
-Scope is passed as `$0`, depth as `--depth`:
+## Scope and save path
 
-- `domain` — epic-level backlog at `domain/$1/backlog.md`. In a portfolio
-  workspace, a product-level backlog uses this same scope and saves to
-  `product/{name}/backlog.md` instead.
-- `work-package` — story-level backlog at `work/$1/backlog.md`
+Scope is passed as `$0`, the name as `$1` (where applicable), depth as `--depth`:
 
-Depth (domain scope only):
+| Scope | Meaning | Save path |
+| --- | --- | --- |
+| `portfolio` | Epic-level backlog for the whole portfolio | `product/backlog.md` |
+| `product <name>` | Epic-level backlog for a sub-product | `product/{name}/backlog.md` |
+| `domain <name>` | Epic-level backlog for a bounded context | `domain/{name}/backlog.md` |
+| `work-package <wp>` | Story-level backlog for a work package | `work/{wp}/backlog.md` |
+
+Depth (`--depth`) applies to portfolio/product/domain scope only:
 
 - Default (no flag) — Now-phase epics have full detail; later-phase epics
-  are single-line placeholders in the epic table. Apply the calibration rule:
-  if removing a phase wouldn't block Story 1 on Monday, that phase detail
-  belongs in a later backlog revision.
+  are single-line placeholders. Apply the calibration rule: if removing a phase
+  wouldn't block Story 1 on Monday, that phase detail belongs in a later revision.
 - `--depth full` — full epic detail for all phases.
 
 ## Context
 
 <artifacts>
 [Provided by the caller:
-  Domain scope: product.md, roadmap.md, solution.md, contracts.md
-  Work-package scope: domain/backlog.md (parent epic),
+  Portfolio/product/domain scope: product.md, roadmap.md, solution.md, contracts.md
+  Work-package scope: parent backlog.md (the owning epic entry),
   work/{wp}/design.md (work-package), solution.md, contracts.md]
 </artifacts>
 
-## Steps (domain scope)
+## Steps (portfolio / product / domain scope)
 
 1. Read product.md, roadmap.md, and solution.md before writing anything
 2. Write a summary: objective, delivery approach, prerequisites (complete + required), out-of-scope pointer (reference `product.md §5` and `roadmap.md §Later` — do not restate them)
@@ -96,7 +99,7 @@ Depth (domain scope only):
 
 ## Steps (work-package scope)
 
-1. Read the parent epic entry in `domain/backlog.md`, plus `work/{wp}/design.md` and `solution.md`
+1. Read the parent epic entry in the owning backlog.md, plus `work/{wp}/design.md` and `solution.md`
 2. Write a summary: epic ID, phase, priority, estimate, scope, deliverables, dependencies, downstream consumers
 3. Define conventions table
 4. Write each story using the canonical schema (see template-work-package.md §3):
@@ -119,10 +122,8 @@ Depth (domain scope only):
 
 ## Output format
 
-Write as a Markdown file with YAML frontmatter.
-
-- Domain scope: save as `domain/$1/backlog.md`
-- Work-package scope: save as `work/$1/backlog.md`
+Write as a Markdown file with YAML frontmatter. Save path is determined by scope
+(see Scope and save path table above).
 
 Use `template-domain.md` or `template-work-package.md` as the scaffold.
 

@@ -22,7 +22,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: domain|work-package> <backlog-path>'
+argument-hint: '<scope: portfolio|product|domain|work-package> <name>'
 artefact: backlog.md review
 track: discovery
 also-relevant-to-tracks:
@@ -55,7 +55,7 @@ tags:
   - stories
   - quality
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Review Backlog
@@ -65,7 +65,7 @@ is to determine whether the backlog is fit for delivery — not to be
 encouraging. Assume the author is optimistic about scope, vague about
 criteria, and has not validated against the product strategy recently.
 
-Identify the scope from the backlog's frontmatter (`scope: domain|work-package`)
+Identify the scope from the backlog's frontmatter (`scope: portfolio|product|domain|work-package`)
 and apply the relevant criteria below. Then apply the universal criteria.
 
 For each finding: state the gap, make an opinionated recommendation, and
@@ -116,9 +116,17 @@ A backlog review MUST NOT:
 
 ## Scope-specific review criteria
 
-### Domain scope (epics)
+### Portfolio and product scope (epics)
 
-**Strategic alignment.**
+Apply the same epic-quality criteria as domain scope. Additionally check:
+
+- Portfolio backlogs cross-reference sub-product strategies (`product/{p}/product.md`)
+  not domain-level strategies; every epic should trace to a sub-product outcome
+- Each epic's work-package path follows the scope convention:
+  `product/{name}/` for product-scoped work, `domain/{name}/` for domain work
+- Cross-product/product dependencies are explicit with named owner squads
+
+### Domain scope (epics)
 Does every Now-phase epic trace to a product outcome in `product.md §7`? An
 epic with no outcome link is either undocumented scope or scope that should
 not exist. Flag any epic not traceable to the product strategy.

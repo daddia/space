@@ -6,9 +6,7 @@ owner: daddia
 status: Current
 last_updated: 2026-04-26
 related:
-  - ../../crew-space/product/product.md
   - product.md
-  - ../../crew-space/product/space/backlog.md
   - ../architecture/solution.md
 ---
 
@@ -19,9 +17,8 @@ capabilities**. Organised as Now / Next / Later, sequenced by what
 each capability unlocks for an initiative workspace, not by calendar.
 
 This roadmap owns outcomes and sequencing. The epic decomposition
-that implements each outcome lives in
-[`../../crew-space/product/space/backlog.md`](backlog.md); the sprint-scale design and stories
-live under [`work/`](../../crew-space/work/). The roadmap does not list epics.
+that implements each outcome lives in the delivery backlog; the sprint-scale design and stories
+live under `work/` in the delivery workspace. The roadmap does not list epics.
 
 ## Now -- Source sync foundation
 
@@ -146,9 +143,8 @@ Next; no conventions break.
 - **Phase-0 `plan-delivery` orchestrator.** Run the canonical Phase-0
   artefact sequence deterministically as a multi-step activity.
 - **External open-source release.** Open-source release is gated on
-  measurable adoption signals (downloads, stars, active workspaces) per
-  [`../../crew-space/product/proof.md`](../proof.md), not on a fixed count of internal
-  validation workspaces.
+  measurable adoption signals (downloads, stars, active workspaces),
+  not on a fixed count of internal validation workspaces.
 
 No Later capability is sized or sequenced here. Each is identified
 and deliberately deferred until its gating phase opens.
@@ -179,7 +175,7 @@ Three reasons Now precedes Next, and Next precedes Later:
 | ---------------------------------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
 | Atlassian API availability and rate limits     | Atlassian (external)  | Now       | Addressed via retry + concurrency cap in the sync implementation |
 | `@daddia/crew` readiness to consume the workspace | Crew team              | Now, Next | Content contract stable; Crew integrates on its own schedule      |
-| Initiative workspace adoption                  | Each initiative squad | Next      | `storefront-space` is the validation environment; broader adoption is tracked via downloads, stars, and active workspaces in [`../../crew-space/product/proof.md`](../proof.md) |
+| Initiative workspace adoption                  | Each initiative squad | Next      | `storefront-space` is the validation environment; broader adoption is tracked via downloads, stars, and active workspaces |
 | Confluence page structure conventions          | daddia      | Next      | Confirmed before `space publish confluence` ships                |
 
 ## Review cadence

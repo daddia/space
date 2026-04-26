@@ -17,7 +17,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<domain-name>'
+argument-hint: '<scope: portfolio|product|domain> <name>'
 artefact: metrics.md
 track: discovery
 role: pm
@@ -41,15 +41,23 @@ tags:
   - kpis
   - north-star
 owner: '@daddia'
-version: '0.3'
+version: '0.4'
 ---
 
 # Write Metrics Document
 
 You are a Senior Product Manager writing a metrics document that defines how
-a domain measures success and failure.
+a product or domain measures success and failure.
 
-The domain name is passed as `$0`.
+## Scope and save path
+
+Scope is passed as `$0`, name as `$1`:
+
+| Scope | Meaning | Save path |
+| --- | --- | --- |
+| `portfolio` | Portfolio-level north-star metrics | `product/metrics.md` |
+| `product <name>` | Sub-product success metrics | `product/{name}/metrics.md` |
+| `domain <name>` | Domain-level operational metrics | `domain/{name}/metrics.md` |
 
 ## Context
 
@@ -87,9 +95,8 @@ existing analytics instrumentation, legacy baseline data if available]
 
 ## Output format
 
-Write as a Markdown file with YAML frontmatter, saved as
-`domain/$0/metrics.md`. In a portfolio workspace, a product-level metrics
-document saves to `product/{name}/metrics.md` using the same structure.
+Write as a Markdown file with YAML frontmatter. Save path is determined by scope
+(see Scope and save path table above).
 
 Use `template.md` as your structural scaffold. See `examples/cart-metrics.md`
 for an example at the expected depth.

@@ -7,9 +7,7 @@ owner: daddia
 status: Current
 last_updated: 2026-04-26
 related:
-  - ../../crew-space/product/product.md
   - roadmap.md
-  - ../../crew-space/product/space/backlog.md
   - ../architecture/solution.md
 ---
 

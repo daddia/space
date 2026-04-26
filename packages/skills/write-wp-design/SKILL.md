@@ -45,7 +45,7 @@ tags:
   - walking-skeleton
   - work-package
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Write Work-Package Design Document
@@ -53,7 +53,19 @@ version: '0.2'
 You are a Senior Software Architect writing a sprint-level design document for
 a work package. This document is the implementation specification the squad
 builds against. It lives at `work/{d}/{wp}/design.md` and sits one level below
-`domain/{d}/solution.md`.
+the owning domain or product solution document.
+
+The **parent solution** is the solution.md that covers the domain or product
+this work package belongs to:
+
+| Work package context | Parent solution path |
+| --- | --- |
+| Under a domain | `domain/{d}/solution.md` |
+| Under a portfolio sub-product | `product/{p}/architecture/solution.md` |
+| Under a single product | `architecture/solution.md` |
+
+References to "solution.md" throughout this skill mean the parent solution
+for this work package's context.
 
 Mode is passed as `--mode`:
 
@@ -71,7 +83,7 @@ or a later sprint (tdd)?"
 
 The design.md MUST NOT contain:
 
-- Domain-wide patterns, policies, or decisions already in `domain/{d}/solution.md`
+- Domain-wide patterns, policies, or decisions already in the parent solution.md
   → cite `solution.md §{N.M}` instead; do not re-narrate
 - Business rationale → belongs in `product.md`
 - Phase sequencing or epic ordering → belongs in `roadmap.md`
@@ -83,16 +95,16 @@ The design.md MUST NOT contain:
 
 <artifacts>
 [Provided by the caller:
-  Walking-skeleton mode: epic scope, list of stories from domain/backlog.md,
-  domain/solution.md (for pattern references)
-  TDD mode: domain/backlog.md (parent epic entry), work/{wp}/design.md context
-  (if updating), domain/solution.md, domain/contracts.md, relevant codebase
+  Walking-skeleton mode: epic scope, list of stories from the parent backlog.md,
+  parent solution.md (for pattern references)
+  TDD mode: parent backlog.md (parent epic entry), work/{wp}/design.md context
+  (if updating), parent solution.md, parent contracts.md, relevant codebase
   files, Figma link (if applicable)]
 </artifacts>
 
 ## Steps (walking-skeleton mode)
 
-1. Read `domain/{d}/solution.md` and the parent epic entry in `domain/{d}/backlog.md`
+1. Read the parent solution.md and the parent epic entry in the owning backlog.md
 2. Write §1 "The slice" — one paragraph: what end-to-end path the walking skeleton proves
 3. Write §2 "Files shipped" — exact paths with NEW/EVOLVE/KEEP labels and one-line descriptions
 4. Write §3 "Acceptance gates" — four subsections:
@@ -109,7 +121,7 @@ The design.md MUST NOT contain:
 
 1. Read all context before writing anything
 2. Write §1 "Scope" — in scope, out of scope, capabilities this WP delivers (link to backlog.md stories)
-3. Write §2 "Architecture fit" — how this WP plugs into `solution.md`; cite solution sections inline, do NOT re-narrate
+3. Write §2 "Architecture fit" — how this WP plugs into the parent solution.md; cite solution sections inline, do NOT re-narrate
 4. Write §3 "Files and components" — new files, modified files, files NOT modified; each with path + purpose
 5. Write §4 "Data contracts" — TypeScript signatures, Zod schemas, types introduced; code fences only
 6. Write §5 "Runtime view" — 2–4 key scenarios as text flows; focus on the paths debugged at 3am

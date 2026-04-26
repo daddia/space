@@ -7,10 +7,8 @@ owner: daddia
 status: Current
 last_updated: 2026-04-26
 related:
-  - ../crew-space/product/space/product.md
-  - ../crew-space/product/space/roadmap.md
-  - ../crew-space/product/space/backlog.md
-  - ../crew-space/product/space/design/space-artefact-model.md
+  - docs/product.md
+  - docs/roadmap.md
 ---
 
 # Solution -- Space
@@ -18,11 +16,10 @@ related:
 Solution design for the `space` monorepo. Defines the architecture,
 cross-cutting concepts, data contracts, and key decisions behind the
 three packages (`@daddia/skills`, `@daddia/create-space`, `@daddia/space`). Uses
-the arc42-lite structure described in
-`../crew-space/product/space/design/space-artefact-model.md` Section 4.7.
+the arc42-lite structure.
 
 For the product context, problem statement, and user targets see
-`../crew-space/product/space/product.md`.
+`docs/product.md`.
 
 ## 1. Context and scope
 
@@ -85,7 +82,7 @@ Space does not own:
 
 ### 1.3 Out of scope for this solution
 
-- Non-Atlassian source providers (deferred; see `../crew-space/product/space/roadmap.md`).
+- Non-Atlassian source providers (deferred; see `docs/roadmap.md`).
 - Any runtime service hosted by Space (the platform is package-only).
 - A UI or web dashboard.
 - Credential management beyond reading a local `.env`.
@@ -418,7 +415,7 @@ space publish confluence <path>
 
 A document must explicitly declare `confluence_page_id` in frontmatter
 to be publishable. The `space publish jira` command is described
-separately in `../crew-space/product/space/design/space-artefact-model.md` Section 6.
+separately in the Space artefact model design, Section 6.
 
 ## 6. Data model and ubiquitous language
 
@@ -435,8 +432,7 @@ separately in `../crew-space/product/space/design/space-artefact-model.md` Secti
 - **Mirror** -- the local copy of upstream state, stored under
   `.space/sources/{provider}/` in native upstream format.
 - **Profile** -- a YAML file in `@daddia/skills/profiles/` listing which
-  skills a workspace activates (see
-  `../crew-space/product/space/design/space-artefact-model.md` Section 3.7).
+  skills a workspace activates (see Space artefact model design, Section 3.7).
 - **Provider** -- a named upstream integration (`jira`, `confluence`).
 - **Consumer workspace** -- any workspace that installs `@daddia/skills`
   and optionally `@daddia/space`.
@@ -564,7 +560,7 @@ owner: '@daddia'
 The `description` field is authored to Anthropic skill-creator rules:
 third person, verb-ing, literal trigger phrases, neighbour
 disambiguation, artefact names verbatim, 200-500 chars. See
-`../crew-space/product/space/design/space-artefact-model.md` Section 3.3.
+Space artefact model design, Section 3.3.
 
 ## 7. Cross-cutting concepts
 
@@ -644,7 +640,7 @@ Per package.
   includes required fields; directory name matches `name`.
 - Description eval loop (CI): 20 representative queries x 3 samples per
   description; block merge on trigger-rate regression
-  (`../crew-space/product/space/design/space-artefact-model.md` Section 3.4).
+  (Space artefact model design, Section 3.4).
 - `sync-skills` unit tests (Vitest, mock filesystem): correct file
   copy; manifest written with accurate origins; project-local skills
   preserved; path-traversal inputs rejected.
@@ -720,7 +716,7 @@ that is outside Space's concern.
 ## 9. Architectural decisions (ADR log)
 
 No ADRs have been written yet. Entries are added as decisions arise
-per Ambler JBGE (`../crew-space/product/space/design/space-artefact-model.md` Section 2.3).
+per Ambler JBGE (Space artefact model design, Section 2.3).
 Candidate first ADRs, to be written at the point each decision is
 defended:
 

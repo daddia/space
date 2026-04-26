@@ -14,7 +14,7 @@ when_to_use: >
   phasing into gates.
   Domain scope: when a domain's product doc is approved and implementation
   needs sequencing into phases.
-  Examples: "write the portfolio roadmap for crew-space", "write the roadmap
+  Examples: "write the portfolio roadmap for my-delivery-space", "write the roadmap
   for cart", "create the storefront product roadmap".
 allowed-tools:
   - Read

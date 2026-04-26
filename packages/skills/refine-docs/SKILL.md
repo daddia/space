@@ -18,7 +18,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<work-package-path> [--domain <domain-name>]'
+argument-hint: '<work-package-path> [--scope portfolio|product|domain] [--name <name>]'
 artefact: refine-session.md
 track: refine
 also-relevant-to-tracks:
@@ -49,7 +49,7 @@ tags:
   - refinement
   - docs
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Refine Docs
@@ -61,9 +61,23 @@ no longer carry new information.
 
 ## Scope
 
-`$0` is the work-package path (e.g. `work/03-tooling-v2/`). Optionally,
-`--domain <name>` targets a specific domain's `solution.md` (default: the
-nearest `docs/solution.md` walking up from the WP path).
+`$0` is the work-package path (e.g. `work/space/SPACE-03/`). Optionally,
+`--scope <tier> --name <name>` targets a specific solution.md (default: resolve
+from the work-package path).
+
+Scope resolution:
+
+| Flag | Target solution.md |
+| --- | --- |
+| `--scope domain --name cart` | `domain/cart/solution.md` |
+| `--scope product --name space` | `product/space/architecture/solution.md` |
+| `--scope portfolio` | `architecture/solution.md` |
+| (no flag) | Walk up from the WP path to find the nearest solution.md |
+
+The ADR register path follows the same scope logic: portfolio/product ADRs live
+at `architecture/decisions/register.md`; domain ADRs may live at
+`domain/{name}/architecture/decisions/register.md` or the workspace-level
+register as configured.
 
 ## Steps
 
@@ -104,8 +118,8 @@ nearest `docs/solution.md` walking up from the WP path).
   entries and close open questions.
 - Archived design sections must remain readable; only the comment prefix is
   added, never a deletion.
-- Each ADR promoted in this session must be cross-referenced in both the
-  `solution.md` ADR log and `architecture/decisions/register.md`.
+   - Each ADR promoted in this session must be cross-referenced in both the
+     `solution.md` ADR log and the workspace ADR register (see Scope section).
 - Do not create ADR files speculatively — only formalise decisions that were
   actually made and implemented during the sprint.
 

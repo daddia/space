@@ -78,7 +78,7 @@ You need the following for the target epic:
 | Backlog               | `product/backlog.md`             | Yes         |
 | Requirements          | `work/{EPIC_ID}/requirements.md` | If exists   |
 | Design                | `work/{EPIC_ID}/design.md`       | If exists   |
-| Application code      | `../carinyaforce`                | Yes         |
+| Application code      | `{repo}:src/`                    | Yes         |
 | Solution architecture | `architecture/solution.md`       | If relevant |
 | ADRs                  | `architecture/decisions/`        | If relevant |
 
@@ -108,7 +108,7 @@ For every story in the epic, build a table of acceptance criteria with columns:
 
 For each acceptance criterion:
 
-1. Search the application codebase (`../carinyaforce`) for the implementation
+1. Search the application codebase (`{repo}:src/`) for the implementation
 2. Read the relevant source files and confirm the behaviour described by the criterion
 3. Check for unit or integration tests that cover the criterion
 4. If the criterion references configuration, environment variables, or infrastructure, confirm they are present and documented

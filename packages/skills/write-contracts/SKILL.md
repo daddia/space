@@ -17,7 +17,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: product|domain> <name>'
+argument-hint: '<scope: portfolio|product|domain> <name>'
 artefact: contracts.md
 track: architecture
 also-relevant-to-tracks:
@@ -44,7 +44,7 @@ tags:
   - zod
   - openapi
 owner: '@daddia'
-version: '0.3'
+version: '0.4'
 ---
 
 # Write Contracts Document
@@ -56,8 +56,9 @@ than the actual API.
 
 Scope is passed as `$0`:
 
-- `product` — product-level contracts (`product/contracts.md` or `product/{name}/contracts.md`)
-- `domain` — a domain contracts index (`domain/{name}/contracts.md`)
+- `portfolio` — portfolio-level contracts index (`architecture/contracts.md`)
+- `product <name>` — product-level contracts (in portfolio: `product/{name}/contracts.md`; single-product: `contracts.md`)
+- `domain <name>` — a domain contracts index (`domain/{name}/contracts.md`)
 
 ## Negative constraints
 
@@ -106,9 +107,12 @@ Each section has exactly one worked example.
 
 Write as a Markdown file with YAML frontmatter.
 
-- Product scope (single-product workspace): save as `product/contracts.md`
-- Product scope (within a portfolio): save as `product/{name}/contracts.md`
-- Domain scope: save as `domain/{name}/contracts.md`
+| Scope | Save path |
+| --- | --- |
+| `portfolio` | `architecture/contracts.md` |
+| `product` (single-product workspace) | `contracts.md` |
+| `product <name>` (portfolio sub-product) | `product/{name}/contracts.md` |
+| `domain <name>` | `domain/{name}/contracts.md` |
 
 Use `template.md` as your structural scaffold.
 

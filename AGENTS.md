@@ -19,31 +19,14 @@ This file gives implementation context to AI coding assistants working in the `s
 | `packages/space/`        | `@daddia/space`        | Space operations CLI (`space sync`, `space publish`)    |
 | `tooling/`               | `@daddia/*-config`     | Shared internal configs (eslint, prettier, typescript)  |
 | `architecture/`          | --                     | Solution architecture for the Space monorepo            |
-| `docs/product.md`        | --                     | Product strategy (copy; canonical in `crew-space`)      |
-| `docs/roadmap.md`        | --                     | Roadmap (copy; canonical in `crew-space`)               |
-| `docs/getting-started/`  | --                     | User-facing getting started guides                      |
 
 Each package has its own `AGENTS.md` with package-specific implementation context.
 
 ## Key documents
 
-### In this repo
-- `architecture/solution.md` -- Space solution architecture (canonical)
-- `docs/product.md` -- Space product strategy (copy; canonical in `crew-space`)
-- `docs/roadmap.md` -- Space phased roadmap (copy; canonical in `crew-space`)
-
-### In the portfolio workspace (`../crew-space`)
-The full PM artefact set -- backlog, epic detail, work packages, artefact model design -- lives in the portfolio workspace:
-
-- `../crew-space/product/space/product.md` -- Space product strategy (canonical)
-- `../crew-space/product/space/roadmap.md` -- Space roadmap (canonical)
-- `../crew-space/product/space/backlog.md` -- Space epic backlog
-- `../crew-space/product/space/design/space-artefact-model.md` -- Space artefact model design
-
-### Active work packages
-Story-scope backlogs and design documents for in-progress epics live at:
-
-- `../crew-space/work/space/SPACE-{nn}/`
+- `architecture/solution.md` -- Space solution architecture
+- `docs/product.md` -- Space product strategy
+- `docs/roadmap.md` -- Space phased roadmap
 
 ## Dependency Rules
 

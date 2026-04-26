@@ -128,6 +128,44 @@ Skills with `template.md` files satisfy the negative-constraints requirement via
 5. Run `node bin/generate-index.js` and commit the updated `space-index/SKILL.md`.
 6. Record a changeset (`pnpm changeset` from the repo root) before publishing.
 
+## URI scheme for cross-source references
+
+Skill bodies reference artefacts using two forms:
+
+**Workspace-relative paths** — for artefacts that live in the consuming workspace:
+
+```
+product/product.md
+domain/{name}/solution.md
+work/{wp}/design.md
+```
+
+**Source references** — for artefacts in a code repo registered in `.space/config`:
+
+```
+{source}:{path}
+```
+
+Where `{source}` matches a key under `sources:` in the workspace's `.space/config`,
+and `{path}` is relative to that source's local `path:` root.
+
+**Never use `../` relative paths in skill bodies.** Cross-source references must
+use the `{source}:{path}` scheme. Workspace artefacts use plain relative paths.
+
+When writing skill bodies, use generic source placeholders since skills are
+workspace-agnostic:
+
+```
+{product-source}:architecture/solution.md
+{domain-source}:architecture/decisions/register.md
+```
+
+Or reference the workspace convention doc so the consuming workspace fills in
+the correct source name from its `.space/config`.
+
+See `docs/conventions/artefact-references.md` in the consuming workspace
+for the concrete mappings.
+
 ## Editing a Skill
 
 Skills are plain Markdown. No build or typecheck is required after editing. After editing:

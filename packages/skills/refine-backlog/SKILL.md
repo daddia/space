@@ -25,7 +25,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: domain|work-package> <backlog-path> [--context <notes>]'
+argument-hint: '<scope: portfolio|product|domain|work-package> <name> [--context <notes>]'
 artefact: backlog.md (refined)
 track: refine
 also-relevant-to-tracks:
@@ -56,7 +56,7 @@ tags:
   - prioritisation
   - estimation
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Refine Backlog
@@ -86,9 +86,14 @@ A backlog refinement MUST NOT:
 
 Scope is passed as `$0`:
 
-- `domain` — refines the epic breakdown table and epic detail entries in
-  `domain/{name}/backlog.md` (or `product/{name}/backlog.md` in a portfolio
-  workspace). Focus: epics.
+| Scope | Meaning | Save path |
+| --- | --- | --- |
+| `portfolio` | Portfolio-level epic backlog | `product/backlog.md` |
+| `product <name>` | Sub-product epic backlog | `product/{name}/backlog.md` |
+| `domain <name>` | Domain-level epic backlog | `domain/{name}/backlog.md` |
+| `work-package <wp>` | Sprint story backlog | `work/{wp}/backlog.md` |
+
+- `portfolio`, `product`, `domain` — refines the epic breakdown table and epic detail entries. Focus: epics.
 - `work-package` — refines the stories section in `work/{wp}/backlog.md`.
   Focus: stories ready for sprint pickup.
 

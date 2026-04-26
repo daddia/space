@@ -19,7 +19,7 @@ allowed-tools:
   - Write
   - Glob
   - Grep
-argument-hint: '<scope: product|domain> <name>'
+argument-hint: '<scope: portfolio|product|domain> <name>'
 artefact: tech-stack.md
 track: architecture
 role: architect
@@ -42,7 +42,7 @@ tags:
   - architecture
   - technology
 owner: '@daddia'
-version: '0.1'
+version: '0.2'
 ---
 
 # Write Technology Stack
@@ -57,9 +57,12 @@ places on future decisions.
 
 Scope is passed as `$0`:
 
-- `product` — the stack for an entire product (`architecture/tech-stack.md`)
-- `domain` — the stack for a bounded context within a product
-  (`domain/{name}/tech-stack.md` or `product/{name}/domain/{name}/tech-stack.md`)
+| Scope | Meaning | Save path |
+| --- | --- | --- |
+| `portfolio` | Cross-product technology overview | `architecture/tech-stack.md` |
+| `product <name>` | Sub-product stack (portfolio) | `product/{name}/architecture/tech-stack.md` |
+| `product` | Single-product stack | `architecture/tech-stack.md` |
+| `domain <name>` | Domain-specific stack additions | `domain/{name}/tech-stack.md` |
 
 ## Negative constraints
 
@@ -123,10 +126,8 @@ Cover at least the applicable categories from the following list:
 
 ## Output format
 
-Write as a Markdown file with YAML frontmatter.
-
-- Product scope: save as `architecture/tech-stack.md`
-- Domain scope: save as `domain/{name}/tech-stack.md`
+Write as a Markdown file with YAML frontmatter. Save path is determined by scope
+(see Scope table above).
 
 <example>
 ## Technology Stack — Storefront
