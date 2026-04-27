@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`buildIndexTable snapshot > produces the expected table for a canonical 3-skill fixture set 1`] = `
-"| Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |
-| --- | --- | --- | --- | --- | --- | --- |
-| implement | Implements code for a story or task against an approved design.md and backlog.md. | code | delivery | engineer | design.md, backlog.md | code |
-| write-product | Drafts product.md in pitch mode or product mode. Use when the user mentions "product doc", "PRD", or "why are we... | product.md | discovery | pm, founder | — | product.md |
-| space-index | Identifies the right skill for a vague or open-ended request. | skill-routing | discovery | pm, founder, architect, engineer | — | skill-routing |"
-`;
