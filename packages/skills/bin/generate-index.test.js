@@ -324,7 +324,7 @@ describe('buildIndexTable snapshot', () => {
           description:
             'Implements code for a story or task against an approved design.md and backlog.md.',
           artefact: 'code',
-          phase: 'delivery',
+          track: 'delivery',
           role: ['engineer'],
           consumes: ['design.md', 'backlog.md'],
           produces: ['code'],
@@ -336,7 +336,7 @@ describe('buildIndexTable snapshot', () => {
           description:
             'Drafts product.md in pitch mode or product mode. Use when the user mentions "product doc", "PRD", or "why are we building this".',
           artefact: 'product.md',
-          phase: 'discovery',
+          track: 'discovery',
           role: ['pm', 'founder'],
           produces: ['product.md'],
         },
@@ -346,7 +346,7 @@ describe('buildIndexTable snapshot', () => {
         fm: {
           description: 'Identifies the right skill for a vague or open-ended request.',
           artefact: 'skill-routing',
-          phase: 'discovery',
+          track: 'discovery',
           role: ['pm', 'founder', 'architect', 'engineer'],
           produces: ['skill-routing'],
         },

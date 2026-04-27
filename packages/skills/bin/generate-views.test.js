@@ -112,7 +112,7 @@ describe('buildRoleView', () => {
 
   it('has the correct 6-column table header', () => {
     const content = buildRoleView('Engineer', fixtures);
-    expect(content).toContain('| Skill | What it does | Artefact | Phase | Consumes | Produces |');
+    expect(content).toContain('| Skill | What it does | Artefact | Track | Consumes | Produces |');
   });
 
   it('contains one row per skill', () => {
@@ -317,7 +317,7 @@ describe('buildRoleView snapshot', () => {
           description:
             'Implements code for a story or task against an approved design.md and backlog.md.',
           artefact: 'code',
-          phase: 'delivery',
+          track: 'delivery',
           consumes: ['design.md', 'backlog.md'],
           produces: ['code'],
         },
@@ -327,7 +327,7 @@ describe('buildRoleView snapshot', () => {
         fm: {
           description: 'Performs a comprehensive code review of changes in a branch or PR.',
           artefact: 'code review',
-          phase: 'delivery',
+          track: 'delivery',
           consumes: ['design.md', 'backlog.md'],
           produces: ['review'],
         },
@@ -337,7 +337,7 @@ describe('buildRoleView snapshot', () => {
         fm: {
           description: 'Drafts a work-package design.md in walking-skeleton mode or TDD mode.',
           artefact: 'design.md',
-          phase: 'delivery',
+          track: 'delivery',
           consumes: ['solution.md', 'backlog.md'],
           produces: ['design.md'],
         },
