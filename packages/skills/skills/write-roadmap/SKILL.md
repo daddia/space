@@ -131,9 +131,4 @@ Write as a Markdown file with YAML frontmatter.
 - Product scope (within a portfolio): save as `product/{name}/roadmap.md`
 - Domain scope: save as `domain/{name}/roadmap.md`
 
-Use `template.md` as your structural scaffold. See `examples/cart-roadmap.md`
-for a domain-scope roadmap at the expected depth.
-
-<example>
-See `examples/cart-roadmap.md`
-</example>
+Use `template.md` as your structural scaffold.

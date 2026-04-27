@@ -115,9 +115,3 @@ Write as a Markdown file with YAML frontmatter.
 | `domain <name>`                          | `domain/{name}/contracts.md`  |
 
 Use `template.md` as your structural scaffold.
-
-See `examples/cart-contracts.md` for a domain-scope example.
-
-<example>
-See `examples/cart-contracts.md` (domain scope)
-</example>

@@ -102,7 +102,7 @@ Depth (`--depth`) applies to portfolio/product/domain scope only:
 1. Read the parent epic entry in the owning backlog.md, plus `work/{wp}/design.md` and `solution.md`
 2. Write a summary: epic ID, phase, priority, estimate, scope, deliverables, dependencies, downstream consumers
 3. Define conventions table
-4. Write each story using the canonical schema (see template-work-package.md §3):
+4. Write each story using the canonical schema:
    - Status, Priority, Estimate, Epic, Labels, Depends on, Deliverable, Design (section link), Acceptance (EARS), Acceptance (Gherkin)
 5. Build traceability: stories to solution sections + stories to product outcomes
 6. Write the Definition of Done
@@ -125,13 +125,9 @@ Depth (`--depth`) applies to portfolio/product/domain scope only:
 Write as a Markdown file with YAML frontmatter. Save path is determined by scope
 (see Scope and save path table above).
 
-Use `template.md` as the general scaffold. For internal daddia use, `template-domain.md`
-(domain scope) and `template-work-package.md` (work-package scope) are opt-in
-mode-specific overrides.
+Use `template.md` as your structural scaffold.
 
 <example>
-See `examples/domain-backlog.md` (domain scope) — generic reference
-See `examples/wp01-backlog.md` (work-package scope) — generic reference
-See `examples/cart-domain-backlog.md` (domain scope) — internal reference
-See `examples/cart-wp01-backlog.md` (work-package scope) — internal reference
+See `examples/domain-backlog.md` (domain scope)
+See `examples/wp01-backlog.md` (work-package scope)
 </example>

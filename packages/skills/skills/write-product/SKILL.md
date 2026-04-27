@@ -183,11 +183,8 @@ and `scope: portfolio|product|domain`.
 - Product scope (within a portfolio): save as `product/{name}/product.md`
 - Domain scope: save as `domain/{name}/product.md`
 
-Use `template-portfolio.md` for portfolio scope, `template-pitch.md` for
-pitch stage, `template-product.md` for product stage.
+Use `template.md` as your structural scaffold.
 
 <example>
-See `examples/product.md` (domain scope, pitch stage) — generic reference
-See `examples/cart-product.md` (domain scope, product stage) — internal reference
-See `examples/space-product.md` (product scope, product stage) — internal reference
+See `examples/product.md` (domain scope, pitch stage)
 </example>

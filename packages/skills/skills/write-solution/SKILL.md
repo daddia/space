@@ -138,11 +138,8 @@ Write as a Markdown file with YAML frontmatter.
 | `product <name>` (portfolio sub-product) | `product/{name}/architecture/solution.md` |
 | `domain <name>`                          | `domain/{name}/solution.md`               |
 
-Use `template.md` as the general scaffold. For internal daddia use, `template-stub.md`
-(stub stage) and `template-full.md` (full stage) are opt-in mode-specific overrides.
+Use `template.md` as your structural scaffold.
 
 <example>
-See `examples/solution.md` (domain scope, stub mode) — generic reference
-See `examples/space-solution.md` (platform scope, full mode) — internal reference
-See `examples/cart-solution.md` (domain scope, full mode) — internal reference
+See `examples/solution.md` (domain scope, stub mode)
 </example>

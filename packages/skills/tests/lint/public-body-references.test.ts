@@ -111,6 +111,43 @@ describe('publicBodyReferences', () => {
     expect(result.every((d) => d.rule === 'public-body-references')).toBe(true);
   });
 
+  it('emits error when body references an internal example via inline backticks', () => {
+    const skill = makeSkill(
+      'See `examples/cart-product.md` (domain scope, product stage) -- internal reference.',
+      'stable',
+    );
+    const result = publicBodyReferences(skill, []);
+    expect(result).toHaveLength(1);
+    expect(result[0]!.rule).toBe('public-body-references');
+    expect(result[0]!.severity).toBe('error');
+    expect(result[0]!.message).toContain('"examples/cart-product.md"');
+  });
+
+  it('emits error when body references a mode-specific template via inline backticks', () => {
+    const skill = makeSkill('Use `template-domain.md` for domain mode.', 'stable');
+    const result = publicBodyReferences(skill, []);
+    expect(result).toHaveLength(1);
+    expect(result[0]!.message).toContain('"template-domain.md"');
+  });
+
+  it('passes for inline-backtick references to files that ship', () => {
+    const skill = makeSkill(
+      'Use `template.md` as the general scaffold; see `examples/product.md`.',
+      'stable',
+    );
+    expect(publicBodyReferences(skill, [])).toHaveLength(0);
+  });
+
+  it('does not flag inline-backtick code that is not a markdown path', () => {
+    const skill = makeSkill('Run `pnpm test` and check the `Skill` type.', 'stable');
+    expect(publicBodyReferences(skill, [])).toHaveLength(0);
+  });
+
+  it('does not flag inline-backtick references with a {source}: scheme', () => {
+    const skill = makeSkill('See `space:architecture/solution.md` for context.', 'stable');
+    expect(publicBodyReferences(skill, [])).toHaveLength(0);
+  });
+
   it('skips a draft skill entirely', () => {
     const skill = makeSkill('See [examples/cart-product.md](examples/cart-product.md).', 'draft');
     expect(publicBodyReferences(skill, [])).toHaveLength(0);

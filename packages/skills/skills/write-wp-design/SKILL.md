@@ -147,12 +147,8 @@ The design.md MUST NOT contain:
 
 Write as a Markdown file with YAML frontmatter, saved as `work/{d}/{wp}/design.md`.
 
-Use `template.md` as the general scaffold. For internal daddia use,
-`template-walking-skeleton.md` (walking-skeleton mode) and `template-tdd.md`
-(TDD mode) are opt-in mode-specific overrides.
+Use `template.md` as your structural scaffold.
 
 <example>
-See `examples/walking-skeleton.md` (walking-skeleton mode) — generic reference
-See `examples/cart-wp01-walking-skeleton.md` (walking-skeleton mode) — internal reference
-See `examples/cart-wp02-tdd.md` (TDD mode) — internal reference
+See `examples/walking-skeleton.md` (walking-skeleton mode)
 </example>

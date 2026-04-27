@@ -12,12 +12,25 @@ import type { Diagnostic, LintRule } from './types.js';
 const LOCAL_LINK_RE = /\[(?:[^\]]*)\]\(((?!https?:\/\/|[a-zA-Z][a-zA-Z0-9+\-.]*:)[^)]+)\)/g;
 
 /**
- * Assert that a stable skill's SKILL.md body contains no Markdown link to a
- * local file that the public mirror would NOT ship.
+ * Regex that matches inline-backtick references to local Markdown files,
+ * e.g. `` `examples/cart-product.md` `` or `` `template-domain.md` ``.
  *
- * For each `[text](target)` link whose target is a local relative path, this
+ * Constrained to paths ending in `.md` to avoid false positives on code
+ * identifiers and shell snippets. Excludes absolute paths and URL/source
+ * schemes the same way the markdown-link regex does.
+ *
+ * Captures the path in group 1.
+ */
+const LOCAL_BACKTICK_RE = /`((?!https?:\/\/|[a-zA-Z][a-zA-Z0-9+\-.]*:|\/)[A-Za-z0-9._/-]+\.md)`/g;
+
+/**
+ * Assert that a stable skill's SKILL.md body contains no reference (Markdown
+ * link or inline-backtick path) to a local file that the public mirror would
+ * NOT ship.
+ *
+ * For each candidate path -- whether `[text](target)` or `` `target` `` -- this
  * rule calls `shouldShipFile(target)`. If the public-asset policy would drop
- * the file, the link would be broken in the published mirror.
+ * the file, the reference would be broken in the published mirror.
  *
  * Skips skills that are not stable (draft, deprecated, deferred).
  */
@@ -27,19 +40,20 @@ export const publicBodyReferences: LintRule = (skill: Skill): Diagnostic[] => {
   const diagnostics: Diagnostic[] = [];
   const { body } = skill;
 
-  let match: RegExpExecArray | null;
-  LOCAL_LINK_RE.lastIndex = 0;
-
-  while ((match = LOCAL_LINK_RE.exec(body)) !== null) {
-    const target = match[1]!.trim();
-    if (!shouldShipFile(target)) {
-      diagnostics.push({
-        rule: 'public-body-references',
-        severity: 'error',
-        skill: skill.name,
-        message: `body links to "${target}" which the public mirror would not ship`,
-        hint: `Remove the link, replace it with a generic example, or update to point at a file that will be published.`,
-      });
+  for (const re of [LOCAL_LINK_RE, LOCAL_BACKTICK_RE]) {
+    re.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(body)) !== null) {
+      const target = match[1]!.trim();
+      if (!shouldShipFile(target)) {
+        diagnostics.push({
+          rule: 'public-body-references',
+          severity: 'error',
+          skill: skill.name,
+          message: `body references "${target}" which the public mirror would not ship`,
+          hint: `Remove the reference, replace it with a generic example, or update to point at a file that will be published.`,
+        });
+      }
     }
   }
 
