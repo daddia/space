@@ -12,6 +12,12 @@ public/
 coverage/
 .coverage/
 .content-collections/
+packages/skills/views/
+packages/skills/space-index/SKILL.md
+
+# Installed skills
+.agents/skills/
+skills/
 
 # Build output
 .next/
