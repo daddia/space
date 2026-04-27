@@ -25,8 +25,19 @@
   "engines": {
     "node": ">=24.14.1"
   },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "scripts": {
     "postinstall": "sync-skills",
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit --project tsconfig.json",
+    "test": "vitest run",
     "lint": "node bin/lint-skills.js",
     "generate:index": "node bin/generate-index.js",
     "generate:views": "node bin/generate-views.js"
@@ -36,6 +47,7 @@
     "lint-skills": "bin/lint-skills.js"
   },
   "files": [
+    "dist/**",
     "bin/**",
     "*/SKILL.md",
     "*/template.md",
@@ -47,5 +59,14 @@
     "profiles/**",
     "README.md",
     "CHANGELOG.md"
-  ]
+  ],
+  "dependencies": {
+    "yaml": "^2.8.3"
+  },
+  "devDependencies": {
+    "@daddia/typescript-config": "workspace:*",
+    "@types/node": "^25.5.2",
+    "typescript": "^6.0.2",
+    "vitest": "^4.1.3"
+  }
 }
