@@ -26,7 +26,8 @@
   },
   "files": [
     "dist",
-    "template"
+    "template",
+    "profiles"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.json",
