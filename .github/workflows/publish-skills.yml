@@ -1,0 +1,119 @@
+name: Publish Skills
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/skills/**'
+  workflow_dispatch:
+
+# Never cancel an in-progress publish run; a partial push would leave
+# daddia/skills in an inconsistent state.
+concurrency:
+  group: publish-skills
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish to daddia/skills
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout daddia/space
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build @daddia/skills
+        run: pnpm --filter '@daddia/skills' run build
+
+      # validate:public exits non-zero on any lint, drift, or strip failure.
+      # Steps after this point do not run when validation fails, ensuring the
+      # public repo is never touched on a bad build.
+      - name: Validate public skills
+        run: pnpm --filter '@daddia/skills' run validate:public
+
+      - name: Configure SSH deploy key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SKILLS_DEPLOY_KEY }}
+
+      - name: Checkout daddia/skills
+        run: |
+          git clone --depth 1 git@github.com:daddia/skills.git "${{ runner.temp }}/daddia-skills"
+          git -C "${{ runner.temp }}/daddia-skills" config user.name "github-actions[bot]"
+          git -C "${{ runner.temp }}/daddia-skills" config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync public skills
+        id: sync
+        run: |
+          TARGET="${{ runner.temp }}/daddia-skills"
+          SYNC_OUT=$(node packages/skills/dist/cli/sync-public.js --target "$TARGET" 2>&1)
+          EXIT_CODE=$?
+          echo "$SYNC_OUT"
+          # Stash for the step summary written below.
+          {
+            echo "sync_out<<__EOF__"
+            echo "$SYNC_OUT"
+            echo "__EOF__"
+          } >> "$GITHUB_OUTPUT"
+          exit $EXIT_CODE
+
+      - name: Commit and push to daddia/skills
+        id: publish
+        run: |
+          TARGET="${{ runner.temp }}/daddia-skills"
+          git -C "$TARGET" add -A
+
+          if git -C "$TARGET" diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes to publish -- skipping commit."
+          else
+            SHORT_SHA="${GITHUB_SHA:0:7}"
+            git -C "$TARGET" commit -m "Sync from daddia/space@${SHORT_SHA}"
+
+            # Retry once on a push race: pull --rebase then push again.
+            if ! git -C "$TARGET" push origin main; then
+              echo "Push failed -- attempting rebase and retry."
+              git -C "$TARGET" pull --rebase origin main
+              git -C "$TARGET" push origin main
+            fi
+
+            COMMIT_SHA=$(git -C "$TARGET" rev-parse HEAD)
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "commit_sha=${COMMIT_SHA}" >> "$GITHUB_OUTPUT"
+            echo "Published commit ${COMMIT_SHA} to daddia/skills."
+          fi
+
+      - name: Write step summary
+        if: always() && steps.sync.outcome != 'skipped'
+        run: |
+          {
+            echo "## Skills publish"
+            echo ""
+            if [[ "${{ steps.publish.outputs.changed }}" == "true" ]]; then
+              echo "**Commit:** \`${{ steps.publish.outputs.commit_sha }}\`"
+            else
+              echo "**Result:** no changes"
+            fi
+            echo ""
+            echo "### Sync output"
+            echo '```'
+            echo "${{ steps.sync.outputs.sync_out }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
