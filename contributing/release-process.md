@@ -37,8 +37,8 @@ This runs: install → build → typecheck → lint → test.
 For `@daddia/skills` specifically:
 
 ```bash
-node packages/skills/bin/lint-skills.js     # all skills must pass
-node packages/skills/bin/generate-index.js  # index must be current (exits 0)
+pnpm --filter @daddia/skills run lint:skills     # all skills must pass
+pnpm --filter @daddia/skills run generate:index  # index must be current (exits 0)
 ```
 
 If the index is stale, commit the updated `space-index/SKILL.md` first.
@@ -64,6 +64,29 @@ Publishes to npm using the credentials configured in `.npmrc`.
 ```bash
 git push --follow-tags
 ```
+
+## 6. Publish skills to the public mirror
+
+Skill content in `packages/skills/skills/` is published to `github.com/daddia/skills`
+automatically by the `publish-skills.yml` GitHub Action. **The Action is the primary
+publish mechanism.** No manual step is required for a normal merge to `main`.
+
+The Action triggers on push to `main` when any file under `packages/skills/**` changes:
+
+1. Runs `pnpm --filter @daddia/skills run validate:public` (lint + drift check + strip validator).
+2. Checks out `daddia/skills@main` via deploy key (`secrets.SKILLS_DEPLOY_KEY`).
+3. Runs `sync-public` to copy stripped skills to the public mirror.
+4. Commits and pushes if there are changes.
+
+**Manual fallback** (use only if the Action is unavailable):
+
+```bash
+pnpm --filter @daddia/skills run validate:public  # must pass before publishing
+pnpm --filter @daddia/skills run sync-public      # requires daddia/skills checked out locally
+```
+
+See `architecture/skills/delivery.md` for the full pipeline, deploy-key setup, and
+rotation runbook.
 
 ## Pre-release (beta)
 
