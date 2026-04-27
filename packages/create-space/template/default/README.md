@@ -1,6 +1,6 @@
 # {projectName} Workspace
 
-Delivery workspace for **{projectName}** by Horizon.
+Delivery workspace for **{projectName}**.
 
 This repo is managed as a VS Code multi-root workspace via `{project}.code-workspace`.
 
@@ -26,7 +26,7 @@ This repo is managed as a VS Code multi-root workspace via `{project}.code-works
 ## Setup
 
 ```bash
-git clone git@github.com:horizon/{project}-space.git
+git clone git@github.com:{org}/{project}-space.git
 cd {project}-space
 pnpm install
 ```

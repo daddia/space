@@ -1,5 +1,29 @@
 #!/usr/bin/env sh
 # Verify that generated files (space-index/SKILL.md and views/*.md) are not
-# stale before a push. If either generator exits non-zero, the push is aborted.
-pnpm --filter '@daddia/skills' run generate:index && \
+# stale before a push. The generators are run in-place; if regeneration
+# produces a non-empty diff against committed output, the committed output
+# was stale and the push is aborted with a stale-detection message.
+
+set -e
+
+pnpm --filter '@daddia/skills' run generate:index
 pnpm --filter '@daddia/skills' run generate:views
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+GENERATED_PATHS="packages/skills/space-index/SKILL.md packages/skills/views"
+
+if ! git -C "$REPO_ROOT" diff --quiet -- $GENERATED_PATHS; then
+  echo ""
+  echo "pre-push: generated skill outputs are stale."
+  echo ""
+  echo "  The following files were rewritten by the generators and are"
+  echo "  out of date in the index:"
+  echo ""
+  git -C "$REPO_ROOT" diff --name-only -- $GENERATED_PATHS | sed 's/^/    - /'
+  echo ""
+  echo "  Run:"
+  echo "    pnpm --filter '@daddia/skills' run generate:index"
+  echo "    pnpm --filter '@daddia/skills' run generate:views"
+  echo "  then commit the regenerated files before pushing."
+  exit 1
+fi

@@ -1,6 +1,6 @@
 # @daddia/create-space
 
-Scaffold a new Crew delivery workspace for Horizon.
+Scaffold a new daddia delivery workspace.
 
 ## Quick start
 
@@ -33,4 +33,4 @@ bunx @daddia/create-space my-project
 
 ## License
 
-(c) 2026 Temple & Webster
+MIT. (c) 2026 daddia. See [`LICENSE`](./LICENSE).

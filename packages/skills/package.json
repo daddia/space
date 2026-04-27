@@ -1,19 +1,19 @@
 {
   "name": "@daddia/skills",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "type": "module",
   "description": "Delivery activity skills for AI coding agents -- works with any IDE",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
+    "url": "git+https://github.com/daddia/space.git",
     "directory": "packages/skills"
   },
   "keywords": [
-    "horizon",
+    "daddia",
     "space",
     "skills",
     "delivery",
@@ -57,7 +57,8 @@
     "views",
     "space-index",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "LICENSE"
   ],
   "dependencies": {
     "yaml": "^2.8.3"

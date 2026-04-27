@@ -1,5 +1,23 @@
 # @daddia/skills
 
+## 1.0.0
+
+### Major Changes
+
+- Restructure `@daddia/skills` as a typed authoring toolkit (SPACE-15).
+
+  **Breaking changes:**
+  - Skill folders moved from `packages/skills/<name>/` to `packages/skills/skills/<name>/` (Vercel pattern). Published tarball ships `skills/<name>/SKILL.md` not `<name>/SKILL.md`.
+  - Legacy JS bins (`bin/lint-skills.js`, `bin/generate-index.js`, `bin/generate-views.js`, `bin/profile-utils.js`, `bin/sync-skills.js`) removed. Replaced by compiled TypeScript CLIs in `dist/cli/`.
+  - `postinstall` side-effect removed. Consumers must install skills via `space skills sync` or `npx skills add daddia/skills`.
+  - Package shape changes: `main` and `types` now point at `dist/index.js` and `dist/index.d.ts`.
+
+  **New capabilities:**
+  - Full TypeScript authoring toolkit: `parseFrontmatter`, `stripFrontmatter`, `loadSkill`, `loadAllSkills`, `resolveProfile`, lint engine with nine rules, generators for index table and role views, `syncPublicSkills` typed module.
+  - `validate:public` composite CI gate: lint + generate no-drift + public-strip + bundled-assets + public-body-references.
+  - Public-asset policy: strips daddia-specific frontmatter fields; drops `template-*.md` mode variants and project-prefixed examples before publishing to `daddia/skills`.
+  - `sync-public` CLI for pushing to the public mirror.
+
 ## 0.4.0
 
 ### New skills
@@ -114,7 +132,7 @@ Added `views/**` and `profiles/**` to the `files` field in `package.json`.
 
 - Document full skill structure (`SKILL.md` + `template.md` + `examples/` + `scripts/`) in `README.md` and `AGENTS.md`
 - Expand `"files"` in `package.json` to include `template.md`, `examples/`, `scripts/`, and `CHANGELOG.md`
-- Switch registry to GitLab Package Registry (`@tpw:registry`); `license` changed to `UNLICENSED`
+- Switch registry to private GitLab Package Registry; `license` changed to `UNLICENSED`
 - Fix `repository.url` normalisation warning
 
 ## 0.1.2

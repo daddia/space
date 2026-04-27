@@ -1,17 +1,19 @@
 {
   "name": "@daddia/space",
-  "version": "0.1.0",
-  "private": true,
-  "description": "Operate a Horizon delivery space -- sync sources, publish docs",
+  "version": "0.2.0",
+  "description": "Operate a delivery workspace -- sync sources, publish docs",
   "type": "module",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/templeandwebster/horizon/space.git",
+    "url": "git+https://github.com/daddia/space.git",
     "directory": "packages/space"
   },
   "keywords": [
-    "horizon",
+    "daddia",
     "space",
     "delivery",
     "sync",
@@ -27,7 +29,9 @@
   "files": [
     "dist",
     "template",
-    "profiles"
+    "profiles",
+    "README.md",
+    "LICENSE"
   ],
   "scripts": {
     "build": "tsc --project tsconfig.json",

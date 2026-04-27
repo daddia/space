@@ -29,7 +29,7 @@ The `project` block identifies the workspace. Every space needs it.
 project:
   name: Storefront
   key: STORE
-  description: Temple & Webster's new Next.js storefront.
+  description: A new Next.js storefront.
 ```
 
 `key` is used as a prefix for backlog item IDs (e.g. `STORE-001`). Use a short uppercase acronym that matches your Jira project key.

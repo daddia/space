@@ -23,8 +23,7 @@
     "validate:public": "pnpm --filter '@daddia/skills' run validate:public",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "pnpm build && changeset publish",
-    "postinstall": "sync-skills"
+    "release": "pnpm build && changeset publish"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [

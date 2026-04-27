@@ -3,7 +3,7 @@ type: Solution
 product: space
 stage: full
 version: '1.0'
-owner: Horizon Platform
+owner: Acme Platform
 status: Draft
 last_updated: 2026-04-23
 parent_product: docs/product.md
@@ -119,7 +119,7 @@ Ordered; the top goal dominates when goals conflict.
 
 - **Technical:** pnpm workspace; TypeScript for CLIs; Markdown-only for
   skills; Node 18+; no custom runtime.
-- **Organisational:** single team of 1-2 engineers; Horizon-internal
+- **Organisational:** single team of 1-2 engineers; Acme-internal
   users first; OSS deferred.
 - **Regulatory:** program mirrors may contain sensitive business data;
   workspace repos inherit the parent organisation's access controls.
@@ -549,7 +549,7 @@ produces: [solution.md]
 prerequisites: [product.md]
 related: [write-product, write-adr, write-contracts]
 tags: [architecture, arc42, c4]
-owner: '@horizon-platform'
+owner: '@acme-platform'
 ---
 ```
 
@@ -693,7 +693,7 @@ invoked by the router.
 - **Versioning:** changesets (`pnpm changeset`) per package.
 - **Publish:** `pnpm release` after `pnpm validate` (install, build,
   typecheck, lint, test) passes clean.
-- **Distribution channel:** npm registry, public; `@tpw` scope.
+- **Distribution channel:** npm registry, public; `@acme` scope.
 - **Consumer update path:** `pnpm update @daddia/skills` (or any package).
 
 ### 8.2 CI/CD shape

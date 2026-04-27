@@ -1,6 +1,6 @@
 # `@daddia/eslint-config`
 
-Shared ESLint flat configurations for Horizon repositories.
+Shared ESLint flat configurations for daddia repositories.
 
 ## Available configs
 
