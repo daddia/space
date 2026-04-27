@@ -13,3 +13,5 @@ export {
   INTERNAL_DIRS,
   shouldShipFile,
 } from './publish/strip-policy.js';
+export type { SyncOptions, SyncResult } from './publish/sync-public.js';
+export { syncPublicSkills } from './publish/sync-public.js';

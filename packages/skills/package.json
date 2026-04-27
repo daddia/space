@@ -40,13 +40,15 @@
     "lint:skills": "node dist/cli/lint.js",
     "generate:index": "node dist/cli/generate.js index",
     "generate:views": "node dist/cli/generate.js views",
-    "validate:public": "node dist/cli/validate-public.js"
+    "validate:public": "node dist/cli/validate-public.js",
+    "sync-public": "node dist/cli/sync-public.js"
   },
   "bin": {
     "lint-skills": "dist/cli/lint.js",
     "generate-index": "dist/cli/generate.js index",
     "generate-views": "dist/cli/generate.js views",
-    "validate-public": "dist/cli/validate-public.js"
+    "validate-public": "dist/cli/validate-public.js",
+    "sync-public-skills": "dist/cli/sync-public.js"
   },
   "files": [
     "dist/**",
