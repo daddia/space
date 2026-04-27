@@ -23,7 +23,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { loadAllSkills } from '../skill.js';
+import { loadAllSkills, loadSkill } from '../skill.js';
 import { lintSkills } from '../lint/index.js';
 import { publicStrip } from '../lint/public-strip.js';
 import { bundledAssets } from '../lint/bundled-assets.js';
@@ -107,6 +107,25 @@ process.exit(errors.length > 0 ? 1 : 0);
 
 // ─── Generate drift check ────────────────────────────────────────────────────
 
+/**
+ * Load all skills plus the `space-index` skill itself, mirroring what the
+ * `generate index` command does. `space-index` is excluded from
+ * `loadAllSkills` to avoid circular loading, but must be included when
+ * generating or verifying the routing table.
+ */
+function loadAllSkillsForIndex(pkgDir: string): ReturnType<typeof loadAllSkills> {
+  const skills = loadAllSkills(pkgDir);
+  const spaceIndexDir = path.join(pkgDir, 'space-index');
+  if (fs.existsSync(path.join(spaceIndexDir, 'SKILL.md'))) {
+    try {
+      skills.push(loadSkill(spaceIndexDir));
+    } catch {
+      // space-index SKILL.md unreadable — skip silently
+    }
+  }
+  return skills.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 function checkGenerateDrift(
   pkgDir: string,
   loadedSkills: ReturnType<typeof loadAllSkills>,
@@ -114,12 +133,15 @@ function checkGenerateDrift(
   const diags: Diagnostic[] = [];
 
   // Check space-index/SKILL.md drift
+  // Use the extended skill set that includes space-index itself (matching
+  // what the generate:index command produces).
+  const skillsForIndex = loadAllSkillsForIndex(pkgDir);
   const indexPath = path.join(pkgDir, 'space-index', 'SKILL.md');
   if (fs.existsSync(indexPath)) {
     const currentIndex = fs.readFileSync(indexPath, 'utf8');
     let generatedIndex: string;
     try {
-      generatedIndex = generateSpaceIndexSkill(currentIndex, loadedSkills);
+      generatedIndex = generateSpaceIndexSkill(currentIndex, skillsForIndex);
     } catch (err) {
       diags.push({
         rule: 'generate-no-drift',
