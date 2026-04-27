@@ -12,21 +12,47 @@ This file gives implementation context to AI coding assistants working in the `s
 
 ## Repository Structure
 
-| Directory                | Package                | Purpose                                                 |
-| ------------------------ | ---------------------- | ------------------------------------------------------- |
-| `packages/skills/`       | `@daddia/skills`       | Delivery activity skills (Markdown only, no build step) |
-| `packages/create-space/` | `@daddia/create-space` | Scaffolding CLI for new delivery workspaces             |
-| `packages/space/`        | `@daddia/space`        | Space operations CLI (`space sync`, `space publish`)    |
-| `tooling/`               | `@daddia/*-config`     | Shared internal configs (eslint, prettier, typescript)  |
-| `architecture/`          | --                     | Solution architecture for the Space monorepo            |
+| Directory | Package | Purpose |
+| --- | --- | --- |
+| `packages/skills/` | `@daddia/skills` | Delivery activity skills (Markdown only, no build step) |
+| `packages/create-space/` | `@daddia/create-space` | Scaffolding CLI for new delivery workspaces |
+| `packages/space/` | `@daddia/space` | Space operations CLI (`space sync`, `space publish`) |
+| `tooling/` | `@daddia/*-config` | Shared internal configs (eslint, prettier, typescript) |
+| `architecture/` | — | Architecture documentation for the Space monorepo |
+| `contributing/` | — | Contributor guides |
 
 Each package has its own `AGENTS.md` with package-specific implementation context.
 
-## Key documents
+## Architecture documentation
 
-- `architecture/solution.md` -- Space solution architecture
-- `docs/product.md` -- Space product strategy
-- `docs/roadmap.md` -- Space phased roadmap
+Before making substantive changes, read the relevant architecture docs:
+
+| Topic | Document |
+| --- | --- |
+| Workspace artefact model, tiers, ownership matrix | `architecture/artefact-model.md` |
+| Sync and publish pipeline | `architecture/publish-pipeline.md` |
+| Solution architecture (monorepo) | `architecture/solution.md` |
+| Skill anatomy and frontmatter schema | `architecture/skills/skill-anatomy.md` |
+| Skill routing and descriptions | `architecture/skills/discovery-and-routing.md` |
+| Five-track and role model | `architecture/skills/track-and-role-model.md` |
+| Skill profiles | `architecture/skills/profiles.md` |
+| Index and views generation | `architecture/skills/index-and-views.md` |
+| Lint and quality checks | `architecture/skills/lint-and-quality.md` |
+| Acceptance criteria (EARS + Gherkin) | `architecture/conventions/acceptance-criteria.md` |
+| Negative constraints (WHAT/WHY vs HOW) | `architecture/conventions/negative-constraints.md` |
+| Artefact references URI scheme | `architecture/conventions/artefact-references.md` |
+| Delivery phases (Phase 0/1/2) | `architecture/conventions/phases.md` |
+
+## Contributor guides
+
+| Task | Guide |
+| --- | --- |
+| Add a new skill | `contributing/add-new-skill.md` |
+| Edit an existing skill | `contributing/edit-existing-skill.md` |
+| Deprecate a skill | `contributing/deprecate-skill.md` |
+| Add a new source provider | `contributing/add-source-provider.md` |
+| Release process | `contributing/release-process.md` |
+| Naming conventions | `contributing/naming-conventions.md` |
 
 ## Dependency Rules
 
@@ -45,27 +71,29 @@ No package in this repo depends on `@daddia/crew`.
 
 Run from the repo root:
 
-| Command             | Description                                            |
-| ------------------- | ------------------------------------------------------ |
-| `pnpm build`        | Build `create-space` and `space`                       |
-| `pnpm typecheck`    | Type-check all packages                                |
-| `pnpm test`         | Run Vitest suite                                       |
-| `pnpm lint`         | Run ESLint                                             |
-| `pnpm format:write` | Format with Prettier                                   |
-| `pnpm validate`     | Full pre-publish check (install, build, quality, test) |
+| Command | Description |
+| --- | --- |
+| `pnpm build` | Build `create-space` and `space` |
+| `pnpm typecheck` | Type-check all packages |
+| `pnpm test` | Run Vitest suite |
+| `pnpm lint` | Run ESLint |
+| `pnpm format:write` | Format with Prettier |
+| `pnpm validate` | Full pre-publish check (install, build, quality, test) |
 
-## Adding a New Package
+Skills-specific commands (run in `packages/skills/`):
 
-1. Create `packages/{name}/` with `package.json`, `tsconfig.json`, and `src/index.ts`.
-2. Add to root `tsconfig.json` references if the package has TypeScript.
-3. Add the package filter to the `build` script in root `package.json` if it needs building.
-4. Create a package-level `AGENTS.md` following the pattern in the existing packages.
+| Command | Description |
+| --- | --- |
+| `node bin/lint-skills.js` | Lint all skills |
+| `node bin/generate-index.js` | Regenerate `space-index/SKILL.md` |
+| `node bin/generate-views.js` | Regenerate role view files |
 
 ## Working Rules
 
-- Read the package-level `AGENTS.md` before editing any package.
-- `packages/skills/` is Markdown only — changes do not require a build or typecheck.
+- Read the relevant architecture doc before editing any package.
+- `packages/skills/` is Markdown only — no build or typecheck after changes.
+- After editing a skill, run `lint-skills.js` and `generate-index.js`. Commit both.
 - `packages/create-space/` and `packages/space/` are TypeScript — run `pnpm build` and `pnpm typecheck` after changes.
 - Run `pnpm test` after logic changes to either CLI package.
-- Use changesets (`pnpm changeset`) when making publishable changes to any package.
-- Do not add cross-package dependencies without first checking the dependency rules above.
+- Use changesets (`pnpm changeset`) when making publishable changes.
+- Do not add cross-package dependencies without checking the dependency rules above.
