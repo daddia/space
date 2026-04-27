@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:docs": "node scripts/lint-docs.js",
-    "lint:skills": "pnpm --filter '@daddia/skills' run lint",
+    "lint:skills": "pnpm --filter '@daddia/skills' run lint:skills",
     "sync:public-skills": "node scripts/sync-public-skills.mjs",
     "format": "prettier --check .",
     "format:write": "prettier --write .",

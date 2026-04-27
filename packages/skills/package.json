@@ -34,17 +34,17 @@
     }
   },
   "scripts": {
-    "postinstall": "sync-skills",
     "build": "tsc --project tsconfig.json",
     "typecheck": "tsc --noEmit --project tsconfig.json",
     "test": "vitest run",
-    "lint": "node bin/lint-skills.js",
-    "generate:index": "node bin/generate-index.js",
-    "generate:views": "node bin/generate-views.js"
+    "lint:skills": "node dist/cli/lint.js",
+    "generate:index": "node dist/cli/generate.js index",
+    "generate:views": "node dist/cli/generate.js views"
   },
   "bin": {
-    "sync-skills": "bin/sync-skills.js",
-    "lint-skills": "bin/lint-skills.js"
+    "lint-skills": "dist/cli/lint.js",
+    "generate-index": "dist/cli/generate.js index",
+    "generate-views": "dist/cli/generate.js views"
   },
   "files": [
     "dist/**",

@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Verify that generated files (space-index/SKILL.md and views/*.md) are not
+# stale before a push. If either generator exits non-zero, the push is aborted.
+pnpm --filter '@daddia/skills' run generate:index && \
+pnpm --filter '@daddia/skills' run generate:views
