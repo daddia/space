@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Description eval loop for @tpw/skills.
+Description eval loop for @daddia/skills.
 
 Evaluates each skill's description by asking the Anthropic API to route a
 representative set of queries against the full list of skill descriptions.
