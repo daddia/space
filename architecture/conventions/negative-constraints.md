@@ -36,6 +36,7 @@ The DRAFTING AIDE block must **not** appear in committed output. The `path.relat
 ### `product.md`
 
 Must not contain:
+
 - File paths, module names, or class names → `solution.md`
 - API endpoints, HTTP verbs, schemas, or type aliases → `solution.md` or `contracts.md`
 - Tech stack names (React, Next.js, Zustand, Postgres, etc.) → `solution.md`
@@ -46,6 +47,7 @@ Must not contain:
 ### `solution.md`
 
 Must not contain:
+
 - Commercial rationale or business case → `product.md`
 - Target customer segments or personas → `product.md`
 - Strategic thesis or product principles → `product.md`
@@ -57,6 +59,7 @@ Must not contain:
 ### `roadmap.md`
 
 Must not contain:
+
 - Epic IDs, story IDs, or any backlog identifiers — a roadmap names outcomes, not work items
 - Story-level deliverables, estimates, or acceptance criteria
 - Component names, schemas, file paths, or API names → `solution.md`
@@ -68,6 +71,7 @@ A roadmap entry is a **customer-visible capability** (what customers will be abl
 ### `backlog.md`
 
 Must not contain:
+
 - Business-case narrative → `product.md`
 - Architecture rationale or pattern definitions → `solution.md` or ADRs
 - Phase exit criteria — those live in the roadmap; the backlog references them
@@ -75,6 +79,7 @@ Must not contain:
 ### `contracts.md`
 
 Must not contain:
+
 - Prose that describes what a shape means → `solution.md`
 - Business rationale for a contract → `product.md`
 - Implementation patterns → `solution.md` or `work/{wp}/design.md`
@@ -84,6 +89,7 @@ Only executable code fences with one worked example per section. No narrative pa
 ### `metrics.md`
 
 Must not contain:
+
 - Metric targets without a baseline
 - Business rationale for a metric → `product.md`
 - Metric implementation detail → `solution.md`
@@ -92,11 +98,11 @@ Must not contain:
 
 Scope boundary tends to appear in multiple artefacts. To prevent drift, each statement has one canonical home:
 
-| Statement | Canonical home |
-| --- | --- |
-| Permanent no-gos — capabilities this domain will never own | `product.md §5` |
-| Deferred capabilities — in scope but not this phase | `roadmap.md §Later` |
-| Technical boundary — what APIs/systems the domain does not own | `solution.md §1` |
-| Out-of-scope summary | `backlog.md §1` — references product.md §5 and roadmap.md §Later; adds nothing new |
+| Statement                                                      | Canonical home                                                                     |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Permanent no-gos — capabilities this domain will never own     | `product.md §5`                                                                    |
+| Deferred capabilities — in scope but not this phase            | `roadmap.md §Later`                                                                |
+| Technical boundary — what APIs/systems the domain does not own | `solution.md §1`                                                                   |
+| Out-of-scope summary                                           | `backlog.md §1` — references product.md §5 and roadmap.md §Later; adds nothing new |
 
 `solution.md §1` does not restate the full no-gos list — it says "see `product.md §5`" for the complete list.

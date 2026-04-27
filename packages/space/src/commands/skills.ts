@@ -11,9 +11,7 @@ import {
 } from '../skills/sync-driver.js';
 
 export function registerSkillsCommand(program: Command): void {
-  const skillsCmd = program
-    .command('skills')
-    .description('Manage skills in the workspace');
+  const skillsCmd = program.command('skills').description('Manage skills in the workspace');
 
   skillsCmd
     .command('sync')

@@ -80,10 +80,7 @@ describe('resolveProfileName', () => {
   });
 
   it('throws MalformedProfileFileError when .space/profile.yaml is invalid YAML', async () => {
-    await writeFile(
-      path.join(tempDir, '.space', 'profile.yaml'),
-      'name: [\nunclosed bracket\n',
-    );
+    await writeFile(path.join(tempDir, '.space', 'profile.yaml'), 'name: [\nunclosed bracket\n');
     expect(() => resolveProfileName(tempDir)).toThrow(MalformedProfileFileError);
   });
 });
@@ -392,7 +389,14 @@ describe('installSkills', () => {
   it('throws when npx install returns a non-zero exit code', async () => {
     await writeFile(
       path.join(tempDir, 'skills-lock.json'),
-      JSON.stringify({ version: 1, source: 'daddia/skills', ref: 'latest', profile: 'minimal', skills: [], syncedAt: '' }),
+      JSON.stringify({
+        version: 1,
+        source: 'daddia/skills',
+        ref: 'latest',
+        profile: 'minimal',
+        skills: [],
+        syncedAt: '',
+      }),
     );
 
     const failRunner = () => ({ status: 1 });
@@ -404,7 +408,14 @@ describe('installSkills', () => {
   it('prints a summary on successful install', async () => {
     await writeFile(
       path.join(tempDir, 'skills-lock.json'),
-      JSON.stringify({ version: 1, source: 'daddia/skills', ref: 'latest', profile: 'minimal', skills: [], syncedAt: '' }),
+      JSON.stringify({
+        version: 1,
+        source: 'daddia/skills',
+        ref: 'latest',
+        profile: 'minimal',
+        skills: [],
+        syncedAt: '',
+      }),
     );
 
     const stdoutSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true);

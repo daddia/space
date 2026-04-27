@@ -147,10 +147,7 @@ describe('syncPublicSkills: frontmatter strip', () => {
 
     await syncPublicSkills({ sourceDir: srcDir, targetDir: dstDir, profileFile });
 
-    const published = fs.readFileSync(
-      path.join(dstDir, 'write-product', 'SKILL.md'),
-      'utf8',
-    );
+    const published = fs.readFileSync(path.join(dstDir, 'write-product', 'SKILL.md'), 'utf8');
     expect(published).toContain('name: write-product');
     expect(published).toContain('description:');
     expect(published).not.toContain('track:');

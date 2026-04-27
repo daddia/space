@@ -39,16 +39,13 @@ export function loadSkill(dir: string): Skill {
   const templates = entries.filter((f) => /^template.*\.md$/.test(f));
 
   const hasExamples =
-    entries.includes('examples') &&
-    fs.statSync(path.join(dir, 'examples')).isDirectory();
+    entries.includes('examples') && fs.statSync(path.join(dir, 'examples')).isDirectory();
 
   const hasScripts =
-    entries.includes('scripts') &&
-    fs.statSync(path.join(dir, 'scripts')).isDirectory();
+    entries.includes('scripts') && fs.statSync(path.join(dir, 'scripts')).isDirectory();
 
   const hasReferences =
-    entries.includes('references') &&
-    fs.statSync(path.join(dir, 'references')).isDirectory();
+    entries.includes('references') && fs.statSync(path.join(dir, 'references')).isDirectory();
 
   return { name, path: dir, frontmatter, body, templates, hasExamples, hasScripts, hasReferences };
 }

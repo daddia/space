@@ -6,12 +6,12 @@ How a Space workspace organises its documents — what artefacts exist, where th
 
 Every artefact lives at one of three tiers. The tier determines the save path and what the document is responsible for.
 
-| Tier | `scope:` | Save path | What it describes |
-| --- | --- | --- | --- |
-| Portfolio | `portfolio` | `product/{artefact}.md` | A collection of related products — their thesis, sequencing, and commercial model |
-| Product | `product` | `product/{name}/{artefact}.md` | A single product — strategy, roadmap, and epic backlog |
-| Domain | `domain` | `domain/{name}/{artefact}.md` | A bounded context within a product — its architecture, contracts, and sprint backlogs |
-| Work package | `work-package` | `work/{wp}/{artefact}.md` | A sprint-scoped implementation unit |
+| Tier         | `scope:`       | Save path                      | What it describes                                                                     |
+| ------------ | -------------- | ------------------------------ | ------------------------------------------------------------------------------------- |
+| Portfolio    | `portfolio`    | `product/{artefact}.md`        | A collection of related products — their thesis, sequencing, and commercial model     |
+| Product      | `product`      | `product/{name}/{artefact}.md` | A single product — strategy, roadmap, and epic backlog                                |
+| Domain       | `domain`       | `domain/{name}/{artefact}.md`  | A bounded context within a product — its architecture, contracts, and sprint backlogs |
+| Work package | `work-package` | `work/{wp}/{artefact}.md`      | A sprint-scoped implementation unit                                                   |
 
 Each artefact carries a `parent:` field pointing one tier up:
 
@@ -89,27 +89,27 @@ Written after the walking skeleton walks (never before — baselines require shi
 
 One artefact is the authoritative source (**OWN**) for each type of content. Others may reference but not redefine.
 
-| Content type | product | solution | roadmap | backlog | contracts | metrics |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: |
-| Vision, strategic thesis | **OWN** | REF | REF | — | — | — |
-| Problem statement | **OWN** | REF | REF | REF | — | — |
-| Target user segments | **OWN** | REF | — | REF | — | REF |
-| Product scope (in/out) | **OWN** | REF | REF | — | — | — |
-| North-star metric targets | **OWN** | — | REF | REF | — | REF |
-| Metric instrumentation | — | — | — | — | — | **OWN** |
-| Technical non-goals | REF | **OWN** | — | — | — | — |
-| API contracts and schemas | — | REF | — | REF | **OWN** | — |
-| System structure (C4 L2) | — | **OWN** | — | — | — | — |
-| Data model | — | **OWN** | — | — | REF | — |
-| Error-handling strategy | — | **OWN** | — | REF | REF | REF |
-| Observability strategy | — | **OWN** | — | — | REF | REF |
-| Phase sequencing | REF | REF | **OWN** | — | — | — |
-| Cross-team dependencies | REF | REF | **OWN** | REF | — | — |
-| User stories + EARS criteria | — | — | — | **OWN** | REF | — |
-| Architectural decisions | — | **OWN** | — | — | — | — |
-| Tech stack choices | — | **OWN** | — | — | — | — |
-| Technical risks and debt | — | **OWN** | REF | — | — | — |
-| Product and market risks | **OWN** | — | REF | — | — | — |
+| Content type                 | product | solution | roadmap | backlog | contracts | metrics |
+| ---------------------------- | :-----: | :------: | :-----: | :-----: | :-------: | :-----: |
+| Vision, strategic thesis     | **OWN** |   REF    |   REF   |    —    |     —     |    —    |
+| Problem statement            | **OWN** |   REF    |   REF   |   REF   |     —     |    —    |
+| Target user segments         | **OWN** |   REF    |    —    |   REF   |     —     |   REF   |
+| Product scope (in/out)       | **OWN** |   REF    |   REF   |    —    |     —     |    —    |
+| North-star metric targets    | **OWN** |    —     |   REF   |   REF   |     —     |   REF   |
+| Metric instrumentation       |    —    |    —     |    —    |    —    |     —     | **OWN** |
+| Technical non-goals          |   REF   | **OWN**  |    —    |    —    |     —     |    —    |
+| API contracts and schemas    |    —    |   REF    |    —    |   REF   |  **OWN**  |    —    |
+| System structure (C4 L2)     |    —    | **OWN**  |    —    |    —    |     —     |    —    |
+| Data model                   |    —    | **OWN**  |    —    |    —    |    REF    |    —    |
+| Error-handling strategy      |    —    | **OWN**  |    —    |   REF   |    REF    |   REF   |
+| Observability strategy       |    —    | **OWN**  |    —    |    —    |    REF    |   REF   |
+| Phase sequencing             |   REF   |   REF    | **OWN** |    —    |     —     |    —    |
+| Cross-team dependencies      |   REF   |   REF    | **OWN** |   REF   |     —     |    —    |
+| User stories + EARS criteria |    —    |    —     |    —    | **OWN** |    REF    |    —    |
+| Architectural decisions      |    —    | **OWN**  |    —    |    —    |     —     |    —    |
+| Tech stack choices           |    —    | **OWN**  |    —    |    —    |     —     |    —    |
+| Technical risks and debt     |    —    | **OWN**  |   REF   |    —    |     —     |    —    |
+| Product and market risks     | **OWN** |    —     |   REF   |    —    |     —     |    —    |
 
 ## Scope canonicalisation
 
@@ -122,12 +122,12 @@ The same scope boundary tends to appear in four places. To prevent drift:
 
 ## Roadmap vs backlog seam
 
-| | `roadmap.md` | `backlog.md` |
-| --- | --- | --- |
-| Written | Before epics exist | After roadmap is sequenced |
-| Unit | Customer capability + exit criterion | Epic + estimate + dependency |
-| Vocabulary | Outcome, phase, gate | Epic, story, points, WP |
-| Cites the other? | Never — no epic IDs | Yes — cites the roadmap phase |
+|                  | `roadmap.md`                         | `backlog.md`                  |
+| ---------------- | ------------------------------------ | ----------------------------- |
+| Written          | Before epics exist                   | After roadmap is sequenced    |
+| Unit             | Customer capability + exit criterion | Epic + estimate + dependency  |
+| Vocabulary       | Outcome, phase, gate                 | Epic, story, points, WP       |
+| Cites the other? | Never — no epic IDs                  | Yes — cites the roadmap phase |
 
 The backlog is the many-to-one decomposition of roadmap phases into epics. If a roadmap entry needs an epic ID to make sense, it is not outcome-shaped and must be rewritten.
 

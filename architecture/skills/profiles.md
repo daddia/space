@@ -35,12 +35,12 @@ skills:
 
 ### Starter profiles
 
-| Profile | Best for |
-| --- | --- |
-| `minimal` | Code-focused teams: implement, review-code, refactor-code, create-mr, write-adr |
+| Profile       | Best for                                                                                                                      |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `minimal`     | Code-focused teams: implement, review-code, refactor-code, create-mr, write-adr                                               |
 | `domain-team` | Squads delivering a domain: add write-product, write-solution, write-backlog, write-contracts, write-wp-design, review-design |
-| `platform` | Platform and architecture teams: add plan-adr, review-adr, review-solution, write-tech-stack |
-| `full` | All stable skills |
+| `platform`    | Platform and architecture teams: add plan-adr, review-adr, review-solution, write-tech-stack                                  |
+| `full`        | All stable skills                                                                                                             |
 
 Deprecated and deferred skills are **never** included in any profile, regardless of the profile setting.
 

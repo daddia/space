@@ -49,35 +49,35 @@ Configured per workspace in `.space/config`:
 
 ```yaml
 issues:
-  source: markdown    # markdown | jira
+  source: markdown # markdown | jira
 ```
 
-| Mode | Who owns the key | `space publish jira` behaviour |
-| --- | --- | --- |
+| Mode               | Who owns the key                         | `space publish jira` behaviour                                                              |
+| ------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `source: markdown` | Space Markdown — local IDs are canonical | Creates and updates Jira issues; writes Jira key back to `.space/sources/jira/mapping.json` |
-| `source: jira` | Jira — the Jira key is canonical | Only reconciles updates; never creates issues from Markdown alone |
+| `source: jira`     | Jira — the Jira key is canonical         | Only reconciles updates; never creates issues from Markdown alone                           |
 
 ### Field mapping
 
-| Markdown field | Jira field |
-| --- | --- |
-| `[ID]` title | Summary |
-| Status | Status (via workflow transitions) |
-| Priority | Priority |
-| Estimate | Story points |
-| Epic | Parent (Epic link) |
-| Labels | Labels |
-| Depends on | Issue link: blocks / is blocked by |
-| Deliverable | Description (first paragraph) |
-| Design | Description (remote link to Confluence) |
-| Acceptance | Description checklist or sub-tasks (per `ac_placement` config) |
+| Markdown field | Jira field                                                     |
+| -------------- | -------------------------------------------------------------- |
+| `[ID]` title   | Summary                                                        |
+| Status         | Status (via workflow transitions)                              |
+| Priority       | Priority                                                       |
+| Estimate       | Story points                                                   |
+| Epic           | Parent (Epic link)                                             |
+| Labels         | Labels                                                         |
+| Depends on     | Issue link: blocks / is blocked by                             |
+| Deliverable    | Description (first paragraph)                                  |
+| Design         | Description (remote link to Confluence)                        |
+| Acceptance     | Description checklist or sub-tasks (per `ac_placement` config) |
 
 ### AC placement config
 
 ```yaml
 issues:
-  ac_format: ears+gherkin    # ears | gherkin | ears+gherkin
-  ac_placement: description  # description | subtasks
+  ac_format: ears+gherkin # ears | gherkin | ears+gherkin
+  ac_placement: description # description | subtasks
 ```
 
 Default is `description` (lower Jira noise). `subtasks` enables per-criterion tracking.
@@ -98,14 +98,14 @@ Files without this field are silently skipped. The command converts Markdown to 
 
 ## Doc-to-destination mapping
 
-| Workspace artefact | Destination |
-| --- | --- |
-| `product/{name}/product.md` | Confluence — strategy context page |
-| `product/{name}/roadmap.md` | Confluence + Jira Plans |
-| `domain/{d}/solution.md` | Confluence — architecture page linked from epics |
-| `domain/{d}/contracts.md` | Confluence — index page linking to source files |
-| `domain/{d}/backlog.md` | Jira — one epic per row |
-| `work/{d}/{wp}/backlog.md` | Jira — one story per block, under the epic |
-| `work/{d}/{wp}/design.md` | Confluence — linked from the Jira epic |
+| Workspace artefact          | Destination                                      |
+| --------------------------- | ------------------------------------------------ |
+| `product/{name}/product.md` | Confluence — strategy context page               |
+| `product/{name}/roadmap.md` | Confluence + Jira Plans                          |
+| `domain/{d}/solution.md`    | Confluence — architecture page linked from epics |
+| `domain/{d}/contracts.md`   | Confluence — index page linking to source files  |
+| `domain/{d}/backlog.md`     | Jira — one epic per row                          |
+| `work/{d}/{wp}/backlog.md`  | Jira — one story per block, under the epic       |
+| `work/{d}/{wp}/design.md`   | Confluence — linked from the Jira epic           |
 
 **Principle: Confluence owns prose, Jira owns work.**

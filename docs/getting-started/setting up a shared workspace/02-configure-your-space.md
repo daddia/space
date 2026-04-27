@@ -14,11 +14,11 @@ description: Wire your workspace to Jira, Confluence, and other external sources
 
 ## The `.space/` directory
 
-| Path | Contents |
-|---|---|
-| `.space/config` | Project identity and source references (committed) |
-| `.space/team` | Team members and roles (committed) |
-| `.space/raci` | Responsibility matrix (committed) |
+| Path              | Contents                                              |
+| ----------------- | ----------------------------------------------------- |
+| `.space/config`   | Project identity and source references (committed)    |
+| `.space/team`     | Team members and roles (committed)                    |
+| `.space/raci`     | Responsibility matrix (committed)                     |
 | `.space/sources/` | Native-format mirrors of external sources (committed) |
 
 ## Configure project identity
@@ -95,10 +95,10 @@ space sync confluence     # sync Confluence space to .space/sources/confluence/
 space sync                # sync all configured sources
 ```
 
-| Command | Output path | Format |
-|---|---|---|
-| `space sync jira` | `.space/sources/jira/` | Jira issue JSON (native API format) |
-| `space sync confluence` | `.space/sources/confluence/` | Confluence storage-format XHTML |
+| Command                 | Output path                  | Format                              |
+| ----------------------- | ---------------------------- | ----------------------------------- |
+| `space sync jira`       | `.space/sources/jira/`       | Jira issue JSON (native API format) |
+| `space sync confluence` | `.space/sources/confluence/` | Confluence storage-format XHTML     |
 
 Syncs are deterministic and idempotent -- safe to re-run. Partial writes go to a temp directory and are only moved into place on success.
 

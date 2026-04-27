@@ -8,15 +8,15 @@
 
 Full documentation for how skills are structured, linted, and published lives in the repo architecture docs:
 
-| Topic | Document |
-| --- | --- |
-| Skill anatomy, frontmatter schema, body sections | `architecture/skills/skill-anatomy.md` |
-| Description authoring rules and routing | `architecture/skills/discovery-and-routing.md` |
-| Five-track and role model | `architecture/skills/track-and-role-model.md` |
-| Skill profiles | `architecture/skills/profiles.md` |
-| Index and role views generation | `architecture/skills/index-and-views.md` |
-| Lint checks and quality rules | `architecture/skills/lint-and-quality.md` |
-| Artefact reference URI scheme | `architecture/conventions/artefact-references.md` |
+| Topic                                            | Document                                          |
+| ------------------------------------------------ | ------------------------------------------------- |
+| Skill anatomy, frontmatter schema, body sections | `architecture/skills/skill-anatomy.md`            |
+| Description authoring rules and routing          | `architecture/skills/discovery-and-routing.md`    |
+| Five-track and role model                        | `architecture/skills/track-and-role-model.md`     |
+| Skill profiles                                   | `architecture/skills/profiles.md`                 |
+| Index and role views generation                  | `architecture/skills/index-and-views.md`          |
+| Lint checks and quality rules                    | `architecture/skills/lint-and-quality.md`         |
+| Artefact reference URI scheme                    | `architecture/conventions/artefact-references.md` |
 
 ## Quick reference: directory layout
 

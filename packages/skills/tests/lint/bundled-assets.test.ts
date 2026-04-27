@@ -41,7 +41,11 @@ describe('bundledAssets', () => {
 
   it('passes when the body contains no local asset links', () => {
     const dir = makeSkillDir(tmpDir, 'write-adr');
-    const skill = makeSkill(dir, 'write-adr', 'Use [solution](space:architecture/solution.md) as reference.');
+    const skill = makeSkill(
+      dir,
+      'write-adr',
+      'Use [solution](space:architecture/solution.md) as reference.',
+    );
     expect(bundledAssets(skill, [])).toHaveLength(0);
   });
 

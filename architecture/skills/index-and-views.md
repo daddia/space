@@ -10,10 +10,13 @@ The generated table lives between sentinel comments inside `space-index/SKILL.md
 
 ```markdown
 <!-- BEGIN GENERATED — do not edit; run `pnpm generate:index` to refresh -->
-| Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |
-| --- | --- | --- | --- | --- | --- | --- |
-| write-product | Drafts product.md at portfolio, product, or domain ... | product.md | strategy | pm | — | product.md |
+
+| Skill         | Description (excerpt)                                  | Artefact   | Track    | Role | Consumes | Produces   |
+| ------------- | ------------------------------------------------------ | ---------- | -------- | ---- | -------- | ---------- |
+| write-product | Drafts product.md at portfolio, product, or domain ... | product.md | strategy | pm   | —        | product.md |
+
 ...
+
 <!-- END GENERATED -->
 ```
 
@@ -28,21 +31,22 @@ The script exits with code 1 if it made changes ("output was stale — commit th
 ### What the generator reads
 
 For each skill directory (excluding `bin/`, `.` prefixes, and skills with `stage: deprecated`):
+
 1. Reads `SKILL.md` frontmatter
 2. Extracts: `name`, `description` (first 120 chars), `artefact`, `track`, `role`, `consumes`, `produces`
 3. Emits a table row
 
 ### Column semantics
 
-| Column | Source | Used for |
-| --- | --- | --- |
-| Skill | `name:` | Unique ID |
-| Description | `description:` (excerpt) | Human scan |
-| Artefact | `artefact:` | What it produces |
-| Track | `track:` | Delivery track filter |
-| Role | `role:` | Primary persona |
-| Consumes | `consumes:` | Input artefacts |
-| Produces | `produces:` | Output artefacts |
+| Column      | Source                   | Used for              |
+| ----------- | ------------------------ | --------------------- |
+| Skill       | `name:`                  | Unique ID             |
+| Description | `description:` (excerpt) | Human scan            |
+| Artefact    | `artefact:`              | What it produces      |
+| Track       | `track:`                 | Delivery track filter |
+| Role        | `role:`                  | Primary persona       |
+| Consumes    | `consumes:`              | Input artefacts       |
+| Produces    | `produces:`              | Output artefacts      |
 
 ## Role views
 
@@ -67,6 +71,7 @@ Role views are committed and kept in sync with skills. They are the answer to "w
 ## When to regenerate
 
 Run both generators after:
+
 - Adding or removing a skill
 - Changing any field in a skill's frontmatter (especially `name:`, `description:`, `track:`, `role:`, `artefact:`, `consumes:`, `produces:`)
 - Deprecating a skill (it disappears from the index but its frontmatter still drives the view filter for the transition period)

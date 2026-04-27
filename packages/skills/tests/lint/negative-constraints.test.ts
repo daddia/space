@@ -35,8 +35,12 @@ const BODY_WITHOUT_NEG = `# Title\n\nSome content without the constraints sectio
 describe('negativeConstraints', () => {
   let tmpDir: string;
 
-  beforeEach(() => { tmpDir = makeTmpDir(); });
-  afterEach(() => { fs.rmSync(tmpDir, { recursive: true, force: true }); });
+  beforeEach(() => {
+    tmpDir = makeTmpDir();
+  });
+  afterEach(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  });
 
   it('passes when a skill has no templates and has ## Negative constraints in body', () => {
     const skillDir = makeSkillDir(tmpDir, 'implement');

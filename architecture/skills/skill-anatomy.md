@@ -43,23 +43,23 @@ allowed-tools:
   - Glob
   - Grep
 argument-hint: '<scope: portfolio|product|domain> <name> [--mode pitch|product]'
-artefact: product.md          # primary output artefact name
-track: strategy               # strategy | architecture | discovery | delivery | refine | utility
-role: pm                      # single primary role (see track-and-role-model.md)
-also-relevant-to-roles:       # optional secondary roles
+artefact: product.md # primary output artefact name
+track: strategy # strategy | architecture | discovery | delivery | refine | utility
+role: pm # single primary role (see track-and-role-model.md)
+also-relevant-to-roles: # optional secondary roles
   - founder
-also-relevant-to-tracks:      # optional secondary tracks
+also-relevant-to-tracks: # optional secondary tracks
   - discovery
-domain: product               # subject domain: product | architecture | engineering | delivery
-stage: stable                 # stable | deferred | deprecated | experimental
+domain: product # subject domain: product | architecture | engineering | delivery
+stage: stable # stable | deferred | deprecated | experimental
 consumes:
-  - product.md                # artefact names (abstract, not paths)
+  - product.md # artefact names (abstract, not paths)
 produces:
   - product.md
 prerequisites:
-  - product.md                # must exist before this skill runs
+  - product.md # must exist before this skill runs
 related:
-  - write-roadmap             # sibling skill names
+  - write-roadmap # sibling skill names
 tags:
   - product
   - strategy
@@ -70,27 +70,27 @@ version: '0.3'
 
 ### Field reference
 
-| Field | Required | Description |
-| --- | --- | --- |
-| `name` | ✓ | Matches the directory name (`{verb}-{topic}`) |
-| `description` | ✓ | 200–500 chars; LLM routing text (see `architecture/skills/discovery-and-routing.md`) |
-| `allowed-tools` | ✓ | Tools the skill may use |
-| `version` | ✓ | Semver string `'x.y'` |
-| `artefact` | ✓ | Primary output name |
-| `track` | ✓ | Delivery track (see `architecture/skills/track-and-role-model.md`) |
-| `role` | ✓ | Single primary role |
-| `domain` | ✓ | Subject domain |
-| `stage` | ✓ | Lifecycle |
-| `produces` | ✓ | List of produced artefact names |
-| `when_to_use` | recommended | Extended routing guidance |
-| `argument-hint` | recommended | CLI-style arg signature shown in pickers |
-| `consumes` | recommended | Artefacts the skill reads |
-| `prerequisites` | recommended | Must exist before skill runs |
-| `related` | recommended | Sibling skill names |
-| `also-relevant-to-roles` | optional | Secondary roles |
-| `also-relevant-to-tracks` | optional | Secondary tracks |
-| `tags` | optional | Free-form (linter does not check) |
-| `owner` | recommended | `'@daddia'` or team name |
+| Field                     | Required    | Description                                                                          |
+| ------------------------- | ----------- | ------------------------------------------------------------------------------------ |
+| `name`                    | ✓           | Matches the directory name (`{verb}-{topic}`)                                        |
+| `description`             | ✓           | 200–500 chars; LLM routing text (see `architecture/skills/discovery-and-routing.md`) |
+| `allowed-tools`           | ✓           | Tools the skill may use                                                              |
+| `version`                 | ✓           | Semver string `'x.y'`                                                                |
+| `artefact`                | ✓           | Primary output name                                                                  |
+| `track`                   | ✓           | Delivery track (see `architecture/skills/track-and-role-model.md`)                   |
+| `role`                    | ✓           | Single primary role                                                                  |
+| `domain`                  | ✓           | Subject domain                                                                       |
+| `stage`                   | ✓           | Lifecycle                                                                            |
+| `produces`                | ✓           | List of produced artefact names                                                      |
+| `when_to_use`             | recommended | Extended routing guidance                                                            |
+| `argument-hint`           | recommended | CLI-style arg signature shown in pickers                                             |
+| `consumes`                | recommended | Artefacts the skill reads                                                            |
+| `prerequisites`           | recommended | Must exist before skill runs                                                         |
+| `related`                 | recommended | Sibling skill names                                                                  |
+| `also-relevant-to-roles`  | optional    | Secondary roles                                                                      |
+| `also-relevant-to-tracks` | optional    | Secondary tracks                                                                     |
+| `tags`                    | optional    | Free-form (linter does not check)                                                    |
+| `owner`                   | recommended | `'@daddia'` or team name                                                             |
 
 ## Body sections
 
@@ -126,12 +126,12 @@ The linter asserts that no committed output artefact contains a DRAFTING AIDE bl
 
 Many skills take `<scope: portfolio|product|domain>` as the first argument. The save path depends on scope:
 
-| Scope | Save path |
-| --- | --- |
-| `portfolio` | `product/{artefact}.md` |
-| `product <name>` | `product/{name}/{artefact}.md` (portfolio workspace) or `product/{artefact}.md` (single-product) |
-| `domain <name>` | `domain/{name}/{artefact}.md` |
-| `work-package <wp>` | `work/{wp}/{artefact}.md` |
+| Scope               | Save path                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| `portfolio`         | `product/{artefact}.md`                                                                          |
+| `product <name>`    | `product/{name}/{artefact}.md` (portfolio workspace) or `product/{artefact}.md` (single-product) |
+| `domain <name>`     | `domain/{name}/{artefact}.md`                                                                    |
+| `work-package <wp>` | `work/{wp}/{artefact}.md`                                                                        |
 
 Skills should contain a scope-to-path table in their body rather than hard-coding specific paths.
 
@@ -139,15 +139,15 @@ Skills should contain a scope-to-path table in their body rather than hard-codin
 
 Skills use the `{verb}-{topic}` pattern. The verb signals the operation and the track:
 
-| Verb | Track | Usage |
-| --- | --- | --- |
-| `write-` | any | Author from scratch |
-| `refine-` | refine | Regular cadence update |
-| `review-` | any | Critical quality gate |
-| `plan-` | architecture / strategy | Identify or sequence decisions |
-| `implement` | delivery | Execute a story |
-| `validate` | delivery | Final acceptance check |
-| `create-` | delivery | Automate an external artefact |
-| `refactor-` | delivery | Restructure code without behaviour change |
+| Verb        | Track                   | Usage                                     |
+| ----------- | ----------------------- | ----------------------------------------- |
+| `write-`    | any                     | Author from scratch                       |
+| `refine-`   | refine                  | Regular cadence update                    |
+| `review-`   | any                     | Critical quality gate                     |
+| `plan-`     | architecture / strategy | Identify or sequence decisions            |
+| `implement` | delivery                | Execute a story                           |
+| `validate`  | delivery                | Final acceptance check                    |
+| `create-`   | delivery                | Automate an external artefact             |
+| `refactor-` | delivery                | Restructure code without behaviour change |
 
 See `contributing/naming-conventions.md` for the full policy.

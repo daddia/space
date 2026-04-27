@@ -3,10 +3,7 @@ import { generateIndexTable } from '../../src/generate/index-table.js';
 import type { Skill } from '../../src/skill.js';
 import type { DaddiaFrontmatter } from '../../src/frontmatter.js';
 
-function makeSkill(
-  name: string,
-  fm: Partial<DaddiaFrontmatter>,
-): Skill {
+function makeSkill(name: string, fm: Partial<DaddiaFrontmatter>): Skill {
   return {
     name,
     path: `/fake/${name}`,
@@ -65,7 +62,9 @@ describe('generateIndexTable', () => {
 
   it('truncates descriptions longer than 120 chars with an ellipsis', () => {
     const longDesc = 'A'.repeat(130);
-    const result = generateIndexTable([makeSkill('test-skill', { description: longDesc, produces: ['x'] })]);
+    const result = generateIndexTable([
+      makeSkill('test-skill', { description: longDesc, produces: ['x'] }),
+    ]);
     const row = result.split('\n').find((l) => l.includes('test-skill'));
     expect(row).toContain('...');
     expect(row).not.toContain(longDesc);
@@ -73,7 +72,9 @@ describe('generateIndexTable', () => {
 
   it('does not truncate descriptions at or under 120 chars', () => {
     const shortDesc = 'B'.repeat(120);
-    const result = generateIndexTable([makeSkill('test-skill', { description: shortDesc, produces: ['x'] })]);
+    const result = generateIndexTable([
+      makeSkill('test-skill', { description: shortDesc, produces: ['x'] }),
+    ]);
     const row = result.split('\n').find((l) => l.includes('test-skill'));
     expect(row).toContain(shortDesc);
     expect(row).not.toContain('...');
@@ -89,7 +90,11 @@ describe('generateIndexTable', () => {
 
   it('renders joined array for multi-value role', () => {
     const result = generateIndexTable([
-      makeSkill('test-skill', { description: 'test', role: ['pm', 'engineer'] as unknown as 'pm', produces: ['x'] }),
+      makeSkill('test-skill', {
+        description: 'test',
+        role: ['pm', 'engineer'] as unknown as 'pm',
+        produces: ['x'],
+      }),
     ]);
     const row = result.split('\n').find((l) => l.includes('test-skill'));
     expect(row).toContain('pm, engineer');

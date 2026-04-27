@@ -171,12 +171,12 @@ Three reasons Now precedes Next, and Next precedes Later:
 
 ## Dependencies on other teams
 
-| Dependency                                     | Owner                 | Gates     | Status                                                           |
-| ---------------------------------------------- | --------------------- | --------- | ---------------------------------------------------------------- |
-| Atlassian API availability and rate limits     | Atlassian (external)  | Now       | Addressed via retry + concurrency cap in the sync implementation |
-| `@daddia/crew` readiness to consume the workspace | Crew team              | Now, Next | Content contract stable; Crew integrates on its own schedule      |
-| Initiative workspace adoption                  | Each initiative squad | Next      | `storefront-space` is the validation environment; broader adoption is tracked via downloads, stars, and active workspaces |
-| Confluence page structure conventions          | daddia      | Next      | Confirmed before `space publish confluence` ships                |
+| Dependency                                        | Owner                 | Gates     | Status                                                                                                                    |
+| ------------------------------------------------- | --------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------- |
+| Atlassian API availability and rate limits        | Atlassian (external)  | Now       | Addressed via retry + concurrency cap in the sync implementation                                                          |
+| `@daddia/crew` readiness to consume the workspace | Crew team             | Now, Next | Content contract stable; Crew integrates on its own schedule                                                              |
+| Initiative workspace adoption                     | Each initiative squad | Next      | `storefront-space` is the validation environment; broader adoption is tracked via downloads, stars, and active workspaces |
+| Confluence page structure conventions             | daddia                | Next      | Confirmed before `space publish confluence` ships                                                                         |
 
 ## Review cadence
 

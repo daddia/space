@@ -38,6 +38,7 @@ The linter enforces one of: `Drafts`, `Creates`, `Implements`, `Reviews`, `Perfo
 ### Calibration
 
 The description should be:
+
 - **Specific about triggers** — name the exact phrases users say: "the user mentions 'review the backlog'", not "applicable to backlog review scenarios"
 - **Honest about scope** — if the skill only covers domain scope, say "domain scope"; don't imply it works everywhere
 - **Mildly pushy** when under-triggering is the risk — use imperative phrases like "Use when..." not "Can be used when..."
@@ -66,6 +67,7 @@ description: >
 As the library grows past ~15 skills, description collision becomes a risk: multiple skills look plausible for a given query. `space-index` is the safety net.
 
 `space-index` is a meta-skill with:
+
 - A `description` that triggers on vague routing requests ("which skill should I use?", "what can I do here?", "help me plan")
 - A body that is an **auto-generated table** of every sibling skill's frontmatter
 
@@ -73,8 +75,10 @@ The table is regenerated in CI via `pnpm --filter @daddia/skills generate:index`
 
 ```markdown
 <!-- BEGIN GENERATED — do not edit; run `pnpm generate:index` to refresh -->
+
 | Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |
 ...
+
 <!-- END GENERATED -->
 ```
 
@@ -95,6 +99,7 @@ python scripts/eval-descriptions.py
 ## `when_to_use` field
 
 `when_to_use` is not read by the router. It is read by:
+
 - Humans browsing the skill library
 - Agents that have already triggered the skill and want extended context
 

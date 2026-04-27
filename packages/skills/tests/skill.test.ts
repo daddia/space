@@ -155,7 +155,16 @@ describe('loadAllSkills', () => {
 
   it('skips reserved directories (bin, src, profiles, views, etc.)', () => {
     writeSkill(tmpDir, 'write-product', SAMPLE_SKILL_MD);
-    for (const reserved of ['bin', 'src', 'dist', 'profiles', 'views', 'space-index', 'node_modules', 'tests']) {
+    for (const reserved of [
+      'bin',
+      'src',
+      'dist',
+      'profiles',
+      'views',
+      'space-index',
+      'node_modules',
+      'tests',
+    ]) {
       const dir = path.join(tmpDir, reserved);
       fs.mkdirSync(dir);
       fs.writeFileSync(path.join(dir, 'SKILL.md'), SAMPLE_SKILL_MD);

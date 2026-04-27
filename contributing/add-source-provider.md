@@ -28,13 +28,11 @@ packages/space/src/providers/{provider}/
 Each provider exports a `sync(config, workspace)` function:
 
 ```typescript
-export async function sync(
-  config: SpaceConfig,
-  workspace: WorkspaceContext,
-): Promise<SyncResult>
+export async function sync(config: SpaceConfig, workspace: WorkspaceContext): Promise<SyncResult>;
 ```
 
 The function:
+
 1. Reads credentials from the workspace's `.env` (never hardcode)
 2. Fetches data from the upstream API with retry and rate limiting
 3. Writes to a **temp directory** first
@@ -63,7 +61,7 @@ Apply a concurrency cap consistent with the upstream API's documented rate limit
 
 ```typescript
 import pLimit from 'p-limit';
-const limit = pLimit(MAX_CONCURRENT);  // e.g. 5 for most REST APIs
+const limit = pLimit(MAX_CONCURRENT); // e.g. 5 for most REST APIs
 ```
 
 Add exponential retry for transient failures (5xx, network errors). Do not retry on 4xx (auth/config errors).
@@ -95,6 +93,7 @@ If the provider requires new config keys, update the config schema in `packages/
 ### 8. Smoke-test against a real workspace
 
 Before shipping, run against a real workspace with valid credentials and verify:
+
 - The mirror is written correctly
 - Re-running sync is idempotent (byte-identical output when upstream hasn't changed)
 - Error handling works: revoke credentials mid-run; confirm the previous mirror is untouched

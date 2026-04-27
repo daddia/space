@@ -10,22 +10,22 @@ We use four canonical artefacts to plan and deliver our work. Each one owns a si
 Two rules keep this set small and sharp:
 
 - **One source of truth per question.** Each artefact owns a distinct question (see the tables below) and nothing else. Every other artefact references its answer rather than restating it. When a piece of content belongs in `product.md`, the solution, roadmap, and backlog link to it and move on.
-- **Write what we know, when we know it.** The   four durable artefacts capture what the team has decided. Detail that emerges during delivery — ADRs, metrics baselines, cross-squad dependencies — is written when the work generates it, not upfront.
+- **Write what we know, when we know it.** The four durable artefacts capture what the team has decided. Detail that emerges during delivery — ADRs, metrics baselines, cross-squad dependencies — is written when the work generates it, not upfront.
 
 Together, these rules mean the artefact set stays small, the content stays current, and a reader always knows where to look for any given question.
 
 ## The four artefacts
 
-| Artefact | Question it answers |
-| --- | --- |
-| `product.md` | **Why** are we building this? **Who** is it for? **What** outcome do we want? |
-| `solution.md` | **How** will it work, at a system level? |
-| `roadmap.md` | **When**, in what order, do the customer-visible capabilities land? |
-| `backlog.md` | **What next**, sized and sequenced into epics and stories? |
+| Artefact      | Question it answers                                                           |
+| ------------- | ----------------------------------------------------------------------------- |
+| `product.md`  | **Why** are we building this? **Who** is it for? **What** outcome do we want? |
+| `solution.md` | **How** will it work, at a system level?                                      |
+| `roadmap.md`  | **When**, in what order, do the customer-visible capabilities land?           |
+| `backlog.md`  | **What next**, sized and sequenced into epics and stories?                    |
 
 This set of artefacts are well-tested industry pattern applied end-to-end:
 
-> **Working Backwards** (product) → **Solution Intent** (solution) → **Now / Next / Later** (roadmap) → **Story Map** (backlog).**
+> **Working Backwards** (product) → **Solution Intent** (solution) → **Now / Next / Later** (roadmap) → **Story Map** (backlog).\*\*
 
 Working Backwards (Amazon) frames product around the customer outcome. Solution Intent (SAFe / arc42) captures the system-level design. Now/Next/Later (Jeff Bastow, Teresa Torres) sequences outcomes by what each unlocks, not by calendar. Story Map (Jeff Patton) lays out the backlog as slices of real customer value.
 
@@ -40,19 +40,19 @@ We use the four artefacts at two levels:
 
 ### Tier 1 — Product / Domain
 
-| Artefact | Owns the question | Owner | Primary audience | Must not contain |
-| --- | --- | --- | --- | --- |
-| `product.md` | Why, who, what outcome | Product | Exec, PMs, adjacent squads | File paths, APIs, schemas, component names, tech choices, ADRs |
-| `solution.md` | How, at a system level | Architect / staff engineer | Engineers, adjacent squads | Commercial rationale, target segments, story-level AC, UI copy |
-| `roadmap.md` | When, in what order | Product + engineering lead | Cross-squad, stakeholders | Epic IDs, implementation design, story AC, dates beyond "Now" |
-| `backlog.md` | What next, sized | Delivery lead | Squad | Business-case narrative, architecture rationale, pattern definitions |
+| Artefact      | Owns the question      | Owner                      | Primary audience           | Must not contain                                                     |
+| ------------- | ---------------------- | -------------------------- | -------------------------- | -------------------------------------------------------------------- |
+| `product.md`  | Why, who, what outcome | Product                    | Exec, PMs, adjacent squads | File paths, APIs, schemas, component names, tech choices, ADRs       |
+| `solution.md` | How, at a system level | Architect / staff engineer | Engineers, adjacent squads | Commercial rationale, target segments, story-level AC, UI copy       |
+| `roadmap.md`  | When, in what order    | Product + engineering lead | Cross-squad, stakeholders  | Epic IDs, implementation design, story AC, dates beyond "Now"        |
+| `backlog.md`  | What next, sized       | Delivery lead              | Squad                      | Business-case narrative, architecture rationale, pattern definitions |
 
 ### Tier 2 — Work package
 
-| Artefact | Owns the question | Owner | Primary audience | Must not contain |
-| --- | --- | --- | --- | --- |
-| `design.md` | How will **this sprint** build it? | Engineering lead | Sprint squad | Domain-wide patterns (reference `solution.md`), business rationale, phase sequencing |
-| `backlog.md` | What stories does **this sprint** deliver? | Delivery lead | Sprint squad | Business-case narrative; pattern definitions; cross-sprint dependencies without a reason |
+| Artefact     | Owns the question                          | Owner            | Primary audience | Must not contain                                                                         |
+| ------------ | ------------------------------------------ | ---------------- | ---------------- | ---------------------------------------------------------------------------------------- |
+| `design.md`  | How will **this sprint** build it?         | Engineering lead | Sprint squad     | Domain-wide patterns (reference `solution.md`), business rationale, phase sequencing     |
+| `backlog.md` | What stories does **this sprint** deliver? | Delivery lead    | Sprint squad     | Business-case narrative; pattern definitions; cross-sprint dependencies without a reason |
 
 A work-package `design.md` comes in two modes, depending on sprint position:
 

@@ -71,7 +71,7 @@ The template must open with a DRAFTING AIDE block:
 
 ```markdown
 ---
-type: {Type}
+type: { Type }
 scope: <!-- portfolio | product | domain -->
 version: '0.1'
 status: Draft
@@ -85,6 +85,7 @@ DO NOT INCLUDE in this document:
 -->
 
 # {Title}
+
 ...
 ```
 
@@ -103,6 +104,7 @@ pnpm --filter @daddia/skills lint:skills {verb}-{topic}
 ```
 
 Fix all errors before proceeding. Common issues:
+
 - `desc.length` — description is too short or too long (200–500 chars)
 - `desc.verb` — description doesn't open with an allowed verb
 - `desc.disambiguation` — description missing a `Do NOT use` clause

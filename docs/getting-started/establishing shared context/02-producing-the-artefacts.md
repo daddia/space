@@ -49,7 +49,7 @@ Save the research output as a reference document — you will supply it as conte
 **Model:** High-reasoning (e.g. Opus)
 **Output:** `product.md`
 
-Run `write-product` to produce the first draft of the product strategy. The product document owns the *why*, *who*, and *what* — business context, customer segments, strategic thesis, and success definition. It must not contain technical decisions.
+Run `write-product` to produce the first draft of the product strategy. The product document owns the _why_, _who_, and _what_ — business context, customer segments, strategic thesis, and success definition. It must not contain technical decisions.
 
 Provide as much context as you have:
 
@@ -70,7 +70,7 @@ The model needs signal to be opinionated. A thin brief produces a thin `product.
 Review the draft `product.md` against the brief and any source material. The questions to hold in mind:
 
 - Is the problem statement grounded in current reality, not aspirations?
-- Is the strategic thesis opinionated — does it state what the product will *not* do?
+- Is the strategic thesis opinionated — does it state what the product will _not_ do?
 - Are the success conditions verifiable rather than aspirational?
 - Is anything in the document a restatement of content that belongs elsewhere?
 
@@ -84,7 +84,7 @@ Resolve gaps before moving to Step 4. A weak product document will produce an un
 **Model:** High-reasoning (e.g. Opus)
 **Output:** `solution.md`
 
-Run `write-solution` to develop the solution architecture. The solution document owns the *how* — system boundary, architectural style, key technical choices, data model, cross-cutting concerns, and deployment topology. It must not restate business rationale from `product.md`.
+Run `write-solution` to develop the solution architecture. The solution document owns the _how_ — system boundary, architectural style, key technical choices, data model, cross-cutting concerns, and deployment topology. It must not restate business rationale from `product.md`.
 
 Use `--stage stub` for a Phase 0 pass (pre-foundation sprint) or `--stage full` once a walking skeleton has shipped. For a greenfield domain at discovery time, the stub is the right starting point.
 
@@ -160,7 +160,7 @@ Document any decisions made here as comments or revisions to the artefacts so th
 **Model:** Standard (e.g. Sonnet)
 **Output:** `roadmap.md`
 
-Run `write-roadmap` to sequence the delivery into phases. The roadmap owns the *when* — what customer-visible capabilities land in what order, what quality gates each phase must clear, and what cross-domain dependencies exist.
+Run `write-roadmap` to sequence the delivery into phases. The roadmap owns the _when_ — what customer-visible capabilities land in what order, what quality gates each phase must clear, and what cross-domain dependencies exist.
 
 The roadmap is driven by `product.md` (success definition, outcome priorities) and constrained by `solution.md` (what must be in place before what). A roadmap that contradicts either of these is a signal that the upstream artefacts need revision, not that the roadmap should paper over the gap.
 
@@ -174,7 +174,7 @@ Review the roadmap draft and revise `product.md` or `solution.md` if needed.
 **Model:** Standard (e.g. Sonnet)
 **Output:** `backlog.md`
 
-Run `write-backlog` to decompose the roadmap into epics (domain scope) or stories (work-package scope). The backlog owns the *what next* — concrete, sized, sequenced work items with acceptance criteria.
+Run `write-backlog` to decompose the roadmap into epics (domain scope) or stories (work-package scope). The backlog owns the _what next_ — concrete, sized, sequenced work items with acceptance criteria.
 
 The backlog is the most detail-dense artefact and therefore the most likely to expose gaps in the artefacts above it. If writing a story's acceptance criteria requires inventing a requirement not traceable to `product.md`, or making an architectural decision not in `solution.md`, that is a gap to resolve upstream — not to silently absorb into the story.
 
@@ -213,15 +213,15 @@ That loop runs at each tier — product, solution, roadmap, backlog — and a di
 
 ## Model guidance
 
-| Task | Recommended model |
-| --- | --- |
-| Deep research | External Claude or ChatGPT (extended thinking / deep research mode) |
-| Drafting `product.md` | High-reasoning (e.g. Opus) |
-| Drafting `solution.md` | High-reasoning (e.g. Opus) |
-| Legacy analysis | Standard (e.g. Sonnet) |
-| Cross-document alignment review | High-reasoning (e.g. Opus) |
-| Independent review | A different model from the one that drafted — Claude vs ChatGPT |
-| Drafting `roadmap.md` / `backlog.md` | Standard (e.g. Sonnet) |
+| Task                                 | Recommended model                                                   |
+| ------------------------------------ | ------------------------------------------------------------------- |
+| Deep research                        | External Claude or ChatGPT (extended thinking / deep research mode) |
+| Drafting `product.md`                | High-reasoning (e.g. Opus)                                          |
+| Drafting `solution.md`               | High-reasoning (e.g. Opus)                                          |
+| Legacy analysis                      | Standard (e.g. Sonnet)                                              |
+| Cross-document alignment review      | High-reasoning (e.g. Opus)                                          |
+| Independent review                   | A different model from the one that drafted — Claude vs ChatGPT     |
+| Drafting `roadmap.md` / `backlog.md` | Standard (e.g. Sonnet)                                              |
 
 The principle behind this table: use high-reasoning models where the task requires synthesising conflicting signals or making opinionated trade-offs, and use independent models for review to avoid self-reinforcing blind spots.
 

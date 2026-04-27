@@ -24,9 +24,7 @@ export type ValidProfileName = (typeof VALID_PROFILE_NAMES)[number];
 
 export class UnknownProfileError extends Error {
   constructor(profileName: string) {
-    super(
-      `Unknown profile '${profileName}'. Valid profiles: ${VALID_PROFILE_NAMES.join(', ')}`,
-    );
+    super(`Unknown profile '${profileName}'. Valid profiles: ${VALID_PROFILE_NAMES.join(', ')}`);
     this.name = 'UnknownProfileError';
   }
 }
@@ -43,9 +41,7 @@ export class NpxSkillsError extends Error {
     public readonly exitCode: number | null,
     cause?: Error,
   ) {
-    const detail = cause
-      ? cause.message
-      : `exited with code ${exitCode ?? 'unknown'}`;
+    const detail = cause ? cause.message : `exited with code ${exitCode ?? 'unknown'}`;
     super(`npx skills add failed: ${detail}`);
     this.name = 'NpxSkillsError';
   }
@@ -69,10 +65,7 @@ interface WorkspaceProfileYaml {
  * The default implementation uses spawnSync with stdio: 'inherit'.
  * Override in tests to avoid real network calls.
  */
-export type NpxRunner = (
-  args: string[],
-  cwd: string,
-) => { status: number | null; error?: Error };
+export type NpxRunner = (args: string[], cwd: string) => { status: number | null; error?: Error };
 
 // ---------------------------------------------------------------------------
 // Profile resolution
@@ -251,9 +244,7 @@ export function installSkills(opts: InstallSkillsOptions): void {
 
   const lockfilePath = path.join(workspaceRoot, LOCKFILE_NAME);
   if (!existsSync(lockfilePath)) {
-    throw new Error(
-      `${LOCKFILE_NAME} not found; run \`space skills sync\` first`,
-    );
+    throw new Error(`${LOCKFILE_NAME} not found; run \`space skills sync\` first`);
   }
 
   const result = runNpx(['skills@latest', 'install', '--lockfile', lockfilePath], workspaceRoot);
@@ -262,9 +253,7 @@ export function installSkills(opts: InstallSkillsOptions): void {
     throw new Error(`npx skills install failed: ${result.error.message}`);
   }
   if (result.status !== 0) {
-    throw new Error(
-      `npx skills install exited with code ${result.status ?? 'unknown'}`,
-    );
+    throw new Error(`npx skills install exited with code ${result.status ?? 'unknown'}`);
   }
 
   process.stdout.write('space: skills installed from skills-lock.json\n');

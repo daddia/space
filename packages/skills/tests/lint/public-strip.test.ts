@@ -118,8 +118,8 @@ stage: stable
     const skill = loadSkill(skillDir);
     const result = publicStrip(skill, []);
     const publicStripDiags = result.filter((d) => d.rule === 'public-strip');
-    const missingFields = publicStripDiags.filter((d) =>
-      d.message.includes('"name"') || d.message.includes('"description"'),
+    const missingFields = publicStripDiags.filter(
+      (d) => d.message.includes('"name"') || d.message.includes('"description"'),
     );
     expect(missingFields).toHaveLength(2);
     expect(missingFields.every((d) => d.severity === 'error')).toBe(true);

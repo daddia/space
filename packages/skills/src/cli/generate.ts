@@ -87,9 +87,13 @@ if (runIndex) {
   }
 
   const linesNote = changed ? 'updated' : 'already up to date';
-  process.stdout.write(`generate index: space-index/SKILL.md (${skills.length} skills, ${linesNote})\n`);
+  process.stdout.write(
+    `generate index: space-index/SKILL.md (${skills.length} skills, ${linesNote})\n`,
+  );
   if (changed) {
-    process.stderr.write('generate index: output was stale — commit the updated space-index/SKILL.md\n');
+    process.stderr.write(
+      'generate index: output was stale — commit the updated space-index/SKILL.md\n',
+    );
   }
 }
 

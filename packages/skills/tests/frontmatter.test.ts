@@ -178,7 +178,10 @@ describe('stripFrontmatter', () => {
 
   it('handles a custom allowed-keys set', () => {
     const nameOnly: ReadonlySet<'name'> = new Set(['name']);
-    const stripped = stripFrontmatter(RICH_SKILL_MD, nameOnly as ReadonlySet<keyof import('../src/frontmatter.js').PublicFrontmatter>);
+    const stripped = stripFrontmatter(
+      RICH_SKILL_MD,
+      nameOnly as ReadonlySet<keyof import('../src/frontmatter.js').PublicFrontmatter>,
+    );
     const { data } = parseFrontmatter(stripped);
     expect(data.name).toBe('write-product');
     expect((data as Record<string, unknown>).description).toBeUndefined();

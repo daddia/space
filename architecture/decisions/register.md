@@ -13,19 +13,19 @@ ADRs live in `architecture/decisions/` in this repo. Use the template at
 
 ## Status legend
 
-| Status | Meaning |
-|---|---|
-| **Proposed** | Under discussion, not yet adopted |
-| **Accepted** | Adopted — the standard going forward |
-| **Superseded** | Replaced by a later ADR |
-| **Rejected** | Considered and not adopted |
+| Status         | Meaning                              |
+| -------------- | ------------------------------------ |
+| **Proposed**   | Under discussion, not yet adopted    |
+| **Accepted**   | Adopted — the standard going forward |
+| **Superseded** | Replaced by a later ADR              |
+| **Rejected**   | Considered and not adopted           |
 
 ---
 
 ## Foundation decisions (Phase 1)
 
-| ID | Title | Status |
-|---|---|---|
+| ID                                               | Title                                                                  | Status   |
+| ------------------------------------------------ | ---------------------------------------------------------------------- | -------- |
 | [ADR-0001](ADR-0001-skill-delivery-mechanism.md) | Skill delivery mechanism: three-repo split with stripped public mirror | Accepted |
 
 ---
@@ -34,8 +34,8 @@ ADRs live in `architecture/decisions/` in this repo. Use the template at
 
 Write the ADR before starting implementation of the blocking feature.
 
-| ID | Title | Priority | Blocks |
-|---|---|---|---|
+| ID  | Title | Priority | Blocks |
+| --- | ----- | -------- | ------ |
 
 ---
 

@@ -3,12 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { mkdtemp, rm, writeFile, mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import {
-  buildRoleView,
-  roleMatches,
-  generateViews,
-  ROLE_VIEWS,
-} from '../../src/generate/views.js';
+import { buildRoleView, roleMatches, generateViews, ROLE_VIEWS } from '../../src/generate/views.js';
 import { loadAllSkills } from '../../src/skill.js';
 import type { Skill } from '../../src/skill.js';
 import type { DaddiaFrontmatter } from '../../src/frontmatter.js';
@@ -50,7 +45,13 @@ function makeSkillMd(
 }
 
 async function createPackageDir(
-  skills: Array<{ name: string; description: string; role: string | string[]; produces: string[]; stage?: string }>,
+  skills: Array<{
+    name: string;
+    description: string;
+    role: string | string[];
+    produces: string[];
+    stage?: string;
+  }>,
 ): Promise<string> {
   const dir = await mkdtemp(path.join(tmpdir(), 'gen-views-'));
   await mkdir(path.join(dir, 'bin'), { recursive: true });
@@ -204,8 +205,20 @@ describe('generateViews (integration)', () => {
 
   it('excludes deprecated skills from all views', async () => {
     packageDir = await createPackageDir([
-      { name: 'live-skill', description: 'live', role: ['engineer'], produces: ['x'], stage: 'stable' },
-      { name: 'old-skill', description: 'old', role: ['engineer'], produces: ['x'], stage: 'deprecated' },
+      {
+        name: 'live-skill',
+        description: 'live',
+        role: ['engineer'],
+        produces: ['x'],
+        stage: 'stable',
+      },
+      {
+        name: 'old-skill',
+        description: 'old',
+        role: ['engineer'],
+        produces: ['x'],
+        stage: 'deprecated',
+      },
     ]);
     const views = generateViews(loadAllSkills(packageDir));
     expect(views['engineer.md']).toContain('live-skill');

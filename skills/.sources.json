@@ -2,39 +2,7 @@
   "@daddia/skills": {
     "version": "0.4.0",
     "skills": [
-      "create-mr",
-      "design",
-      "implement",
-      "plan-adr",
-      "plan-delivery",
-      "refactor-code",
-      "refine-backlog",
-      "refine-docs",
-      "refine-product",
-      "refine-roadmap",
-      "refine-solution",
-      "requirements",
-      "review-adr",
-      "review-backlog",
-      "review-code",
-      "review-design",
-      "review-docs",
-      "review-product",
-      "review-roadmap",
-      "review-solution",
-      "space-index",
-      "validate",
-      "write-adr",
-      "write-backlog",
-      "write-contracts",
-      "write-metrics",
-      "write-metrics-report",
-      "write-product",
-      "write-retrospective",
-      "write-roadmap",
-      "write-solution",
-      "write-tech-stack",
-      "write-wp-design"
+      "space-index"
     ]
   }
 }

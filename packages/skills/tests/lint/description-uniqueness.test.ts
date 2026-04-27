@@ -18,10 +18,7 @@ function makeSkill(name: string, description: string): Skill {
 describe('descriptionUniqueness', () => {
   it('passes when the description is unique among all skills', () => {
     const skill = makeSkill('skill-b', 'Drafts a backlog. Do NOT use for roadmaps.');
-    const all = [
-      makeSkill('skill-a', 'Drafts a product. Do NOT use for roadmaps.'),
-      skill,
-    ];
+    const all = [makeSkill('skill-a', 'Drafts a product. Do NOT use for roadmaps.'), skill];
     const result = descriptionUniqueness(skill, all);
     expect(result).toHaveLength(0);
   });

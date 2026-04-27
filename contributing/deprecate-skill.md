@@ -5,6 +5,7 @@ How to retire a skill without breaking workspaces that reference it by name.
 ## When to deprecate
 
 Deprecate (not delete) when:
+
 - A skill is replaced by a new skill with a better name or scope
 - A skill is split into two more focused skills
 - A skill was added speculatively and has never been used
@@ -46,6 +47,7 @@ Use **{new-skill-name}** instead.
 ```
 
 Deprecated skills are:
+
 - Exempt from description length, verb, and disambiguation lint checks
 - Excluded from the generated index (not shown to routing agents)
 - Required to have `related:` pointing at the live replacement
@@ -74,8 +76,8 @@ When the removal version ships, delete the directory and add a major-bump change
 
 ## Current deprecated skills
 
-| Skill | Replaced by | Removal target |
-| --- | --- | --- |
-| `review-docs` | `review-design`, `review-solution`, `review-product` | v0.5.0 |
-| `requirements` | `write-backlog` (work-package scope) | v0.5.0 |
-| `design` | `write-wp-design` | v0.4.0 — already removed |
+| Skill          | Replaced by                                          | Removal target           |
+| -------------- | ---------------------------------------------------- | ------------------------ |
+| `review-docs`  | `review-design`, `review-solution`, `review-product` | v0.5.0                   |
+| `requirements` | `write-backlog` (work-package scope)                 | v0.5.0                   |
+| `design`       | `write-wp-design`                                    | v0.4.0 — already removed |

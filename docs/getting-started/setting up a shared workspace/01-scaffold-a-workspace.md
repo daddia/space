@@ -58,7 +58,7 @@ pnpm dlx @daddia/create-space my-project --yes --key ACME --use-pnpm
 | `work/`                    | Task workspaces (one directory per Jira issue or work item)                     |
 | `reports/`                 | Generated reports and summaries                                                 |
 | `{project}.code-workspace` | VS Code / Cursor multi-root workspace file                                      |
-| `package.json`             | Declares `@daddia/skills` and `@daddia/space` as dev dependencies                     |
+| `package.json`             | Declares `@daddia/skills` and `@daddia/space` as dev dependencies               |
 
 ## Install dependencies
 

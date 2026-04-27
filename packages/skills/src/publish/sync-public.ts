@@ -199,7 +199,10 @@ function collectSkillFiles(skillSrcDir: string): Map<string, string | Buffer> {
 
         if (relPath === 'SKILL.md') {
           const raw = fs.readFileSync(path.join(dir, entry.name), 'utf8');
-          files.set(relPath, stripFrontmatter(raw, PUBLIC_KEYS as ReadonlySet<keyof PublicFrontmatter>));
+          files.set(
+            relPath,
+            stripFrontmatter(raw, PUBLIC_KEYS as ReadonlySet<keyof PublicFrontmatter>),
+          );
         } else {
           files.set(relPath, fs.readFileSync(path.join(dir, entry.name)));
         }
@@ -288,7 +291,9 @@ function printDryRunSummary(
 
   if (plan.removedStale.length > 0) {
     process.stdout.write('\n');
-    process.stdout.write(`Will remove (no longer in profile): ${plan.removedStale.length} skills\n`);
+    process.stdout.write(
+      `Will remove (no longer in profile): ${plan.removedStale.length} skills\n`,
+    );
     for (const name of plan.removedStale) {
       process.stdout.write(`    - ${name}\n`);
     }

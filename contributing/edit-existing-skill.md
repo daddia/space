@@ -5,6 +5,7 @@ When to edit vs. deprecate, and how to make changes safely.
 ## Edit vs deprecate
 
 **Edit** when you are:
+
 - Correcting the description (routing improvement, length fix, missing `Do NOT use`)
 - Updating steps to reflect a changed convention
 - Adding missing body sections (negative constraints, quality rules)
@@ -12,6 +13,7 @@ When to edit vs. deprecate, and how to make changes safely.
 - Bumping version after a substantive change
 
 **Deprecate** when you are:
+
 - Replacing the skill with a different name or split into two skills
 - Removing a skill entirely (deprecate first; do not delete immediately)
 
@@ -50,6 +52,7 @@ See `contributing/deprecate-skill.md` for the deprecation process.
 ## What counts as a breaking change
 
 A skill change is breaking if consumers that invoke it with existing arguments would get a different output path or a different set of produced artefacts. Specifically:
+
 - Renaming the `argument-hint` parameters in a way that changes existing call sites
 - Removing a scope value that workspaces currently use
 - Changing the `artefact:` field or output file path

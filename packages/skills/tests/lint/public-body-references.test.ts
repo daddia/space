@@ -46,10 +46,7 @@ describe('publicBodyReferences', () => {
   });
 
   it('passes for a body linking to a generic example (ships)', () => {
-    const skill = makeSkill(
-      'See [example](examples/example-app-product.md).',
-      'stable',
-    );
+    const skill = makeSkill('See [example](examples/example-app-product.md).', 'stable');
     expect(publicBodyReferences(skill, [])).toHaveLength(0);
   });
 
@@ -98,10 +95,7 @@ describe('publicBodyReferences', () => {
   });
 
   it('emits error when body links to a file under .internal/', () => {
-    const skill = makeSkill(
-      'See [file](.internal/private-doc.md).',
-      'stable',
-    );
+    const skill = makeSkill('See [file](.internal/private-doc.md).', 'stable');
     const result = publicBodyReferences(skill, []);
     expect(result).toHaveLength(1);
     expect(result[0]!.message).toContain('".internal/private-doc.md"');
@@ -118,25 +112,17 @@ describe('publicBodyReferences', () => {
   });
 
   it('skips a draft skill entirely', () => {
-    const skill = makeSkill(
-      'See [examples/cart-product.md](examples/cart-product.md).',
-      'draft',
-    );
+    const skill = makeSkill('See [examples/cart-product.md](examples/cart-product.md).', 'draft');
     expect(publicBodyReferences(skill, [])).toHaveLength(0);
   });
 
   it('skips a deprecated skill entirely', () => {
-    const skill = makeSkill(
-      'See [template-domain.md](template-domain.md).',
-      'deprecated',
-    );
+    const skill = makeSkill('See [template-domain.md](template-domain.md).', 'deprecated');
     expect(publicBodyReferences(skill, [])).toHaveLength(0);
   });
 
   it('skips a skill with no stage field (not explicitly stable)', () => {
-    const skill = makeSkill(
-      'See [examples/cart-product.md](examples/cart-product.md).',
-    );
+    const skill = makeSkill('See [examples/cart-product.md](examples/cart-product.md).');
     // Skills without a stage field are caught by required-fields lint, but
     // public-body-references only runs against explicitly stable skills.
     expect(publicBodyReferences(skill, [])).toHaveLength(0);

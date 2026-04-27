@@ -163,8 +163,8 @@ Targets only; instrumentation and dashboards live in a future
 | Outcome                                                          | Baseline                    | Target (12 mo)                     |
 | ---------------------------------------------------------------- | --------------------------- | ---------------------------------- |
 | Time from zero to a fully operational agent-ready workspace      | Days (manual configuration) | <= 30 minutes                      |
-| Share of daddia workspaces scaffolded from Space     | 0                           | 100% of new initiatives            |
-| daddia initiatives running current skill library version        | N/A                         | >= 80% within 30 days of release   |
+| Share of daddia workspaces scaffolded from Space                 | 0                           | 100% of new initiatives            |
+| daddia initiatives running current skill library version         | N/A                         | >= 80% within 30 days of release   |
 | Agent sessions that can reason over program context offline      | 0                           | 100% of sessions in a synced space |
 | Skill improvements adopted across teams without manual migration | Ad hoc                      | Automatic on next install          |
 | Cross-tool portability of skills (Cursor, Claude Code, etc.)     | 0                           | 100% of skills                     |
@@ -204,11 +204,11 @@ are separate and live in `../architecture/solution.md`.
 
 | Stakeholder                      | Responsibility                                                                      | R/A/C/I |
 | -------------------------------- | ----------------------------------------------------------------------------------- | ------- |
-| daddia team            | Builds and maintains Space; owns the skill library, scaffolder, and operations tool | R, A    |
+| daddia team                      | Builds and maintains Space; owns the skill library, scaffolder, and operations tool | R, A    |
 | Engineering leads (initiative)   | Adopt Space for new initiatives; govern workspace quality per convention            | R       |
 | Engineering squads (initiative)  | Consume skills; contribute improvements back through the skill library              | R       |
 | Program and transformation leads | Operate sync; author documents published back to the knowledge base                 | R       |
-| Crew team (`@daddia/crew`)      | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
+| Crew team (`@daddia/crew`)       | Consume the workspace substrate at runtime; contract on file-system conventions     | C       |
 | AI tooling vendors (indirect)    | Support the Markdown skill format; no commitments from Space                        | I       |
 
 ## 10. About daddia
@@ -242,4 +242,3 @@ The artefacts of software delivery -- strategy, architecture, decisions, issues,
 Space is a candidate for filling that gap. Not by adding another SaaS tool to the stack, but by treating the workspace itself as a first-class product artefact -- versioned, reviewable, and co-located with the code it describes. When the workspace is the substrate, agents inherit context automatically, conventions travel with the repo, and improvements compound across every team that installs them.
 
 The measure of success is not adoption metrics. It is whether an agent working in a Space workspace produces meaningfully better artefacts than one working without it -- requirements that close open questions, designs that reference agreed architecture, reviews that cite the agreed definition of done. That is the bar Space is built to clear.
-

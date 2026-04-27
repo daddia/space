@@ -51,13 +51,9 @@ export function buildRoleView(roleTitle: string, skills: Skill[]): string {
     const artefact = fm.artefact ?? '\u2014';
     const track = fm.track ?? '\u2014';
     const consumes =
-      Array.isArray(fm.consumes) && fm.consumes.length > 0
-        ? fm.consumes.join(', ')
-        : '\u2014';
+      Array.isArray(fm.consumes) && fm.consumes.length > 0 ? fm.consumes.join(', ') : '\u2014';
     const produces =
-      Array.isArray(fm.produces) && fm.produces.length > 0
-        ? fm.produces.join(', ')
-        : '\u2014';
+      Array.isArray(fm.produces) && fm.produces.length > 0 ? fm.produces.join(', ') : '\u2014';
     return `| ${skill.name} | ${excerpt(desc)} | ${artefact} | ${track} | ${consumes} | ${produces} |`;
   });
 

@@ -75,7 +75,7 @@ function splitFrontmatterBlock(content: string): { raw: string; body: string } {
 export function parseFrontmatter(content: string): { data: DaddiaFrontmatter; body: string } {
   const { raw, body } = splitFrontmatterBlock(content);
   const parsed = raw ? (yaml.parse(raw) as unknown) : {};
-  const data = ((parsed ?? {}) as unknown) as DaddiaFrontmatter;
+  const data = (parsed ?? {}) as unknown as DaddiaFrontmatter;
   return { data, body };
 }
 

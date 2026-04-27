@@ -4,11 +4,11 @@ How to publish a new version of any Space package.
 
 ## Packages
 
-| Package | npm name | Release trigger |
-| --- | --- | --- |
-| `@daddia/skills` | Skills and views | New or changed skill, profile change |
-| `@daddia/create-space` | Scaffolding CLI | Template change, new config key, new prompt option |
-| `@daddia/space` | Operations CLI | New command, new provider, bug fix |
+| Package                | npm name         | Release trigger                                    |
+| ---------------------- | ---------------- | -------------------------------------------------- |
+| `@daddia/skills`       | Skills and views | New or changed skill, profile change               |
+| `@daddia/create-space` | Scaffolding CLI  | Template change, new config key, new prompt option |
+| `@daddia/space`        | Operations CLI   | New command, new provider, bug fix                 |
 
 ## 1. Record the change with a changeset
 
@@ -18,10 +18,10 @@ pnpm changeset
 
 Select the package(s) affected. Choose bump type:
 
-| Change | Bump |
-| --- | --- |
-| New skill, new command, new feature | `minor` |
-| Bug fix, description update, step correction | `patch` |
+| Change                                                              | Bump    |
+| ------------------------------------------------------------------- | ------- |
+| New skill, new command, new feature                                 | `minor` |
+| Bug fix, description update, step correction                        | `patch` |
 | Breaking change (removed scope, renamed output path, removed skill) | `major` |
 
 Write a one-line summary: what changed and why.

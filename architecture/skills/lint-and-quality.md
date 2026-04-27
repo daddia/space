@@ -89,6 +89,7 @@ Skill bodies must not contain `../` relative paths. Use the `{source}:{path}` UR
 ## Deprecated skills
 
 Deprecated skills (`stage: deprecated`) are exempt from all v2 frontmatter and description checks. They must still have:
+
 - `name`
 - `description`
 - `allowed-tools`

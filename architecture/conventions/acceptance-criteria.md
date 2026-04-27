@@ -89,7 +89,7 @@ Then the cart updates
 
 EARS + Gherkin belong in `work/{d}/{wp}/backlog.md` under each story block:
 
-```markdown
+````markdown
 - [ ] **[CART01-03] Add to cart**
   - **Acceptance (EARS):**
     - WHEN a customer clicks "Add to cart", THE SYSTEM SHALL add the item
@@ -103,6 +103,6 @@ EARS + Gherkin belong in `work/{d}/{wp}/backlog.md` under each story block:
       When the customer taps "Add to cart"
       Then the mini-cart opens with the added item
     ```
-```
+````
 
 They do **not** belong in `domain/{d}/backlog.md` (epic scope — too detailed) or `domain/{d}/product.md` (strategy scope — wrong seam).

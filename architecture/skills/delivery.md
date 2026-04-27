@@ -116,9 +116,7 @@ The lockfile is the daddia-extended Vercel format (see `packages/space/src/skill
   "ref": "<commit-sha>",
   "profile": "domain-team",
   "syncedAt": "2026-04-27T10:00:00Z",
-  "skills": [
-    { "name": "write-product", "contentHash": "<sha256>" }
-  ]
+  "skills": [{ "name": "write-product", "contentHash": "<sha256>" }]
 }
 ```
 
@@ -156,8 +154,8 @@ or CI infrastructure migration.
 
 ### Key history
 
-| Date | Reason | Rotated by |
-|---|---|---|
+| Date       | Reason                   | Rotated by   |
+| ---------- | ------------------------ | ------------ |
 | 2026-04-27 | Initial setup (SPACE-15) | daddia admin |
 
 ## Future delivery options

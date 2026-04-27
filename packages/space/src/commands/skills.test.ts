@@ -81,9 +81,7 @@ describe('space skills sync', () => {
     const exitSpy = vi.spyOn(process, 'exit').mockImplementation((() => {}) as never);
 
     // Import and call the underlying logic directly to avoid actual npx invocation
-    const { resolveProfileName, loadBundledProfile } = await import(
-      '../skills/sync-driver.js'
-    );
+    const { resolveProfileName, loadBundledProfile } = await import('../skills/sync-driver.js');
 
     const root = workspaceDir;
     const profileName = resolveProfileName(root, 'unknown-profile-xyz');

@@ -1,7 +1,6 @@
 import type { Skill } from '../skill.js';
 
-const HEADER =
-  '| Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |';
+const HEADER = '| Skill | Description (excerpt) | Artefact | Track | Role | Consumes | Produces |';
 const SEPARATOR = '| --- | --- | --- | --- | --- | --- | --- |';
 
 function excerpt(desc: string): string {

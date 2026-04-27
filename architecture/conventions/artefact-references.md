@@ -26,6 +26,7 @@ Use for artefacts that live in a code repo registered in `.space/config`:
 ```
 
 Where:
+
 - `{source}` matches a key under `sources:` in `.space/config`
 - `{path}` is relative to that source's local `path:` root
 
@@ -54,6 +55,7 @@ related:
 
 ```markdown
 <!-- In a workspace artefact's prose -->
+
 Engineering principles live in [crew:architecture/principles.md](crew:architecture/principles.md).
 ```
 
@@ -77,12 +79,12 @@ Skills in `@daddia/skills` are workspace-agnostic. When a skill body refers to a
 
 ## Artefact tier paths (reference)
 
-| Tier | Save path | Example |
-| --- | --- | --- |
-| Portfolio strategy | `product/product.md` | `product/product.md` |
-| Sub-product strategy | `product/{name}/product.md` | `product/space/product.md` |
-| Domain strategy | `domain/{name}/product.md` | `domain/cart/product.md` |
-| Work package | `work/{wp}/{artefact}.md` | `work/space/SPACE-01/design.md` |
+| Tier                 | Save path                   | Example                         |
+| -------------------- | --------------------------- | ------------------------------- |
+| Portfolio strategy   | `product/product.md`        | `product/product.md`            |
+| Sub-product strategy | `product/{name}/product.md` | `product/space/product.md`      |
+| Domain strategy      | `domain/{name}/product.md`  | `domain/cart/product.md`        |
+| Work package         | `work/{wp}/{artefact}.md`   | `work/space/SPACE-01/design.md` |
 
 ## `parent:` field
 

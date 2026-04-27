@@ -126,11 +126,7 @@ describe('resolveProfile', () => {
 
   it('reports missing skills explicitly rather than throwing', () => {
     writeSkillDir(tmpDir, 'implement');
-    writeProfile(
-      tmpDir,
-      'partial',
-      'name: partial\nskills:\n  - implement\n  - missing-skill\n',
-    );
+    writeProfile(tmpDir, 'partial', 'name: partial\nskills:\n  - implement\n  - missing-skill\n');
     const { skills, missing } = resolveProfile('partial', tmpDir);
     expect(skills.map((s) => s.name)).toEqual(['implement']);
     expect(missing).toEqual(['missing-skill']);

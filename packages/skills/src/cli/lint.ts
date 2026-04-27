@@ -70,7 +70,10 @@ process.exit(errors.length > 0 ? 1 : 0);
 // Profile validation
 // ---------------------------------------------------------------------------
 
-function validateProfiles(pkgDir: string, loadedSkills: ReturnType<typeof loadAllSkills>): Diagnostic[] {
+function validateProfiles(
+  pkgDir: string,
+  loadedSkills: ReturnType<typeof loadAllSkills>,
+): Diagnostic[] {
   const profilesDir = path.join(pkgDir, 'profiles');
   if (!fs.existsSync(profilesDir)) return [];
 
@@ -145,9 +148,7 @@ function validateProfiles(pkgDir: string, loadedSkills: ReturnType<typeof loadAl
       // space-index) stay at the package root.
       const primaryDir = path.join(pkgDir, 'skills', skillName);
       const fallbackDir = path.join(pkgDir, skillName);
-      const skillDir = fs.existsSync(path.join(primaryDir, 'SKILL.md'))
-        ? primaryDir
-        : fallbackDir;
+      const skillDir = fs.existsSync(path.join(primaryDir, 'SKILL.md')) ? primaryDir : fallbackDir;
       if (!fs.existsSync(skillDir) || !fs.existsSync(path.join(skillDir, 'SKILL.md'))) {
         diagnostics.push({
           rule: 'profile.unknown-skill',
