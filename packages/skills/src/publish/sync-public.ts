@@ -5,12 +5,25 @@ import { stripFrontmatter, type PublicFrontmatter } from '../frontmatter.js';
 import { PUBLIC_KEYS, shouldShipFile, INTERNAL_DIRS } from './strip-policy.js';
 
 export interface SyncOptions {
-  /** Absolute path to the `packages/skills/` source directory. */
+  /**
+   * Absolute path to the skills content root.
+   *
+   * For the Vercel-pattern layout (post SPACE-15-00) this is
+   * `packages/skills/skills/`. For tests using a temporary directory this is
+   * the tmp dir itself, with skills written directly under it.
+   */
   sourceDir: string;
   /** Absolute path to the `daddia/skills` checkout that receives the mirror. */
   targetDir: string;
   /** Absolute path to the profile YAML (e.g. `packages/skills/profiles/full.yaml`). */
   profileFile: string;
+  /**
+   * Optional list of additional directories to search for skill content.
+   * Entries are resolved as absolute paths and searched after `sourceDir`.
+   * Use when generated skill outputs (e.g. `space-index`) live outside the
+   * primary skills content root.
+   */
+  extraSourceDirs?: string[];
   /** When true, print the planned changes and write nothing to disk. */
   dryRun?: boolean;
 }
@@ -39,7 +52,7 @@ export interface SyncResult {
  * zero file writes on the second call.
  */
 export async function syncPublicSkills(opts: SyncOptions): Promise<SyncResult> {
-  const { sourceDir, targetDir, profileFile, dryRun = false } = opts;
+  const { sourceDir, targetDir, profileFile, extraSourceDirs = [], dryRun = false } = opts;
 
   if (!fs.existsSync(sourceDir)) {
     process.stderr.write(`sync-public: sourceDir not found: ${sourceDir}\n`);
@@ -55,13 +68,21 @@ export async function syncPublicSkills(opts: SyncOptions): Promise<SyncResult> {
 
   const skillsToCopy: string[] = [];
   const missingSource: string[] = [];
+  const skillSourceDir = new Map<string, string>();
 
   for (const name of profileSkillNames) {
-    const skillDir = path.join(sourceDir, name);
-    if (!fs.existsSync(path.join(skillDir, 'SKILL.md'))) {
-      missingSource.push(name);
-    } else {
+    const primaryDir = path.join(sourceDir, name);
+    if (fs.existsSync(path.join(primaryDir, 'SKILL.md'))) {
       skillsToCopy.push(name);
+      skillSourceDir.set(name, primaryDir);
+      continue;
+    }
+    const fallback = extraSourceDirs.find((d) => fs.existsSync(path.join(d, name, 'SKILL.md')));
+    if (fallback) {
+      skillsToCopy.push(name);
+      skillSourceDir.set(name, path.join(fallback, name));
+    } else {
+      missingSource.push(name);
     }
   }
 
@@ -96,7 +117,7 @@ export async function syncPublicSkills(opts: SyncOptions): Promise<SyncResult> {
   let filesWritten = 0;
 
   for (const name of skillsToCopy) {
-    const srcSkillDir = path.join(sourceDir, name);
+    const srcSkillDir = skillSourceDir.get(name) ?? path.join(sourceDir, name);
     const dstSkillDir = path.join(targetDir, name);
     filesWritten += syncSkillDir(srcSkillDir, dstSkillDir);
     copied.push(name);

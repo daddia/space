@@ -8,6 +8,7 @@ import { loadProfile } from '../profile.js';
 import type { Diagnostic } from '../lint/types.js';
 
 const packageDir = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..');
+const skillsDir = path.join(packageDir, 'skills');
 
 const args = process.argv.slice(2);
 const jsonOutput = args.includes('--json');
@@ -15,9 +16,9 @@ const skillFilter = args.filter((a) => !a.startsWith('--'));
 
 let skills;
 if (skillFilter.length > 0) {
-  skills = skillFilter.map((name) => loadSkill(path.join(packageDir, name)));
+  skills = skillFilter.map((name) => loadSkill(path.join(skillsDir, name)));
 } else {
-  skills = loadAllSkills(packageDir);
+  skills = loadAllSkills(skillsDir);
 }
 
 if (skills.length === 0) {
@@ -75,12 +76,13 @@ function validateProfiles(pkgDir: string, loadedSkills: ReturnType<typeof loadAl
 
   const stageByName = new Map(loadedSkills.map((s) => [s.name, s.frontmatter.stage ?? 'unknown']));
 
-  // Some skill directories are excluded from loadAllSkills (e.g. space-index).
-  // Look them up directly from disk when they appear in profiles.
+  // Skills live under the skills/ subdirectory (Vercel pattern). Generated
+  // directories such as space-index stay at the package root.
   const stageForSkill = (skillName: string): string => {
     if (stageByName.has(skillName)) return stageByName.get(skillName)!;
-    const skillDir = path.join(pkgDir, skillName);
-    if (!fs.existsSync(skillDir)) return 'unknown';
+    const primaryDir = path.join(pkgDir, 'skills', skillName);
+    const fallbackDir = path.join(pkgDir, skillName);
+    const skillDir = fs.existsSync(path.join(primaryDir, 'SKILL.md')) ? primaryDir : fallbackDir;
     const skillMdPath = path.join(skillDir, 'SKILL.md');
     if (!fs.existsSync(skillMdPath)) return 'unknown';
     const content = fs.readFileSync(skillMdPath, 'utf8');
@@ -139,13 +141,19 @@ function validateProfiles(pkgDir: string, loadedSkills: ReturnType<typeof loadAl
     }
 
     for (const skillName of profile.skills) {
-      const skillDir = path.join(pkgDir, skillName);
+      // Authored skills live under skills/; generated directories (e.g.
+      // space-index) stay at the package root.
+      const primaryDir = path.join(pkgDir, 'skills', skillName);
+      const fallbackDir = path.join(pkgDir, skillName);
+      const skillDir = fs.existsSync(path.join(primaryDir, 'SKILL.md'))
+        ? primaryDir
+        : fallbackDir;
       if (!fs.existsSync(skillDir) || !fs.existsSync(path.join(skillDir, 'SKILL.md'))) {
         diagnostics.push({
           rule: 'profile.unknown-skill',
           severity: 'error',
           skill: profileId,
-          message: `skill "${skillName}" does not match any directory under packages/skills/`,
+          message: `skill "${skillName}" does not match any directory under packages/skills/skills/ or packages/skills/`,
         });
         continue;
       }

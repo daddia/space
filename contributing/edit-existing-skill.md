@@ -28,13 +28,13 @@ See `contributing/deprecate-skill.md` for the deprecation process.
 4. **Lint the skill:**
 
    ```bash
-   node packages/skills/bin/lint-skills.js {skill-name}
+   pnpm --filter @daddia/skills lint:skills {skill-name}
    ```
 
 5. **Regenerate the index** if you changed `name:`, `description:`, `artefact:`, `track:`, `role:`, `consumes:`, or `produces:`:
 
    ```bash
-   node packages/skills/bin/generate-index.js
+   pnpm --filter @daddia/skills generate:index
    ```
 
    Commit the updated `space-index/SKILL.md` alongside the skill change.

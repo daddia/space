@@ -20,8 +20,6 @@ The generated table lives between sentinel comments inside `space-index/SKILL.md
 **Never edit the generated block manually.** Run the generator:
 
 ```bash
-node packages/skills/bin/generate-index.js
-# or
 pnpm --filter @daddia/skills generate:index
 ```
 
@@ -61,8 +59,6 @@ packages/skills/views/
 Regenerate:
 
 ```bash
-node packages/skills/bin/generate-views.js
-# or
 pnpm --filter @daddia/skills generate:views
 ```
 

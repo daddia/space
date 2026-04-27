@@ -6,14 +6,22 @@ The structure of a skill: what files it contains, how its frontmatter is read, a
 
 ```
 packages/skills/
-  {verb}-{topic}/
-    SKILL.md             # required — skill definition and instructions
-    template.md          # optional — output document template
-    template-*.md        # optional — additional mode-specific templates
-    examples/            # optional — worked example outputs
+  skills/                  # skill content root (Vercel pattern)
+    {verb}-{topic}/
+      SKILL.md             # required — skill definition and instructions
+      template.md          # optional — generic public template
+      template-*.md        # optional — daddia-specific mode variants (not published)
+      examples/            # optional — worked example outputs
+  profiles/                # YAML profile definitions
+  views/                   # generated role-filtered Markdown
+  space-index/             # generated routing index SKILL.md
+  src/                     # TypeScript authoring toolkit (lint, generate, publish)
+  tests/                   # Vitest unit tests for src/
 ```
 
-Skills are **Markdown only**. No build step, no TypeScript, no compilation.
+Skill **content** (`skills/`) is Markdown only — no TypeScript. The `src/` authoring
+toolkit is TypeScript and drives lint, generation, and publish; it is not required in
+consumer workspaces.
 
 ## `SKILL.md` frontmatter
 

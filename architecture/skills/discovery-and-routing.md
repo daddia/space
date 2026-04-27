@@ -69,7 +69,7 @@ As the library grows past ~15 skills, description collision becomes a risk: mult
 - A `description` that triggers on vague routing requests ("which skill should I use?", "what can I do here?", "help me plan")
 - A body that is an **auto-generated table** of every sibling skill's frontmatter
 
-The table is regenerated in CI via `packages/skills/bin/generate-index.js` between the sentinel markers:
+The table is regenerated in CI via `pnpm --filter @daddia/skills generate:index` between the sentinel markers:
 
 ```markdown
 <!-- BEGIN GENERATED — do not edit; run `pnpm generate:index` to refresh -->

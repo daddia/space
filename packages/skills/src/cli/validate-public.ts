@@ -33,13 +33,14 @@ import { generateViews, ROLE_VIEWS } from '../generate/views.js';
 import type { Diagnostic } from '../lint/types.js';
 
 const packageDir = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..');
+const skillsDir = path.join(packageDir, 'skills');
 
 const args = process.argv.slice(2);
 const jsonOutput = args.includes('--json');
 
 let skills;
 try {
-  skills = loadAllSkills(packageDir);
+  skills = loadAllSkills(skillsDir);
 } catch (err) {
   process.stderr.write(`validate-public: error loading skills — ${(err as Error).message}\n`);
   process.exit(1);
@@ -114,7 +115,7 @@ process.exit(errors.length > 0 ? 1 : 0);
  * generating or verifying the routing table.
  */
 function loadAllSkillsForIndex(pkgDir: string): ReturnType<typeof loadAllSkills> {
-  const skills = loadAllSkills(pkgDir);
+  const skills = loadAllSkills(path.join(pkgDir, 'skills'));
   const spaceIndexDir = path.join(pkgDir, 'space-index');
   if (fs.existsSync(path.join(spaceIndexDir, 'SKILL.md'))) {
     try {

@@ -26,15 +26,19 @@ const dryRun = args.includes('--dry-run');
 const targetIdx = args.indexOf('--target');
 const targetOverride = targetIdx >= 0 ? args[targetIdx + 1] : undefined;
 
-const sourceDir = packageDir;
-const profileFile = path.join(sourceDir, 'profiles', 'full.yaml');
+// Skills content lives under packages/skills/skills/ (Vercel pattern).
+// Generated directories (e.g. space-index) remain at the package root and are
+// passed as extraSourceDirs so the sync module can locate them.
+const sourceDir = path.join(packageDir, 'skills');
+const profileFile = path.join(packageDir, 'profiles', 'full.yaml');
+const extraSourceDirs = [packageDir];
 
 // Default target: sibling `skills` repo at `{space-repo}/../skills`
 const targetDir = targetOverride
   ? path.resolve(targetOverride)
   : path.resolve(packageDir, '..', '..', '..', 'skills');
 
-syncPublicSkills({ sourceDir, targetDir, profileFile, dryRun })
+syncPublicSkills({ sourceDir, targetDir, profileFile, extraSourceDirs, dryRun })
   .then((result) => {
     if (result.missingSource.length > 0) {
       process.stderr.write(

@@ -13,8 +13,8 @@ See `contributing/naming-conventions.md` for the full policy.
 ## 2. Create the directory and SKILL.md
 
 ```bash
-mkdir packages/skills/{verb}-{topic}
-touch packages/skills/{verb}-{topic}/SKILL.md
+mkdir packages/skills/skills/{verb}-{topic}
+touch packages/skills/skills/{verb}-{topic}/SKILL.md
 ```
 
 Fill in the required frontmatter (see `architecture/skills/skill-anatomy.md`):
@@ -64,7 +64,7 @@ Then write the skill body following the six required sections:
 If the skill produces a structured document, add `template.md`:
 
 ```bash
-touch packages/skills/{verb}-{topic}/template.md
+touch packages/skills/skills/{verb}-{topic}/template.md
 ```
 
 The template must open with a DRAFTING AIDE block:
@@ -91,7 +91,7 @@ DO NOT INCLUDE in this document:
 ## 4. Add examples (if needed)
 
 ```bash
-mkdir packages/skills/{verb}-{topic}/examples
+mkdir packages/skills/skills/{verb}-{topic}/examples
 ```
 
 Add at least one worked example when the output shape is complex. Name files descriptively: `cart-product.md`, not `example1.md`.
@@ -99,7 +99,7 @@ Add at least one worked example when the output shape is complex. Name files des
 ## 5. Lint the skill
 
 ```bash
-node packages/skills/bin/lint-skills.js {verb}-{topic}
+pnpm --filter @daddia/skills lint:skills {verb}-{topic}
 ```
 
 Fix all errors before proceeding. Common issues:
@@ -111,7 +111,7 @@ Fix all errors before proceeding. Common issues:
 ## 6. Regenerate the index
 
 ```bash
-node packages/skills/bin/generate-index.js
+pnpm --filter @daddia/skills generate:index
 ```
 
 Commit the updated `space-index/SKILL.md` alongside the new skill.

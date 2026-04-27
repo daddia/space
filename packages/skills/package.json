@@ -51,16 +51,11 @@
     "sync-public-skills": "dist/cli/sync-public.js"
   },
   "files": [
-    "dist/**",
-    "bin/**",
-    "*/SKILL.md",
-    "*/template.md",
-    "*/template-*.md",
-    "*/template.*.md",
-    "*/examples/**",
-    "*/scripts/**",
-    "views/**",
-    "profiles/**",
+    "dist",
+    "skills",
+    "profiles",
+    "views",
+    "space-index",
     "README.md",
     "CHANGELOG.md"
   ],

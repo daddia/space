@@ -22,14 +22,18 @@ import { generateSpaceIndexSkill } from '../generate/space-index-skill.js';
 import { generateViews, ROLE_VIEWS } from '../generate/views.js';
 
 const packageDir = path.resolve(fileURLToPath(import.meta.url), '..', '..', '..');
+const skillsDir = path.join(packageDir, 'skills');
 
 /**
  * Load all skills for the index generator. This includes the `space-index`
  * skill itself (so it appears in the routing table), which `loadAllSkills`
  * intentionally excludes to avoid circular loading during profile resolution.
+ *
+ * Skills are read from `packages/skills/skills/` (Vercel pattern); the
+ * `space-index` output directory remains at `packages/skills/space-index/`.
  */
 function loadAllSkillsForIndex(pkgDir: string) {
-  const skills = loadAllSkills(pkgDir);
+  const skills = loadAllSkills(path.join(pkgDir, 'skills'));
   const spaceIndexDir = path.join(pkgDir, 'space-index');
   if (fs.existsSync(path.join(spaceIndexDir, 'SKILL.md'))) {
     try {
@@ -94,7 +98,7 @@ if (runIndex) {
 if (runViews) {
   let skills;
   try {
-    skills = loadAllSkills(packageDir);
+    skills = loadAllSkills(skillsDir);
   } catch (err) {
     process.stderr.write(`generate views: error loading skills — ${(err as Error).message}\n`);
     process.exit(1);

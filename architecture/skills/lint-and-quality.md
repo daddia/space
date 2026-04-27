@@ -5,9 +5,9 @@ How the skill linter works, what it checks, and how to fix failures.
 ## Running the linter
 
 ```bash
-node packages/skills/bin/lint-skills.js              # lint all skills
-node packages/skills/bin/lint-skills.js write-product  # lint one skill
-node packages/skills/bin/lint-skills.js --json       # machine-readable output
+pnpm --filter @daddia/skills lint:skills              # lint all skills
+pnpm --filter @daddia/skills lint:skills write-product  # lint one skill
+pnpm --filter @daddia/skills lint:skills --json       # machine-readable output
 ```
 
 Exit code 0 = all checks pass. Exit code 1 = one or more errors.
@@ -101,13 +101,13 @@ The linter is run as part of `pnpm lint` at the repo root. It is also run standa
 After making changes to any skill, run:
 
 ```bash
-node packages/skills/bin/lint-skills.js {skill-name}
+pnpm --filter @daddia/skills lint:skills {skill-name}
 ```
 
 Then regenerate the index:
 
 ```bash
-node packages/skills/bin/generate-index.js
+pnpm --filter @daddia/skills generate:index
 ```
 
 Commit both the skill change and the updated `space-index/SKILL.md`.
