@@ -51,7 +51,7 @@ decision as an ADR for `$ARGUMENTS`.
 ## Supporting files
 
 - Blank scaffold to fill in: [template.md](template.md)
-- Worked example for reference: [examples/workflow-engine.md](examples/workflow-engine.md)
+- Worked example for reference: `examples/workflow-engine.md`
 
 ## Steps
 

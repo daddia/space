@@ -50,7 +50,7 @@ need ADRs for `$ARGUMENTS` before technical design can proceed.
 ## Supporting files
 
 - Output template: [template.md](template.md)
-- Worked example: [examples/cart-domain.md](examples/cart-domain.md)
+- Worked example: `examples/cart-domain.md`
 
 ## Steps
 
