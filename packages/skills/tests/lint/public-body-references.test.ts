@@ -46,7 +46,7 @@ describe('publicBodyReferences', () => {
   });
 
   it('passes for a body linking to a generic example (ships)', () => {
-    const skill = makeSkill('See [example](examples/example-app-product.md).', 'stable');
+    const skill = makeSkill('See [example](examples/product.md).', 'stable');
     expect(publicBodyReferences(skill, [])).toHaveLength(0);
   });
 

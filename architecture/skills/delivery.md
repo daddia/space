@@ -62,8 +62,9 @@ The public mirror strips daddia-specific frontmatter and excludes internal asset
 - **Templates**: each skill ships at most one template, named exactly `template.md`.
   Mode-specific variants (`template-pitch.md`, `template-tdd.md`, etc.) are excluded.
 - **Examples**: `examples/*.md` files whose name matches an internal project prefix
-  (`cart-`, `space-`, `workflow-engine`) are excluded. Generic examples
-  (`example-app-*.md`) are published.
+  (`cart-`, `space-`, `workflow-engine`) are excluded. All other examples
+  (e.g. `product.md`, `solution.md`, `domain-backlog.md`, `walking-skeleton.md`)
+  are published.
 - **Internal directories**: `examples/.internal/` is excluded.
 - **Tooling**: `package.json`, `CHANGELOG.md`, `AGENTS.md`, `src/`, `bin/`, `profiles/`,
   `views/`, `space-index/` are not present in the public mirror.

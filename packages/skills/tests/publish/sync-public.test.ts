@@ -314,13 +314,13 @@ describe('syncPublicSkills: example asset filter', () => {
     const examplesDir = path.join(skillDir, 'examples');
     fs.mkdirSync(examplesDir);
     fs.writeFileSync(path.join(examplesDir, 'cart-product.md'), '# Cart');
-    fs.writeFileSync(path.join(examplesDir, 'example-app-product.md'), '# Generic app');
+    fs.writeFileSync(path.join(examplesDir, 'product.md'), '# Generic app');
     profileFile = writeProfileYaml(srcDir, ['write-product']);
 
     await syncPublicSkills({ sourceDir: srcDir, targetDir: dstDir, profileFile });
 
     const dstExamples = path.join(dstDir, 'write-product', 'examples');
-    expect(fs.existsSync(path.join(dstExamples, 'example-app-product.md'))).toBe(true);
+    expect(fs.existsSync(path.join(dstExamples, 'product.md'))).toBe(true);
     expect(fs.existsSync(path.join(dstExamples, 'cart-product.md'))).toBe(false);
   });
 
@@ -545,7 +545,7 @@ describe('syncPublicSkills: idempotency', () => {
     fs.writeFileSync(path.join(skillDir, 'template.md'), '# Template');
     const examplesDir = path.join(skillDir, 'examples');
     fs.mkdirSync(examplesDir);
-    fs.writeFileSync(path.join(examplesDir, 'example-app-product.md'), '# Generic example');
+    fs.writeFileSync(path.join(examplesDir, 'product.md'), '# Generic example');
     profileFile = writeProfileYaml(srcDir, ['write-product']);
 
     const first = await syncPublicSkills({ sourceDir: srcDir, targetDir: dstDir, profileFile });
