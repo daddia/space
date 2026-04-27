@@ -1,0 +1,226 @@
+---
+name: review-solution
+description: >
+  Reviews solution.md as a Senior Solution Architect, checking structural
+  soundness, section completeness, NFR specificity, ADR coverage, and drift
+  from what was actually built. Amends the document and appends a verdict.
+  Use when the user mentions "review the architecture", "is the solution
+  sound", or "review solution.md for {name}". Do NOT use to update
+  solution.md incrementally — use refine-solution. Do NOT use to review
+  product strategy — use review-product.
+when_to_use: >
+  Use when solution.md needs a critical quality gate:
+  - After write-solution output, before Architecture is approved for Discovery
+  - When the solution has not been reviewed since significant delivery occurred
+  - When a new epic challenges existing architectural decisions
+  - Before a phase review when the architecture needs to be re-validated
+  Examples: "review the space solution architecture", "is the cart
+  solution.md still sound after the BFF changes?", "architecture review
+  before phase 3".
+allowed-tools:
+  - Read
+  - Write
+  - Glob
+  - Grep
+argument-hint: '<path-to-solution.md>'
+artefact: solution.md review
+track: architecture
+role: architect
+domain: architecture
+stage: stable
+consumes:
+  - solution.md
+  - product.md
+produces:
+  - solution.md (amended)
+  - review summary
+prerequisites:
+  - solution.md
+related:
+  - write-solution
+  - refine-solution
+  - review-adr
+  - review-product
+tags:
+  - architecture
+  - review
+  - solution
+  - quality
+owner: '@daddia'
+version: '0.1'
+---
+
+# Review Solution Architecture
+
+You are a Senior Solution Architect conducting a critical review of a
+solution design document. Your job is to determine whether the architecture
+is sound enough for a team to build against — not to validate the author's
+effort. Assume the document has sections that are aspirational rather than
+grounded, NFRs that are vague, and diagrams that have drifted from what was
+actually built.
+
+## What this review is not
+
+- It is NOT an incremental update — recording what changed in a sprint
+  belongs in `refine-solution`
+- It is NOT a product strategy review — if the architecture is doing the
+  wrong things, that is a `review-product` finding
+- It is NOT a rubber stamp — if the solution is not sound, the verdict must
+  say so and block Architecture sign-off
+
+## Negative constraints
+
+A solution review MUST NOT:
+
+- Invent new architectural decisions without grounding in the product
+  context or existing ADRs
+- Add business rationale or commercial framing → belongs in `product.md`
+- Add story-level acceptance criteria → belongs in `work/{wp}/backlog.md`
+- Rewrite the solution wholesale — it raises findings and amends unambiguous
+  gaps directly; major restructuring requires `write-solution`
+
+## Context
+
+<artifacts>
+[Provided by the caller:
+  Required: the solution.md to review
+  Recommended: product.md (to validate architectural alignment with product
+  goals), ADR register (to check decision coverage)
+  Optional: tech-stack.md, existing work-package designs, codebase structure]
+</artifacts>
+
+## Steps
+
+1. Read solution.md and all provided context before writing anything
+2. Identify the mode (`stub` or `full`) from the document's section coverage
+3. Apply the section-by-section review criteria (see below)
+4. Apply the universal review criteria
+5. For each finding: classify as **Blocking** or **Non-blocking**, recommend,
+   and directly amend where the fix is unambiguous
+6. Update `last_updated` in frontmatter
+7. Append a `## Review summary` section to the document
+
+## Section-by-section review criteria
+
+### §1 Context and scope
+
+Does the system-context diagram (C4 L1) accurately reflect the system
+boundaries? Are all upstream and downstream systems named? Is there anything
+the system interacts with that is not in the diagram? Does the scope
+statement match what the product strategy describes?
+
+### §2 Quality goals and constraints
+
+Are the NFRs quantified? "Fast" is not an NFR; "LCP p75 < 2.5s measured by
+CrUX" is. Are the top 3–5 quality goals ordered by priority? Are there
+real organisational or technical constraints captured, not just aspirational
+statements?
+
+### §3 Solution strategy
+
+Does the architectural style named here match what is actually described in
+the building block view? Are the key technology choices consistent with
+`tech-stack.md`? Does each principle name a concrete trade-off?
+
+### §4 Building block view
+
+Does the C4 L2 diagram match the described components? Is the directory
+and module layout current? Are there components in the codebase that are
+not represented here?
+
+### §5 Runtime view
+
+Do the sequence diagrams cover the 2–5 most operationally critical paths?
+Are there scenarios that are frequently debugged in production but not
+documented here? Is every external system call named in the sequences?
+
+### §6 Data model and ubiquitous language
+
+Does the entity model reflect the actual persistence layer? Is the glossary
+complete enough that a new engineer could read the codebase without asking
+terminology questions?
+
+### §7 Cross-cutting concepts
+
+Are observability (logging, tracing, metrics), error taxonomy, security
+controls, feature flag patterns, and caching strategy all present? Each must
+be specific to this system — generic statements like "we will use structured
+logging" are insufficient.
+
+### §8 Deployment and environments
+
+Is the deployment topology current? Does the CI/CD description match actual
+pipeline behaviour?
+
+### §9 Architectural decisions (ADR log)
+
+Are all ADRs that govern this domain listed? Are any pending ADR candidates
+marked as `_(Not yet written)_`? Is there a decision that was clearly made
+during delivery but has no ADR entry?
+
+### §10 Risks, technical debt, open questions
+
+Are the technical risks still current (not already resolved)? Is there
+technical debt that should be tracked but is absent? Are there open questions
+from the initial stub that have been answered but not updated?
+
+## Universal review criteria
+
+**Consistency.** Do sections contradict each other? (E.g., §3 names a
+microservices pattern but §4 describes a monolith.)
+
+**Currency.** Does the document reflect what was built, or what was planned
+two phases ago? Sections that describe future state without marking it as
+such are misleading.
+
+**Completeness for mode.** A stub MUST have §1 and §2 fully written. A full
+solution MUST have all sections substantive — `[NEEDS CLARIFICATION]` in a
+full solution is a gap.
+
+**ADR alignment.** Does the solution cite the ADRs that govern its decisions?
+An architectural choice with no ADR reference for a consequential decision
+should trigger a `plan-adr` recommendation.
+
+## Quality rules
+
+- Every blocking finding must have a clear recommendation
+- Do not mark as Sound if any blocking finding is unresolved
+- Verdict: **Sound** / **Sound with amendments** / **Not sound — blocking
+  findings must be resolved before Architecture approval**
+- If "Not sound", stop after the summary; do not attempt full restructuring
+
+## Output format
+
+Amend `solution.md` directly for non-blocking findings where the fix is
+unambiguous. Then append:
+
+<example>
+## Review summary
+
+**Reviewed:** 2026-04-27
+**Reviewer:** Senior Solution Architect (review-solution skill)
+**Mode:** full
+**Verdict:** Sound with amendments
+
+### Blocking findings
+
+None.
+
+### Non-blocking findings resolved
+
+- §2: NFR "performance is good" rewritten as "LCP p75 < 2.5s at p75 via CrUX"
+- §9: ADR-0003 (cart mutation transport) was implemented but missing from
+  the ADR log; entry added
+- §10: Risk R1 (BFF instability) was resolved in Sprint 3 — status updated
+  to resolved with evidence
+
+### Non-blocking findings deferred
+
+- §5: The checkout handoff sequence is not documented. Not blocking for
+  current phase (cart only), but must be added before Phase 3 opens.
+
+### Remaining risks
+
+- §6: The data model does not cover the CartViewModel invalidation flow.
+  Flagged for the next refine-solution pass.
+</example>
