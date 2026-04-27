@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format check
+        run: pnpm format
+
+      - name: Test
+        run: pnpm test
+
+  skills:
+    name: Skills
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Lint skills
+        run: pnpm --filter '@daddia/skills' run lint
+
+      - name: Check index is up to date
+        run: |
+          node packages/skills/bin/generate-index.js
+          if [ $? -ne 0 ]; then
+            echo "space-index/SKILL.md is out of date — run 'pnpm --filter @daddia/skills generate:index' locally and commit"
+            exit 1
+          fi
+
+      - name: Check views are up to date
+        run: |
+          node packages/skills/bin/generate-views.js
+          if [ $? -ne 0 ]; then
+            echo "views/*.md are out of date — run 'pnpm --filter @daddia/skills generate:views' locally and commit"
+            exit 1
+          fi
+
+  docs:
+    name: Docs
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'pull_request' &&
+      contains(toJson(github.event.pull_request.changed_files), 'docs/')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+
+      - name: Lint docs
+        run: node scripts/lint-docs.js
+
+  eval:
+    name: Description eval
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'pull_request' &&
+      contains(toJson(github.event.pull_request.changed_files), 'packages/skills/')
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      EVAL_THRESHOLD: '0.75'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: pip install anthropic pyyaml
+
+      - name: Run description eval
+        run: python scripts/eval-descriptions.py
