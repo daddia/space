@@ -125,12 +125,11 @@ Depth (`--depth`) applies to portfolio/product/domain scope only:
 Write as a Markdown file with YAML frontmatter. Save path is determined by scope
 (see Scope and save path table above).
 
-Use `template-domain.md` or `template-work-package.md` as the scaffold.
-
-See `examples/cart-domain-backlog.md` (domain scope) and
-`examples/cart-wp01-backlog.md` (work-package scope) for worked examples.
+Use `template.md` as the general scaffold. For internal daddia use, `template-domain.md`
+(domain scope) and `template-work-package.md` (work-package scope) are opt-in
+mode-specific overrides.
 
 <example>
-See `examples/cart-domain-backlog.md` (domain scope)
-See `examples/cart-wp01-backlog.md` (work-package scope)
+See `examples/cart-domain-backlog.md` (domain scope) — internal reference
+See `examples/cart-wp01-backlog.md` (work-package scope) — internal reference
 </example>

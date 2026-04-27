@@ -138,12 +138,10 @@ Write as a Markdown file with YAML frontmatter.
 | `product <name>` (portfolio sub-product) | `product/{name}/architecture/solution.md` |
 | `domain <name>`                          | `domain/{name}/solution.md`               |
 
-Use `template-stub.md` for stub stage, `template-full.md` for full stage.
-
-See `examples/space-solution.md` for a platform-scope full-mode example and
-`examples/cart-solution.md` for a domain-scope full-mode example.
+Use `template.md` as the general scaffold. For internal daddia use, `template-stub.md`
+(stub stage) and `template-full.md` (full stage) are opt-in mode-specific overrides.
 
 <example>
-See `examples/space-solution.md` (platform scope, full mode)
-See `examples/cart-solution.md` (domain scope, full mode)
+See `examples/space-solution.md` (platform scope, full mode) — internal reference
+See `examples/cart-solution.md` (domain scope, full mode) — internal reference
 </example>
