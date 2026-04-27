@@ -3,7 +3,12 @@ import { mkdtemp, rm, readFile, mkdir, writeFile, access } from 'node:fs/promise
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createSpace } from './create-space.js';
+import { trySkillsSync } from './helpers/skills-sync.js';
 import type { SpaceConfig } from './config.js';
+
+vi.mock('./helpers/skills-sync.js', () => ({
+  trySkillsSync: vi.fn(),
+}));
 
 function makeConfig(targetDir: string, overrides: Partial<SpaceConfig> = {}): SpaceConfig {
   return {
@@ -36,6 +41,59 @@ function captureLogs(): string[] {
   });
   return logs;
 }
+
+describe('SPACE-15-07: scaffold no longer uses @daddia/skills', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-15-07-'));
+    targetDir = join(tempBase, 'acme-space');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(trySkillsSync).mockReset();
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('greenfield: package.json devDependencies does not list @daddia/skills', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const pkg = JSON.parse(await readFile(join(targetDir, 'package.json'), 'utf-8')) as {
+      devDependencies?: Record<string, string>;
+    };
+    expect(pkg.devDependencies).not.toHaveProperty('@daddia/skills');
+  });
+
+  it('greenfield: .gitignore contains the three skill sync paths', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const gitignore = await readFile(join(targetDir, '.gitignore'), 'utf-8');
+    expect(gitignore).toContain('.agents/skills/');
+    expect(gitignore).toContain('.cursor/skills');
+    expect(gitignore).toContain('.claude/skills');
+  });
+
+  it('greenfield: invokes trySkillsSync after rendering the template', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    expect(vi.mocked(trySkillsSync)).toHaveBeenCalledOnce();
+    expect(vi.mocked(trySkillsSync)).toHaveBeenCalledWith(expect.stringContaining('acme-space'));
+  });
+
+  it('greenfield: scaffold completes even when trySkillsSync fails', async () => {
+    vi.mocked(trySkillsSync).mockImplementationOnce(() => {
+      console.error('  Warning: skills sync failed (exit 1); run space skills sync manually.');
+    });
+
+    await expect(createSpace(makeConfig(targetDir), { yes: true })).resolves.toBeUndefined();
+
+    expect(await fileExists(join(targetDir, 'package.json'))).toBe(true);
+  });
+});
 
 describe('createSpace integration: three workspace states', () => {
   let tempBase: string;

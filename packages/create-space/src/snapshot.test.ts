@@ -5,6 +5,10 @@ import { tmpdir } from 'node:os';
 import { createSpace } from './create-space.js';
 import type { SpaceConfig } from './config.js';
 
+vi.mock('./helpers/skills-sync.js', () => ({
+  trySkillsSync: vi.fn(),
+}));
+
 function makeConfig(targetDir: string): SpaceConfig {
   return {
     projectName: 'acme',
@@ -130,7 +134,7 @@ describe('reinit path', () => {
     expect(logs.join('\n')).toContain('Initialized empty Space workspace in');
   });
 
-  it('ensures @daddia/space and @daddia/skills in devDependencies on partial workspace reinit', async () => {
+  it('ensures @daddia/space in devDependencies on partial workspace reinit (does not add @daddia/skills)', async () => {
     await mkdir(targetDir, { recursive: true });
     await writeFile(join(targetDir, 'README.md'), '# Partial workspace\n');
     await writeFile(
@@ -144,7 +148,7 @@ describe('reinit path', () => {
       devDependencies?: Record<string, string>;
     };
     expect(pkg.devDependencies).toHaveProperty('@daddia/space');
-    expect(pkg.devDependencies).toHaveProperty('@daddia/skills');
+    expect(pkg.devDependencies).not.toHaveProperty('@daddia/skills');
   });
 
   it('matches the reinit file tree snapshot', async () => {

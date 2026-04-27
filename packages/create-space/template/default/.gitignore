@@ -27,6 +27,11 @@ tmp/
 node_modules/
 .pnpm-store/
 
+# Skills (installed via space skills sync; not committed)
+.agents/skills/
+.cursor/skills
+.claude/skills
+
 # Build output
 dist/
 *.tsbuildinfo

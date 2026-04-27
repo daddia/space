@@ -9,6 +9,7 @@ import { validateProjectName, validateTargetDir } from './helpers/validate.js';
 import { detectWorkspaceState } from './helpers/workspace-state.js';
 import { tryGitInit } from './helpers/git.js';
 import { tryInstall } from './helpers/install.js';
+import { trySkillsSync } from './helpers/skills-sync.js';
 import { getOnline } from './helpers/is-online.js';
 
 interface SourceInfo {
@@ -209,18 +210,22 @@ async function runGreenfield(
     console.log(`${pc.yellow('Skipped')} install (--skip-install)`);
   } else {
     console.log(`Installing dependencies (using ${pc.cyan(config.packageManager)})`);
-    console.log(`  - ${pc.bold('@daddia/skills')}`);
     const isOnline = await getOnline();
     tryInstall(absTarget, config.packageManager, isOnline);
   }
   console.log();
 
+  console.log('Syncing skills');
+  trySkillsSync(absTarget);
+  console.log();
+
   const agentDirs = getAgentDirs(config.llmProvider);
   console.log('Creating agent resources');
   console.log(`  - ${pc.bold('AGENTS.md')}`);
+  await fs.mkdir(path.join(absTarget, '.agents', 'skills'), { recursive: true });
   for (const dir of agentDirs) {
     await createAgentDir(absTarget, dir);
-    console.log(`  - ${pc.bold(`${dir}/skills`)} -> @daddia/skills`);
+    console.log(`  - ${pc.bold(`${dir}/skills`)} -> .agents/skills`);
   }
   console.log();
 
@@ -300,10 +305,6 @@ async function ensurePackageJsonDeps(targetDir: string): Promise<void> {
     devDeps['@daddia/space'] = '*';
     changed = true;
   }
-  if (!('@daddia/skills' in devDeps)) {
-    devDeps['@daddia/skills'] = '*';
-    changed = true;
-  }
 
   if (!changed) return;
 
@@ -324,6 +325,6 @@ async function forceSymlink(target: string, linkPath: string): Promise<void> {
 async function createAgentDir(targetDir: string, dirName: string): Promise<void> {
   const dir = path.join(targetDir, dirName);
   await fs.mkdir(dir, { recursive: true });
-  const skillsTarget = '../node_modules/@daddia/skills';
+  const skillsTarget = path.join('..', '.agents', 'skills');
   await forceSymlink(skillsTarget, path.join(dir, 'skills'));
 }
