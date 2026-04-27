@@ -49,6 +49,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { validateProfiles } from './profile-utils.js';
 
 const packageDir = path.resolve(fileURLToPath(import.meta.url), '..', '..');
 
@@ -237,6 +238,15 @@ for (const skill of skills) {
       );
     }
   }
+}
+
+// ---------------------------------------------------------------------------
+// Profile validation (runs when no skill filter is active)
+// ---------------------------------------------------------------------------
+
+if (skillFilter.length === 0) {
+  const stageBySkillName = new Map(skills.map(({ name, fm }) => [name, fm.stage ?? 'unknown']));
+  validateProfiles(packageDir, stageBySkillName, findings);
 }
 
 // ---------------------------------------------------------------------------

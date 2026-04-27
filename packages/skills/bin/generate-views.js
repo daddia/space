@@ -38,6 +38,7 @@ export const ROLE_VIEWS = [
   { file: 'pm.md', title: 'PM & Founder', matches: ['pm', 'founder'] },
   { file: 'architect.md', title: 'Architect', matches: ['architect'] },
   { file: 'engineer.md', title: 'Engineer', matches: ['engineer'] },
+  { file: 'delivery.md', title: 'Delivery Lead', matches: ['delivery'] },
 ];
 
 // ---------------------------------------------------------------------------
@@ -58,7 +59,7 @@ export function buildRoleView(roleTitle, skills) {
     'Generated from `packages/skills/*/SKILL.md` frontmatter. Run',
     '`pnpm generate:views` to refresh.',
     '',
-    '| Skill | What it does | Artefact | Phase | Consumes | Produces |',
+    '| Skill | What it does | Artefact | Track | Consumes | Produces |',
     '| --- | --- | --- | --- | --- | --- |',
   ].join('\n');
 
@@ -66,15 +67,15 @@ export function buildRoleView(roleTitle, skills) {
     const desc = typeof fm.description === 'string' ? fm.description : '';
     const excerpt = desc.length > 120 ? desc.slice(0, 120).replace(/\s+\S*$/, '') + '...' : desc;
     const artefact = fm.artefact ?? '\u2014';
-    const phase = fm.phase ?? '\u2014';
+    const track = fm.track ?? fm.phase ?? '\u2014';
     const consumes =
       Array.isArray(fm.consumes) && fm.consumes.length > 0 ? fm.consumes.join(', ') : '\u2014';
     const produces =
       Array.isArray(fm.produces) && fm.produces.length > 0 ? fm.produces.join(', ') : '\u2014';
-    return `| ${name} | ${excerpt} | ${artefact} | ${phase} | ${consumes} | ${produces} |`;
+    return `| ${name} | ${excerpt} | ${artefact} | ${track} | ${consumes} | ${produces} |`;
   });
 
-  return [header, ...rows].join('\n');
+  return [header, ...rows].join('\n') + '\n';
 }
 
 /**
