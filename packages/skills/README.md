@@ -30,3 +30,4 @@ pnpm release          # build + publish
 ## Licence
 
 MIT. (c) 2026 daddia. See [`LICENSE`](./LICENSE).
+
