@@ -152,6 +152,7 @@ Use `template.md` as the general scaffold. For internal daddia use,
 (TDD mode) are opt-in mode-specific overrides.
 
 <example>
+See `examples/walking-skeleton.md` (walking-skeleton mode) — generic reference
 See `examples/cart-wp01-walking-skeleton.md` (walking-skeleton mode) — internal reference
 See `examples/cart-wp02-tdd.md` (TDD mode) — internal reference
 </example>

@@ -130,6 +130,8 @@ Use `template.md` as the general scaffold. For internal daddia use, `template-do
 mode-specific overrides.
 
 <example>
+See `examples/domain-backlog.md` (domain scope) — generic reference
+See `examples/wp01-backlog.md` (work-package scope) — generic reference
 See `examples/cart-domain-backlog.md` (domain scope) — internal reference
 See `examples/cart-wp01-backlog.md` (work-package scope) — internal reference
 </example>

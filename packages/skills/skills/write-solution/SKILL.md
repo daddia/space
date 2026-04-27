@@ -142,6 +142,7 @@ Use `template.md` as the general scaffold. For internal daddia use, `template-st
 (stub stage) and `template-full.md` (full stage) are opt-in mode-specific overrides.
 
 <example>
+See `examples/solution.md` (domain scope, stub mode) — generic reference
 See `examples/space-solution.md` (platform scope, full mode) — internal reference
 See `examples/cart-solution.md` (domain scope, full mode) — internal reference
 </example>

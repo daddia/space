@@ -187,6 +187,7 @@ Use `template-portfolio.md` for portfolio scope, `template-pitch.md` for
 pitch stage, `template-product.md` for product stage.
 
 <example>
-See `examples/cart-product.md` (domain scope, product stage)
-See `examples/space-product.md` (product scope, product stage)
+See `examples/product.md` (domain scope, pitch stage) — generic reference
+See `examples/cart-product.md` (domain scope, product stage) — internal reference
+See `examples/space-product.md` (product scope, product stage) — internal reference
 </example>
