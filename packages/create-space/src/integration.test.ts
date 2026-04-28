@@ -90,11 +90,55 @@ describe('SPACE-15-07: scaffold no longer uses @daddia/skills', () => {
   it('greenfield: scaffold completes even when trySkillsSync fails', async () => {
     vi.mocked(trySkillsSync).mockImplementationOnce(() => {
       console.error('  Warning: skills sync failed (exit 1); run space skills sync manually.');
+      return false;
     });
 
     await expect(createSpace(makeConfig(targetDir), { yes: true })).resolves.toBeUndefined();
 
     expect(await fileExists(join(targetDir, 'package.json'))).toBe(true);
+  });
+});
+
+describe('SPACE-10-03: .space/profile.yaml persistence', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-10-03-'));
+    targetDir = join(tempBase, 'acme-space');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(trySkillsSync).mockReset();
+    vi.mocked(trySkillsSync).mockReturnValue(true);
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('writes .space/profile.yaml containing the profile name when sync succeeds', async () => {
+    await createSpace(makeConfig(targetDir, { profile: 'minimal' }), { yes: true });
+
+    const profileYamlPath = join(targetDir, '.space', 'profile.yaml');
+    expect(await fileExists(profileYamlPath)).toBe(true);
+
+    const content = await readFile(profileYamlPath, 'utf-8');
+    expect(content).toBe('name: minimal\n');
+  });
+
+  it('does not write .space/profile.yaml when profile is not set', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    expect(await fileExists(join(targetDir, '.space', 'profile.yaml'))).toBe(false);
+  });
+
+  it('does not write .space/profile.yaml when sync fails', async () => {
+    vi.mocked(trySkillsSync).mockReturnValueOnce(false);
+
+    await createSpace(makeConfig(targetDir, { profile: 'typo' }), { yes: true });
+
+    expect(await fileExists(join(targetDir, '.space', 'profile.yaml'))).toBe(false);
   });
 });
 
