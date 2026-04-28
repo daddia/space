@@ -276,7 +276,7 @@ async function runReinit(
     llmProviders: llmConfig.providers,
   };
 
-  await renderTemplate(templateDir, absTarget, vars, 'idempotent');
+  await renderTemplate(templateDir, absTarget, vars, { mode: 'idempotent' });
   await ensurePackageJsonDeps(absTarget);
 
   const agentDirs = getAgentDirs(config.llmProvider);
