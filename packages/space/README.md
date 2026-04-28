@@ -11,14 +11,14 @@ pnpm add -D @daddia/space
 
 ## Commands
 
-| Command                       | Description                                                  |
-| ----------------------------- | ------------------------------------------------------------ |
-| `space skills sync`           | Resolve a profile, install skills, write `skills-lock.json`  |
-| `space skills install`        | Restore the skills pinned in `skills-lock.json`              |
-| `space sync jira`             | Sync a Jira project into `.space/sources/jira/`              |
-| `space sync confluence`       | Sync a Confluence space into `.space/sources/confluence/`    |
-| `space sync`                  | Sync all configured sources                                  |
-| `space init`                  | Initialise or reinitialise a workspace                       |
+| Command                 | Description                                                 |
+| ----------------------- | ----------------------------------------------------------- |
+| `space skills sync`     | Resolve a profile, install skills, write `skills-lock.json` |
+| `space skills install`  | Restore the skills pinned in `skills-lock.json`             |
+| `space sync jira`       | Sync a Jira project into `.space/sources/jira/`             |
+| `space sync confluence` | Sync a Confluence space into `.space/sources/confluence/`   |
+| `space sync`            | Sync all configured sources                                 |
+| `space init`            | Initialise or reinitialise a workspace                      |
 
 Run `space --help` or `space <command> --help` for full options.
 
