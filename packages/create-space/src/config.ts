@@ -187,6 +187,22 @@ export async function resolveConfig(
   const targetDir = options.dir ?? defaults.targetDir;
   const packageManager = resolvePackageManager(options);
 
+  let profile: string | undefined;
+  if (options.profile) {
+    profile = options.profile;
+  } else if (!skipPrompts) {
+    profile = await select<string>({
+      message: 'Which skill profile would you like to use?',
+      choices: [
+        { value: 'minimal', name: 'minimal      — essential skills only' },
+        { value: 'domain-team', name: 'domain-team  — delivery team defaults' },
+        { value: 'platform', name: 'platform    — platform engineering' },
+        { value: 'full', name: 'full        — all available skills' },
+      ],
+      default: 'full',
+    });
+  }
+
   return {
     projectName: name,
     projectKey,
@@ -197,6 +213,6 @@ export async function resolveConfig(
     packageManager,
     skipInstall: !!options.skipInstall,
     disableGit: !!options.disableGit,
-    profile: options.profile || undefined,
+    profile,
   };
 }
