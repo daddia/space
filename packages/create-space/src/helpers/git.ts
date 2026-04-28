@@ -23,6 +23,20 @@ function isDefaultBranchSet(): boolean {
   return result.status === 0;
 }
 
+/**
+ * Returns true when the directory is inside a git repository that has
+ * uncommitted changes (staged or unstaged). Returns false when git is
+ * unavailable, the directory is not a git repo, or the tree is clean.
+ */
+export function hasUncommittedGitChanges(targetDir: string): boolean {
+  const result = spawn.sync('git', ['status', '--porcelain'], {
+    cwd: targetDir,
+    stdio: ['ignore', 'pipe', 'ignore'],
+  });
+  if (result.error || result.status !== 0) return false;
+  return (result.stdout as Buffer).toString().trim().length > 0;
+}
+
 export function tryGitInit(targetDir: string): boolean {
   let didInit = false;
 
