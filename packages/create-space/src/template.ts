@@ -1,11 +1,37 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import pc from 'picocolors';
+
+import type { WorkspaceLayout } from './helpers/workspace-layout.js';
 
 export type TemplateVars = Record<string, string>;
 export type RenderMode = 'greenfield' | 'idempotent';
 
+export interface RenderOptions {
+  /** Whether to skip existing files or overwrite them. Defaults to 'greenfield'. */
+  mode?: RenderMode;
+  /** Selects the template variant. Defaults to 'sibling'. */
+  layout?: WorkspaceLayout;
+}
+
 const TEMPLATE_PATTERN = /\{([a-z][a-zA-Z]*)\}/g;
 const SPACE_CONFIG_RELATIVE = path.join('.space', 'config');
+
+// Lines that Space manages inside the .gitignore marker block.
+const GITIGNORE_MARKER_START =
+  '# >>> @daddia/space — managed block, do not edit between markers';
+const GITIGNORE_MARKER_END = '# <<< @daddia/space';
+const GITIGNORE_MANAGED_LINES = [
+  '.space/sources/',
+  '.space/cache/',
+  'runs/',
+  'node_modules/',
+  '.cursor/skills',
+  '.claude/skills',
+];
+
+// The postinstall command Space writes when none exists in embedded repos.
+const SPACE_POSTINSTALL = 'space skills sync';
 
 function substitute(content: string, vars: TemplateVars): string {
   return content.replace(TEMPLATE_PATTERN, (_match, key: string) => {
@@ -13,15 +39,25 @@ function substitute(content: string, vars: TemplateVars): string {
   });
 }
 
+/**
+ * Copies the appropriate template variant into targetDir, substituting
+ * variables and respecting render mode.
+ *
+ * Resolves the variant directory from templateDir:
+ *   layout === 'embedded' → templateDir/embedded/
+ *   otherwise             → templateDir/default/
+ */
 export async function renderTemplate(
   templateDir: string,
   targetDir: string,
   vars: TemplateVars,
-  mode: RenderMode = 'greenfield',
+  options?: RenderOptions,
 ): Promise<string[]> {
-  const defaultDir = path.join(templateDir, 'default');
+  const layout = options?.layout ?? 'sibling';
+  const mode = options?.mode ?? 'greenfield';
+  const variantDir = path.join(templateDir, layout === 'embedded' ? 'embedded' : 'default');
   const created: string[] = [];
-  await copyDir(defaultDir, targetDir, targetDir, vars, mode, created);
+  await copyDir(variantDir, targetDir, targetDir, vars, mode, created);
   return created;
 }
 
@@ -151,4 +187,129 @@ async function fileExists(filePath: string): Promise<boolean> {
 function substituteFilename(name: string, vars: TemplateVars): string {
   const project = vars['project'] ?? '';
   return name.replace(/\{project\}/g, project);
+}
+
+// ---------------------------------------------------------------------------
+// Embedded-mode helpers
+// ---------------------------------------------------------------------------
+
+function buildManagedBlock(): string {
+  return [GITIGNORE_MARKER_START, ...GITIGNORE_MANAGED_LINES, GITIGNORE_MARKER_END, ''].join('\n');
+}
+
+/**
+ * Ensures that the host .gitignore in targetDir contains a Space-managed
+ * marker block. Appends the block if absent; updates the block in-place on
+ * reinit; backs up and replaces on unreadable file.
+ */
+export async function ensureGitignoreManagedBlock(targetDir: string): Promise<void> {
+  const gitignorePath = path.join(targetDir, '.gitignore');
+
+  let existing: string;
+  try {
+    existing = await fs.readFile(gitignorePath, 'utf-8');
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      await fs.writeFile(gitignorePath, buildManagedBlock());
+      return;
+    }
+    // Unreadable (e.g. permissions) — attempt backup then write fresh.
+    try {
+      await fs.copyFile(gitignorePath, gitignorePath + '.bak');
+    } catch {
+      // Best-effort; if the file cannot be copied it cannot be read either.
+    }
+    console.warn(
+      `  ${pc.yellow('Warning:')} .gitignore is unreadable; backed up to .gitignore.bak and replaced.`,
+    );
+    await fs.writeFile(gitignorePath, buildManagedBlock());
+    return;
+  }
+
+  const startIdx = existing.indexOf(GITIGNORE_MARKER_START);
+  const endIdx = existing.indexOf(GITIGNORE_MARKER_END);
+
+  if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+    // Managed block already present — refresh the content between the markers.
+    const before = existing.slice(0, startIdx);
+    const afterMarker = existing.slice(endIdx + GITIGNORE_MARKER_END.length);
+    // Trim any trailing newline that belongs to the old block end marker.
+    await fs.writeFile(gitignorePath, before + buildManagedBlock() + afterMarker.replace(/^\n/, ''));
+  } else {
+    // No managed block — append.
+    const separator = existing.endsWith('\n') ? '\n' : '\n\n';
+    await fs.writeFile(gitignorePath, existing + separator + buildManagedBlock());
+  }
+}
+
+/**
+ * Merges Space devDependencies into the host package.json in embedded mode.
+ * Adds @daddia/space and @daddia/skills to devDependencies; adds a
+ * scripts.postinstall for skills sync if no postinstall is present; warns
+ * when a non-Space postinstall already exists. Throws on invalid JSON so the
+ * caller surfaces it as a non-zero exit.
+ *
+ * If package.json does not exist, creates a minimal one.
+ */
+export async function ensureEmbeddedPackageJsonDeps(targetDir: string): Promise<void> {
+  const pkgPath = path.join(targetDir, 'package.json');
+
+  let raw: string | null = null;
+  try {
+    raw = await fs.readFile(pkgPath, 'utf-8');
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code !== 'ENOENT') throw err;
+  }
+
+  if (raw === null) {
+    // No package.json — create a minimal one.
+    const minimal = {
+      private: true,
+      scripts: { postinstall: SPACE_POSTINSTALL },
+      devDependencies: { '@daddia/space': '*', '@daddia/skills': '*' },
+    };
+    await fs.writeFile(pkgPath, JSON.stringify(minimal, null, 2) + '\n');
+    return;
+  }
+
+  let pkg: Record<string, unknown>;
+  try {
+    pkg = JSON.parse(raw) as Record<string, unknown>;
+  } catch {
+    throw new Error(
+      `package.json at ${pkgPath} contains invalid JSON. ` +
+        `Fix it before running embedded Space init.`,
+    );
+  }
+
+  let changed = false;
+
+  // devDependencies — merge; never touch other fields.
+  const devDeps = { ...((pkg['devDependencies'] as Record<string, string> | undefined) ?? {}) };
+  if (!('@daddia/space' in devDeps)) {
+    devDeps['@daddia/space'] = '*';
+    changed = true;
+  }
+  if (!('@daddia/skills' in devDeps)) {
+    devDeps['@daddia/skills'] = '*';
+    changed = true;
+  }
+  pkg['devDependencies'] = devDeps;
+
+  // scripts.postinstall — add if absent; warn and preserve if pointing elsewhere.
+  const scripts = { ...((pkg['scripts'] as Record<string, string> | undefined) ?? {}) };
+  const existingPostinstall = scripts['postinstall'];
+  if (!existingPostinstall) {
+    scripts['postinstall'] = SPACE_POSTINSTALL;
+    pkg['scripts'] = scripts;
+    changed = true;
+  } else if (existingPostinstall !== SPACE_POSTINSTALL) {
+    console.warn(
+      `  ${pc.yellow('Warning:')} scripts.postinstall is already set to "${existingPostinstall}". ` +
+        `Add "${SPACE_POSTINSTALL}" manually if skills auto-sync is needed.`,
+    );
+  }
+
+  if (!changed) return;
+  await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 }
