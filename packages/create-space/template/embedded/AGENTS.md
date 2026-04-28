@@ -8,13 +8,13 @@ This Space workspace is **embedded** inside the `{project}` code repository.
 Delivery artifacts (product strategy, architecture, backlog, design documents,
 delivery reports) live here alongside the application code.
 
-| Path             | Purpose                                                            |
-| ---------------- | ------------------------------------------------------------------ |
-| `.space/`        | Space workspace configuration (config, team, RACI)                |
-| `product/`       | Product strategy and roadmap                                       |
-| `architecture/`  | Solution architecture and architecture decision records            |
-| `work/`          | Work-package artifacts: design, backlog, delivery reports          |
-| `docs/`          | Conventions, runbooks, and shared team documentation               |
+| Path            | Purpose                                                   |
+| --------------- | --------------------------------------------------------- |
+| `.space/`       | Space workspace configuration (config, team, RACI)        |
+| `product/`      | Product strategy and roadmap                              |
+| `architecture/` | Solution architecture and architecture decision records   |
+| `work/`         | Work-package artifacts: design, backlog, delivery reports |
+| `docs/`         | Conventions, runbooks, and shared team documentation      |
 
 ## Key documents
 

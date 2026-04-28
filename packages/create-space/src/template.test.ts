@@ -446,9 +446,7 @@ describe('ensureEmbeddedPackageJsonDeps', () => {
   it('throws on invalid JSON so the caller can surface a non-zero exit', async () => {
     await writeFile(join(targetDir, 'package.json'), '{ not valid json }');
 
-    await expect(ensureEmbeddedPackageJsonDeps(targetDir)).rejects.toThrow(
-      /invalid JSON/i,
-    );
+    await expect(ensureEmbeddedPackageJsonDeps(targetDir)).rejects.toThrow(/invalid JSON/i);
   });
 
   it('is idempotent — does not write the file when deps are already present', async () => {

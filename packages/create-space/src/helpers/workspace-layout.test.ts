@@ -134,10 +134,7 @@ describe('readExistingLayout', () => {
   it('returns undefined when there is no workspace block', async () => {
     const target = join(tempBase, 'no-workspace-block');
     await mkdir(join(target, '.space'), { recursive: true });
-    await writeFile(
-      join(target, '.space', 'config'),
-      'project:\n  name: acme\n  key: ACME\n',
-    );
+    await writeFile(join(target, '.space', 'config'), 'project:\n  name: acme\n  key: ACME\n');
     expect(await readExistingLayout(target)).toBeUndefined();
   });
 });
