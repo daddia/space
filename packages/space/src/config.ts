@@ -1,6 +1,9 @@
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { parse } from 'yaml';
+import type { WorkspaceLayout } from './helpers/workspace-layout.js';
+
+export type { WorkspaceLayout } from './helpers/workspace-layout.js';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -22,6 +25,9 @@ export interface WorkspaceConfig {
   project: {
     name: string;
     key: string;
+  };
+  workspace?: {
+    layout?: WorkspaceLayout;
   };
   sources?: {
     issues?: JiraSourceConfig;
@@ -112,6 +118,19 @@ function validateConfig(data: unknown): WorkspaceConfig {
   }
   if (typeof project['key'] !== 'string' || project['key'].trim() === '') {
     throw new ConfigError('.space/config: project.key must be a non-empty string');
+  }
+
+  const workspace = data['workspace'];
+  if (workspace !== undefined) {
+    if (!isObject(workspace)) {
+      throw new ConfigError('.space/config: "workspace" must be a YAML mapping');
+    }
+    const layout = workspace['layout'];
+    if (layout !== undefined && layout !== 'sibling' && layout !== 'embedded') {
+      throw new ConfigError(
+        '.space/config: workspace.layout must be "sibling" or "embedded" when present',
+      );
+    }
   }
 
   const sources = data['sources'];

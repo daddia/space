@@ -2,8 +2,10 @@ import { input, select, confirm } from '@inquirer/prompts';
 import { isCI } from 'ci-info';
 import pc from 'picocolors';
 import { resolvePackageManager, type PackageManager } from './helpers/pkg-manager.js';
+import type { WorkspaceLayout } from './helpers/workspace-layout.js';
 
 export type { PackageManager } from './helpers/pkg-manager.js';
+export type { WorkspaceLayout } from './helpers/workspace-layout.js';
 
 export type SourceProvider = 'github' | 'gitlab' | 'bitbucket' | 'none';
 export type LlmProvider = 'anthropic' | 'openai' | 'cursor' | 'other';
@@ -29,6 +31,7 @@ export interface SpaceConfig {
   skipInstall: boolean;
   disableGit: boolean;
   profile?: string;
+  layout?: WorkspaceLayout;
 }
 
 export interface CliOptions {
@@ -42,6 +45,7 @@ export interface CliOptions {
   skipInstall?: boolean;
   disableGit?: boolean;
   profile?: string;
+  mode?: WorkspaceLayout;
 }
 
 export function deriveDefaults(projectName: string) {
