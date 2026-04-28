@@ -191,7 +191,7 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
 
   if (state === 'greenfield') {
     if (layout === 'embedded') {
-      await runGreenfieldEmbedded(config, absTarget, templateDir, options);
+      await runGreenfieldEmbedded(config, absTarget, templateDir);
       console.log(`Initialized embedded Space workspace in ${spaceStatusPath}`);
     } else {
       const source = await runGreenfieldSibling(config, absTarget, templateDir, options);
@@ -341,7 +341,6 @@ async function runGreenfieldEmbedded(
   config: SpaceConfig,
   absTarget: string,
   templateDir: string,
-  options: CliOptions,
 ): Promise<void> {
   console.log();
   console.log(
