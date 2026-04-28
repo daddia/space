@@ -1,0 +1,15 @@
+# RACI matrix for {projectName}
+# R = Responsible (does the work)
+# A = Accountable (owns the outcome, one per activity)
+# C = Consulted (input required before decision)
+# I = Informed (notified of outcome)
+
+activities:
+  # - activity: Example Delivery Activity
+  #   responsible: engineering-lead
+  #   accountable: engineering-lead
+  #   consulted:
+  #     - product-owner
+  #     - design-lead
+  #   informed:
+  #     - stakeholders

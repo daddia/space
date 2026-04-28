@@ -1,0 +1,13 @@
+# Team roster for {projectName}
+# List the people involved in this initiative, their roles, and how to reach them.
+
+members:
+  # - name: Your Name
+  #   role: Engineering Lead
+  #   email: name@example.com
+  #   slack: '@handle'
+
+# approvers:
+#   engineering: '@handle'
+#   product: '@handle'
+#   design: '@handle'
