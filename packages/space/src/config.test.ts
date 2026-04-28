@@ -251,4 +251,82 @@ sources:
     // no config file written
     expect(() => loadConfig(tempDir)).toThrow(ConfigError);
   });
+
+  it('throws ConfigError when workspace.layout is an unrecognised value', async () => {
+    await makeWorkspace(
+      tempDir,
+      `
+project:
+  name: T
+  key: T
+workspace:
+  layout: monorepo
+`.trim(),
+    );
+    expect(() => loadConfig(tempDir)).toThrow(ConfigError);
+    expect(() => loadConfig(tempDir)).toThrow('workspace.layout must be "sibling" or "embedded"');
+  });
+
+  it('throws ConfigError when the workspace block is not a mapping', async () => {
+    await makeWorkspace(
+      tempDir,
+      `
+project:
+  name: T
+  key: T
+workspace: embedded
+`.trim(),
+    );
+    expect(() => loadConfig(tempDir)).toThrow(ConfigError);
+    expect(() => loadConfig(tempDir)).toThrow('"workspace" must be a YAML mapping');
+  });
+});
+
+// ---------------------------------------------------------------------------
+// loadConfig -- workspace.layout field
+// ---------------------------------------------------------------------------
+
+describe('loadConfig -- workspace.layout', () => {
+  let tempDir: string;
+
+  beforeEach(async () => {
+    tempDir = await mkdtemp(path.join(tmpdir(), 'space-config-layout-'));
+  });
+
+  afterEach(async () => {
+    await rm(tempDir, { recursive: true, force: true });
+  });
+
+  it('accepts workspace.layout: embedded', async () => {
+    await makeWorkspace(
+      tempDir,
+      `project:\n  name: T\n  key: T\nworkspace:\n  layout: embedded`,
+    );
+    const config = loadConfig(tempDir);
+    expect(config.workspace?.layout).toBe('embedded');
+  });
+
+  it('accepts workspace.layout: sibling', async () => {
+    await makeWorkspace(
+      tempDir,
+      `project:\n  name: T\n  key: T\nworkspace:\n  layout: sibling`,
+    );
+    const config = loadConfig(tempDir);
+    expect(config.workspace?.layout).toBe('sibling');
+  });
+
+  it('accepts a config without workspace.layout (undefined is valid)', async () => {
+    await makeWorkspace(tempDir, `project:\n  name: T\n  key: T`);
+    const config = loadConfig(tempDir);
+    expect(config.workspace).toBeUndefined();
+  });
+
+  it('accepts workspace block without layout key', async () => {
+    await makeWorkspace(
+      tempDir,
+      `project:\n  name: T\n  key: T\nworkspace:\n  path: .\n  work: work/{TASK_ID}/`,
+    );
+    const config = loadConfig(tempDir);
+    expect(config.workspace?.layout).toBeUndefined();
+  });
 });
