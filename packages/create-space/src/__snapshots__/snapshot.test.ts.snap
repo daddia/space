@@ -28,6 +28,59 @@ exports[`reinit path > matches the reinit file tree snapshot 1`] = `
 ]
 `;
 
+exports[`template output snapshots (embedded layout) > matches the expected embedded .space/config content 1`] = `
+"project:
+  name: acme
+  key: ACME
+
+# External source configuration for \`space sync\`.
+# Uncomment and fill in to enable Jira and Confluence sync.
+#
+# sources:
+#   issues:
+#     provider: jira
+#     base_url: https://your-org.atlassian.net
+#     project: ACME
+#
+#   docs:
+#     provider: confluence
+#     space: YOUR_SPACE_KEY
+#     url: https://your-org.atlassian.net/wiki/spaces/YOUR_SPACE_KEY
+
+workspace:
+  path: .
+  work: work/{TASK_ID}/
+  runs: runs/
+  layout: embedded
+
+llm:
+  default_model: claude-sonnet
+  providers:
+    anthropic:
+      api_key_env: ANTHROPIC_API_KEY
+      models:
+        claude-sonnet: claude-sonnet-4-20250514
+"
+`;
+
+exports[`template output snapshots (embedded layout) > matches the expected embedded file tree 1`] = `
+[
+  ".claude/skills -> symlink",
+  ".cursor/skills -> symlink",
+  ".gitignore",
+  ".space/config",
+  ".space/raci",
+  ".space/team",
+  "AGENTS.md",
+  "architecture/.gitkeep",
+  "docs/.gitkeep",
+  "package.json",
+  "product/.gitkeep",
+  "reports/.gitkeep",
+  "work/.gitkeep",
+]
+`;
+
 exports[`template output snapshots (with profile) > file tree does not include .space/profile.yaml when profile is omitted 1`] = `
 [
   ".claude/skills -> symlink",

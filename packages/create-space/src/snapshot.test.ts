@@ -201,6 +201,50 @@ describe('template output snapshots (with profile)', () => {
   });
 });
 
+describe('template output snapshots (embedded layout)', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-snap-emb-'));
+    targetDir = join(tempBase, 'my-app');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('matches the expected embedded file tree', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true, mode: 'embedded' });
+    const tree = await collectTree(targetDir);
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('matches the expected embedded .space/config content', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true, mode: 'embedded' });
+    const content = await readFile(join(targetDir, '.space/config'), 'utf-8');
+    expect(content).toMatchSnapshot();
+    expect(content).toContain('layout: embedded');
+  });
+
+  it('non-interactive with auto-detected embedded defaults to sibling layout', async () => {
+    // A target directory that contains a package.json would auto-detect as
+    // embedded, but --yes (non-interactive) suppresses the prompt and returns
+    // sibling instead.
+    await mkdir(targetDir, { recursive: true });
+    await writeFile(join(targetDir, 'package.json'), '{"name":"host-app"}');
+
+    await createSpace(makeConfig(targetDir), { yes: true });
+
+    const config = await readFile(join(targetDir, '.space/config'), 'utf-8');
+    expect(config).not.toContain('layout: embedded');
+  });
+});
+
 describe('profile flag wiring', () => {
   let tempBase: string;
   let targetDir: string;
