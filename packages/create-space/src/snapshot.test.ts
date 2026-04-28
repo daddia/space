@@ -121,7 +121,7 @@ describe('reinit path', () => {
 
     await createSpace(makeConfig(targetDir), { yes: true });
 
-    expect(logs.join('\n')).toContain('Reinitialized existing Space workspace in');
+    expect(logs.join('\n')).toContain('Reinitialized existing Space workspace (sibling) in');
   });
 
   it('prints Initialized status line on greenfield run', async () => {
@@ -132,7 +132,7 @@ describe('reinit path', () => {
 
     await createSpace(makeConfig(targetDir), { yes: true });
 
-    expect(logs.join('\n')).toContain('Initialized empty Space workspace in');
+    expect(logs.join('\n')).toContain('Initialized empty Space workspace (sibling) in');
   });
 
   it('ensures @daddia/space in devDependencies on partial workspace reinit (does not add @daddia/skills)', async () => {
