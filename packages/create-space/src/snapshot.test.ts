@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createSpace } from './create-space.js';
 import type { SpaceConfig } from './config.js';
+import { trySkillsSync } from './helpers/skills-sync.js';
 
 vi.mock('./helpers/skills-sync.js', () => ({
   trySkillsSync: vi.fn(),
@@ -157,5 +158,39 @@ describe('reinit path', () => {
     await createSpace(makeConfig(targetDir), { yes: true });
     const tree = await collectTree(targetDir);
     expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('profile flag wiring', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-profile-'));
+    targetDir = join(tempBase, 'acme-space');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(trySkillsSync).mockClear();
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('calls trySkillsSync with the profile name when profile is set', async () => {
+    const config: SpaceConfig = { ...makeConfig(targetDir), profile: 'minimal' };
+    await createSpace(config, { yes: true });
+    expect(vi.mocked(trySkillsSync)).toHaveBeenCalledWith(
+      expect.stringContaining('acme-space'),
+      'minimal',
+    );
+  });
+
+  it('calls trySkillsSync without a profile argument when profile is undefined', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+    const calls = vi.mocked(trySkillsSync).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    expect(calls[calls.length - 1]![1]).toBeUndefined();
   });
 });

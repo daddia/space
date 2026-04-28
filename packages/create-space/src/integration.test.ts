@@ -81,7 +81,10 @@ describe('SPACE-15-07: scaffold no longer uses @daddia/skills', () => {
     await createSpace(makeConfig(targetDir), { yes: true });
 
     expect(vi.mocked(trySkillsSync)).toHaveBeenCalledOnce();
-    expect(vi.mocked(trySkillsSync)).toHaveBeenCalledWith(expect.stringContaining('acme-space'));
+    expect(vi.mocked(trySkillsSync)).toHaveBeenCalledWith(
+      expect.stringContaining('acme-space'),
+      undefined,
+    );
   });
 
   it('greenfield: scaffold completes even when trySkillsSync fails', async () => {

@@ -146,4 +146,22 @@ describe('resolveConfig', () => {
     expect(config.skipInstall).toBe(true);
     expect(config.disableGit).toBe(true);
   });
+
+  it('records the --profile flag value on SpaceConfig.profile', async () => {
+    const { resolveConfig } = await import('./config.js');
+    const config = await resolveConfig('acme', { yes: true, profile: 'minimal' });
+    expect(config.profile).toBe('minimal');
+  });
+
+  it('sets profile to undefined when --profile is not provided', async () => {
+    const { resolveConfig } = await import('./config.js');
+    const config = await resolveConfig('acme', { yes: true });
+    expect(config.profile).toBeUndefined();
+  });
+
+  it('sets profile to undefined when --profile is an empty string', async () => {
+    const { resolveConfig } = await import('./config.js');
+    const config = await resolveConfig('acme', { yes: true, profile: '' });
+    expect(config.profile).toBeUndefined();
+  });
 });
