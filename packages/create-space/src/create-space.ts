@@ -216,8 +216,12 @@ async function runGreenfield(
   console.log();
 
   console.log('Syncing skills');
-  trySkillsSync(absTarget, config.profile);
+  const syncSucceeded = trySkillsSync(absTarget, config.profile);
   console.log();
+
+  if (config.profile && syncSucceeded) {
+    await writeProfileYaml(absTarget, config.profile);
+  }
 
   const agentDirs = getAgentDirs(config.llmProvider);
   console.log('Creating agent resources');
@@ -327,4 +331,9 @@ async function createAgentDir(targetDir: string, dirName: string): Promise<void>
   await fs.mkdir(dir, { recursive: true });
   const skillsTarget = path.join('..', '.agents', 'skills');
   await forceSymlink(skillsTarget, path.join(dir, 'skills'));
+}
+
+async function writeProfileYaml(targetDir: string, profile: string): Promise<void> {
+  const profileYamlPath = path.join(targetDir, '.space', 'profile.yaml');
+  await fs.writeFile(profileYamlPath, `name: ${profile}\n`);
 }

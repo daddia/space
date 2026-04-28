@@ -3,11 +3,13 @@ import pc from 'picocolors';
 
 /**
  * Invokes `space skills sync` in the target workspace directory.
- * Best-effort: emits a warning and returns if the command fails; the scaffold
- * continues and exits 0 regardless. The caller is responsible for ensuring
- * `@daddia/space` is already installed in the target before calling.
+ * Best-effort: emits a warning on failure and returns false; the scaffold
+ * continues and exits 0 regardless. Returns true when sync succeeds so the
+ * caller can gate follow-on writes (e.g. .space/profile.yaml) on success.
+ * The caller is responsible for ensuring `@daddia/space` is already installed
+ * in the target before calling.
  */
-export function trySkillsSync(targetDir: string, profileName?: string): void {
+export function trySkillsSync(targetDir: string, profileName?: string): boolean {
   const args = ['exec', 'space', 'skills', 'sync'];
   if (profileName) {
     args.push('--profile', profileName);
@@ -23,5 +25,8 @@ export function trySkillsSync(targetDir: string, profileName?: string): void {
     console.error(
       `  ${pc.yellow('Warning:')} skills sync failed (${reason}); run ${pc.cyan('space skills sync')} manually.`,
     );
+    return false;
   }
+
+  return true;
 }
