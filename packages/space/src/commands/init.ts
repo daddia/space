@@ -25,9 +25,10 @@ export async function runInit(options: InitOptions = {}): Promise<void> {
     assertGitClean(targetDir);
   }
 
-  const configTemplatePath = layout === 'embedded'
-    ? path.join(templateDir, 'embedded', '.space', 'config')
-    : path.join(templateDir, '.space', 'config');
+  const configTemplatePath =
+    layout === 'embedded'
+      ? path.join(templateDir, 'embedded', '.space', 'config')
+      : path.join(templateDir, '.space', 'config');
 
   await mergeOrCreateConfig(targetDir, configTemplatePath);
 
@@ -66,11 +67,16 @@ export function registerInitCommand(program: Command): void {
     .command('init')
     .description('Initialise or reinitialise the Space workspace in the current directory')
     .option('--skip-install', 'Skip package manager install after init')
-    .option('--mode <layout>', 'Workspace layout: sibling (dedicated repo) or embedded (inside host repo)')
+    .option(
+      '--mode <layout>',
+      'Workspace layout: sibling (dedicated repo) or embedded (inside host repo)',
+    )
     .action(async (opts: { skipInstall?: boolean; mode?: string }) => {
-      const mode = opts.mode === 'embedded' || opts.mode === 'sibling'
-        ? (opts.mode as WorkspaceLayout)
-        : undefined;
+      if (opts.mode !== undefined && opts.mode !== 'embedded' && opts.mode !== 'sibling') {
+        console.error(pc.red(`space: --mode must be "sibling" or "embedded", got "${opts.mode}"`));
+        process.exit(1);
+      }
+      const mode = opts.mode as WorkspaceLayout | undefined;
       try {
         await runInit({ skipInstall: opts.skipInstall, mode });
       } catch (err) {
@@ -120,6 +126,11 @@ async function resolveLayout(
 /**
  * Throws when the target directory is a git repo with uncommitted changes.
  * Silent when git is unavailable, the dir is not a repo, or the tree is clean.
+ *
+ * This function always throws — there is no interactive "continue?" prompt —
+ * because this package does not depend on @inquirer/prompts. The interactive
+ * warn-and-continue path is only implemented in the create-space package,
+ * which does have an interactive runtime.
  */
 function assertGitClean(targetDir: string): void {
   const result = spawnSync('git', ['status', '--porcelain'], {
@@ -320,8 +331,10 @@ async function ensureEmbeddedPackageJsonDeps(targetDir: string): Promise<void> {
 // .gitignore managed block
 // ---------------------------------------------------------------------------
 
-const GITIGNORE_MARKER_START =
-  '# >>> @daddia/space — managed block, do not edit between markers';
+// These constants are intentionally duplicated in the create-space package (template.ts).
+// The two packages may not import from each other (dependency rules). Keep both
+// copies identical; if the managed lines change, update both files together.
+const GITIGNORE_MARKER_START = '# >>> @daddia/space — managed block, do not edit between markers';
 const GITIGNORE_MARKER_END = '# <<< @daddia/space';
 const GITIGNORE_MANAGED_LINES = [
   '.space/sources/',
@@ -352,8 +365,9 @@ async function ensureGitignoreManagedBlock(targetDir: string): Promise<void> {
       await fs.writeFile(gitignorePath, buildManagedBlock());
       return;
     }
+    const backupPath = path.join(path.dirname(gitignorePath), '.gitignore.bak');
     try {
-      await fs.copyFile(gitignorePath, gitignorePath + '.bak');
+      await fs.copyFile(gitignorePath, backupPath);
     } catch {
       // best-effort backup
     }

@@ -18,8 +18,11 @@ const TEMPLATE_PATTERN = /\{([a-z][a-zA-Z]*)\}/g;
 const SPACE_CONFIG_RELATIVE = path.join('.space', 'config');
 
 // Lines that Space manages inside the .gitignore marker block.
-const GITIGNORE_MARKER_START =
-  '# >>> @daddia/space — managed block, do not edit between markers';
+//
+// These constants are intentionally duplicated in @daddia/space/src/commands/init.ts.
+// The two packages may not import from each other (dependency rules). Keep both
+// copies identical; if the managed lines change, update both files together.
+const GITIGNORE_MARKER_START = '# >>> @daddia/space — managed block, do not edit between markers';
 const GITIGNORE_MARKER_END = '# <<< @daddia/space';
 const GITIGNORE_MANAGED_LINES = [
   '.space/sources/',
@@ -214,8 +217,9 @@ export async function ensureGitignoreManagedBlock(targetDir: string): Promise<vo
       return;
     }
     // Unreadable (e.g. permissions) — attempt backup then write fresh.
+    const backupPath = path.join(path.dirname(gitignorePath), '.gitignore.bak');
     try {
-      await fs.copyFile(gitignorePath, gitignorePath + '.bak');
+      await fs.copyFile(gitignorePath, backupPath);
     } catch {
       // Best-effort; if the file cannot be copied it cannot be read either.
     }
@@ -234,7 +238,10 @@ export async function ensureGitignoreManagedBlock(targetDir: string): Promise<vo
     const before = existing.slice(0, startIdx);
     const afterMarker = existing.slice(endIdx + GITIGNORE_MARKER_END.length);
     // Trim any trailing newline that belongs to the old block end marker.
-    await fs.writeFile(gitignorePath, before + buildManagedBlock() + afterMarker.replace(/^\n/, ''));
+    await fs.writeFile(
+      gitignorePath,
+      before + buildManagedBlock() + afterMarker.replace(/^\n/, ''),
+    );
   } else {
     // No managed block — append.
     const separator = existing.endsWith('\n') ? '\n' : '\n\n';

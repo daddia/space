@@ -23,6 +23,11 @@ export interface DetectWorkspaceLayoutOptions {
   /**
    * Layout read from an existing .space/config. When provided, it is returned
    * immediately — layout is sticky and survives reinit runs.
+   *
+   * Callers in this codebase read the config separately via readExistingLayout()
+   * and short-circuit before calling detectWorkspaceLayout. This option exists
+   * as a forward-compatibility hook for callers that already have the config
+   * in hand and want a single-call API.
    */
   existingLayout?: WorkspaceLayout;
 }
