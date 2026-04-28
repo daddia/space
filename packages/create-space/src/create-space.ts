@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { confirm } from '@inquirer/prompts';
 import pc from 'picocolors';
-import type { SpaceConfig, LlmProvider } from './config.js';
+import type { SpaceConfig, LlmProvider, WorkspaceLayout } from './config.js';
 import {
   getLlmConfig,
   buildSourceRepo,
@@ -10,13 +10,20 @@ import {
   VALID_PROFILES,
   type CliOptions,
 } from './config.js';
-import { renderTemplate, type TemplateVars } from './template.js';
+import {
+  renderTemplate,
+  ensureGitignoreManagedBlock,
+  ensureEmbeddedPackageJsonDeps,
+  type TemplateVars,
+} from './template.js';
 import { validateProjectName, validateTargetDir } from './helpers/validate.js';
-import { detectWorkspaceState } from './helpers/workspace-state.js';
-import { tryGitInit } from './helpers/git.js';
+import { detectWorkspaceState, readExistingLayout } from './helpers/workspace-state.js';
+import { detectWorkspaceLayout } from './helpers/workspace-layout.js';
+import { hasUncommittedGitChanges, tryGitInit } from './helpers/git.js';
 import { tryInstall } from './helpers/install.js';
 import { trySkillsSync } from './helpers/skills-sync.js';
 import { getOnline } from './helpers/is-online.js';
+import type { WorkspaceState } from './helpers/workspace-state.js';
 
 interface SourceInfo {
   sourcePath: string;
@@ -92,6 +99,73 @@ function getAgentDirs(llmProvider: LlmProvider): string[] {
   }
 }
 
+/**
+ * Determines the workspace layout from the current state, --mode flag, and
+ * auto-detection. For complete workspaces the existing layout is always
+ * returned (layout is sticky). For partial/greenfield, the flag takes
+ * precedence; when absent, layout is auto-detected and confirmed interactively
+ * or defaulted to 'sibling' in non-interactive contexts.
+ */
+async function resolveLayout(
+  state: WorkspaceState,
+  absTarget: string,
+  flagMode: WorkspaceLayout | undefined,
+  skipPrompts: boolean,
+): Promise<WorkspaceLayout> {
+  if (state === 'complete') {
+    const existingLayout = (await readExistingLayout(absTarget)) ?? 'sibling';
+    if (flagMode !== undefined && flagMode !== existingLayout) {
+      console.warn(
+        `  ${pc.yellow('Warning:')} Workspace is already ${existingLayout}; --mode flag ignored`,
+      );
+    }
+    return existingLayout;
+  }
+
+  if (flagMode !== undefined) {
+    return flagMode;
+  }
+
+  const detected = await detectWorkspaceLayout(absTarget);
+  if (detected === 'embedded') {
+    if (skipPrompts) {
+      return 'sibling';
+    }
+    const embed = await confirm({
+      message: `Detected existing project at ${pc.bold(path.basename(absTarget))}. Embed a Space workspace here?`,
+      default: true,
+    });
+    return embed ? 'embedded' : 'sibling';
+  }
+
+  return 'sibling';
+}
+
+/**
+ * Throws (non-interactive) or prompts (interactive) when the target directory
+ * is inside a git repo with uncommitted changes. Silently returns when the
+ * directory is clean, absent, or not a git repo.
+ */
+async function assertGitClean(absTarget: string, skipPrompts: boolean): Promise<void> {
+  if (!hasUncommittedGitChanges(absTarget)) return;
+
+  const message =
+    `Target directory has uncommitted git changes. ` +
+    `Commit or stash them before running embedded init.`;
+
+  if (skipPrompts) {
+    throw new Error(message);
+  }
+
+  const proceed = await confirm({
+    message: `${message} Continue anyway?`,
+    default: false,
+  });
+  if (!proceed) {
+    throw new Error('Aborted: uncommitted changes in target directory.');
+  }
+}
+
 export async function createSpace(config: SpaceConfig, options: CliOptions = {}): Promise<void> {
   const nameResult = validateProjectName(config.projectName);
   if (!nameResult.valid) {
@@ -106,67 +180,78 @@ export async function createSpace(config: SpaceConfig, options: CliOptions = {})
   }
 
   const state = await detectWorkspaceState(config.targetDir);
+  const skipPrompts = shouldSkipPrompts(options);
+  const layout = await resolveLayout(state, absTarget, options.mode ?? config.layout, skipPrompts);
   const templateDir = path.join(import.meta.dirname, '..', 'template');
   const spaceStatusPath = `${path.join(absTarget, '.space')}/`;
 
+  if (layout === 'embedded' && state !== 'complete') {
+    await assertGitClean(absTarget, skipPrompts);
+  }
+
   if (state === 'greenfield') {
-    const source = await runGreenfield(config, absTarget, templateDir, options);
-    console.log(`Initialized empty Space workspace in ${spaceStatusPath}`);
-    console.log();
-
-    const needsSourceSetup = !source.gitRemote;
-    const needsWorkspaceSetup = config.skipInstall || config.disableGit || !source.gitRemote;
-
-    if (needsSourceSetup || needsWorkspaceSetup) {
-      console.log(pc.bold('To get started:'));
+    if (layout === 'embedded') {
+      await runGreenfieldEmbedded(config, absTarget, templateDir, options);
+      console.log(`Initialized embedded Space workspace in ${spaceStatusPath}`);
+    } else {
+      const source = await runGreenfieldSibling(config, absTarget, templateDir, options);
+      console.log(`Initialized empty Space workspace (sibling) in ${spaceStatusPath}`);
       console.log();
-    }
 
-    let step = 1;
+      const needsSourceSetup = !source.gitRemote;
+      const needsWorkspaceSetup = config.skipInstall || config.disableGit || !source.gitRemote;
 
-    if (needsSourceSetup) {
-      console.log(pc.bold(`  ${step}. Set up your source code repository`));
-      console.log(`     ${pc.cyan(`cd ${source.sourcePath}`)}`);
-      console.log(`     ${pc.cyan('git init')} or ${pc.cyan('git clone <url>')}`);
-      console.log();
-      step++;
-    }
-
-    if (needsWorkspaceSetup) {
-      console.log(pc.bold(`  ${step}. Configure your workspace`));
-      console.log(`     ${pc.cyan(`cd ${config.targetDir}`)}`);
-
-      if (config.skipInstall) {
-        console.log(`     ${pc.cyan(`${config.packageManager} install`)}`);
+      if (needsSourceSetup || needsWorkspaceSetup) {
+        console.log(pc.bold('To get started:'));
+        console.log();
       }
 
-      if (config.disableGit) {
-        console.log(`     ${pc.cyan('git init')}`);
+      let step = 1;
+
+      if (needsSourceSetup) {
+        console.log(pc.bold(`  ${step}. Set up your source code repository`));
+        console.log(`     ${pc.cyan(`cd ${source.sourcePath}`)}`);
+        console.log(`     ${pc.cyan('git init')} or ${pc.cyan('git clone <url>')}`);
+        console.log();
+        step++;
       }
 
-      if (!source.gitRemote) {
-        console.log(`     ${pc.cyan('git remote add origin <url>')}`);
-        if (config.sourceProvider !== 'none') {
-          console.log(
-            `     Edit ${pc.cyan('.space/config')} -- update source.repo with your ${config.sourceProvider} org`,
-          );
+      if (needsWorkspaceSetup) {
+        console.log(pc.bold(`  ${step}. Configure your workspace`));
+        console.log(`     ${pc.cyan(`cd ${config.targetDir}`)}`);
+
+        if (config.skipInstall) {
+          console.log(`     ${pc.cyan(`${config.packageManager} install`)}`);
         }
-      }
-      console.log();
-    }
 
-    if (!needsSourceSetup && !needsWorkspaceSetup) {
-      console.log(`  ${pc.cyan(`cd ${config.targetDir}`)}`);
-      console.log();
+        if (config.disableGit) {
+          console.log(`     ${pc.cyan('git init')}`);
+        }
+
+        if (!source.gitRemote) {
+          console.log(`     ${pc.cyan('git remote add origin <url>')}`);
+          if (config.sourceProvider !== 'none') {
+            console.log(
+              `     Edit ${pc.cyan('.space/config')} -- update source.repo with your ${config.sourceProvider} org`,
+            );
+          }
+        }
+        console.log();
+      }
+
+      if (!needsSourceSetup && !needsWorkspaceSetup) {
+        console.log(`  ${pc.cyan(`cd ${config.targetDir}`)}`);
+        console.log();
+      }
     }
   } else {
-    await runReinit(config, absTarget, templateDir);
-    console.log(`Reinitialized existing Space workspace in ${spaceStatusPath}`);
+    await runReinit(config, absTarget, templateDir, layout);
+    console.log(`Reinitialized existing Space workspace (${layout}) in ${spaceStatusPath}`);
     console.log();
   }
 }
 
-async function runGreenfield(
+async function runGreenfieldSibling(
   config: SpaceConfig,
   absTarget: string,
   templateDir: string,
@@ -252,10 +337,70 @@ async function runGreenfield(
   return source;
 }
 
+async function runGreenfieldEmbedded(
+  config: SpaceConfig,
+  absTarget: string,
+  templateDir: string,
+  options: CliOptions,
+): Promise<void> {
+  console.log();
+  console.log(
+    `${pc.cyan('>>>')} Initializing embedded Space workspace at ${pc.bold(config.targetDir)} ...`,
+  );
+  console.log();
+  console.log(`  Project name:  ${pc.cyan(config.projectName)}`);
+  console.log(`  Project key:   ${pc.cyan(config.projectKey)}`);
+  console.log();
+
+  const llmConfig = getLlmConfig(config.llmProvider);
+
+  const vars: TemplateVars = {
+    projectName: config.projectName,
+    projectKey: config.projectKey,
+    project: config.project,
+    sourceRepo: config.project,
+    sourcePath: '.',
+    llmDefaultModel: llmConfig.defaultModel,
+    llmProviders: llmConfig.providers,
+  };
+
+  console.log(`Initializing workspace with template: ${pc.cyan('embedded')}`);
+  console.log();
+
+  await renderTemplate(templateDir, absTarget, vars, { layout: 'embedded' });
+  await ensureEmbeddedPackageJsonDeps(absTarget);
+  await ensureGitignoreManagedBlock(absTarget);
+
+  if (!config.skipInstall) {
+    console.log(`Installing dependencies (using ${pc.cyan(config.packageManager)})`);
+    const isOnline = await getOnline();
+    tryInstall(absTarget, config.packageManager, isOnline);
+    console.log();
+  }
+
+  console.log('Syncing skills');
+  const syncSucceeded = trySkillsSync(absTarget, config.profile);
+  console.log();
+
+  if (config.profile && syncSucceeded) {
+    await writeProfileYaml(absTarget, config.profile);
+  }
+
+  const agentDirs = getAgentDirs(config.llmProvider);
+  console.log('Creating agent resources');
+  await fs.mkdir(path.join(absTarget, '.agents', 'skills'), { recursive: true });
+  for (const dir of agentDirs) {
+    await createAgentDir(absTarget, dir);
+    console.log(`  - ${pc.bold(`${dir}/skills`)} -> .agents/skills`);
+  }
+  console.log();
+}
+
 async function runReinit(
   config: SpaceConfig,
   absTarget: string,
   templateDir: string,
+  layout: WorkspaceLayout,
 ): Promise<void> {
   console.log();
   console.log(
@@ -276,8 +421,14 @@ async function runReinit(
     llmProviders: llmConfig.providers,
   };
 
-  await renderTemplate(templateDir, absTarget, vars, { mode: 'idempotent' });
-  await ensurePackageJsonDeps(absTarget);
+  await renderTemplate(templateDir, absTarget, vars, { mode: 'idempotent', layout });
+
+  if (layout === 'embedded') {
+    await ensureEmbeddedPackageJsonDeps(absTarget);
+    await ensureGitignoreManagedBlock(absTarget);
+  } else {
+    await ensurePackageJsonDeps(absTarget);
+  }
 
   const agentDirs = getAgentDirs(config.llmProvider);
   for (const dir of agentDirs) {
@@ -288,15 +439,13 @@ async function runReinit(
     const isOnline = await getOnline();
     tryInstall(absTarget, config.packageManager, isOnline);
   }
-  // git init is intentionally skipped for partial/complete workspaces: the
-  // directory already has files and may already be a git repo. Disturbing the
-  // VCS state during a reinit would be unexpected and potentially destructive.
+  // git init is intentionally skipped for partial/complete workspaces.
 }
 
 /**
- * Adds @daddia/space and @daddia/skills to devDependencies in the target
- * package.json if they are not already present. Creates a minimal
- * package.json if none exists.
+ * Adds @daddia/space to devDependencies in the target package.json if
+ * not already present. Creates a minimal package.json if none exists.
+ * Used for sibling-mode reinit only; embedded mode uses ensureEmbeddedPackageJsonDeps.
  */
 async function ensurePackageJsonDeps(targetDir: string): Promise<void> {
   const pkgPath = path.join(targetDir, 'package.json');

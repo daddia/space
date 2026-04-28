@@ -71,6 +71,7 @@ program
   .option('--skip-install', 'Skip dependency installation')
   .option('--disable-git', 'Skip git repository initialisation')
   .option('--profile <name>', 'Skill profile to activate (minimal, domain-team, platform, full)')
+  .option('--mode <layout>', 'Workspace layout: sibling (dedicated repo) or embedded (inside host repo)')
   .action(async (projectName: string | undefined, options: CliOptions) => {
     try {
       const config = await resolveConfig(projectName, options);
