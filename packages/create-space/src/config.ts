@@ -8,6 +8,9 @@ export type { PackageManager } from './helpers/pkg-manager.js';
 export type SourceProvider = 'github' | 'gitlab' | 'bitbucket' | 'none';
 export type LlmProvider = 'anthropic' | 'openai' | 'cursor' | 'other';
 
+export const VALID_PROFILES = ['minimal', 'domain-team', 'platform', 'full'] as const;
+export type ValidProfile = (typeof VALID_PROFILES)[number];
+
 export interface SpaceConfig {
   projectName: string;
   projectKey: string;
@@ -18,6 +21,7 @@ export interface SpaceConfig {
   packageManager: PackageManager;
   skipInstall: boolean;
   disableGit: boolean;
+  profile?: string;
 }
 
 export interface CliOptions {
@@ -30,6 +34,7 @@ export interface CliOptions {
   useBun?: boolean;
   skipInstall?: boolean;
   disableGit?: boolean;
+  profile?: string;
 }
 
 export function deriveDefaults(projectName: string) {
@@ -192,5 +197,6 @@ export async function resolveConfig(
     packageManager,
     skipInstall: !!options.skipInstall,
     disableGit: !!options.disableGit,
+    profile: options.profile || undefined,
   };
 }

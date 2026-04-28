@@ -216,7 +216,7 @@ async function runGreenfield(
   console.log();
 
   console.log('Syncing skills');
-  trySkillsSync(absTarget);
+  trySkillsSync(absTarget, config.profile);
   console.log();
 
   const agentDirs = getAgentDirs(config.llmProvider);

@@ -70,6 +70,7 @@ program
   .option('--use-bun', 'Use Bun for installation')
   .option('--skip-install', 'Skip dependency installation')
   .option('--disable-git', 'Skip git repository initialisation')
+  .option('--profile <name>', 'Skill profile to activate (minimal, domain-team, platform, full)')
   .action(async (projectName: string | undefined, options: CliOptions) => {
     try {
       const config = await resolveConfig(projectName, options);
