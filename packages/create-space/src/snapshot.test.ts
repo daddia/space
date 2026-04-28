@@ -7,7 +7,7 @@ import type { SpaceConfig } from './config.js';
 import { trySkillsSync } from './helpers/skills-sync.js';
 
 vi.mock('./helpers/skills-sync.js', () => ({
-  trySkillsSync: vi.fn(),
+  trySkillsSync: vi.fn().mockReturnValue(true),
 }));
 
 function makeConfig(targetDir: string): SpaceConfig {
@@ -158,6 +158,46 @@ describe('reinit path', () => {
     await createSpace(makeConfig(targetDir), { yes: true });
     const tree = await collectTree(targetDir);
     expect(tree).toMatchSnapshot();
+  });
+});
+
+describe('template output snapshots (with profile)', () => {
+  let tempBase: string;
+  let targetDir: string;
+
+  beforeEach(async () => {
+    tempBase = await mkdtemp(join(tmpdir(), 'cs-snap-profile-'));
+    targetDir = join(tempBase, 'acme-space');
+    vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.mocked(trySkillsSync).mockReturnValue(true);
+  });
+
+  afterEach(async () => {
+    vi.restoreAllMocks();
+    await rm(tempBase, { recursive: true, force: true });
+  });
+
+  it('file tree includes .space/profile.yaml when profile is set', async () => {
+    const config: SpaceConfig = { ...makeConfig(targetDir), profile: 'minimal' };
+    await createSpace(config, { yes: true });
+    const tree = await collectTree(targetDir);
+    expect(tree).toMatchSnapshot();
+    expect(tree).toContain('.space/profile.yaml');
+  });
+
+  it('matches the expected .space/profile.yaml content', async () => {
+    const config: SpaceConfig = { ...makeConfig(targetDir), profile: 'minimal' };
+    await createSpace(config, { yes: true });
+    const content = await readFile(join(targetDir, '.space/profile.yaml'), 'utf-8');
+    expect(content).toMatchSnapshot();
+  });
+
+  it('file tree does not include .space/profile.yaml when profile is omitted', async () => {
+    await createSpace(makeConfig(targetDir), { yes: true });
+    const tree = await collectTree(targetDir);
+    expect(tree).toMatchSnapshot();
+    expect(tree).not.toContain('.space/profile.yaml');
   });
 });
 

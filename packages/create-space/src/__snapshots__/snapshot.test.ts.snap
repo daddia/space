@@ -28,6 +28,68 @@ exports[`reinit path > matches the reinit file tree snapshot 1`] = `
 ]
 `;
 
+exports[`template output snapshots (with profile) > file tree does not include .space/profile.yaml when profile is omitted 1`] = `
+[
+  ".claude/skills -> symlink",
+  ".cursor/rules/workspace.mdc",
+  ".cursor/skills -> symlink",
+  ".env.example",
+  ".gitignore",
+  ".space/config",
+  ".space/raci",
+  ".space/team",
+  "AGENTS.md",
+  "README.md",
+  "acme.code-workspace",
+  "architecture/decisions/adr-template.md",
+  "architecture/decisions/register.md",
+  "architecture/solution.md",
+  "docs/.gitkeep",
+  "docs/conventions/definition-of-done.md",
+  "docs/conventions/definition-of-ready.md",
+  "package.json",
+  "product/backlog.md",
+  "product/prd.md",
+  "product/roadmap.md",
+  "reports/.gitkeep",
+  "work/.gitkeep",
+]
+`;
+
+exports[`template output snapshots (with profile) > file tree includes .space/profile.yaml when profile is set 1`] = `
+[
+  ".claude/skills -> symlink",
+  ".cursor/rules/workspace.mdc",
+  ".cursor/skills -> symlink",
+  ".env.example",
+  ".gitignore",
+  ".space/config",
+  ".space/profile.yaml",
+  ".space/raci",
+  ".space/team",
+  "AGENTS.md",
+  "README.md",
+  "acme.code-workspace",
+  "architecture/decisions/adr-template.md",
+  "architecture/decisions/register.md",
+  "architecture/solution.md",
+  "docs/.gitkeep",
+  "docs/conventions/definition-of-done.md",
+  "docs/conventions/definition-of-ready.md",
+  "package.json",
+  "product/backlog.md",
+  "product/prd.md",
+  "product/roadmap.md",
+  "reports/.gitkeep",
+  "work/.gitkeep",
+]
+`;
+
+exports[`template output snapshots (with profile) > matches the expected .space/profile.yaml content 1`] = `
+"name: minimal
+"
+`;
+
 exports[`template output snapshots > matches the expected .space/config content 1`] = `
 "project:
   name: acme
