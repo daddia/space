@@ -1,7 +1,13 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { select, confirm } from '@inquirer/prompts';
 import { deriveDefaults, shouldSkipPrompts, getLlmConfig, buildSourceRepo } from './config.js';
 
 vi.mock('ci-info', () => ({ isCI: false }));
+vi.mock('@inquirer/prompts', () => ({
+  input: vi.fn(),
+  select: vi.fn(),
+  confirm: vi.fn(),
+}));
 
 describe('deriveDefaults', () => {
   it('derives project key as uppercase with non-alphanumeric replaced by hyphens', () => {
@@ -163,5 +169,68 @@ describe('resolveConfig', () => {
     const { resolveConfig } = await import('./config.js');
     const config = await resolveConfig('acme', { yes: true, profile: '' });
     expect(config.profile).toBeUndefined();
+  });
+});
+
+describe('interactive profile prompt', () => {
+  beforeEach(() => {
+    vi.mocked(confirm).mockReset();
+    vi.mocked(select).mockReset();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it('presents select prompt and stores the chosen profile', async () => {
+    const { resolveConfig } = await import('./config.js');
+    // confirm: "customize key?" → false; "use GitHub?" → true; "use Anthropic?" → true
+    vi.mocked(confirm)
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true)
+      .mockResolvedValueOnce(true);
+    vi.mocked(select).mockResolvedValueOnce('domain-team');
+
+    const config = await resolveConfig('acme', {});
+
+    expect(vi.mocked(select)).toHaveBeenCalledWith(
+      expect.objectContaining({ message: expect.stringContaining('skill profile') }),
+    );
+    expect(config.profile).toBe('domain-team');
+  });
+
+  it('defaults to full when the user accepts the default at the prompt', async () => {
+    const { resolveConfig } = await import('./config.js');
+    vi.mocked(confirm)
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true)
+      .mockResolvedValueOnce(true);
+    vi.mocked(select).mockResolvedValueOnce('full');
+
+    const config = await resolveConfig('acme', {});
+
+    expect(config.profile).toBe('full');
+  });
+
+  it('skips profile prompt when --yes is provided', async () => {
+    const { resolveConfig } = await import('./config.js');
+
+    const config = await resolveConfig('acme', { yes: true });
+
+    expect(vi.mocked(select)).not.toHaveBeenCalled();
+    expect(config.profile).toBeUndefined();
+  });
+
+  it('skips profile prompt when --profile flag is explicitly provided', async () => {
+    const { resolveConfig } = await import('./config.js');
+    vi.mocked(confirm)
+      .mockResolvedValueOnce(false)
+      .mockResolvedValueOnce(true)
+      .mockResolvedValueOnce(true);
+
+    const config = await resolveConfig('acme', { profile: 'minimal' });
+
+    expect(vi.mocked(select)).not.toHaveBeenCalled();
+    expect(config.profile).toBe('minimal');
   });
 });
