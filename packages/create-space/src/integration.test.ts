@@ -140,6 +140,12 @@ describe('SPACE-10-03: .space/profile.yaml persistence', () => {
 
     expect(await fileExists(join(targetDir, '.space', 'profile.yaml'))).toBe(false);
   });
+
+  it('does not write .space/profile.yaml for an unknown profile even when sync returns true', async () => {
+    await createSpace(makeConfig(targetDir, { profile: 'unknown-profile' }), { yes: true });
+
+    expect(await fileExists(join(targetDir, '.space', 'profile.yaml'))).toBe(false);
+  });
 });
 
 describe('createSpace integration: three workspace states', () => {

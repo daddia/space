@@ -3,7 +3,13 @@ import path from 'node:path';
 import { confirm } from '@inquirer/prompts';
 import pc from 'picocolors';
 import type { SpaceConfig, LlmProvider } from './config.js';
-import { getLlmConfig, buildSourceRepo, shouldSkipPrompts, type CliOptions } from './config.js';
+import {
+  getLlmConfig,
+  buildSourceRepo,
+  shouldSkipPrompts,
+  VALID_PROFILES,
+  type CliOptions,
+} from './config.js';
 import { renderTemplate, type TemplateVars } from './template.js';
 import { validateProjectName, validateTargetDir } from './helpers/validate.js';
 import { detectWorkspaceState } from './helpers/workspace-state.js';
@@ -334,6 +340,9 @@ async function createAgentDir(targetDir: string, dirName: string): Promise<void>
 }
 
 async function writeProfileYaml(targetDir: string, profile: string): Promise<void> {
+  if (!(VALID_PROFILES as ReadonlyArray<string>).includes(profile)) {
+    return;
+  }
   const profileYamlPath = path.join(targetDir, '.space', 'profile.yaml');
   await fs.writeFile(profileYamlPath, `name: ${profile}\n`);
 }

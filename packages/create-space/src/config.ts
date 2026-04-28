@@ -11,6 +11,13 @@ export type LlmProvider = 'anthropic' | 'openai' | 'cursor' | 'other';
 export const VALID_PROFILES = ['minimal', 'domain-team', 'platform', 'full'] as const;
 export type ValidProfile = (typeof VALID_PROFILES)[number];
 
+export const PROFILE_DESCRIPTIONS: Record<ValidProfile, string> = {
+  minimal: 'minimal      — essential skills only',
+  'domain-team': 'domain-team  — delivery team defaults',
+  platform: 'platform    — platform engineering',
+  full: 'full        — all available skills',
+};
+
 export interface SpaceConfig {
   projectName: string;
   projectKey: string;
@@ -193,12 +200,7 @@ export async function resolveConfig(
   } else if (!skipPrompts) {
     profile = await select<string>({
       message: 'Which skill profile would you like to use?',
-      choices: [
-        { value: 'minimal', name: 'minimal      — essential skills only' },
-        { value: 'domain-team', name: 'domain-team  — delivery team defaults' },
-        { value: 'platform', name: 'platform    — platform engineering' },
-        { value: 'full', name: 'full        — all available skills' },
-      ],
+      choices: VALID_PROFILES.map((p) => ({ value: p, name: PROFILE_DESCRIPTIONS[p] })),
       default: 'full',
     });
   }
