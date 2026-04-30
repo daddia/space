@@ -8,3 +8,13 @@ export { mergeOrCreateConfig } from './merge-config.js';
 export { ensurePackageJsonDeps } from './ensure-package-deps.js';
 export { ensureAgentDirs, forceSymlink } from './ensure-agent-dirs.js';
 export { detectPackageManager, runInstall } from './run-install.js';
+export {
+  detectInstalledVersions,
+  fetchLatestVersions,
+  writeUpdateCache,
+  readUpdateCache,
+  isCacheStale,
+  readOrRefreshCache,
+  type PackageVersionInfo,
+  type UpdateCache,
+} from './version-check.js';
