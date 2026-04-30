@@ -49,7 +49,7 @@ jobs:
         run: pnpm --filter '@daddia/skills' run validate:public
 
       - name: Configure SSH deploy key
-        uses: webfactory/ssh-agent@v0.9.0
+        uses: webfactory/ssh-agent@v0.10.0
         with:
           ssh-private-key: ${{ secrets.SKILLS_DEPLOY_KEY }}
 
