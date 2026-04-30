@@ -32,6 +32,9 @@ node_modules/
 .cursor/skills
 .claude/skills
 
+# Space workspace cache (probe result for space update/upgrade; not committed)
+.space/.update-cache.json
+
 # Build output
 dist/
 *.tsbuildinfo

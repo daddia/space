@@ -240,6 +240,7 @@ const GITIGNORE_MARKER_END = '# <<< @daddia/space';
 const GITIGNORE_MANAGED_LINES = [
   '.space/sources/',
   '.space/cache/',
+  '.space/.update-cache.json',
   'runs/',
   'node_modules/',
   '.cursor/skills',

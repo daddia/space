@@ -1,24 +1,13 @@
-import { describe, it, expect, beforeAll, beforeEach, afterEach, afterAll, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, afterAll, vi } from 'vitest';
 import { mkdtemp, rm, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { http, HttpResponse } from 'msw';
-import { setupServer } from 'msw/node';
 import { runUpgrade, MajorUpgradeRefusedError } from './upgrade.js';
 import { writeUpdateCache, type UpdateCache } from '../lifecycle/version-check.js';
 
-// ---------------------------------------------------------------------------
-// MSW server (used only for readOrRefreshCache's probe when cache is absent/stale)
-// ---------------------------------------------------------------------------
-
-const server = setupServer();
-
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterEach(() => {
-  server.resetHandlers();
+afterAll(() => {
   vi.restoreAllMocks();
 });
-afterAll(() => server.close());
 
 // ---------------------------------------------------------------------------
 // Fixtures
@@ -72,8 +61,7 @@ async function writeStaleCacheAt(dir: string, packages: UpdateCache['packages'])
 const noNetworkFetch: typeof globalThis.fetch = () =>
   Promise.reject(new Error('network should not be called'));
 
-const offlineFetch: typeof globalThis.fetch = () =>
-  Promise.reject(new Error('network failure'));
+const offlineFetch: typeof globalThis.fetch = () => Promise.reject(new Error('network failure'));
 
 function captureOutput(): { logs: string[]; errs: string[]; restore: () => void } {
   const logs: string[] = [];
@@ -119,7 +107,12 @@ describe('space upgrade: all current (no-op)', () => {
     );
     await writeFreshCache(targetDir, {
       '@daddia/space': { declared: '^0.4.0', installed: '0.4.0', latest: '0.4.0', breaking: false },
-      '@daddia/skills': { declared: '^0.5.0', installed: '0.5.0', latest: '0.5.0', breaking: false },
+      '@daddia/skills': {
+        declared: '^0.5.0',
+        installed: '0.5.0',
+        latest: '0.5.0',
+        breaking: false,
+      },
     });
   });
 
@@ -334,9 +327,10 @@ describe('space upgrade: --major stub', () => {
 
   it('writes the codemod explanation to stderr', async () => {
     const stderrOutput: string[] = [];
-    const stderrSpy = vi
-      .spyOn(process.stderr, 'write')
-      .mockImplementation((chunk: unknown) => { stderrOutput.push(String(chunk)); return true; });
+    const stderrSpy = vi.spyOn(process.stderr, 'write').mockImplementation((chunk: unknown) => {
+      stderrOutput.push(String(chunk));
+      return true;
+    });
 
     await expect(runUpgrade(targetDir, { major: 1 })).rejects.toThrow();
     stderrSpy.mockRestore();
@@ -461,7 +455,7 @@ describe('space upgrade: missing package.json', () => {
 
   it('throws with the expected message', async () => {
     await expect(runUpgrade(targetDir, { fetchFn: noNetworkFetch })).rejects.toThrow(
-      "No package.json found; run `space init` first",
+      'No package.json found; run `space init` first',
     );
   });
 });
@@ -477,11 +471,7 @@ describe('space upgrade: pnpm install soft-fail', () => {
   beforeEach(async () => {
     tempBase = await makeTempDir();
     targetDir = join(tempBase, 'workspace');
-    await makeWorkspace(
-      targetDir,
-      { '@daddia/space': '^0.4.0' },
-      { '@daddia/space': '0.4.0' },
-    );
+    await makeWorkspace(targetDir, { '@daddia/space': '^0.4.0' }, { '@daddia/space': '0.4.0' });
     await writeFreshCache(targetDir, {
       '@daddia/space': { declared: '^0.4.0', installed: '0.4.0', latest: '0.5.2', breaking: false },
     });
