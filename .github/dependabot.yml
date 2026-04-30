@@ -1,0 +1,57 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /packages/crew
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /packages/crew-cli
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /packages/anthropic-sdk
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /packages/cursor-sdk
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /tooling/eslint-config
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /tooling/prettier-config
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /tooling/tailwind-config
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /tooling/typescript-config
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: npm
+    directory: /tooling/vitest-config
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
