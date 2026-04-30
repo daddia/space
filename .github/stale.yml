@@ -9,17 +9,17 @@ daysUntilClose: 14
 
 # Issues with these labels will never be considered stale
 exemptLabels:
-  - "pinned"
-  - "security"
-  - "bug"
-  - "enhancement"
-  - "good first issue"
-  - "help wanted"
-  - "roadmap"
-  - "wontfix"
+  - 'pinned'
+  - 'security'
+  - 'bug'
+  - 'enhancement'
+  - 'good first issue'
+  - 'help wanted'
+  - 'roadmap'
+  - 'wontfix'
 
 # Label to use when marking an issue as stale
-staleLabel: "stale"
+staleLabel: 'stale'
 
 # Comment to post when marking an issue as stale
 markComment: >
@@ -46,15 +46,15 @@ daysUntilPrClose: 7
 
 # Pull requests with these labels will never be considered stale
 exemptPrLabels:
-  - "pinned"
-  - "security"
-  - "work-in-progress"
-  - "wip"
-  - "dependencies"
-  - "do-not-merge"
+  - 'pinned'
+  - 'security'
+  - 'work-in-progress'
+  - 'wip'
+  - 'dependencies'
+  - 'do-not-merge'
 
 # Label to use when marking a pull request as stale
-stalePrLabel: "stale"
+stalePrLabel: 'stale'
 
 # Comment to post when marking a pull request as stale
 markPrComment: >
