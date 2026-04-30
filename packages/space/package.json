@@ -48,7 +48,7 @@
   "devDependencies": {
     "@daddia/typescript-config": "workspace:*",
     "@types/node": "^25.5.2",
-    "msw": "^2.13.4",
+    "msw": "^2.14.2",
     "typescript": "^6.0.2",
     "vitest": "^4.1.3"
   }
