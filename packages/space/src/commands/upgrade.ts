@@ -2,14 +2,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { Command } from 'commander';
 import pc from 'picocolors';
-import {
-  readOrRefreshCache,
-  type UpdateCache,
-} from '../lifecycle/version-check.js';
-import {
-  selectCompatibleBumps,
-  applyVersionBumps,
-} from '../lifecycle/apply-upgrade.js';
+import { readOrRefreshCache, type UpdateCache } from '../lifecycle/version-check.js';
+import { selectCompatibleBumps, applyVersionBumps } from '../lifecycle/apply-upgrade.js';
 import {
   mergeOrCreateConfig,
   ensurePackageJsonDeps,
@@ -83,7 +77,7 @@ export async function runUpgrade(cwd: string, opts: UpgradeOptions = {}): Promis
   try {
     await fs.access(path.join(cwd, 'package.json'));
   } catch {
-    throw new Error("No package.json found; run `space init` first");
+    throw new Error('No package.json found; run `space init` first');
   }
 
   // Fetch or return a fresh cache. Throws when the registry is unreachable
@@ -166,20 +160,22 @@ export function registerUpgradeCommand(program: Command): void {
     .option('--force', 'Rewrite exact-pinned specifiers')
     .option('--skip-install', 'Skip pnpm install after rewriting specifiers')
     .option('--max-age <seconds>', 'Maximum cache age in seconds before re-probing')
-    .action(async (opts: { major?: string; force?: boolean; skipInstall?: boolean; maxAge?: string }) => {
-      try {
-        await runUpgrade(process.cwd(), {
-          major: opts.major !== undefined ? parseInt(opts.major, 10) : undefined,
-          force: opts.force,
-          skipInstall: opts.skipInstall,
-          maxAgeMs: opts.maxAge !== undefined ? parseInt(opts.maxAge, 10) * 1000 : undefined,
-        });
-      } catch (err) {
-        if (!(err instanceof MajorUpgradeRefusedError)) {
-          const msg = err instanceof Error ? err.message : String(err);
-          process.stderr.write(pc.red(`space: ${msg}\n`));
+    .action(
+      async (opts: { major?: string; force?: boolean; skipInstall?: boolean; maxAge?: string }) => {
+        try {
+          await runUpgrade(process.cwd(), {
+            major: opts.major !== undefined ? parseInt(opts.major, 10) : undefined,
+            force: opts.force,
+            skipInstall: opts.skipInstall,
+            maxAgeMs: opts.maxAge !== undefined ? parseInt(opts.maxAge, 10) * 1000 : undefined,
+          });
+        } catch (err) {
+          if (!(err instanceof MajorUpgradeRefusedError)) {
+            const msg = err instanceof Error ? err.message : String(err);
+            process.stderr.write(pc.red(`space: ${msg}\n`));
+          }
+          process.exit(1);
         }
-        process.exit(1);
-      }
-    });
+      },
+    );
 }

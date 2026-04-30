@@ -64,14 +64,15 @@ describe('ensurePackageJsonDeps', () => {
   it('is a no-op when both deps are already present', async () => {
     const dir = join(tempBase, 'workspace');
     await mkdir(dir);
-    const original = JSON.stringify(
-      {
-        private: true,
-        devDependencies: { '@daddia/space': '^0.4.0', '@daddia/skills': '^1.0.0' },
-      },
-      null,
-      2,
-    ) + '\n';
+    const original =
+      JSON.stringify(
+        {
+          private: true,
+          devDependencies: { '@daddia/space': '^0.4.0', '@daddia/skills': '^1.0.0' },
+        },
+        null,
+        2,
+      ) + '\n';
     await writeFile(join(dir, 'package.json'), original);
 
     await ensurePackageJsonDeps(dir);

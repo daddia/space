@@ -72,9 +72,7 @@ async function resolveWorkspaceDaddaDeps(cwd: string): Promise<WorkspaceDep[]> {
  * declared in the workspace package.json. Returns null for a package when
  * node_modules is absent or the package has not been installed.
  */
-export async function detectInstalledVersions(
-  cwd: string,
-): Promise<Record<string, string | null>> {
+export async function detectInstalledVersions(cwd: string): Promise<Record<string, string | null>> {
   const deps = await resolveWorkspaceDaddaDeps(cwd);
   return Object.fromEntries(deps.map((d) => [d.name, d.installed]));
 }

@@ -122,9 +122,7 @@ describe('fetchLatestVersions', () => {
       http.get(/^https:\/\/registry\.npmjs\.org\//, () => HttpResponse.json({ 'dist-tags': {} })),
     );
 
-    await expect(fetchLatestVersions(['@daddia/space'])).rejects.toThrow(
-      'No dist-tags.latest',
-    );
+    await expect(fetchLatestVersions(['@daddia/space'])).rejects.toThrow('No dist-tags.latest');
   });
 });
 

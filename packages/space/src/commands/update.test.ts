@@ -139,9 +139,7 @@ describe('space update', () => {
   });
 
   it('compatible lines appear before breaking lines in the report', async () => {
-    server.use(
-      mockRegistry({ '@daddia/space': '0.5.2', '@daddia/skills': '1.0.0' }),
-    );
+    server.use(mockRegistry({ '@daddia/space': '0.5.2', '@daddia/skills': '1.0.0' }));
     await makeWorkspace(targetDir, {
       devDeps: { '@daddia/space': '^0.4.0', '@daddia/skills': '^0.5.0' },
       nodeModules: { '@daddia/space': '0.4.0', '@daddia/skills': '0.5.0' },

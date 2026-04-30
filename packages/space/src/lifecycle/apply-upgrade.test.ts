@@ -35,9 +35,7 @@ async function readDeps(dir: string): Promise<Record<string, string>> {
   return { ...(pkg.dependencies ?? {}), ...(pkg.devDependencies ?? {}) };
 }
 
-function makeCache(
-  packages: Record<string, { latest: string; breaking: boolean }>,
-): UpdateCache {
+function makeCache(packages: Record<string, { latest: string; breaking: boolean }>): UpdateCache {
   return {
     checked_at: new Date().toISOString(),
     packages: Object.fromEntries(

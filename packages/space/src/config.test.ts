@@ -298,19 +298,13 @@ describe('loadConfig -- workspace.layout', () => {
   });
 
   it('accepts workspace.layout: embedded', async () => {
-    await makeWorkspace(
-      tempDir,
-      `project:\n  name: T\n  key: T\nworkspace:\n  layout: embedded`,
-    );
+    await makeWorkspace(tempDir, `project:\n  name: T\n  key: T\nworkspace:\n  layout: embedded`);
     const config = loadConfig(tempDir);
     expect(config.workspace?.layout).toBe('embedded');
   });
 
   it('accepts workspace.layout: sibling', async () => {
-    await makeWorkspace(
-      tempDir,
-      `project:\n  name: T\n  key: T\nworkspace:\n  layout: sibling`,
-    );
+    await makeWorkspace(tempDir, `project:\n  name: T\n  key: T\nworkspace:\n  layout: sibling`);
     const config = loadConfig(tempDir);
     expect(config.workspace?.layout).toBe('sibling');
   });

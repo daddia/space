@@ -50,7 +50,9 @@ export async function runUpdate(
     const existing = await readUpdateCache(cwd);
     if (existing !== null && !isCacheStale(existing, CACHE_FALLBACK_MAX_AGE_MS)) {
       process.stderr.write(
-        pc.yellow(`Warning: npm registry unreachable; using cached data (${existing.checked_at})\n`),
+        pc.yellow(
+          `Warning: npm registry unreachable; using cached data (${existing.checked_at})\n`,
+        ),
       );
       printUpdateReport(existing);
       return;
