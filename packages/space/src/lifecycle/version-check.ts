@@ -103,6 +103,7 @@ export async function fetchLatestVersions(
       } catch (err) {
         throw new Error(
           `Unable to reach npm registry for ${name}: ${err instanceof Error ? err.message : String(err)}`,
+          { cause: err },
         );
       }
       if (!response.ok) {

@@ -481,14 +481,12 @@ describe('space upgrade: pnpm install soft-fail', () => {
     await rm(tempBase, { recursive: true, force: true });
   });
 
-  it('continues and prints success even when install fails', async () => {
-    // Put a malformed lockfile to cause pnpm detection to fall back to npm,
-    // then skip install entirely so we don't actually invoke pnpm.
+  it('prints "Workspace upgraded successfully." when install is skipped via --skip-install', async () => {
     const { logs, restore } = captureOutput();
 
     await runUpgrade(targetDir, {
       fetchFn: noNetworkFetch,
-      skipInstall: true, // avoids real install; tests the soft-fail path via runInstall is bypassed
+      skipInstall: true,
       runNpx: noopNpx,
     });
     restore();

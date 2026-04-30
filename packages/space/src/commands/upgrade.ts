@@ -140,11 +140,11 @@ export async function runUpgrade(cwd: string, opts: UpgradeOptions = {}): Promis
 
   // Print "Skipped" lines for breaking bumps.
   for (const [name, info] of breakingEntries) {
-    const major = parseInt(info.latest.split('.')[0] ?? '0', 10);
+    const latestMajor = parseInt(info.latest.split('.')[0] ?? '0', 10);
     const installedStr = info.installed ?? 'unknown';
     const paddedName = name.padEnd(maxNameLen + 3);
     console.log(
-      `Skipped ${paddedName}${installedStr} → ${info.latest}  (major; run \`space upgrade --major ${major}\`)`,
+      `Skipped ${paddedName}${installedStr} → ${info.latest}  (major; run \`space upgrade --major ${latestMajor}\`)`,
     );
   }
 

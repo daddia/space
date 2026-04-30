@@ -85,8 +85,10 @@ function rewriteSpecifier(
   // Tilde range.
   if (current.startsWith('~')) return `~${version}`;
 
-  // Exact semver (e.g. "0.4.0" or "v0.4.0").
-  if (/^v?\d+\.\d+\.\d/.test(current)) {
+  // Exact semver (e.g. "0.4.0", "v0.4.0", "1.2.3-rc.1"). The pattern is
+  // anchored so "0.4.0.foo" falls through to the unrecognised-form warning
+  // rather than being silently treated as an exact pin.
+  if (/^v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(current)) {
     return force ? `^${version}` : null;
   }
 
