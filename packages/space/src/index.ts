@@ -3,6 +3,7 @@ import { registerSyncCommand } from './commands/sync.js';
 import { registerInitCommand } from './commands/init.js';
 import { registerSkillsCommand } from './commands/skills.js';
 import { registerUpdateCommand } from './commands/update.js';
+import { registerUpgradeCommand } from './commands/upgrade.js';
 
 const program = new Command();
 
@@ -12,5 +13,6 @@ registerInitCommand(program);
 registerSyncCommand(program);
 registerSkillsCommand(program);
 registerUpdateCommand(program);
+registerUpgradeCommand(program);
 
 program.parse();
