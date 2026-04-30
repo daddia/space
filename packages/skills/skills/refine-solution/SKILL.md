@@ -93,7 +93,7 @@ A solution refinement MUST NOT:
 1. Read solution.md and all provided context before making any change
 2. Apply the five refinement activities in order (see below)
 3. Update `version` (patch bump) and `last_updated` in frontmatter
-4. Append a `## Refinement session` section to the document
+4. Report what changed in your response to the user (see Output format)
 
 ## Refinement activities
 
@@ -143,41 +143,13 @@ A solution refinement MUST NOT:
   state — do not update based on assumptions
 - Do not mark a risk as resolved without naming the evidence
 - Do not remove open questions without recording the decision that closed them
-- The refinement session summary must identify: which sections changed, which
-  sections were inspected but unchanged, and any risks identified during the
-  pass
 
 ## Output format
 
-Amend `solution.md` directly. Then append:
+Amend `solution.md` directly. Do not append any section to the document.
 
-<example>
-## Refinement session
+Report the following in your response to the user:
 
-**Date:** 2026-04-27
-**Scope:** full solution
-**Trigger:** post-sprint — Sprint 4 cart foundations
-
-### Sections updated
-
-- §4 Building blocks: added `CartRepository` module; updated directory layout
-  to reflect `src/modules/cart/` structure that shipped in Sprint 4
-- §5 Runtime view: updated add-to-cart sequence to reflect the new SWR
-  revalidation pattern; previous POST-then-reload sequence is now archived
-- §6 Data model: added `CartMutation` entity and `MutationStatus` enum that
-  emerged from the CART01 implementation
-- §9 ADR log: added ADR-0007 (SWR for cart state) — formalised from CART01
-  design candidate
-- §10 Risks: R3 (BFF contract instability) resolved — contract v2 shipped
-  and locked; R5 (multi-tab state) added as new medium risk
-
-### Sections inspected, unchanged
-
-- §3 Solution strategy: consistent with what shipped
-- §7 Cross-cutting: no observable changes to error handling or observability
-
-### Risks identified during pass
-
-- §5: The mini-cart revalidation path is not yet documented in runtime views.
-  This is a gap — flagged for review-solution or next refinement pass.
-  </example>
+- **Sections updated** — one bullet per changed section: which section, what changed
+- **Sections inspected, unchanged** — sections reviewed but requiring no edit
+- **Risks identified during pass** — gaps or new risks flagged for a follow-up pass

@@ -209,7 +209,7 @@ strategy or current phase.
    for every story that is missing or has vague AC
 8. Update the `version` (minor bump), `last_updated`, and `status: Refined`
    in the frontmatter
-9. Append a `## Refinement session` section to the backlog (see Output format)
+9. Report what changed in your response to the user (see Output format)
 
 ## Quality rules
 
@@ -221,60 +221,19 @@ strategy or current phase.
 - EARS statements at WP scope must be independently testable — no compound
   "shall do X and also Y" statements
 - Gherkin scenarios must describe observable outcomes, not implementation steps
-- The session summary must state whether the backlog is sprint-ready or has
-  remaining blockers
+- The report must state whether the backlog is sprint-ready or has remaining
+  blockers
 
 ## Output format
 
-Amend the `backlog.md` file directly. Then append the following section at
-the end of the document:
+Amend `backlog.md` directly. Do not append any section to the document.
 
-<example>
-## Refinement session
+Report the following in your response to the user:
 
-**Date:** 2026-04-27
-**Scope:** work-package
-**Trigger:** pre-sprint grooming
-
-### Removed
-
-| Item      | Reason                                                               |
-| --------- | -------------------------------------------------------------------- |
-| CART03-07 | Duplicate of CART03-04; consolidated AC into CART03-04               |
-| CART03-09 | Implementation detail (internal cache key naming) — not a user story |
-
-### Split
-
-| Original           | Split into                            | Reason                                                                           |
-| ------------------ | ------------------------------------- | -------------------------------------------------------------------------------- |
-| CART03-05 (13 pts) | CART03-05 (5 pts) + CART03-10 (8 pts) | Two distinct integration boundaries: mini-cart revalidation and cart page reload |
-
-### Reprioritised
-
-| Item      | Old rank | New rank | Reason                                            |
-| --------- | -------- | -------- | ------------------------------------------------- |
-| CART03-02 | 4        | 1        | Blocks three downstream stories; must ship first  |
-| CART03-06 | 1        | 3        | No dependents; deprioritised to unblock CART03-02 |
-
-### Estimates updated
-
-| Item      | Old | New | Reason                                                          |
-| --------- | --- | --- | --------------------------------------------------------------- |
-| CART03-03 | TBD | 5   | Design.md §3.2 clarified the scope; estimate is now stable      |
-| CART03-08 | 3   | 8   | AC expanded after review; original estimate was for a stub only |
-
-### AC added or improved
-
-- CART03-01: added two EARS statements covering the error path; added Gherkin
-  scenario for ATC failure with server 500
-- CART03-04: rewritten; original AC was "should work correctly" (not testable)
-
-### Verdict
-
-**Sprint-ready.** Top 5 stories (CART03-02, -01, -03, -04, -05) are estimated,
-have complete EARS + Gherkin AC, and have no unresolved dependencies.
-
-### Remaining blockers
-
-None.
-</example>
+- **Removed** — items removed and why
+- **Split** — items split, what they became, and why
+- **Reprioritised** — items that moved, old vs new position, reason
+- **Estimates updated** — items re-estimated with reason
+- **AC added or improved** — stories that received new or rewritten acceptance criteria
+- **Verdict** — Sprint-ready or Not ready, with the top sprint-ready stories named
+- **Remaining blockers** — any items that could not be groomed to ready

@@ -103,7 +103,7 @@ A roadmap review MUST NOT:
    recommendation, and directly amend the document where the fix is
    unambiguous
 6. Update `last_updated` in frontmatter
-7. Append a `## Review summary` section to the document
+7. Report your verdict and findings in your response to the user (see Output format)
 
 ## Scope-specific review criteria
 
@@ -211,40 +211,13 @@ only). Over-specifying later phases is false precision — flag it.
 ## Output format
 
 Amend `roadmap.md` directly for non-blocking findings where the fix is
-unambiguous. Then append the following section:
+unambiguous. Do not append any section to the document. The document
+itself is the output of the review.
 
-<example>
-## Review summary
+Report the following in your response to the user:
 
-**Reviewed:** 2026-04-27
-**Reviewer:** Senior Delivery Lead (review-roadmap skill)
-**Scope:** product
-**Verdict:** Credible with amendments
-
-### Blocking findings
-
-None.
-
-### Non-blocking findings resolved
-
-- Phase 2 exit criterion "SEO audit passes": rewritten to "Screaming Frog
-  audit confirms zero missing meta descriptions and canonical URLs for all
-  PDP routes as of audit date" — previous wording was not independently
-  verifiable
-- Phase 3 cross-dependency "BFF checkout endpoint" had no owner or status;
-  added "Owner: BFF squad, Status: In progress, Est. delivery: 2026-05-10"
-- Deferred items section was empty despite product.md §5 listing six No-gos;
-  added deferred items from product.md §5 and roadmap.md §Later
-
-### Non-blocking findings deferred
-
-- Phase 4 and 5 objectives are activity lists, not outcome statements.
-  Recommend rewriting before Phase 3 closes — not blocking now because these
-  phases are not yet in planning.
-
-### Remaining risks
-
-- Phase 3 total estimate (87 points) at observed sprint velocity (28 pts)
-  implies ~10 weeks, not the 8 weeks in the roadmap. No evidence of a plan
-  to close this gap. Flagged; owner: Delivery Lead.
-  </example>
+- **Verdict** — one of: Credible / Credible with amendments / Not credible
+- **Blocking findings** — each with its resolution or the reason it blocks
+- **Non-blocking findings resolved** — one bullet per finding: which section, what changed
+- **Non-blocking findings deferred** — finding, reason for deferral, recommended action
+- **Remaining risks** — risks that the review cannot close

@@ -71,9 +71,9 @@ aligned before the team begins implementation.
 5. **Amend in place.** For each gap or inconsistency, either fix it directly
    (if the fix is unambiguous) or add a `<!-- TODO -->` comment noting what
    is missing. Use the author's voice — do not re-narrate existing prose.
-6. **Produce a review summary.** Append or write a `## Review` section at the
-   bottom of whichever document is most affected, listing findings by
-   severity: Blocking, Warning, Suggestion.
+6. **Report the review outcome** in your response to the user, listing findings
+   by severity: Blocking, Warning, Suggestion. Do not append any section to
+   either document.
 
 ## Quality rules
 

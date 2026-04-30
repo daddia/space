@@ -112,7 +112,7 @@ A backlog review MUST NOT:
 5. For each finding: classify as **Blocking** or **Non-blocking**, make a
    recommendation, and directly amend the document if the fix is unambiguous
 6. Update `last_updated` in frontmatter
-7. Append a `## Review summary` section to the backlog
+7. Report your verdict and findings in your response to the user (see Output format)
 
 ## Scope-specific review criteria
 
@@ -265,39 +265,12 @@ down.
 ## Output format
 
 Amend the backlog.md directly for non-blocking findings where the fix is
-unambiguous. Then append the following section at the end of the document:
+unambiguous. Do not append any section to the document.
 
-<example>
-## Review summary
+Report the following in your response to the user:
 
-**Reviewed:** 2026-04-27
-**Reviewer:** Senior Delivery Lead (review-backlog skill)
-**Scope:** work-package
-**Verdict:** Acceptable with amendments
-
-### Blocking findings
-
-None.
-
-### Non-blocking findings resolved
-
-- CART03-01: EARS statement 3 rewritten — "shall handle correctly" is not
-  testable; replaced with specific 500-response behaviour
-- CART03-04: Gherkin `Then` clause described an internal state mutation, not
-  an observable outcome; rewritten to describe the mini-cart update the user
-  sees
-- Traceability table: CART03-06 had no product outcome link; added link to
-  `product.md §7` "cart-to-checkout step rate"
-
-### Non-blocking findings deferred
-
-- Story estimates for CART03-08 and CART03-09 appear low given the AC scope.
-  Flagged with a comment; recommend revisiting in the next refinement session
-  before the sprint that picks them up.
-
-### Remaining risks
-
-- CART03-07 depends on the BFF availability endpoint which is still draft.
-  If the endpoint slips, this story cannot be completed. Owner: BFF squad.
-  This risk is captured in the domain backlog §10 but has no mitigation date.
-  </example>
+- **Verdict** — one of: Sprint-ready / Acceptable with amendments / Not ready
+- **Blocking findings** — each with its resolution or the reason it blocks
+- **Non-blocking findings resolved** — one bullet per finding: which item, what changed
+- **Non-blocking findings deferred** — finding, reason, recommended action
+- **Remaining risks** — unresolved risks with owner and dependency

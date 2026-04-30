@@ -98,7 +98,7 @@ A solution review MUST NOT:
 5. For each finding: classify as **Blocking** or **Non-blocking**, recommend,
    and directly amend where the fix is unambiguous
 6. Update `last_updated` in frontmatter
-7. Append a `## Review summary` section to the document
+7. Report your verdict and findings in your response to the user (see Output format)
 
 ## Section-by-section review criteria
 
@@ -192,35 +192,12 @@ should trigger a `plan-adr` recommendation.
 ## Output format
 
 Amend `solution.md` directly for non-blocking findings where the fix is
-unambiguous. Then append:
+unambiguous. Do not append any section to the document.
 
-<example>
-## Review summary
+Report the following in your response to the user:
 
-**Reviewed:** 2026-04-27
-**Reviewer:** Senior Solution Architect (review-solution skill)
-**Mode:** full
-**Verdict:** Sound with amendments
-
-### Blocking findings
-
-None.
-
-### Non-blocking findings resolved
-
-- §2: NFR "performance is good" rewritten as "LCP p75 < 2.5s at p75 via CrUX"
-- §9: ADR-0003 (cart mutation transport) was implemented but missing from
-  the ADR log; entry added
-- §10: Risk R1 (BFF instability) was resolved in Sprint 3 — status updated
-  to resolved with evidence
-
-### Non-blocking findings deferred
-
-- §5: The checkout handoff sequence is not documented. Not blocking for
-  current phase (cart only), but must be added before Phase 3 opens.
-
-### Remaining risks
-
-- §6: The data model does not cover the CartViewModel invalidation flow.
-  Flagged for the next refine-solution pass.
-  </example>
+- **Verdict** — one of: Sound / Sound with amendments / Not sound
+- **Blocking findings** — each with its resolution or the reason it blocks
+- **Non-blocking findings resolved** — one bullet per finding: which section, what changed
+- **Non-blocking findings deferred** — finding, reason, recommended action
+- **Remaining risks** — unresolved risks to flag for the next review pass

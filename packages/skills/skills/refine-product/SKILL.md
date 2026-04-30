@@ -101,7 +101,7 @@ A product refinement MUST NOT:
 3. Apply the scope-specific activities — see below
 4. Update `version` (patch bump), `last_updated`, and `status: Current` in
    frontmatter
-5. Append a `## Refinement session` section to the document
+5. Report what changed in your response to the user (see Output format)
 
 ## Universal refinement activities (all scopes)
 
@@ -183,42 +183,15 @@ speculatively update sections for which no evidence was provided.
 - Do not change the strategic thesis without explicit caller instruction
 - Do not bump `version` beyond a patch increment unless a significant section
   is substantively updated (e.g. new major user segment added)
-- The refinement session summary must identify which sections changed and why
+- Every change must be traceable to the provided context — do not invent evidence
 
 ## Output format
 
-Amend the `product.md` directly. Then append the following section at the end
-of the document:
+Amend `product.md` directly. Do not append any section to the document.
 
-<example>
-## Refinement session
+Report the following in your response to the user:
 
-**Date:** 2026-04-27
-**Scope:** product
-**Trigger:** post-sprint — Sprint 3 retrospective
-
-### Sections updated
-
-- §1 Problem: added evidence from user research session (25 Apr) confirming
-  cart abandonment is primarily a mobile performance issue, not a trust issue
-- §7 Outcome metrics: added LCP baseline (3.8s p75 mobile) from CrUX;
-  was previously listed as TBD
-- Open questions: OQ2 resolved — personalisation stack decision made
-  (Algolia, confirmed by engineering); OQ3 added (trade cart phase gate
-  timing)
-
-### Removed open questions
-
-- OQ1: "What is the migration strategy?" — resolved, incremental route-by-route
-  confirmed via ops review
-
-### Scope changes
-
-None.
-
-### Remaining staleness risks
-
-- §9 Stakeholders RACI: Cart & Checkout squad lead changed last week;
-  RACI not updated here because the caller did not confirm the new lead.
-  Needs a follow-up.
-  </example>
+- **Sections updated** — one bullet per changed section: which section, what changed and why
+- **Removed open questions** — questions closed, with the decision made
+- **Scope changes** — no-gos or in-scope items that moved
+- **Remaining staleness risks** — sections that could not be updated because evidence was not provided

@@ -99,7 +99,7 @@ A roadmap refinement MUST NOT:
 2. Identify the current phase (the first phase without all exit criteria met)
 3. Apply the five refinement activities below
 4. Update `version` (patch bump) and `last_updated` in frontmatter
-5. Append a `## Refinement session` section to the document
+5. Report what changed in your response to the user (see Output format)
 
 ## Refinement activities
 
@@ -179,53 +179,18 @@ If velocity data is available (points delivered, sprint cadence):
 - Every status change must be traceable to evidence in the provided context
 - Do not mark an exit criterion as met without naming the evidence
 - Do not change phase boundaries without recording the reason
-- The refinement session must identify: what advanced, what slipped, any new
-  risks, and whether the next phase is ready to open
+- The refinement must identify: what advanced, what slipped, any new risks,
+  and whether the next phase is ready to open
 
 ## Output format
 
-Amend the `roadmap.md` directly. Then append the following section at the
-end of the document:
+Amend `roadmap.md` directly. Do not append any section to the document.
 
-<example>
-## Refinement session
+Report the following in your response to the user:
 
-**Date:** 2026-04-27
-**Scope:** domain
-**Trigger:** Sprint 3 retrospective + BFF dependency update
-
-### Phase status
-
-- Phase 2 (Core Shopping): 4 of 5 exit criteria met. One remaining: "SEO
-  audit confirms parity" — audit scheduled for 2026-05-03.
-- Phase 3 (Commerce Flows): opened 2026-04-25 following cart epic
-  CART01 completion.
-
-### Exit criteria evidence recorded
-
-- "LCP p75 < 2.5s (mobile, lab)": met — Lighthouse CI shows 2.1s p75,
-  confirmed 2026-04-22.
-- "Analytics captures add-to-cart events": met — Segment dashboard confirms
-  event firing since 2026-04-18.
-
-### Dependencies updated
-
-- BFF availability endpoint: slipped from 2026-04-20 to 2026-05-10.
-  This delays CART03-07; does not block Phase 3 opening but delays Phase 3
-  close by ~2 weeks.
-
-### Phase content adjustments
-
-- "Wishlist persistence" moved from Phase 3 to Phase 2 — proved simpler than
-  expected, shipped in Sprint 3.
-
-### Timeline update
-
-Sprint 3 velocity: 34 points. Phase 3 estimate revised from 8 weeks to 9
-weeks based on BFF slip.
-
-### Risks
-
-- BFF slip (above) may push Phase 3 close to 2026-07-18 (was 2026-07-04).
-  Owner: BFF squad. Escalated to product lead.
-  </example>
+- **Phase status** — what advanced, what closed, what opened
+- **Exit criteria evidence recorded** — each criterion that moved, with the evidence
+- **Dependencies updated** — status changes and downstream effects
+- **Phase content adjustments** — items moved between phases with reason
+- **Timeline update** — velocity data and revised estimates if available
+- **Risks** — new or escalated risks

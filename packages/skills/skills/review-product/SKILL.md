@@ -99,8 +99,8 @@ still valid.]
 4. Apply the universal review criteria (see below)
 5. For each finding: state the gap, make an opinionated recommendation, and
    directly amend the document — do not leave a finding without a resolution
-6. After all amendments, append a `## Review summary` section to the document
-7. Update `status: Reviewed` and `last_updated:` in the frontmatter
+6. Update `status: Reviewed` and `last_updated:` in the frontmatter
+7. Report your verdict and findings in your response to the user (see Output format)
 
 ## Scope-specific review criteria
 
@@ -197,35 +197,12 @@ still valid.]
 
 ## Output format
 
-Amend the product.md directly for all resolved findings. Then append the
-following review summary at the end of the document:
+Amend the product.md directly for all resolved findings. Do not append any
+section to the document. The document itself is the output of the review.
 
-<example>
-## Review summary
+Report the following in your response to the user:
 
-**Reviewed:** 2026-04-27
-**Reviewer:** Senior PM (review-product skill)
-**Scope:** product
-**Verdict:** Acceptable with amendments
-
-### Findings resolved
-
-- §1 Problem: "performance is slow" replaced with specific Core Web Vitals gap
-  and evidence from CrUX data
-- §4 Rabbit holes: added "Owning backend cart state" as a named rabbit hole
-  with clear rationale
-- §7 Outcome metrics: removed internal activity metric ("instrument analytics");
-  replaced with customer-visible outcome ("cart-to-checkout step rate")
-- §8 Principles: "Be honest" rewritten as a trade-off principle with a named
-  constraint
-
-### Findings deferred
-
-- §6 Target users: NZ market segment boundary is unclear; deferred to Phase 6
-  planning — flagged with a comment in the document
-
-### Remaining risks
-
-- The appetite (one sprint) does not obviously match the sketch scope. If
-  sprint velocity data is available, validate before planning begins.
-  </example>
+- **Verdict** — one of: Strong / Acceptable with amendments / Needs significant rework
+- **Findings resolved** — one bullet per finding: which section, what was wrong, what was changed
+- **Findings deferred** — findings not resolved inline, with a reason and a recommended follow-up action
+- **Remaining risks** — risks that the review cannot close because they require future evidence or a decision

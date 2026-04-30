@@ -102,7 +102,7 @@ A design review MUST NOT:
 5. For each finding: classify as **Blocking** or **Non-blocking**,
    recommend, and directly amend where the fix is unambiguous
 6. Update `last_updated` in frontmatter
-7. Append a `## Review summary` section to the document
+7. Report your verdict and findings in your response to the user (see Output format)
 
 ## Mode-specific review criteria
 
@@ -177,40 +177,12 @@ violation.
 ## Output format
 
 Amend `design.md` directly for non-blocking findings where the fix is
-unambiguous. Then append:
+unambiguous. Do not append any section to the document.
 
-<example>
-## Review summary
+Report the following in your response to the user:
 
-**Reviewed:** 2026-04-27
-**Reviewer:** Senior Solution Architect (review-design skill)
-**Mode:** tdd
-**Verdict:** Needs revision
-
-### Blocking findings
-
-- §3 API contract: `AddLineItemRequest` type is described in prose but not
-  specified with field names and types. An engineer cannot implement the
-  request body without guessing. **Recommendation:** specify the type inline
-  or add a reference to `contracts.md §2.1` with the exact type alias.
-
-### Non-blocking findings resolved
-
-- §4 Runtime flow: the error path for a 500 from the cart BFF was absent;
-  added a documented flow for server error → optimistic rollback → toast
-- §5 Test strategy: "write unit tests" expanded to specify unit tests for
-  `CartRepository.add()` with mock BFF, integration test for the full
-  add-to-cart route, and a coverage target of ≥ 80% on new files
-
-### Non-blocking findings deferred
-
-- §2 Goals: the design references "performance requirements" but does not
-  name the specific LCP target from solution.md §2. Not blocking but should
-  be added before implementation starts.
-
-### Remaining risks
-
-- The BFF availability contract (`getProductAvailability`) is listed as
-  "draft" in the OpenAPI spec. If the schema changes after implementation
-  starts, §3 will need revision. Owner: BFF squad.
-  </example>
+- **Verdict** — one of: Ready for implementation / Needs revision / Blocked
+- **Blocking findings** — each with a specific, actionable recommendation
+- **Non-blocking findings resolved** — one bullet per finding: which section, what changed
+- **Non-blocking findings deferred** — finding, reason, recommended action
+- **Remaining risks** — unresolved risks with owner
