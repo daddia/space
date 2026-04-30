@@ -14,6 +14,9 @@ concurrency:
   group: publish-skills
   cancel-in-progress: false
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   publish:
     name: Publish to daddia/skills
@@ -23,17 +26,17 @@ jobs:
 
     steps:
       - name: Checkout daddia/space
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v5
         with:
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version-file: .node-version
+          node-version: '24'
           cache: pnpm
 
       - name: Install dependencies
