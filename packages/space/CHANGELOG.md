@@ -1,5 +1,15 @@
 # @daddia/space
 
+## 0.3.1
+
+### Patch Changes
+
+- Pass `--yes` to `npx skills add` to skip the interactive agent-selection prompt (SPACE-15-14).
+
+  The Vercel `skills` CLI added an interactive prompt asking which agents to install to. This
+  blocked `space skills sync` in non-interactive environments. Adding `--yes` accepts the default
+  (Universal `.agents/skills/` only) without prompting.
+
 ## 0.3.0
 
 ### Minor Changes

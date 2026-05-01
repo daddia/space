@@ -194,6 +194,7 @@ export function syncSkills(opts: SyncSkillsOptions): void {
     'skills@latest',
     'add',
     'daddia/skills',
+    '--yes',
     ...skills.flatMap((n) => ['--skill', n]),
   ];
 
