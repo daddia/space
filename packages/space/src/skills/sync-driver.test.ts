@@ -301,6 +301,7 @@ describe('syncSkills', () => {
       'skills@latest',
       'add',
       'daddia/skills',
+      '--yes',
       '--skill',
       'implement',
       '--skill',

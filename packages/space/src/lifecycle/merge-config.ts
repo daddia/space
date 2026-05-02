@@ -4,13 +4,14 @@ import { fileURLToPath } from 'node:url';
 
 /**
  * Default: the sibling-mode .space/config template bundled with this package.
- * Resolved from dist/lifecycle/ → ../../template/.space/config at the package root.
+ * Resolved from dist/lifecycle/ → ../../template/default/.space/config at the package root.
  */
 const DEFAULT_TEMPLATE_CONFIG_PATH = path.join(
   path.dirname(fileURLToPath(import.meta.url)),
   '..',
   '..',
   'template',
+  'default',
   '.space',
   'config',
 );

@@ -37,7 +37,7 @@ export async function runInit(options: InitOptions = {}): Promise<void> {
   const configTemplatePath =
     layout === 'embedded'
       ? path.join(templateDir, 'embedded', '.space', 'config')
-      : path.join(templateDir, '.space', 'config');
+      : path.join(templateDir, 'default', '.space', 'config');
 
   await mergeOrCreateConfig(targetDir, configTemplatePath);
 
