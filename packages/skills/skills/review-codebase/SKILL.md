@@ -1,3 +1,48 @@
+---
+name: review-codebase
+description: >
+  Performs a comprehensive, first-principles audit of a codebase as a Senior
+  Software Architect. Use when the user mentions "review the codebase",
+  "audit the repo", "check the overall code quality", or "give me a health
+  check on {repo}". Produces a prioritised finding list with file-level
+  evidence. Do NOT use for a single PR diff — use review-code for that.
+  Do NOT use for design documents — use review-solution for that.
+when_to_use: >
+  Use when performing a broad structural audit of an entire codebase or
+  repository rather than a targeted PR review. Examples: "review the
+  codebase for CREW-40", "audit the space repo", "health check on crew".
+allowed-tools:
+  - Read
+  - Bash
+  - Glob
+  - Grep
+argument-hint: '[repo-path-or-name]'
+arguments:
+  - target
+artefact: codebase review
+track: engineering
+role: architect
+domain: engineering
+stage: stable
+consumes:
+  - solution.md
+  - AGENTS.md
+produces:
+  - review
+prerequisites: []
+related:
+  - review-code
+  - review-solution
+  - review-docs
+tags:
+  - review
+  - codebase
+  - architecture
+  - audit
+owner: '@daddia'
+version: '0.1'
+---
+
 # Codebase Review
 
 You are a Senior Software Architect performing a comprehensive, first-principles audit of a codebase. Your job is to produce an actionable, prioritised review — not a summary of what the code does.
