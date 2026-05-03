@@ -1,17 +1,16 @@
 ---
 name: refactor-code
 description: >
-  Performs targeted code refactoring to address issues raised in a code
-  review or to improve quality without changing behaviour. Use when the
-  user mentions "refactor", "fix the review comments", "address the
-  feedback", "clean this up", or "fix the issues from the code review".
-  Do NOT use to add new features — use implement for that. Do NOT use to
-  review code — use review-code for that.
+  Performs targeted code refactoring to address issues raised in a code review
+  or to improve quality without changing behaviour. Use when the user mentions
+  "refactor", "fix the review comments", "address the feedback", "clean this
+  up", or "fix the issues from the code review". Do NOT use to add new features
+  — use implement for that. Do NOT use to review code — use review-code for
+  that.
 when_to_use: >
-  Use after a code review has identified blocking issues, warnings, or
-  suggestions that need to be resolved before merge. Examples: "refactor
-  based on the review", "fix the blocking issues from review-code",
-  "clean up src/context/assembler.ts".
+  Use when addressing review feedback or improving code quality without changing
+  behaviour. Examples: "fix the review comments on feat/PROJ-001", "refactor the
+  context assembler to address the blocking issues".
 allowed-tools:
   - Read
   - Write
@@ -19,7 +18,7 @@ allowed-tools:
   - Bash
   - Glob
   - Grep
-argument-hint: '[branch-or-file-or-review-output]'
+argument-hint: "[branch-or-file-or-review-output]"
 arguments:
   - target
 artefact: code
@@ -29,7 +28,6 @@ domain: engineering
 stage: stable
 consumes:
   - review
-  - code
 produces:
   - code
 prerequisites: []
@@ -42,7 +40,7 @@ tags:
   - code
   - review
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Refactor Code
@@ -69,10 +67,17 @@ be refactored, relevant existing codebase files]
    the finding
 5. Verify each change does not alter observable behaviour (no logic changes
    unless the review explicitly flagged a logic bug)
-6. Run the project's typecheck and test commands after each meaningful
-   change; fix any failures before moving on
-7. Review the full diff with `git diff` before committing
-8. Commit in logical units tied to the findings: `refactor(module): what
+6. Run typecheck and tests after each individual fix to confirm behaviour is preserved before moving to the next finding.
+7. Discover and run the project's full validation suite before committing:
+   a. Check AGENTS.md (or CLAUDE.md) first; if not documented there, read the CI config or the project manifest to identify the project's validation commands
+   b. Run format check
+   c. Run lint
+   d. Run typecheck
+   e. Run build / compile (if the project has a compile or emit step)
+   f. Run tests
+   All checks must pass. Fix every failure before proceeding to step 8.
+8. Review the full diff with `git diff` before committing
+9. Commit in logical units tied to the findings: `refactor(module): what
 and why`
 
 ## Quality rules
@@ -102,6 +107,7 @@ The refactor-code skill addresses review feedback. It MUST NOT:
   wrong, fix the test logic, not the criterion.
 - Suppress or skip failing tests to make the build pass — fix the
   underlying issue or split the story.
+- Commit while any validation check is failing (format, lint, typecheck, build, or tests) — fix every failure or split the story.
 - Add comments that cite external markdown documents, ticket IDs, or
   cross-repo file paths. Code must stand on its own.
 - Perform cosmetic reformatting outside the files named in the review —
@@ -136,5 +142,6 @@ After completing the refactor, write a summary:
 - Format: pass
 - Lint: pass (no new warnings)
 - Typecheck: pass
+- Build: pass (or n/a -- no compile step)
 - Tests: 14/14 pass
   </example>

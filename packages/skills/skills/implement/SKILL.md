@@ -44,7 +44,7 @@ tags:
   - code
   - story
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Implement Feature
@@ -67,7 +67,14 @@ standards, relevant existing codebase files]
 4. Create a feature branch: `feat/{STORY_ID}-{short-description}`
 5. Implement changes file by file, reading each existing file before modifying it
 6. Write tests that verify each acceptance criterion
-7. Run the project's typecheck and test commands; fix any failures
+7. Discover and run the project's full validation suite before committing:
+   a. Check AGENTS.md (or CLAUDE.md) first; if not documented there, read the CI config or the project manifest to identify the project's validation commands
+   b. Run format check
+   c. Run lint
+   d. Run typecheck
+   e. Run build / compile (if the project has a compile or emit step)
+   f. Run tests
+   All checks must pass. Fix every failure before proceeding to step 8.
 8. Review the full diff with `git diff` before committing
 9. Commit in logical units with descriptive messages: `feat(module): what and why`
 
@@ -101,6 +108,7 @@ The implement skill writes code against an approved design. It MUST NOT:
   the repository's conventions.
 - Skip tests or mark failing tests as expected — failing tests must be fixed
   or the story must be split.
+- Commit while any validation check is failing (format, lint, typecheck, build, or tests) — fix every failure or split the story.
 - Add comments that cite external markdown documents, ticket IDs, or
   cross-repo file paths (e.g. `CART02-07 | domain/cart/solution.md §5.1`).
   Code must stand on its own. Comments should explain non-obvious intent or
@@ -133,5 +141,6 @@ After completing implementation, write a summary:
 - Format: pass
 - Lint: pass (no new warnings)
 - Typecheck: pass
+- Build: pass (or n/a -- no compile step)
 - Tests: 12/12 pass
   </example>

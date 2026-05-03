@@ -40,7 +40,7 @@ tags:
   - code
   - pr
 owner: '@daddia'
-version: '0.2'
+version: '0.3'
 ---
 
 # Review Code
@@ -54,6 +54,7 @@ A code review output MUST NOT:
 - Rewrite or propose significant refactoring beyond the diff in scope → raise a separate story
 - Include business context or strategic rationale → product.md or solution.md
 - Duplicate acceptance criteria already in backlog.md — reference them, do not restate
+- Do not mark the review PASS while CI failures are present without explicitly acknowledging each one — record whether the failure is introduced by this branch, pre-existing, or a known flake, and whether it is acceptable to merge in that state.
 
 ## Context
 
