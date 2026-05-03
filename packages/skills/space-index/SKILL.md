@@ -55,7 +55,7 @@ below to identify the best match and direct them to the right skill.
 | implement | Implements code for a story or task against an approved design.md and backlog.md. Use when the user mentions... | code | delivery | engineer | design.md, backlog.md | code |
 | plan-adr | Identifies the architecture decisions that need ADRs and produces a prioritised adr-plan.md before technical design... | adr-plan.md | architecture | architect | solution.md | adr-plan.md |
 | plan-delivery | Produces a delivery-plan.md that sequences the Phase-0 artefacts for a new portfolio, product, or domain before the... | delivery-plan.md | strategy | pm | — | delivery-plan.md |
-| refactor-code | Performs targeted code refactoring to address issues raised in a code review or to improve quality without changing... | code | delivery | engineer | review, code | code |
+| refactor-code | Performs targeted code refactoring to address issues raised in a code review or to improve quality without changing... | code | delivery | engineer | review | code |
 | refine-backlog | Refines backlog.md by applying five grooming activities: prioritise, break down, estimate, define acceptance criteria,... | backlog.md (refined) | refine | delivery | backlog.md, product.md, roadmap.md | backlog.md (refined) |
 | refine-docs | Documents the sprint-end refinement session: promotes WP-local ADR candidates into solution.md, archives superseded... | refine-session.md | refine | architect | solution.md, design.md | refine-session.md |
 | refine-product | Refines product.md on a regular cadence by recording sprint learnings, updating metric baselines, closing resolved open... | product.md (refined) | refine | pm | product.md | product.md (refined) |
